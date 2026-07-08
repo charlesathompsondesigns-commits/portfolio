@@ -1,0 +1,1476 @@
+/* ============================================================
+   CHAR — Charlesa Thompson Portfolio
+   Hand-coded clone of https://www.thecharlesathompson.com
+   Fonts are the exact woff2 assets hosted on the live site.
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   @font-face — copied verbatim from the live Figma Sites HTML,
+   with absolute URLs so fonts load from the live CDN.
+   ------------------------------------------------------------ */
+
+/* ---- Instrument Serif :Italic ---- */
+@font-face{font-family:"Instrument Serif:Italic";font-style:italic;src:url("fonts/InstrumentSerif-Italic_1-english.woff2") format("woff2");font-display:block;unicode-range:U+0000-00A0,U+00A2-00A9,U+00AC-00AE,U+00B0-00B7,U+00B9-00BA,U+00BC-00BE,U+00D7,U+00F7,U+2000-206F,U+2074,U+20AC,U+2122,U+2190-21BB,U+2212,U+2215,U+F8FF,U+FEFF,U+FFFD}
+@font-face{font-family:"Instrument Serif:Italic";font-style:italic;src:url("fonts/InstrumentSerif-Italic_1-latin-extended-a.woff2") format("woff2");font-display:block;unicode-range:U+0100-0130,U+0132-0151,U+0154-017F}
+@font-face{font-family:"Instrument Serif:Italic";font-style:italic;src:url("fonts/InstrumentSerif-Italic_1-latin-extended-additional.woff2") format("woff2");font-display:block;unicode-range:U+1E00-1EFF}
+@font-face{font-family:"Instrument Serif:Italic";font-style:italic;src:url("fonts/InstrumentSerif-Italic_1-latin-extended-b.woff2") format("woff2");font-display:block;unicode-range:U+0180-024F}
+@font-face{font-family:"Instrument Serif:Italic";font-style:italic;src:url("fonts/InstrumentSerif-Italic_1-rest-latin.woff2") format("woff2");font-display:block;unicode-range:U+00A1,U+00AA-00AB,U+00AF,U+00B8,U+00BB,U+00BF-00D6,U+00D8-00F6,U+00F8-00FF,U+0131,U+0152-0153,U+02B0-02FF}
+@font-face{font-family:"Instrument Serif:Italic";font-style:italic;src:url("fonts/InstrumentSerif-Italic_1-rest.woff2") format("woff2");font-display:block;unicode-range:U+0250-02AF,U+0300-1DFF,U+1F00-1FFF,U+2070-2073,U+2075-20AB,U+20AD-2121,U+2123-218F,U+21BC-2211,U+2213-2214,U+2216-F8FE,U+F900-FEFE,U+FF00-FFFC,U+FFFE-FFFF}
+
+/* ---- Instrument Serif :Regular ---- */
+@font-face{font-family:"Instrument Serif:Regular";font-style:normal;src:url("fonts/InstrumentSerif-Regular_1-english.woff2") format("woff2");font-display:block;unicode-range:U+0000-00A0,U+00A2-00A9,U+00AC-00AE,U+00B0-00B7,U+00B9-00BA,U+00BC-00BE,U+00D7,U+00F7,U+2000-206F,U+2074,U+20AC,U+2122,U+2190-21BB,U+2212,U+2215,U+F8FF,U+FEFF,U+FFFD}
+@font-face{font-family:"Instrument Serif:Regular";font-style:normal;src:url("fonts/InstrumentSerif-Regular_1-latin-extended-a.woff2") format("woff2");font-display:block;unicode-range:U+0100-0130,U+0132-0151,U+0154-017F}
+@font-face{font-family:"Instrument Serif:Regular";font-style:normal;src:url("fonts/InstrumentSerif-Regular_1-latin-extended-additional.woff2") format("woff2");font-display:block;unicode-range:U+1E00-1EFF}
+@font-face{font-family:"Instrument Serif:Regular";font-style:normal;src:url("fonts/InstrumentSerif-Regular_1-latin-extended-b.woff2") format("woff2");font-display:block;unicode-range:U+0180-024F}
+@font-face{font-family:"Instrument Serif:Regular";font-style:normal;src:url("fonts/InstrumentSerif-Regular_1-rest-latin.woff2") format("woff2");font-display:block;unicode-range:U+00A1,U+00AA-00AB,U+00AF,U+00B8,U+00BB,U+00BF-00D6,U+00D8-00F6,U+00F8-00FF,U+0131,U+0152-0153,U+02B0-02FF}
+@font-face{font-family:"Instrument Serif:Regular";font-style:normal;src:url("fonts/InstrumentSerif-Regular_1-rest.woff2") format("woff2");font-display:block;unicode-range:U+0250-02AF,U+0300-1DFF,U+1F00-1FFF,U+2070-2073,U+2075-20AB,U+20AD-2121,U+2123-218F,U+21BC-2211,U+2213-2214,U+2216-F8FE,U+F900-FEFE,U+FF00-FFFC,U+FFFE-FFFF}
+
+/* ---- Source Serif Pro :Regular ---- */
+@font-face{font-family:"Source Serif Pro:Regular";font-style:normal;src:url("fonts/SourceSerifPro-Regular_2-english.woff2") format("woff2");font-display:block;unicode-range:U+0000-00A0,U+00A2-00A9,U+00AC-00AE,U+00B0-00B7,U+00B9-00BA,U+00BC-00BE,U+00D7,U+00F7,U+2000-206F,U+2074,U+20AC,U+2122,U+2190-21BB,U+2212,U+2215,U+F8FF,U+FEFF,U+FFFD}
+@font-face{font-family:"Source Serif Pro:Regular";font-style:normal;src:url("fonts/SourceSerifPro-Regular_2-latin-extended-a.woff2") format("woff2");font-display:block;unicode-range:U+0100-0130,U+0132-0151,U+0154-017F}
+@font-face{font-family:"Source Serif Pro:Regular";font-style:normal;src:url("fonts/SourceSerifPro-Regular_2-latin-extended-additional.woff2") format("woff2");font-display:block;unicode-range:U+1E00-1EFF}
+@font-face{font-family:"Source Serif Pro:Regular";font-style:normal;src:url("fonts/SourceSerifPro-Regular_2-latin-extended-b.woff2") format("woff2");font-display:block;unicode-range:U+0180-024F}
+@font-face{font-family:"Source Serif Pro:Regular";font-style:normal;src:url("fonts/SourceSerifPro-Regular_2-rest-latin.woff2") format("woff2");font-display:block;unicode-range:U+00A1,U+00AA-00AB,U+00AF,U+00B8,U+00BB,U+00BF-00D6,U+00D8-00F6,U+00F8-00FF,U+0131,U+0152-0153,U+02B0-02FF}
+@font-face{font-family:"Source Serif Pro:Regular";font-style:normal;src:url("fonts/SourceSerifPro-Regular_2-rest.woff2") format("woff2");font-display:block;unicode-range:U+0250-02AF,U+0300-1DFF,U+1F00-1FFF,U+2070-2073,U+2075-20AB,U+20AD-2121,U+2123-218F,U+21BC-2211,U+2213-2214,U+2216-F8FE,U+F900-FEFE,U+FF00-FFFC,U+FFFE-FFFF}
+
+/* ---- Source Serif Pro :Italic ---- */
+@font-face{font-family:"Source Serif Pro:Italic";font-style:italic;src:url("fonts/SourceSerifPro-Italic_1-english.woff2") format("woff2");font-display:block;unicode-range:U+0000-00A0,U+00A2-00A9,U+00AC-00AE,U+00B0-00B7,U+00B9-00BA,U+00BC-00BE,U+00D7,U+00F7,U+2000-206F,U+2074,U+20AC,U+2122,U+2190-21BB,U+2212,U+2215,U+F8FF,U+FEFF,U+FFFD}
+@font-face{font-family:"Source Serif Pro:Italic";font-style:italic;src:url("fonts/SourceSerifPro-Italic_1-latin-extended-a.woff2") format("woff2");font-display:block;unicode-range:U+0100-0130,U+0132-0151,U+0154-017F}
+@font-face{font-family:"Source Serif Pro:Italic";font-style:italic;src:url("fonts/SourceSerifPro-Italic_1-latin-extended-additional.woff2") format("woff2");font-display:block;unicode-range:U+1E00-1EFF}
+@font-face{font-family:"Source Serif Pro:Italic";font-style:italic;src:url("fonts/SourceSerifPro-Italic_1-latin-extended-b.woff2") format("woff2");font-display:block;unicode-range:U+0180-024F}
+@font-face{font-family:"Source Serif Pro:Italic";font-style:italic;src:url("fonts/SourceSerifPro-Italic_1-rest-latin.woff2") format("woff2");font-display:block;unicode-range:U+00A1,U+00AA-00AB,U+00AF,U+00B8,U+00BB,U+00BF-00D6,U+00D8-00F6,U+00F8-00FF,U+0131,U+0152-0153,U+02B0-02FF}
+@font-face{font-family:"Source Serif Pro:Italic";font-style:italic;src:url("fonts/SourceSerifPro-Italic_1-rest.woff2") format("woff2");font-display:block;unicode-range:U+0250-02AF,U+0300-1DFF,U+1F00-1FFF,U+2070-2073,U+2075-20AB,U+20AD-2121,U+2123-218F,U+21BC-2211,U+2213-2214,U+2216-F8FE,U+F900-FEFE,U+FF00-FFFC,U+FFFE-FFFF}
+
+/* ---- Source Serif Pro :Light Italic ---- */
+@font-face{font-family:"Source Serif Pro:Light Italic";font-style:italic;src:url("fonts/SourceSerifPro-LightItalic_1-english.woff2") format("woff2");font-display:block;unicode-range:U+0000-00A0,U+00A2-00A9,U+00AC-00AE,U+00B0-00B7,U+00B9-00BA,U+00BC-00BE,U+00D7,U+00F7,U+2000-206F,U+2074,U+20AC,U+2122,U+2190-21BB,U+2212,U+2215,U+F8FF,U+FEFF,U+FFFD}
+@font-face{font-family:"Source Serif Pro:Light Italic";font-style:italic;src:url("fonts/SourceSerifPro-LightItalic_1-latin-extended-a.woff2") format("woff2");font-display:block;unicode-range:U+0100-0130,U+0132-0151,U+0154-017F}
+@font-face{font-family:"Source Serif Pro:Light Italic";font-style:italic;src:url("fonts/SourceSerifPro-LightItalic_1-latin-extended-additional.woff2") format("woff2");font-display:block;unicode-range:U+1E00-1EFF}
+@font-face{font-family:"Source Serif Pro:Light Italic";font-style:italic;src:url("fonts/SourceSerifPro-LightItalic_1-latin-extended-b.woff2") format("woff2");font-display:block;unicode-range:U+0180-024F}
+@font-face{font-family:"Source Serif Pro:Light Italic";font-style:italic;src:url("fonts/SourceSerifPro-LightItalic_1-rest-latin.woff2") format("woff2");font-display:block;unicode-range:U+00A1,U+00AA-00AB,U+00AF,U+00B8,U+00BB,U+00BF-00D6,U+00D8-00F6,U+00F8-00FF,U+0131,U+0152-0153,U+02B0-02FF}
+@font-face{font-family:"Source Serif Pro:Light Italic";font-style:italic;src:url("fonts/SourceSerifPro-LightItalic_1-rest.woff2") format("woff2");font-display:block;unicode-range:U+0250-02AF,U+0300-1DFF,U+1F00-1FFF,U+2070-2073,U+2075-20AB,U+20AD-2121,U+2123-218F,U+21BC-2211,U+2213-2214,U+2216-F8FE,U+F900-FEFE,U+FF00-FFFC,U+FFFE-FFFF}
+
+/* ---- Source Serif Pro :ExtraLight Italic ---- */
+@font-face{font-family:"Source Serif Pro:ExtraLight Italic";font-style:italic;src:url("fonts/SourceSerifPro-ExtraLightItalic_1-english.woff2") format("woff2");font-display:block;unicode-range:U+0000-00A0,U+00A2-00A9,U+00AC-00AE,U+00B0-00B7,U+00B9-00BA,U+00BC-00BE,U+00D7,U+00F7,U+2000-206F,U+2074,U+20AC,U+2122,U+2190-21BB,U+2212,U+2215,U+F8FF,U+FEFF,U+FFFD}
+@font-face{font-family:"Source Serif Pro:ExtraLight Italic";font-style:italic;src:url("fonts/SourceSerifPro-ExtraLightItalic_1-latin-extended-a.woff2") format("woff2");font-display:block;unicode-range:U+0100-0130,U+0132-0151,U+0154-017F}
+@font-face{font-family:"Source Serif Pro:ExtraLight Italic";font-style:italic;src:url("fonts/SourceSerifPro-ExtraLightItalic_1-latin-extended-additional.woff2") format("woff2");font-display:block;unicode-range:U+1E00-1EFF}
+@font-face{font-family:"Source Serif Pro:ExtraLight Italic";font-style:italic;src:url("fonts/SourceSerifPro-ExtraLightItalic_1-latin-extended-b.woff2") format("woff2");font-display:block;unicode-range:U+0180-024F}
+@font-face{font-family:"Source Serif Pro:ExtraLight Italic";font-style:italic;src:url("fonts/SourceSerifPro-ExtraLightItalic_1-rest-latin.woff2") format("woff2");font-display:block;unicode-range:U+00A1,U+00AA-00AB,U+00AF,U+00B8,U+00BB,U+00BF-00D6,U+00D8-00F6,U+00F8-00FF,U+0131,U+0152-0153,U+02B0-02FF}
+@font-face{font-family:"Source Serif Pro:ExtraLight Italic";font-style:italic;src:url("fonts/SourceSerifPro-ExtraLightItalic_1-rest.woff2") format("woff2");font-display:block;unicode-range:U+0250-02AF,U+0300-1DFF,U+1F00-1FFF,U+2070-2073,U+2075-20AB,U+20AD-2121,U+2123-218F,U+21BC-2211,U+2213-2214,U+2216-F8FE,U+F900-FEFE,U+FF00-FFFC,U+FFFE-FFFF}
+
+/* ---- Source Serif Pro :SemiBold ---- */
+@font-face{font-family:"Source Serif Pro:SemiBold";font-style:normal;src:url("fonts/SourceSerifPro-SemiBold_2-english.woff2") format("woff2");font-display:block;unicode-range:U+0000-00A0,U+00A2-00A9,U+00AC-00AE,U+00B0-00B7,U+00B9-00BA,U+00BC-00BE,U+00D7,U+00F7,U+2000-206F,U+2074,U+20AC,U+2122,U+2190-21BB,U+2212,U+2215,U+F8FF,U+FEFF,U+FFFD}
+@font-face{font-family:"Source Serif Pro:SemiBold";font-style:normal;src:url("fonts/SourceSerifPro-SemiBold_2-latin-extended-a.woff2") format("woff2");font-display:block;unicode-range:U+0100-0130,U+0132-0151,U+0154-017F}
+@font-face{font-family:"Source Serif Pro:SemiBold";font-style:normal;src:url("fonts/SourceSerifPro-SemiBold_2-rest-latin.woff2") format("woff2");font-display:block;unicode-range:U+00A1,U+00AA-00AB,U+00AF,U+00B8,U+00BB,U+00BF-00D6,U+00D8-00F6,U+00F8-00FF,U+0131,U+0152-0153,U+02B0-02FF}
+
+/* ---- Inter (regular, medium, bold, semibold share the same variable src) ---- */
+@font-face{font-family:"Inter";font-style:normal;src:url("fonts/Inter_1-english.woff2") format("woff2");font-display:block;unicode-range:U+0000-00A0,U+00A2-00A9,U+00AC-00AE,U+00B0-00B7,U+00B9-00BA,U+00BC-00BE,U+00D7,U+00F7,U+2000-206F,U+2074,U+20AC,U+2122,U+2190-21BB,U+2212,U+2215,U+F8FF,U+FEFF,U+FFFD}
+@font-face{font-family:"Inter";font-style:normal;src:url("fonts/Inter_1-latin-extended-a.woff2") format("woff2");font-display:block;unicode-range:U+0100-0130,U+0132-0151,U+0154-017F}
+@font-face{font-family:"Inter";font-style:normal;src:url("fonts/Inter_1-rest-latin.woff2") format("woff2");font-display:block;unicode-range:U+00A1,U+00AA-00AB,U+00AF,U+00B8,U+00BB,U+00BF-00D6,U+00D8-00F6,U+00F8-00FF,U+0131,U+0152-0153,U+02B0-02FF}
+@font-face{font-family:"Inter:Medium";font-style:normal;src:url("fonts/Inter_1-english.woff2") format("woff2");font-display:block;unicode-range:U+0000-00A0,U+00A2-00A9,U+00AC-00AE,U+00B0-00B7,U+00B9-00BA,U+00BC-00BE,U+00D7,U+00F7,U+2000-206F,U+2074,U+20AC,U+2122,U+2190-21BB,U+2212,U+2215,U+F8FF,U+FEFF,U+FFFD}
+@font-face{font-family:"Inter:Medium";font-style:normal;src:url("fonts/Inter_1-rest-latin.woff2") format("woff2");font-display:block;unicode-range:U+00A1,U+00AA-00AB,U+00AF,U+00B8,U+00BB,U+00BF-00D6,U+00D8-00F6,U+00F8-00FF,U+0131,U+0152-0153,U+02B0-02FF}
+@font-face{font-family:"Inter:Bold";font-style:normal;src:url("fonts/Inter_1-english.woff2") format("woff2");font-display:block;unicode-range:U+0000-00A0,U+00A2-00A9,U+00AC-00AE,U+00B0-00B7,U+00B9-00BA,U+00BC-00BE,U+00D7,U+00F7,U+2000-206F,U+2074,U+20AC,U+2122,U+2190-21BB,U+2212,U+2215,U+F8FF,U+FEFF,U+FFFD}
+@font-face{font-family:"Inter:Bold";font-style:normal;src:url("fonts/Inter_1-rest-latin.woff2") format("woff2");font-display:block;unicode-range:U+00A1,U+00AA-00AB,U+00AF,U+00B8,U+00BB,U+00BF-00D6,U+00D8-00F6,U+00F8-00FF,U+0131,U+0152-0153,U+02B0-02FF}
+@font-face{font-family:"Inter:Semi Bold";font-style:normal;src:url("fonts/Inter_1-english.woff2") format("woff2");font-display:block;unicode-range:U+0000-00A0,U+00A2-00A9,U+00AC-00AE,U+00B0-00B7,U+00B9-00BA,U+00BC-00BE,U+00D7,U+00F7,U+2000-206F,U+2074,U+20AC,U+2122,U+2190-21BB,U+2212,U+2215,U+F8FF,U+FEFF,U+FFFD}
+@font-face{font-family:"Inter:Semi Bold";font-style:normal;src:url("fonts/Inter_1-rest-latin.woff2") format("woff2");font-display:block;unicode-range:U+00A1,U+00AA-00AB,U+00AF,U+00B8,U+00BB,U+00BF-00D6,U+00D8-00F6,U+00F8-00FF,U+0131,U+0152-0153,U+02B0-02FF}
+
+/* ---- Libre Franklin :Regular ---- */
+@font-face{font-family:"Libre Franklin:Regular";font-style:normal;src:url("fonts/LibreFranklin_wght__1-english.woff2") format("woff2");font-display:block;unicode-range:U+0000-00A0,U+00A2-00A9,U+00AC-00AE,U+00B0-00B7,U+00B9-00BA,U+00BC-00BE,U+00D7,U+00F7,U+2000-206F,U+2074,U+20AC,U+2122,U+2190-21BB,U+2212,U+2215,U+F8FF,U+FEFF,U+FFFD}
+@font-face{font-family:"Libre Franklin:Regular";font-style:normal;src:url("fonts/LibreFranklin_wght__1-latin-extended-a.woff2") format("woff2");font-display:block;unicode-range:U+0100-0130,U+0132-0151,U+0154-017F}
+@font-face{font-family:"Libre Franklin:Regular";font-style:normal;src:url("fonts/LibreFranklin_wght__1-rest-latin.woff2") format("woff2");font-display:block;unicode-range:U+00A1,U+00AA-00AB,U+00AF,U+00B8,U+00BB,U+00BF-00D6,U+00D8-00F6,U+00F8-00FF,U+0131,U+0152-0153,U+02B0-02FF}
+
+/* ---- Libre Franklin :Medium ---- */
+@font-face{font-family:"Libre Franklin:Medium";font-style:normal;src:url("fonts/LibreFranklin_wght__1-english.woff2") format("woff2");font-display:block;unicode-range:U+0000-00A0,U+00A2-00A9,U+00AC-00AE,U+00B0-00B7,U+00B9-00BA,U+00BC-00BE,U+00D7,U+00F7,U+2000-206F,U+2074,U+20AC,U+2122,U+2190-21BB,U+2212,U+2215,U+F8FF,U+FEFF,U+FFFD}
+@font-face{font-family:"Libre Franklin:Medium";font-style:normal;src:url("fonts/LibreFranklin_wght__1-rest-latin.woff2") format("woff2");font-display:block;unicode-range:U+00A1,U+00AA-00AB,U+00AF,U+00B8,U+00BB,U+00BF-00D6,U+00D8-00F6,U+00F8-00FF,U+0131,U+0152-0153,U+02B0-02FF}
+
+/* ---- Libre Franklin :Italic ---- */
+@font-face{font-family:"Libre Franklin:Italic";font-style:italic;src:url("fonts/LibreFranklin-Italic_wght__1-english.woff2") format("woff2");font-display:block;unicode-range:U+0000-00A0,U+00A2-00A9,U+00AC-00AE,U+00B0-00B7,U+00B9-00BA,U+00BC-00BE,U+00D7,U+00F7,U+2000-206F,U+2074,U+20AC,U+2122,U+2190-21BB,U+2212,U+2215,U+F8FF,U+FEFF,U+FFFD}
+@font-face{font-family:"Libre Franklin:Italic";font-style:italic;src:url("fonts/LibreFranklin-Italic_wght__1-rest-latin.woff2") format("woff2");font-display:block;unicode-range:U+00A1,U+00AA-00AB,U+00AF,U+00B8,U+00BB,U+00BF-00D6,U+00D8-00F6,U+00F8-00FF,U+0131,U+0152-0153,U+02B0-02FF}
+
+
+/* ============================================================
+   Design Tokens
+   ============================================================ */
+:root {
+  /* Palette — pulled from Figma gradient JSON */
+  --brown:       rgb(39, 15, 5);
+  --brown-dark:  rgb(34, 25, 29);
+  --navy:        rgb(28, 33, 55);
+  --blue-deep:   rgb(48, 68, 101);
+  --blue-mid:    rgb(86, 113, 152);
+  --blue-light:  rgb(117, 142, 180);
+  --blue-pale:   rgb(166, 189, 214);
+  --silver:      rgb(208, 220, 228);
+  --cream-light: rgb(233, 235, 226);
+  --cream:       rgb(252, 247, 230);
+  --cream-warm:  rgb(251, 246, 232);
+  --warm-gray:   rgb(120, 110, 100);
+  --white:       #fff;
+  --black:       #000;
+
+  /* Typography — match live-site family names exactly */
+  --font-instrument-italic: "Instrument Serif:Italic", "Instrument Serif", Georgia, serif;
+  --font-instrument:        "Instrument Serif:Regular", "Instrument Serif", Georgia, serif;
+  --font-source:            "Source Serif Pro:Regular", "Source Serif Pro", Georgia, serif;
+  --font-source-italic:     "Source Serif Pro:Italic", "Source Serif Pro", Georgia, serif;
+  --font-source-light-it:   "Source Serif Pro:Light Italic", "Source Serif Pro:Italic", Georgia, serif;
+  --font-inter:             "Inter", system-ui, -apple-system, Segoe UI, sans-serif;
+  --font-inter-medium:      "Inter:Medium", "Inter", system-ui, sans-serif;
+  --font-inter-bold:        "Inter:Bold", "Inter", system-ui, sans-serif;
+  --font-franklin:          "Libre Franklin:Regular", "Libre Franklin", system-ui, sans-serif;
+  --font-franklin-medium:   "Libre Franklin:Medium", "Libre Franklin", system-ui, sans-serif;
+  --font-franklin-italic:   "Libre Franklin:Italic", "Libre Franklin", system-ui, sans-serif;
+
+  /* Aliases used across sections */
+  --font-serif:    var(--font-instrument-italic);
+  --font-body:     var(--font-source);
+  --font-ui:       var(--font-inter);
+
+  /* Layout */
+  --nav-height: 64px;
+  --max-w: 1280px;
+  --gutter: clamp(24px, 5vw, 80px);
+
+  /* Motion */
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-short:   0.25s;
+  --dur-mid:     0.4s;
+  --dur-long:    0.7s;
+  --dur-hero:    1s;
+}
+
+/* ============================================================
+   Reset
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--font-ui);
+  background: var(--brown);
+  color: var(--white);
+  overflow-x: hidden;
+  line-height: 1.4;
+}
+
+img { display: block; max-width: 100%; }
+a   { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+ul  { list-style: none; }
+
+
+/* ============================================================
+   Hero Gradient — exact stops from Figma JSON
+   ============================================================ */
+.hero-gradient {
+  background: linear-gradient(
+    to bottom,
+    rgb(39,15,5)     0%,
+    rgb(34,25,29)    8%,
+    rgb(28,33,55)   20%,
+    rgb(48,68,101)  35%,
+    rgb(86,113,152) 50%,
+    rgb(117,142,180) 62%,
+    rgb(166,189,214) 74%,
+    rgb(208,220,228) 84%,
+    rgb(233,235,226) 91%,
+    rgb(252,247,230) 96%,
+    rgb(251,246,232) 100%
+  );
+}
+
+
+/* ============================================================
+   Fixed Navigation
+   ============================================================ */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  height: var(--nav-height);
+  background: rgba(39, 15, 5, 0.50);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--gutter);
+}
+
+.nav__logo {
+  font-family: var(--font-instrument-italic);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(22px, 2.4vw, 32px);
+  color: var(--cream);
+  letter-spacing: 0.01em;
+  transition: opacity var(--dur-short) var(--ease-in-out);
+}
+
+.nav__logo:hover { opacity: 0.65; }
+
+.nav__links {
+  display: flex;
+  gap: clamp(24px, 4vw, 48px);
+}
+
+.nav__links a {
+  font-family: var(--font-instrument-italic);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(18px, 1.8vw, 26px);
+  color: var(--cream);
+  letter-spacing: 0.02em;
+  transition: opacity var(--dur-short) var(--ease-in-out);
+}
+
+.nav__links a:hover { opacity: 0.65; }
+
+
+/* ============================================================
+   Layout helpers
+   ============================================================ */
+.container {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+
+/* ============================================================
+   Hero Section — full-viewport, gradient bg, text sits
+   lower-left (~65% down) with load fade + scroll parallax
+   ============================================================ */
+/* Hero — sticky scroll section matching Figma component exactly */
+.hero {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  padding-left: clamp(48px, 4vw, 72px);
+  padding-right: clamp(48px, 4vw, 72px);
+}
+
+.hero__text {
+  position: sticky;
+  top: 30%;
+  transform: translateY(-50%);
+  max-width: 56rem;
+  font-family: "Instrument Serif:Regular", "Instrument Serif", serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: clamp(1.75rem, 6vw, 3.85rem);
+  line-height: 1.4;
+  color: var(--white);
+  letter-spacing: 0.48px;
+  text-align: left;
+  /* opacity controlled by JS scroll driver */
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+@media (min-width: 768px) {
+  .hero__text {
+    top: calc(var(--nav-height) + 10vh);
+    transform: translateY(0);
+    max-width: none;
+  }
+}
+
+/* Individual word spans — stagger-revealed by JS */
+.word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(5px);
+  transition:
+    opacity  0.5s ease-out,
+    transform 0.5s ease-out;
+}
+
+.word.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Approach section — individual word spans, mirrors .word exactly */
+.aword {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(5px);
+  transition:
+    opacity  0.5s ease-out,
+    transform 0.5s ease-out;
+}
+
+.aword.visible { opacity: 1; transform: translateY(0); }
+.aword.hidden  { opacity: 0; transform: translateY(5px); }
+
+
+/* ============================================================
+   Approach Section — warm cream, warm-gray serif copy
+   ============================================================ */
+/* Approach — follows the hero section, seamless cream background */
+.approach {
+  background: rgb(251, 246, 232);
+  position: relative;
+  width: 100%;
+  min-height: 120vh;
+  padding: 0 clamp(48px, 4vw, 72px);
+}
+
+.approach__inner {
+  position: sticky;
+  top: 50vh;
+  transform: translateY(-50%);
+  width: 100%;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.approach__text {
+  /* font exactly matches component: Instrument Serif:Regular */
+  font-family: "Instrument Serif:Regular", "Instrument Serif", serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: clamp(27.65px, 5vw, 61.38px);
+  line-height: 1.4;
+  color: #000;
+  letter-spacing: 0.2765px;
+}
+
+
+/* ============================================================
+   Generic Section
+   ============================================================ */
+.section {
+  padding: clamp(80px, 10vw, 140px) var(--gutter);
+}
+
+.section--dark  { background: var(--brown); color: var(--cream); }
+.section--light { background: var(--cream-warm); color: var(--black); }
+.section--cream { background: var(--cream); color: var(--black); }
+.section--white { background: #f9f9f7; color: var(--black); }
+
+.section__label {
+  font-family: var(--font-franklin-medium);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.5;
+  margin-bottom: 48px;
+}
+
+.section__heading {
+  font-family: var(--font-source);
+  font-size: clamp(28px, 4vw, 52px);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin-bottom: 64px;
+}
+
+
+/* ============================================================
+   Projects Grid
+   ============================================================ */
+.projects-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2px;
+}
+
+.project-card {
+  position: relative;
+  overflow: hidden;
+  background: #111;
+  aspect-ratio: 16 / 9;
+  cursor: pointer;
+  display: block;
+}
+
+@media (min-width: 900px) {
+  .projects-grid { grid-template-columns: repeat(3, 1fr); gap: 2px; }
+  .project-card--wide { grid-column: span 2; }
+}
+
+.project-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s var(--ease-out);
+}
+
+.project-card:hover .project-card__image { transform: scale(1.04); }
+
+.project-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0) 55%);
+  opacity: 0;
+  transition: opacity var(--dur-mid) var(--ease-in-out);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 32px;
+}
+
+.project-card:hover .project-card__overlay { opacity: 1; }
+
+.project-card__meta {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 24px 28px;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+}
+
+.project-card__tags {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.project-card__tag {
+  font-family: var(--font-franklin-medium);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.75);
+  border: 1px solid rgba(255,255,255,0.28);
+  padding: 4px 10px;
+  border-radius: 100px;
+}
+
+.project-card__title {
+  font-family: var(--font-source);
+  font-size: clamp(18px, 2vw, 26px);
+  font-weight: 400;
+  color: var(--white);
+  letter-spacing: -0.01em;
+}
+
+.project-card__desc {
+  font-family: var(--font-franklin);
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.6;
+  margin-top: 8px;
+  max-width: 420px;
+}
+
+.project-card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  font-family: var(--font-franklin-medium);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--white);
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity var(--dur-short) var(--ease-out),
+    transform var(--dur-short) var(--ease-out);
+}
+
+.project-card:hover .project-card__cta {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* ============================================================
+   Awards
+   ============================================================ */
+.awards-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  background: rgba(0,0,0,0.08);
+  border-top: 1px solid rgba(0,0,0,0.1);
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+@media (min-width: 768px) {
+  .awards-list { grid-template-columns: repeat(3, 1fr); }
+}
+
+.award-item {
+  padding: 48px 40px;
+  background: var(--cream-warm);
+  transition: background var(--dur-short) var(--ease-in-out);
+}
+
+.award-item:hover { background: var(--cream); }
+
+.award-item__number {
+  font-family: var(--font-franklin-medium);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0.35;
+  margin-bottom: 20px;
+}
+
+.award-item__title {
+  font-family: var(--font-source-italic);
+  font-size: clamp(16px, 2vw, 22px);
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.3;
+  margin-bottom: 16px;
+  color: var(--black);
+}
+
+.award-item__desc {
+  font-family: var(--font-franklin);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.7;
+  color: rgba(0,0,0,0.6);
+}
+
+
+/* ============================================================
+   Press list
+   ============================================================ */
+.press-list {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid rgba(255,255,255,0.12);
+}
+
+.press-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 28px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+  transition: opacity var(--dur-short) var(--ease-in-out);
+  cursor: pointer;
+}
+
+.press-item:hover { opacity: 0.75; }
+
+.press-item__title {
+  font-family: var(--font-source-italic);
+  font-size: clamp(15px, 2vw, 20px);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--cream);
+  flex: 1;
+}
+
+.press-item__arrow {
+  font-family: var(--font-source);
+  font-size: 18px;
+  color: var(--cream);
+  opacity: 0.5;
+  flex-shrink: 0;
+  transition: transform var(--dur-short) var(--ease-out);
+  display: inline-block;
+}
+
+.press-item:hover .press-item__arrow {
+  transform: translate(4px, -4px);
+}
+
+
+/* ============================================================
+   Testimonial
+   ============================================================ */
+.testimonial-wrap {
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.testimonial__quote {
+  font-family: var(--font-source-italic);
+  font-size: clamp(22px, 3.5vw, 40px);
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.35;
+  color: var(--black);
+  margin-bottom: 32px;
+}
+
+.testimonial__author {
+  font-family: var(--font-franklin-medium);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.5;
+  color: var(--black);
+}
+
+
+/* ============================================================
+   Contact
+   ============================================================ */
+.contact-wrap {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 64px;
+}
+
+@media (min-width: 900px) {
+  .contact-wrap { grid-template-columns: 1fr 1fr; align-items: start; }
+}
+
+.contact__heading {
+  font-family: "Instrument Serif:Italic", "Instrument Serif", serif;
+  font-style: italic;
+  font-size: clamp(40px, 5.5vw, 64px);
+  font-weight: 400;
+  line-height: 1.05;
+  color: var(--cream);
+  margin-bottom: 12px;
+}
+
+.contact__sub {
+  font-family: var(--font-franklin);
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(252,247,230,0.5);
+  line-height: 1.7;
+}
+
+.form { display: flex; flex-direction: column; gap: 16px; }
+
+.form__row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+.form__input,
+.form__textarea {
+  width: 100%;
+  padding: 16px 20px;
+  font-family: var(--font-franklin);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--cream);
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 4px;
+  outline: none;
+  transition:
+    border-color var(--dur-short) var(--ease-in-out),
+    background   var(--dur-short) var(--ease-in-out);
+}
+
+.form__input::placeholder,
+.form__textarea::placeholder { color: rgba(252,247,230,0.35); }
+
+.form__input:focus,
+.form__textarea:focus {
+  border-color: rgba(255,255,255,0.4);
+  background: rgba(255,255,255,0.1);
+}
+
+.form__textarea { resize: vertical; min-height: 140px; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 32px;
+  font-family: var(--font-franklin-medium);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all var(--dur-short) var(--ease-out);
+}
+
+.btn--light {
+  background: var(--cream);
+  color: var(--brown);
+  border: 1px solid var(--cream);
+}
+
+.btn--light:hover {
+  background: var(--white);
+  transform: translateY(-2px);
+}
+
+.btn--outline {
+  background: transparent;
+  color: var(--cream);
+  border: 1px solid rgba(252,247,230,0.4);
+}
+
+.btn--outline:hover {
+  border-color: var(--cream);
+  transform: translateY(-2px);
+}
+
+
+/* ============================================================
+   Footer
+   ============================================================ */
+.footer {
+  background: rgb(39, 15, 5);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 48px var(--gutter);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.footer__logo {
+  font-family: var(--font-instrument-italic);
+  font-style: italic;
+  font-size: 18px;
+  color: var(--cream);
+  transition: opacity var(--dur-short) var(--ease-in-out);
+}
+
+.footer__logo:hover { opacity: 0.65; }
+
+.footer__links {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.footer__links a {
+  font-family: var(--font-franklin);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: rgba(252,247,230,0.45);
+  transition: color var(--dur-short) var(--ease-in-out);
+}
+
+.footer__links a:hover { color: var(--cream); }
+
+
+/* ============================================================
+   Scroll Reveal — fade + lift used by IntersectionObserver
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity var(--dur-long) var(--ease-out),
+    transform var(--dur-long) var(--ease-out);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+
+/* ============================================================
+   Hero on-load entrance (JS removes .hero__text--initial to
+   run the transition defined on .hero__text above)
+   ============================================================ */
+.hero__text--in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* ============================================================
+   Explore link — arrow nudge on hover
+   ============================================================ */
+.explore-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 48px;
+}
+
+.explore-link {
+  font-family: var(--font-franklin-medium);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: gap var(--dur-short) var(--ease-out);
+}
+
+.explore-link:hover { gap: 16px; }
+
+
+/* ============================================================
+   Divider
+   ============================================================ */
+.divider {
+  height: 1px;
+  background: rgba(255,255,255,0.1);
+  margin: 0 var(--gutter);
+}
+
+
+/* ============================================================
+   Large section headings — italic serif, same family as hero
+   ============================================================ */
+.section-heading {
+  font-family: "Instrument Serif:Italic", "Instrument Serif", Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(40px, 5.5vw, 64px);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  color: currentColor;
+  margin-bottom: 10px;
+}
+
+.section-subtext {
+  font-family: var(--font-franklin-medium);
+  font-size: 13px;
+  font-weight: 600;
+  color: currentColor;
+  opacity: 0.7;
+  margin-bottom: 40px;
+}
+
+.section-body {
+  font-family: var(--font-franklin);
+  font-size: clamp(14px, 1.2vw, 16px);
+  font-weight: 400;
+  line-height: 1.7;
+  color: currentColor;
+  opacity: 0.7;
+  max-width: 480px;
+  margin-bottom: 48px;
+}
+
+/* ============================================================
+   Section background variants
+   ============================================================ */
+.section--cream-bg  { background: #FCF7E6; color: var(--brown); }
+.section--white-bg  { background: #FFFFFF; color: var(--brown); }
+.section--blue-light { background: rgb(196, 213, 228); color: var(--brown); }
+.section--blue-mid  { background: rgb(134, 158, 185); color: var(--brown); }
+.section--contact   {
+  background: linear-gradient(
+    to bottom,
+    rgb(134, 158, 185)  0%,
+    rgb(86,  113, 152) 18%,
+    rgb(48,  68,  101) 40%,
+    rgb(28,  33,  55)  65%,
+    rgb(34,  25,  29)  82%,
+    rgb(39,  15,  5)  100%
+  );
+  color: var(--cream);
+}
+
+
+/* ============================================================
+   Projects Bento Grid
+   ============================================================ */
+.projects-bento {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  grid-template-rows: auto auto;
+  gap: 12px;
+  margin-bottom: 64px;
+}
+
+/* All pcards share: text left / image right */
+.pcard {
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  cursor: pointer;
+  text-decoration: none;
+  min-height: 340px;
+  transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
+}
+
+.pcard:hover { transform: translateY(-3px); box-shadow: 0 20px 50px rgba(0,0,0,0.18); }
+
+/* Braid — purple gradient background matching Braid Background color.svg
+   (vertical: transparent → indigo → deep blue → magenta → transparent) */
+.pcard--braid {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  min-height: 540px;
+  border-radius: 24px;
+  position: relative;
+  overflow: hidden;
+
+  /* Gradient stops pulled directly from the reference SVG */
+  background:
+    linear-gradient(180deg,
+      rgba(130,  95, 245, 0.00)  0%,
+      rgba( 90,  64, 225, 0.70) 19.7%,
+      rgba( 50,  33, 205, 1.00) 40.9%,
+      rgba(123,  28, 221, 1.00) 81.25%,
+      rgba(123,  28, 221, 0.00) 91.3%
+    ),
+    #0e0b1e;
+}
+
+/* Soft light wash at top-left of card to match the lit atmosphere in ref */
+.pcard--braid::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    120% 90% at 20% 10%,
+    rgba(160, 130, 255, 0.35) 0%,
+    rgba(160, 130, 255, 0.00) 55%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Glass panel — frosted lavender floating above the gradient */
+.pcard__glass {
+  width: 40%;
+  min-width: 360px;
+  flex-shrink: 0;
+  padding: 64px 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 28px;
+  position: relative;
+  z-index: 2;
+
+  /* Light lavender translucent glass — lets gradient bleed through */
+  background: rgba(225, 220, 255, 0.38);
+  backdrop-filter: blur(36px) saturate(170%) brightness(1.12);
+  -webkit-backdrop-filter: blur(36px) saturate(170%) brightness(1.12);
+
+  /* Specular glass edge */
+  border-right: 1px solid rgba(255, 255, 255, 0.28);
+  box-shadow:
+    inset 0   1px 0  rgba(255, 255, 255, 0.75),
+    inset 1px 0  0   rgba(255, 255, 255, 0.28),
+    inset 0  -1px 0  rgba(255, 255, 255, 0.10),
+    8px  0  40px     rgba(0, 0, 0, 0.22);
+}
+
+/* Top specular highlight */
+.pcard__glass::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    rgba(255,255,255,0.90) 0%,
+    rgba(255,255,255,0.30) 70%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+/* Bottom inner reflection */
+.pcard__glass::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 90px;
+  background: linear-gradient(to top,
+    rgba(255,255,255,0.10) 0%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+/* Dark navy text on the lavender glass */
+.pcard__glass-title {
+  font-family: var(--font-instrument);
+  font-size: clamp(72px, 8.4vw, 128px);
+  font-weight: 400;
+  color: #0f0820;
+  line-height: 0.98;
+  letter-spacing: -0.015em;
+  margin: 0;
+}
+
+.pcard__glass-desc {
+  font-family: var(--font-franklin);
+  font-size: clamp(15px, 1.25vw, 19px);
+  font-weight: 400;
+  color: rgba(10, 4, 28, 0.82);
+  line-height: 1.60;
+  max-width: 38ch;
+  margin: 0;
+}
+
+.pcard__glass-btns {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  padding-top: 8px;
+}
+
+.pcard__glass-btn {
+  font-family: var(--font-franklin-medium);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  padding: 12px 26px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.pcard__glass-btn--filled {
+  background: #0f0820;
+  color: #fff;
+  border: 1px solid #0f0820;
+}
+
+.pcard__glass-btn--filled:hover { background: #1e1040; border-color: #1e1040; }
+
+.pcard__glass-btn--outline {
+  background: transparent;
+  color: #0f0820;
+  border: 1px solid rgba(15, 8, 32, 0.45);
+}
+
+.pcard__glass-btn--outline:hover { background: rgba(15, 8, 32, 0.08); }
+
+/* Phone-mockups area — transparent so the purple gradient bleeds through */
+.pcard--braid .pcard__img-wrap {
+  position: relative;
+  z-index: 1;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pcard--braid .pcard__img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  mix-blend-mode: normal;
+}
+
+/* Columbia Chronicle — white */
+.pcard--chronicle {
+  background: #FFFFFF;
+  grid-column: 1;
+  grid-row: 2;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+}
+
+/* NASCAR — olive-warm tint */
+.pcard--nascar {
+  background: linear-gradient(135deg, #8a8700 0%, #b8b200 50%, #9a9200 100%);
+  grid-column: 2;
+  grid-row: 2;
+  min-height: 300px;
+}
+
+/* Text block */
+.pcard__text {
+  padding: 36px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  flex: 1;
+  min-width: 0;
+  justify-content: center;
+}
+
+.pcard__text--dark { /* white card — dark text inherited */ }
+
+/* Image block */
+.pcard__img-wrap {
+  flex: 1;
+  overflow: hidden;
+}
+
+.pcard__img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  transition: transform 0.6s var(--ease-out);
+}
+
+.pcard:hover .pcard__img-wrap img { transform: scale(1.03); }
+
+/* Title */
+.pcard__title {
+  font-family: var(--font-source);
+  font-size: clamp(22px, 2.4vw, 32px);
+  font-weight: 400;
+  color: var(--white);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.pcard__title--dark { color: var(--black); }
+
+/* Description */
+.pcard__desc {
+  font-family: var(--font-franklin);
+  font-size: 13px;
+  color: rgba(255,255,255,0.72);
+  line-height: 1.7;
+}
+
+.pcard__desc--dark { color: rgba(0,0,0,0.6); }
+
+/* Tags row — always at bottom */
+.pcard__tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: auto;
+  padding-top: 8px;
+}
+
+.pcard__tag {
+  font-family: var(--font-franklin-medium);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.75);
+  border: 1px solid rgba(255,255,255,0.3);
+  padding: 5px 12px;
+  border-radius: 100px;
+}
+
+/* "See Project" — slightly filled */
+.pcard__tag--cta {
+  background: rgba(255,255,255,0.15);
+  border-color: rgba(255,255,255,0.5);
+  color: var(--white);
+}
+
+/* Dark-card tags */
+.pcard__tag--outline-dark {
+  color: rgba(0,0,0,0.55);
+  border-color: rgba(0,0,0,0.2);
+  background: transparent;
+}
+
+.pcard__tag--cta-dark {
+  background: rgba(0,0,0,0.08);
+  border-color: rgba(0,0,0,0.35);
+  color: var(--black);
+}
+
+@media (max-width: 768px) {
+  .projects-bento { grid-template-columns: 1fr; }
+  .pcard { flex-direction: column; min-height: auto; }
+  .pcard--braid     { grid-column: 1; grid-row: auto; }
+  .pcard--chronicle { grid-column: 1; grid-row: auto; }
+  .pcard--nascar    { grid-column: 1; grid-row: auto; min-height: 260px; }
+  .pcard__img-wrap  { min-height: 220px; }
+  .pcard__glass     { width: 100%; min-width: unset; padding: 36px 28px; }
+}
+
+
+/* ============================================================
+   Explore CTA
+   ============================================================ */
+.explore-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  padding: 72px 0 24px;
+}
+
+.explore-cta__hint {
+  font-family: var(--font-franklin-italic);
+  font-style: italic;
+  font-size: 12px;
+  color: rgba(39,15,5,0.35);
+  letter-spacing: 0.08em;
+}
+
+.explore-cta__heading {
+  font-family: "Instrument Serif:Italic", "Instrument Serif", serif;
+  font-style: italic;
+  font-size: clamp(22px, 3vw, 36px);
+  font-weight: 400;
+  color: var(--brown);
+}
+
+.btn--dark {
+  background: var(--brown);
+  color: var(--cream);
+  border: 1px solid var(--brown);
+  border-radius: 100px;
+}
+
+.btn--dark:hover {
+  background: var(--brown-dark);
+  transform: translateY(-2px);
+}
+
+
+/* ============================================================
+   Featured Media
+   ============================================================ */
+.media-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.media-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.media-card:hover { opacity: 0.75; }
+
+.media-card__thumb {
+  width: 100%;
+  aspect-ratio: 4/3;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #111;
+}
+
+.media-card__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s var(--ease-out);
+}
+
+.media-card:hover .media-card__thumb img { transform: scale(1.04); }
+
+.media-card__pub {
+  font-family: var(--font-franklin-medium);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(39,15,5,0.4);
+  margin-top: 4px;
+}
+
+.media-card__title {
+  font-family: var(--font-source);
+  font-size: clamp(12px, 1vw, 14px);
+  font-weight: 400;
+  color: var(--brown);
+  line-height: 1.5;
+  flex: 1;
+}
+
+.media-card__link {
+  font-family: var(--font-franklin-medium);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: rgba(39,15,5,0.55);
+  transition: color 0.2s;
+}
+
+.media-card:hover .media-card__link { color: var(--brown); }
+
+@media (max-width: 900px) { .media-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 500px) { .media-grid { grid-template-columns: 1fr; } }
+
+
+/* ============================================================
+   Awards — 2×2 white cards on light-blue bg
+   ============================================================ */
+.awards-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 700px) { .awards-cards { grid-template-columns: 1fr; } }
+
+.award-card {
+  background: #FFFFFF;
+  border-radius: 20px;
+  padding: 36px 32px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow: hidden;
+  position: relative;
+  min-height: 260px;
+}
+
+.award-card__title {
+  font-family: var(--font-source);
+  font-size: clamp(15px, 1.4vw, 18px);
+  font-weight: 400;
+  color: var(--black);
+  line-height: 1.3;
+}
+
+.award-card__desc {
+  font-family: var(--font-franklin);
+  font-size: 13px;
+  color: rgba(0,0,0,0.6);
+  line-height: 1.7;
+}
+
+/* Decorative illustration placeholders */
+.award-card__illus {
+  position: absolute;
+  bottom: 0; right: 0;
+  width: 140px; height: 120px;
+  border-radius: 0 0 20px 0;
+  opacity: 0.6;
+}
+
+.award-card__illus--flowers {
+  background: radial-gradient(circle at 80% 90%, #f472b6 0%, #ec4899 30%, #a855f7 60%, transparent 80%);
+}
+
+.award-card__illus--landscape {
+  background: linear-gradient(to top, #4ade80 0%, #86efac 40%, #bfdbfe 70%, transparent 100%);
+}
+
+/* Purely decorative 4th card */
+.award-card--illus-only {
+  background: linear-gradient(160deg, #a5b4fc 0%, #818cf8 30%, #6366f1 60%, #4f46e5 100%);
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.award-card__flower {
+  width: 120px; height: 160px;
+  background:
+    radial-gradient(ellipse 50px 40px at 60px 100px, #3b82f6 0%, transparent 70%),
+    radial-gradient(ellipse 30px 55px at 60px 60px,  #818cf8 0%, transparent 60%),
+    radial-gradient(ellipse 40px 30px at 30px 80px,  #6366f1 0%, transparent 70%),
+    radial-gradient(ellipse 40px 30px at 90px 80px,  #a78bfa 0%, transparent 70%),
+    radial-gradient(ellipse 20px 40px at 60px 30px,  #c7d2fe 0%, transparent 60%);
+  filter: blur(2px);
+  opacity: 0.9;
+}
+
+
+/* ============================================================
+   Quotes Grid
+   ============================================================ */
+.quotes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 900px) { .quotes-grid { grid-template-columns: 1fr; } }
+
+.quote-card {
+  background: #FFFFFF;
+  border-radius: 20px;
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.quote-card__text {
+  font-family: var(--font-inter-bold);
+  font-size: clamp(13px, 1.1vw, 15px);
+  font-weight: 700;
+  line-height: 1.6;
+  color: var(--black);
+  flex: 1;
+}
+
+.quote-card__author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.quote-card__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #d1fae5;
+  color: #059669;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.quote-card__name {
+  font-family: var(--font-inter-bold);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--black);
+}
+
+.quote-card__role {
+  font-family: var(--font-inter);
+  font-size: 12px;
+  color: rgba(0,0,0,0.4);
+  margin-top: 2px;
+}
+
+
+/* ============================================================
+   Reduced motion
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .hero__text { opacity: 1; transform: none; }
+  .reveal     { opacity: 1; transform: none; }
+}
+
+
+/* ============================================================
+   Mobile tweaks
+   ============================================================ */
+@media (max-width: 600px) {
+  .form__row { grid-template-columns: 1fr; }
+  .nav      { padding: 0 20px; }
+  .hero     { padding-left: 20px; padding-right: 20px; }
+  .section  { padding-left: 20px; padding-right: 20px; }
+  .footer   { padding: 32px 20px; }
+  .approach { padding-left: 20px; padding-right: 20px; }
+}

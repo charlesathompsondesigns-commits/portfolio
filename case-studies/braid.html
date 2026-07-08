@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Braid — Charlesa Thompson</title>
+  <meta name="description" content="An AI-powered haircare platform designed for people with textured hair. UX/UI case study by Charlesa Thompson." />
+  <meta name="theme-color" content="#dfd5ed" />
+  <link rel="stylesheet" href="../styles.css" />
+  <script defer src="../nav.js"></script>
+
+  <style>
+    /* Design-system iframe preview (Braid case study only) */
+    .cs-ds-preview {
+      grid-column: 1 / -1;
+      margin: clamp(40px, 6vh, 72px) 0 0;
+    }
+    .cs-ds-preview__frame {
+      position: relative;
+      width: 100%;
+      height: clamp(520px, 72vh, 860px);
+      border-radius: 16px;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.22);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+    }
+    .cs-ds-preview__frame iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+    .cs-ds-preview__actions {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+    .cs-ds-preview__link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-franklin-medium);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--brown);
+      border-bottom: 1px solid currentColor;
+      padding-bottom: 4px;
+      transition: opacity 0.2s var(--ease-in-out);
+    }
+    .cs-ds-preview__link:hover { opacity: 0.6; }
+    .cs-ds-preview__meta {
+      font-family: var(--font-source-italic);
+      font-style: italic;
+      font-size: 13px;
+      color: var(--cs-muted);
+    }
+
+    /* ---------- Waitlist promo (top of Braid case study) ---------- */
+    .cs-waitlist {
+      padding: clamp(48px, 7vw, 96px) 0 clamp(32px, 5vw, 56px);
+    }
+    .cs-waitlist__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: clamp(40px, 6vw, 72px);
+      align-items: center;
+    }
+    @media (min-width: 860px) {
+      .cs-waitlist__grid {
+        grid-template-columns: 1.05fr 0.95fr;
+      }
+    }
+    .cs-waitlist__eyebrow {
+      font-family: var(--font-franklin-medium);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(39, 15, 5, 0.55);
+      margin-bottom: 20px;
+    }
+    .cs-waitlist__title {
+      font-family: var(--font-instrument);
+      font-style: italic;
+      font-weight: 400;
+      font-size: clamp(36px, 5vw, 64px);
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      color: var(--brown);
+      margin-bottom: 20px;
+      max-width: 14ch;
+    }
+    .cs-waitlist__copy {
+      font-family: var(--font-source);
+      font-size: clamp(16px, 1.3vw, 19px);
+      line-height: 1.65;
+      color: rgba(39, 15, 5, 0.78);
+      max-width: 48ch;
+      margin-bottom: 32px;
+    }
+    .cs-waitlist__cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 28px;
+      background: var(--brown);
+      color: var(--cream);
+      font-family: var(--font-franklin-medium);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      border-radius: 999px;
+      transition: transform 0.25s var(--ease-out), background 0.25s var(--ease-in-out);
+    }
+    .cs-waitlist__cta:hover {
+      transform: translateY(-2px);
+      background: #1a0a03;
+    }
+    .cs-waitlist__cta-arrow {
+      transition: transform 0.25s var(--ease-out);
+    }
+    .cs-waitlist__cta:hover .cs-waitlist__cta-arrow {
+      transform: translateX(4px);
+    }
+
+    /* ---------- Phone mockup w/ live iframe ----------
+       Strategy: render iframe at an iPhone-equivalent viewport
+       (390 × 845) so the page paints its mobile layout, then
+       CSS-scale it down to fit inside the mockup screen.
+
+       --phone-w sets the outer device width; the inner screen
+       and the iframe scale are derived from it.
+       ---------------------------------------------------- */
+    .phone-mockup {
+      /* phone-w 240, pad 10 → screen 220 × 500.
+         vp-w 390 → scale 0.564 → vp-h 890 fills screen exactly. */
+      --phone-w: 240px;
+      --phone-pad: 10px;
+      --vp-w: 390px;
+      --vp-h: 890px;
+
+      position: relative;
+      width: var(--phone-w);
+      aspect-ratio: 9 / 19.5;
+      margin: 0 auto;
+      background: #0f0a07;
+      border-radius: 38px;
+      padding: var(--phone-pad);
+      box-shadow:
+        0 28px 64px rgba(0, 0, 0, 0.30),
+        0 6px 18px rgba(0, 0, 0, 0.16),
+        inset 0 0 0 2px rgba(255, 255, 255, 0.06);
+    }
+    .phone-mockup::before {
+      /* dynamic island / notch */
+      content: "";
+      position: absolute;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 76px;
+      height: 20px;
+      background: #000;
+      border-radius: 999px;
+      z-index: 4;
+      pointer-events: none;
+    }
+
+    /* ---------- iOS-style status bar ----------
+       Aligned vertically with the dynamic island (top: 14px,
+       height: 20px) so time/icons sit on the same baseline as
+       the notch, flanking it left & right. */
+    .phone-mockup__statusbar {
+      position: absolute;
+      top: 14px;
+      left: 0;
+      right: 0;
+      height: 20px;
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #fff;
+      font-family: "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      line-height: 1;
+      z-index: 3;
+      pointer-events: none;
+    }
+    .phone-mockup__time {
+      /* Optical adjustment: time reads slightly off-center next
+         to the notch without this tiny lift. */
+      transform: translateY(-0.5px);
+    }
+    .phone-mockup__icons {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .phone-mockup__icons svg {
+      display: block;
+      fill: currentColor;
+    }
+    .phone-mockup__battery {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0;
+      line-height: 1;
+    }
+    .phone-mockup__battery-shell {
+      position: relative;
+      width: 18px;
+      height: 9px;
+      border: 1px solid currentColor;
+      border-radius: 2.5px;
+      opacity: 0.95;
+      box-sizing: border-box;
+    }
+    .phone-mockup__battery-shell::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: -2.5px;
+      transform: translateY(-50%);
+      width: 1.5px;
+      height: 4px;
+      background: currentColor;
+      border-radius: 0 1px 1px 0;
+      opacity: 0.85;
+    }
+    .phone-mockup__battery-fill {
+      position: absolute;
+      top: 1px;
+      left: 1px;
+      bottom: 1px;
+      width: calc((100% - 2px) * 0.85);
+      background: currentColor;
+      border-radius: 1px;
+    }
+    .phone-mockup__screen {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: #0f0a07;
+      border-radius: 30px;
+      overflow: hidden;
+      isolation: isolate;
+    }
+    .phone-mockup__screen iframe {
+      position: absolute;
+      /* Push iframe down so the page H1 clears the dynamic island
+         (notch occupies y=14→34 within the screen). The screen's
+         dark background fills the top safe-area band behind the
+         status bar elements. */
+      top: 38px;
+      left: 0;
+      width: var(--vp-w);
+      height: var(--vp-h);
+      border: 0;
+      display: block;
+      transform-origin: top left;
+      /* scale so iframe (vp-w wide) fits the screen inner width
+         (phone-w − 2 × phone-pad) */
+      transform: scale(calc((var(--phone-w) - 2 * var(--phone-pad)) / var(--vp-w)));
+    }
+
+    @media (max-width: 540px) {
+      .phone-mockup { --phone-w: 220px; }
+    }
+
+    /* ---------- Showreel (video right after the waitlist) ---------- */
+    .cs-showreel {
+      padding-top: clamp(24px, 4vw, 56px);
+      padding-bottom: clamp(48px, 6vw, 96px);
+    }
+    .cs-showreel__media {
+      position: relative;
+      width: 100%;
+      border-radius: 20px;
+      overflow: hidden;
+      background: #000;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.22);
+    }
+    .cs-showreel__media video {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+    .cs-showreel__caption {
+      margin-top: 14px;
+      font-family: var(--font-source-italic);
+      font-style: italic;
+      font-size: 14px;
+      color: var(--cs-muted);
+      text-align: center;
+    }
+
+    /* ---------- Section 01 side-by-side (copy + team photo) ---------- */
+    .cs-section--gig .cs-section__body {
+      grid-template-columns: 1fr;
+    }
+    .cs-section__split {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: clamp(28px, 4vw, 56px);
+      align-items: center;
+    }
+    @media (min-width: 820px) {
+      .cs-section__split {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    .cs-section__split .cs-section__copy {
+      grid-column: auto;
+      max-width: 56ch;
+    }
+    .cs-section__split .cs-figure {
+      grid-column: auto;
+      margin: 0;
+    }
+    .cs-section__split .cs-figure__img {
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    /* ---------- Naked video figure (used when the video already
+       has phone chrome baked in — e.g. a screen recording with
+       status bar / dynamic island / home indicator). No outer
+       mockup; the video shows as-is so we don't end up with a
+       phone-on-phone effect. ---------- */
+    .cs-video-figure {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: center;
+      margin: clamp(24px, 3vh, 40px) 0 clamp(40px, 6vh, 72px);
+    }
+
+    /* Sub-section heading used to label media (e.g. "Course Landing") */
+    .cs-subhead {
+      grid-column: 1 / -1;
+      margin: clamp(40px, 6vh, 72px) 0 0;
+      font-family: var(--font-instrument);
+      font-style: italic;
+      font-weight: 400;
+      font-size: clamp(24px, 2.4vw, 34px);
+      line-height: 1.15;
+      color: var(--cs-ink, var(--brown));
+      text-align: center;
+    }
+    .cs-subhead + .cs-video-figure,
+    .cs-subhead + .cs-figure {
+      margin-top: clamp(16px, 2vh, 24px);
+    }
+    /* Rounded clipping frame. A <video>'s own border-radius isn't
+       reliably clipped during playback (WebKit/Chrome compositing
+       bug leaves square corners), so we wrap it in a container that
+       is promoted to its own layer (translateZ) with overflow:hidden
+       — that forces the corners to round on every browser. */
+    /* The recording is a phone centred on a BLACK canvas, so we crop
+       to the phone: the frame is sized to the video's aspect ratio and
+       the video is zoomed slightly (scale) to push the thin black
+       margins out of view, then the corners are rounded to match the
+       phone's own radius. translateZ promotes the frame to its own
+       layer so overflow actually clips the <video>. */
+    .cs-video-figure__frame {
+      position: relative;
+      width: clamp(240px, 28vw, 320px);
+      aspect-ratio: 700 / 1442;
+      border-radius: 56px;
+      overflow: hidden;
+      transform: translateZ(0);
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.22);
+    }
+    .cs-video-figure__video {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: transparent;
+      object-fit: cover;
+      transform: scale(1.035);
+    }
+  </style>
+</head>
+<body class="cs-body-page cs-body-page--braid">
+
+  <!-- ============ Fixed Nav ============ -->
+  <nav class="nav" aria-label="Primary">
+    <a href="../index.html" class="nav__logo">CHAR</a>
+    <ul class="nav__links">
+      <li><a href="../index.html#work">Work</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ============ HERO ============ -->
+  <header class="cs-hero">
+    <div class="cs-container">
+      <h1 class="cs-hero__title">Braid</h1>
+      <p class="cs-hero__tagline">Knowledge That Shapes Confidence.</p>
+      <div class="cs-hero__pills cs-hero__pills--justified">
+        <span class="cs-pill">Design</span>
+        <span class="cs-pill">Experience</span>
+        <span class="cs-hero__inline">For</span>
+        <span class="cs-pill cs-pill--right">Textured Hair</span>
+      </div>
+      <p class="cs-hero__date">September 2024 - Now</p>
+      <figure class="cs-hero__cover">
+        <img src="../Braid/Slide%20show.png" alt="Braid — interface, identity, and community imagery" />
+      </figure>
+    </div>
+  </header>
+
+  <!-- ============ WAITLIST PROMO ============ -->
+  <section class="cs-section cs-waitlist" aria-label="Join the Braid waitlist">
+    <div class="cs-container">
+      <div class="cs-waitlist__grid">
+        <div>
+          <p class="cs-waitlist__eyebrow">Now Live · Waitlist Open</p>
+          <h2 class="cs-waitlist__title">Be first to braid.</h2>
+          <p class="cs-waitlist__copy">Braid is launching to the public soon. Join the waitlist to get early access, product updates, and an invite to try the app before anyone else.</p>
+          <a class="cs-waitlist__cta" href="https://www.braidtech.org/waitlist" target="_blank" rel="noopener">
+            Sign Up for the Waitlist
+            <span class="cs-waitlist__cta-arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+        <div class="phone-mockup" aria-hidden="true">
+          <div class="phone-mockup__screen">
+            <iframe src="https://www.braidtech.org/waitlist" title="Braid — Waitlist signup" loading="lazy"></iframe>
+          </div>
+          <div class="phone-mockup__statusbar">
+            <span class="phone-mockup__time">9:41</span>
+            <span class="phone-mockup__icons">
+              <!-- signal -->
+              <svg width="13" height="9" viewBox="0 0 17 11" aria-hidden="true">
+                <rect x="0"  y="7"  width="3" height="4"  rx="0.6"/>
+                <rect x="4.5" y="5"  width="3" height="6"  rx="0.6"/>
+                <rect x="9"  y="3"  width="3" height="8"  rx="0.6"/>
+                <rect x="13.5" y="0" width="3" height="11" rx="0.6"/>
+              </svg>
+              <!-- wifi -->
+              <svg width="12" height="9" viewBox="0 0 15 11" aria-hidden="true">
+                <path d="M7.5 2.4c2.6 0 5.1 1 6.9 2.7l-1.4 1.4a7.8 7.8 0 0 0-11 0L.6 5.1A9.8 9.8 0 0 1 7.5 2.4Zm0 3.4c1.7 0 3.4.7 4.6 1.9l-1.4 1.4a4.5 4.5 0 0 0-6.4 0L2.9 7.7a6.6 6.6 0 0 1 4.6-1.9Zm0 3.4c.8 0 1.6.3 2.2.9L7.5 11 5.3 10.1c.6-.6 1.4-.9 2.2-.9Z"/>
+              </svg>
+              <!-- battery -->
+              <span class="phone-mockup__battery">
+                <span>85</span>
+                <span class="phone-mockup__battery-shell">
+                  <span class="phone-mockup__battery-fill"></span>
+                </span>
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SHOWREEL ============ -->
+  <section class="cs-section cs-showreel" aria-label="Braid showreel">
+    <div class="cs-container">
+      <div class="cs-showreel__media">
+        <video
+          src="../Braid/showreel.mp4"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="metadata"
+          aria-label="Braid app showreel — mobile gallery">
+        </video>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 01 · THE GIG ============ -->
+  <section class="cs-section cs-section--gig">
+    <div class="cs-container">
+      <header class="cs-section__head">
+        <span class="cs-section__num">01 — The Gig</span>
+        <h2 class="cs-section__title">Where the idea began.</h2>
+      </header>
+      <div class="cs-section__body">
+        <div class="cs-section__split">
+          <div class="cs-section__copy">
+            <p class="cs-lead">Braid was inspired by the Braid team's shared experience navigating textured hair care and the frustration of having to piece together advice from social media, blogs, and inconsistent product recommendations. There was no single trusted platform that provided personalized guidance for textured hair.</p>
+          </div>
+          <figure class="cs-figure">
+            <div class="cs-figure__img">
+              <img src="../Featured%20Media/Photos/Image-1.jpg" alt="The Braid team at a launch event" loading="lazy" />
+            </div>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 02 · THE SOLUTION ============ -->
+  <section class="cs-section">
+    <div class="cs-container">
+      <header class="cs-section__head">
+        <span class="cs-section__num">02 — Solution</span>
+        <h2 class="cs-section__title">A haircare platform for textured hair.</h2>
+      </header>
+      <div class="cs-section__body">
+        <div class="cs-section__copy">
+          <p class="cs-lead">To solve this, the Braid team created Braid, an AI-powered haircare platform designed for people with textured hair. The app helps users identify their hair type, build personalized routines, discover products, and receive step-by-step recommendations tailored to their specific hair goals.</p>
+        </div>
+
+        <h3 class="cs-subhead">Course Landing</h3>
+        <div class="cs-video-figure">
+          <div class="cs-video-figure__frame">
+            <video
+              class="cs-video-figure__video"
+              src="../Braid/courses.mp4"
+              autoplay
+              muted
+              loop
+              playsinline
+              preload="metadata"
+              aria-label="Braid — Courses landing screen walkthrough">
+            </video>
+          </div>
+        </div>
+
+        <figure class="cs-figure">
+          <div class="cs-figure__img">
+            <img src="../Braid/screens-onboarding.jpg" alt="Braid — onboarding, trends, garden glamour, courses, lesson detail" />
+          </div>
+        </figure>
+        <figure class="cs-figure">
+          <div class="cs-figure__img">
+            <img src="../Braid/screens-discovery.jpg" alt="Braid — texture quiz, profile, AI guide, hair simulator" />
+          </div>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 03 · MY ROLE ============ -->
+  <section class="cs-section">
+    <div class="cs-container">
+      <header class="cs-section__head">
+        <span class="cs-section__num">03 — My Role</span>
+        <h2 class="cs-section__title">From concept to execution.</h2>
+      </header>
+      <div class="cs-section__body">
+        <div class="cs-section__copy">
+          <p class="cs-lead">The Braid team led the project from concept to execution by conducting user research, defining the product strategy, designing the UX/UI, and developing the business plan and MVP roadmap. Braid demonstrates the team's ability to transform a real-world problem into a thoughtful, scalable product with a clear market opportunity.</p>
+        </div>
+        <figure class="cs-figure">
+          <div class="cs-figure__img">
+            <img src="../Braid/brand-mark.jpg" alt="Braid — hand-lettered B logo with product lockup" />
+          </div>
+        </figure>
+        <figure class="cs-figure">
+          <div class="cs-figure__img">
+            <img src="../Braid/screens-hero.jpg" alt="Braid — angled-phone cinematic composition" />
+          </div>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 04 · DESIGN SYSTEM ============ -->
+  <section class="cs-section">
+    <div class="cs-container">
+      <header class="cs-section__head">
+        <span class="cs-section__num">04 — Design System</span>
+        <h2 class="cs-section__title">A single source of truth.</h2>
+      </header>
+      <div class="cs-section__body">
+        <div class="cs-section__copy">
+          <p class="cs-lead">Braid runs on a codified design system — typography, color, gradients, spacing, elevation, glass, and component patterns all live as tokens, so the app stays consistent across every screen and breakpoint.</p>
+        </div>
+        <div class="cs-ds-preview">
+          <div class="cs-ds-preview__frame">
+            <iframe src="../Braid/design-system/index.html" title="Braid — Design System" loading="lazy"></iframe>
+          </div>
+          <div class="cs-ds-preview__actions">
+            <a href="../Braid/design-system/index.html" target="_blank" rel="noopener" class="cs-ds-preview__link">
+              Open Full Design System →
+            </a>
+            <span class="cs-ds-preview__meta">Tokens, typography, color, components &amp; patterns.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ NEXT PROJECT CTA ============ -->
+  <section class="cs-next">
+    <div class="cs-container">
+      <p class="cs-next__eyebrow">Next Project</p>
+      <a href="antix.html" class="cs-next__title">
+        Antix <span class="cs-next__arrow">→</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="cs-footer">
+    <div class="cs-container">
+      <div class="cs-footer__row">
+        <a href="../index.html#work" class="cs-footer__back">← Back to all work</a>
+        <a href="mailto:charlesathompsondesigns@gmail.com" class="cs-footer__contact">Get in touch</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

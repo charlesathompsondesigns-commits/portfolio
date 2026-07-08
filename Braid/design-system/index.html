@@ -1,0 +1,2529 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Braid — Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Inter:wght@400;500;600&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="tokens.css" />
+<style>
+/* =========================================================
+   BASE
+   ========================================================= */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: var(--space-6); }
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-normal);
+  color: var(--color-text);
+  background: var(--color-bg);
+  background-image: var(--grad-page-fade);
+  background-attachment: fixed;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.page {
+  max-width: var(--container-wide);
+  margin: 0 auto;
+  padding: var(--space-10) var(--space-8) var(--space-12);
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+.brand {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: var(--space-10);
+}
+.brand__mark {
+  display: block;
+  height: 96px;
+  width: auto;
+  filter: drop-shadow(0 4px 16px rgba(200, 188, 246, 0.25));
+}
+.brand__meta {
+  font-family: var(--font-utility);
+  font-size: var(--fs-meta);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caps);
+  color: var(--text-60);
+  text-align: right;
+}
+.brand__meta strong { display: block; color: var(--text-90); font-weight: 500; }
+
+/* =========================================================
+   SECTIONS
+   ========================================================= */
+/* =========================================================
+   DESIGNER NOTES (intro + per-section rationale)
+   ========================================================= */
+.intro {
+  margin: 0 0 var(--space-10);
+  padding: var(--space-7) var(--space-8);
+  border-radius: var(--radius-lg);
+  background-color: var(--glass-base);
+  background-image: var(--glass-tint);
+  border: var(--glass-border);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow-soft);
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: var(--space-8);
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+.intro::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 50%;
+  background: linear-gradient(170deg, rgba(255,255,255,0.10) 0%, transparent 100%);
+  pointer-events: none;
+}
+.intro__author { position: relative; }
+.intro__eyebrow {
+  font-family: var(--font-utility);
+  font-size: var(--fs-meta);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caps);
+  color: var(--accent-lavender);
+  margin-bottom: var(--space-2);
+}
+.intro__name {
+  font-family: var(--font-display);
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--text-pure-white);
+  letter-spacing: var(--tracking-tight);
+  line-height: 1.1;
+  margin-bottom: var(--space-1);
+}
+.intro__role {
+  font-family: var(--font-body);
+  font-size: var(--fs-caption);
+  color: var(--text-70);
+}
+.intro__body {
+  position: relative;
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  color: var(--text-90);
+  line-height: var(--lh-relaxed);
+}
+.intro__body strong {
+  color: var(--text-pure-white);
+  font-weight: 500;
+}
+
+.rationale {
+  font-family: var(--font-body);
+  font-size: var(--fs-caption);
+  color: var(--text-70);
+  line-height: var(--lh-relaxed);
+  max-width: 820px;
+  margin: 0 0 var(--space-6);
+  padding: var(--space-3) 0 var(--space-3) var(--space-4);
+  border-left: 2px solid var(--accent-lavender);
+  font-style: italic;
+}
+.rationale__label {
+  font-family: var(--font-utility);
+  font-size: var(--fs-meta);
+  font-weight: 600;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--accent-lavender);
+  font-style: normal;
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* =========================================================
+   STICKY NAV — section directory
+   ========================================================= */
+.nav {
+  position: sticky;
+  top: var(--space-3);
+  z-index: 100;
+  margin: 0 0 var(--space-9);
+}
+.nav__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 6px 8px 6px var(--space-3);
+  border-radius: var(--radius-pill);
+  background-color: rgba(24, 23, 44, 0.78);
+  background-image: var(--glass-tint);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.20),
+    0 10px 28px rgba(0, 0, 0, 0.40);
+}
+.nav__label {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caps);
+  color: var(--accent-lavender);
+  padding: 0 var(--space-2) 0 var(--space-1);
+  border-right: 1px solid rgba(255, 255, 255, 0.10);
+  flex-shrink: 0;
+  line-height: 1;
+}
+.nav__links {
+  display: flex;
+  gap: 2px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  flex: 1;
+  min-width: 0;
+}
+.nav__links::-webkit-scrollbar { display: none; }
+.nav__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-size: var(--fs-caption);
+  font-weight: 500;
+  color: var(--text-70);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background var(--dur-base) var(--ease-out),
+              color var(--dur-base) var(--ease-out);
+}
+.nav__link:hover {
+  background: rgba(200, 188, 246, 0.10);
+  color: var(--text-pure-white);
+}
+.nav__num {
+  font-family: var(--font-utility);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--accent-lavender);
+  opacity: 0.60;
+  letter-spacing: 0.02em;
+}
+.nav__link.is-active {
+  background: rgba(200, 188, 246, 0.18);
+  color: var(--text-pure-white);
+}
+.nav__link.is-active .nav__num { opacity: 1; }
+
+@media (max-width: 700px) {
+  .nav__label { display: none; }
+}
+
+.section { margin-bottom: var(--space-11); }
+.section__head {
+  display: flex; align-items: baseline; gap: var(--space-4);
+  margin-bottom: var(--space-6);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.section__num {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--accent-lavender);
+  opacity: 0.7;
+  letter-spacing: var(--tracking-tight);
+}
+.section__title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-pure-white);
+  margin: 0;
+  letter-spacing: var(--tracking-tight);
+}
+.section__hint {
+  margin-left: auto;
+  font-family: var(--font-utility);
+  font-size: var(--fs-meta);
+  color: var(--text-60);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caps);
+}
+.subhead {
+  font-family: var(--font-utility);
+  font-size: var(--fs-meta);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caps);
+  color: var(--accent-lavender);
+  margin: 0 0 var(--space-4);
+}
+
+/* =========================================================
+   01. TYPOGRAPHY
+   ========================================================= */
+.font-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+  margin-bottom: var(--space-8);
+}
+.font-card {
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+  background-color: var(--glass-base);
+  background-image: var(--glass-tint);
+  border: var(--glass-border);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow-soft);
+  position: relative;
+}
+.font-card__top {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  margin-bottom: var(--space-2);
+}
+.font-card__name {
+  font-family: var(--font-utility);
+  font-size: var(--fs-body);
+  font-weight: 600;
+  color: var(--text-pure-white);
+}
+.font-card__role {
+  font-family: var(--font-utility);
+  font-size: var(--fs-meta);
+  color: var(--text-60);
+  display: block;
+  margin-top: 2px;
+  letter-spacing: var(--tracking-wide);
+}
+.font-card__sample {
+  font-size: 30px;
+  line-height: 1.2;
+  margin: var(--space-3) 0 var(--space-3);
+  color: var(--text-pure-white);
+}
+.font-card__sample--display  { font-family: var(--font-display); font-weight: 700; }
+.font-card__sample--body     { font-family: var(--font-body); font-weight: 400; }
+.font-card__sample--utility  { font-family: var(--font-utility); font-weight: 500; }
+.font-card__desc {
+  font-family: var(--font-body);
+  font-size: var(--fs-caption);
+  color: var(--text-70);
+  line-height: var(--lh-normal);
+}
+.pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 10px;
+  background: var(--bg-dark-purple);
+  border: 1px solid rgba(200,188,246,0.20);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-utility);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--accent-lavender);
+  letter-spacing: var(--tracking-wide);
+}
+
+/* Type scale table — glossy glass */
+.scale {
+  border-radius: var(--radius-lg);
+  background-color: var(--glass-base);
+  background-image: var(--glass-tint);
+  border: var(--glass-border);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow-soft);
+  overflow: hidden;
+}
+.scale__row {
+  display: grid;
+  grid-template-columns: 220px 140px 1fr;
+  align-items: center;
+  gap: var(--space-5);
+  padding: var(--space-5) var(--space-6);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.scale__row:last-child { border-bottom: 0; }
+.scale__row--head {
+  font-family: var(--font-utility);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caps);
+  color: var(--text-60);
+  background: rgba(255,255,255,0.04);
+}
+.scale__style { font-family: var(--font-utility); font-size: var(--fs-caption); }
+.scale__style strong { display: block; color: var(--text-pure-white); font-weight: 600; }
+.scale__style span  { color: var(--text-60); font-size: var(--fs-meta); }
+.scale__size { font-family: var(--font-utility); font-size: var(--fs-caption); color: var(--text-70); }
+.scale__size strong { color: var(--text-pure-white); font-weight: 600; }
+.scale__example { color: var(--text-pure-white); }
+
+/* =========================================================
+   02. COLOR
+   ========================================================= */
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-3);
+  margin-bottom: var(--space-8);
+}
+.swatch {
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: var(--bg-jet-black);
+}
+.swatch__chip { height: 88px; }
+.swatch__body { padding: var(--space-3) var(--space-4); }
+.swatch__name {
+  font-family: var(--font-body);
+  font-size: var(--fs-caption);
+  font-weight: 500;
+  color: var(--text-pure-white);
+}
+.swatch__hex {
+  font-family: var(--font-utility);
+  font-size: var(--fs-meta);
+  color: var(--accent-lavender);
+  letter-spacing: var(--tracking-wide);
+}
+.swatch__use {
+  font-family: var(--font-utility);
+  font-size: 11px;
+  color: var(--text-60);
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+/* =========================================================
+   03. GRADIENTS
+   ========================================================= */
+.grad-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4);
+}
+.grad-card {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.grad-card__chip { height: 130px; }
+.grad-card__body {
+  padding: var(--space-4) var(--space-5);
+  background-color: var(--glass-base);
+  background-image: var(--glass-tint);
+  border-top: 1px solid rgba(255,255,255,0.05);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+}
+.grad-card__name {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  font-weight: 500;
+  color: var(--text-pure-white);
+  margin-bottom: 2px;
+}
+.grad-card__code {
+  font-family: var(--font-utility);
+  font-size: 11px;
+  color: var(--text-60);
+  letter-spacing: var(--tracking-wide);
+  line-height: 1.5;
+}
+
+/* =========================================================
+   04. SPACING & RADIUS
+   ========================================================= */
+.two-col { display: grid; grid-template-columns: 1.2fr 1fr; gap: var(--space-6); }
+.spacing-grid { display: flex; flex-direction: column; gap: var(--space-3); }
+.spacing-row {
+  display: grid;
+  grid-template-columns: 80px 80px 1fr;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-sm);
+  background-color: var(--glass-base);
+  background-image: var(--glass-tint);
+  border: var(--glass-border);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+}
+.spacing-row__label { font-family: var(--font-utility); font-size: var(--fs-caption); color: var(--text-pure-white); font-weight: 500; }
+.spacing-row__val   { font-family: var(--font-utility); font-size: var(--fs-meta); color: var(--text-60); }
+.spacing-row__bar   { height: 8px; background: var(--grad-purple-pop); border-radius: var(--radius-pill); }
+
+.radius-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); }
+.radius-chip {
+  aspect-ratio: 1;
+  background-color: var(--glass-base);
+  background-image: var(--glass-tint);
+  border: var(--glass-border);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow-soft);
+  display: flex; align-items: center; justify-content: center; flex-direction: column;
+  gap: 6px;
+  position: relative;
+}
+.radius-chip__name { font-family: var(--font-display); font-size: 22px; color: var(--text-pure-white); font-weight: 700; letter-spacing: var(--tracking-tight); }
+.radius-chip__val  { font-family: var(--font-utility); font-size: var(--fs-meta); color: var(--accent-lavender); letter-spacing: var(--tracking-wide); }
+.radius-chip__use  { font-family: var(--font-utility); font-size: 11px; color: var(--text-60); text-align: center; padding: 0 var(--space-3); }
+
+/* =========================================================
+   05. ELEVATION
+   ========================================================= */
+.shadow-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-5); }
+.shadow-card {
+  height: 120px;
+  background: var(--bg-medium-purple);
+  border-radius: var(--radius-sm);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 2px;
+}
+.shadow-card[data-elev="xs"] { box-shadow: var(--shadow-xs); }
+.shadow-card[data-elev="sm"] { box-shadow: var(--shadow-sm); }
+.shadow-card[data-elev="md"] { box-shadow: var(--shadow-md); }
+.shadow-card[data-elev="lg"] { box-shadow: var(--shadow-lg); }
+.shadow-card[data-elev="xl"] { box-shadow: var(--shadow-xl); }
+.shadow-card[data-elev="glow-v"] { box-shadow: var(--shadow-glow-violet); }
+.shadow-card[data-elev="glow-w"] { box-shadow: var(--shadow-glow-warm);   }
+.shadow-card__name { font-family: var(--font-utility); font-size: var(--fs-caption); color: var(--text-pure-white); font-weight: 500; }
+.shadow-card__val  { font-family: var(--font-utility); font-size: var(--fs-meta); color: var(--text-60); }
+
+/* =========================================================
+   06. GLASS SURFACES — GLOSSY
+   ========================================================= */
+.glass-stage {
+  position: relative;
+  padding: var(--space-8);
+  border-radius: var(--radius-lg);
+  background: var(--grad-deep-dusk);
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.04);
+}
+/* Soft orchid glow behind glass to demo translucency */
+.glass-stage::before {
+  content: "";
+  position: absolute;
+  width: 480px; height: 480px;
+  top: -120px; left: 30%;
+  background: radial-gradient(circle, rgba(200,188,246,0.55) 0%, rgba(90,25,155,0.0) 70%);
+  filter: blur(20px);
+  pointer-events: none;
+}
+.glass-stage::after {
+  content: "";
+  position: absolute;
+  width: 320px; height: 320px;
+  bottom: -120px; right: 10%;
+  background: radial-gradient(circle, rgba(255,144,51,0.20) 0%, rgba(255,144,51,0.0) 70%);
+  filter: blur(20px);
+  pointer-events: none;
+}
+.glass-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+}
+.glass-tile {
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+  min-height: 200px;
+  display: flex; flex-direction: column; justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+.glass-tile--default {
+  background-color: var(--glass-base);
+  background-image: var(--glass-tint);
+  border: var(--glass-border);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow);
+}
+.glass-tile--lifted {
+  background-color: var(--glass-base);
+  background-image: var(--glass-tint-lifted);
+  border: var(--glass-border-strong);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow);
+}
+.glass-tile--violet {
+  background-color: rgba(37, 32, 65, 0.55);
+  background-image: var(--glass-tint-violet);
+  border: 1px solid rgba(200,188,246,0.30);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow);
+}
+/* Glossy specular highlight — diagonal sheen across the top */
+.glass-tile::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 50%;
+  background: linear-gradient(170deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.04) 45%, transparent 100%);
+  pointer-events: none;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+.glass-tile__label {
+  position: relative;
+  font-family: var(--font-utility);
+  font-size: var(--fs-meta);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caps);
+  color: var(--text-60);
+}
+.glass-tile__title {
+  position: relative;
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-pure-white);
+  margin: 8px 0 4px;
+  letter-spacing: var(--tracking-tight);
+}
+.glass-tile__desc {
+  position: relative;
+  font-family: var(--font-body);
+  font-size: var(--fs-caption);
+  color: var(--text-70);
+  line-height: var(--lh-normal);
+}
+.glass-tile__foot {
+  position: relative;
+  font-family: var(--font-utility);
+  font-size: var(--fs-meta);
+  color: var(--accent-lavender);
+  letter-spacing: var(--tracking-wide);
+  margin-top: var(--space-4);
+}
+
+/* =========================================================
+   07. COMPONENTS
+   ========================================================= */
+.comp-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-6); }
+.comp-card {
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+  background-color: var(--glass-base);
+  background-image: var(--glass-tint);
+  border: var(--glass-border);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow-soft);
+}
+.comp-card__title {
+  font-family: var(--font-utility);
+  font-size: var(--fs-meta);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caps);
+  color: var(--text-60);
+  margin: 0 0 var(--space-4);
+}
+.comp-row { display: flex; gap: var(--space-3); flex-wrap: wrap; align-items: center; }
+
+/* Buttons */
+.btn {
+  font-family: var(--font-body);
+  font-size: var(--fs-button);
+  font-weight: 500;
+  padding: 12px 22px;
+  border-radius: var(--radius-pill);
+  border: 1px solid transparent;
+  cursor: pointer;
+  display: inline-flex; align-items: center; gap: 10px;
+  transition: transform var(--dur-fast) var(--ease-out),
+              box-shadow var(--dur-base) var(--ease-out),
+              background var(--dur-base) var(--ease-out),
+              border-color var(--dur-base) var(--ease-out),
+              color var(--dur-base) var(--ease-out);
+}
+.btn svg { stroke-linecap: round; stroke-linejoin: round; transition: transform var(--dur-fast) var(--ease-out); }
+.btn:hover:not(:disabled) { transform: translateY(-1px); }
+.btn:hover:not(:disabled) svg { transform: translateX(2px); }
+.btn:disabled, .btn[disabled] { opacity: 0.40; cursor: not-allowed; }
+.btn:disabled:hover { transform: none; box-shadow: var(--shadow-sm); }
+
+.btn--primary {
+  background-color: var(--glass-base-button);
+  background-image: var(--glass-tint-button);
+  color: var(--text-pure-white);
+  border: 1px solid rgba(200, 188, 246, 0.30);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.18),
+    var(--shadow-glow-violet),
+    var(--shadow-md);
+}
+.btn--primary:hover:not(:disabled) {
+  border-color: rgba(200, 188, 246, 0.50);
+  background-color: rgba(90, 25, 155, 0.65);
+}
+.btn--secondary {
+  background: var(--bg-dark-purple);
+  color: var(--accent-lavender);
+  border-color: rgba(200,188,246,0.22);
+}
+.btn--secondary:hover { border-color: rgba(200,188,246,0.45); }
+.btn--glass {
+  background-color: var(--glass-base);
+  background-image: var(--glass-tint-lifted);
+  color: var(--text-pure-white);
+  border: var(--glass-border-strong);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow-soft);
+}
+.btn--warm {
+  background: var(--grad-warm-flare);
+  color: #2A1500;
+  box-shadow: var(--shadow-glow-warm), var(--shadow-sm);
+  font-weight: 600;
+}
+.btn--ghost {
+  background: transparent;
+  color: var(--text-90);
+  border-color: rgba(255,255,255,0.14);
+}
+.btn--ghost:hover {
+  background: rgba(200,188,246,0.06);
+  border-color: rgba(200,188,246,0.40);
+  color: var(--accent-lavender);
+}
+
+/* Sizes */
+.btn--sm { padding: 8px 16px; font-size: var(--fs-caption); gap: 8px; }
+.btn--lg { padding: 16px 28px; font-size: 20px; gap: 12px; }
+
+/* Icon-only buttons */
+.btn--icon {
+  padding: 0;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  justify-content: center;
+  background: var(--bg-dark-purple);
+  color: var(--text-pure-white);
+  border: 1px solid rgba(200,188,246,0.22);
+}
+.btn--icon:hover svg { transform: none; }
+.btn--icon.btn--sm { width: 36px; height: 36px; }
+.btn--icon.btn--lg { width: 52px; height: 52px; }
+.btn--icon-primary {
+  background-color: var(--glass-base-button);
+  background-image: var(--glass-tint-button);
+  border: 1px solid rgba(200, 188, 246, 0.30);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  color: var(--text-pure-white);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.20),
+    var(--shadow-glow-violet),
+    var(--shadow-sm);
+}
+
+/* Button-group label inside comp-card */
+.btn-group { display: flex; flex-direction: column; gap: var(--space-3); }
+.btn-group + .btn-group { margin-top: var(--space-4); }
+.btn-group__label {
+  font-family: var(--font-utility);
+  font-size: var(--fs-meta);
+  font-weight: 600;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--text-60);
+  margin: 0;
+}
+
+/* Badges */
+.badge {
+  font-family: var(--font-utility);
+  font-size: var(--fs-meta);
+  font-weight: 500;
+  letter-spacing: var(--tracking-wide);
+  padding: 5px 11px;
+  border-radius: var(--radius-pill);
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.badge--lilac    { background: var(--bg-dark-purple); color: var(--accent-lavender); border: 1px solid rgba(200,188,246,0.22); }
+.badge--violet   { background: var(--accent-deep-violet); color: var(--text-pure-white); }
+.badge--warm     { background: rgba(255,144,51,0.15); color: var(--warm-amber); border: 1px solid rgba(255,144,51,0.25); }
+.badge--gold     { background: rgba(255,191,0,0.14);  color: var(--warm-gold);  border: 1px solid rgba(255,191,0,0.28); }
+.badge--ghost    { background: transparent; color: var(--text-70); border: 1px solid rgba(255,255,255,0.10); }
+
+/* Inputs */
+.input {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--bg-dark-charcoal);
+  color: var(--text-pure-white);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--radius-sm);
+  outline: none;
+  transition: border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
+}
+.input:focus {
+  border-color: var(--accent-lavender);
+  box-shadow: 0 0 0 3px rgba(200,188,246,0.18);
+}
+.input::placeholder { color: var(--text-60); }
+
+/* Tabs */
+.tabs {
+  display: inline-flex;
+  padding: 4px;
+  background: var(--bg-dark-charcoal);
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(255,255,255,0.05);
+  gap: 2px;
+}
+.tabs__item {
+  font-family: var(--font-body);
+  font-size: var(--fs-caption);
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  color: var(--text-70);
+  cursor: pointer;
+  border: none; background: transparent;
+  font-weight: 500;
+}
+.tabs__item--active {
+  background: var(--accent-lavender);
+  color: #1A1432;
+}
+
+/* Toggle */
+.toggle {
+  width: 44px; height: 24px;
+  background: var(--bg-dark-charcoal);
+  border-radius: var(--radius-pill);
+  position: relative;
+  border: 1px solid rgba(255,255,255,0.05);
+  cursor: pointer;
+}
+.toggle::after {
+  content: "";
+  position: absolute; top: 3px; left: 3px;
+  width: 16px; height: 16px; border-radius: 50%;
+  background: var(--accent-lavender);
+  transition: transform var(--dur-base) var(--ease-out);
+}
+.toggle--on { background: var(--accent-deep-violet); border-color: var(--accent-lavender); }
+.toggle--on::after { transform: translateX(20px); }
+
+/* Progress */
+.progress {
+  width: 100%; height: 8px;
+  background: rgba(255,255,255,0.06);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+.progress__bar {
+  height: 100%;
+  background: var(--grad-warm-flare);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-glow-warm);
+}
+
+/* =========================================================
+   08. PATTERNS — sample compositions
+   ========================================================= */
+.patterns {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: var(--space-6);
+}
+.product-card {
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  background-color: var(--glass-base);
+  background-image: var(--glass-tint);
+  border: var(--glass-border);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow);
+  position: relative;
+  overflow: hidden;
+}
+.product-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 40%;
+  background: linear-gradient(170deg, rgba(255,255,255,0.14) 0%, transparent 100%);
+  pointer-events: none;
+}
+.product-card > * { position: relative; }
+.product-card__media {
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-sm);
+  background: var(--grad-purple-pop);
+  margin-bottom: var(--space-4);
+  position: relative;
+  overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.product-card__media::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 25% 15%, rgba(255,255,255,0.30), transparent 55%);
+}
+.product-card__icon {
+  position: relative; z-index: 1;
+  width: 44%; height: auto;
+  opacity: 0.50;
+  color: var(--text-pure-white);
+}
+.product-card__fav {
+  position: absolute; z-index: 2;
+  top: var(--space-3); right: var(--space-3);
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background-color: rgba(24,23,44,0.55);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid rgba(255,255,255,0.20);
+  color: var(--text-pure-white);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: background var(--dur-base) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+}
+.product-card__fav:hover { background: rgba(200,188,246,0.18); transform: scale(1.06); }
+.product-card__tag {
+  position: absolute; z-index: 2;
+  bottom: var(--space-3); left: var(--space-3);
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid rgba(255,191,0,0.32);
+  color: var(--warm-gold);
+  font-family: var(--font-utility);
+  font-size: var(--fs-meta);
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  display: inline-flex; align-items: center; gap: 4px;
+}
+.product-card__head {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+.product-card__name {
+  font-family: var(--font-body);
+  font-size: var(--fs-product);
+  color: var(--text-pure-white);
+  font-weight: 500;
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+.product-card__meta {
+  font-family: var(--font-utility);
+  font-size: var(--fs-micro);
+  color: var(--text-60);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caps);
+}
+.product-card__price {
+  font-family: var(--font-body);
+  font-size: var(--fs-price);
+  color: var(--text-pure-white);
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+}
+.product-card__price small {
+  font-size: 0.50em;
+  color: var(--text-60);
+  font-weight: 400;
+  margin-left: 2px;
+}
+.product-card__foot {
+  display: flex; align-items: center; gap: var(--space-2);
+  padding-top: var(--space-3);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  flex-wrap: wrap;
+}
+.product-card__foot .btn { margin-left: auto; }
+
+.course-card {
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+  background-color: rgba(37, 32, 65, 0.55);
+  background-image: var(--glass-tint-violet);
+  border: 1px solid rgba(200,188,246,0.30);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow);
+  display: flex; flex-direction: column; gap: var(--space-4);
+  position: relative;
+  overflow: hidden;
+}
+.course-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 50%;
+  background: linear-gradient(170deg, rgba(255,255,255,0.18) 0%, transparent 100%);
+  pointer-events: none;
+}
+.course-card > * { position: relative; }
+.course-card__head {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: var(--space-2);
+}
+.course-card__eyebrow {
+  font-family: var(--font-utility);
+  font-size: var(--fs-meta);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caps);
+  color: var(--accent-lavender);
+}
+.course-card__title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-pure-white);
+  letter-spacing: var(--tracking-tight);
+  line-height: 1.15;
+  margin: 0;
+}
+.course-card__desc {
+  font-family: var(--font-body);
+  font-size: var(--fs-caption);
+  color: var(--text-70);
+  margin: 0;
+}
+.course-card__instructor {
+  display: flex; align-items: center; gap: var(--space-3);
+  padding: var(--space-3);
+  border-radius: var(--radius-sm);
+  background: rgba(0,0,0,0.20);
+  border: 1px solid rgba(255,255,255,0.05);
+}
+.course-card__avatar {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: var(--grad-purple-pop);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--text-pure-white);
+  flex-shrink: 0;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.30), var(--shadow-sm);
+}
+.course-card__inst-name {
+  font-family: var(--font-body);
+  font-size: var(--fs-caption);
+  color: var(--text-pure-white);
+  font-weight: 500;
+  line-height: 1.2;
+}
+.course-card__inst-role {
+  font-family: var(--font-utility);
+  font-size: var(--fs-meta);
+  color: var(--text-70);
+  margin-top: 2px;
+}
+.course-card__progress { margin-top: var(--space-1); }
+.course-card__progress-head {
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: var(--font-utility);
+  font-size: var(--fs-meta);
+  color: var(--text-70);
+  margin-bottom: 6px;
+  letter-spacing: var(--tracking-wide);
+}
+.course-card__progress-head strong { color: var(--warm-gold); font-weight: 600; }
+.course-card__foot {
+  display: flex; align-items: center; gap: var(--space-2);
+  margin-top: auto;
+  padding-top: var(--space-3);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  flex-wrap: wrap;
+}
+.course-card__meta-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font-utility);
+  font-size: var(--fs-meta);
+  color: var(--text-70);
+  padding: 5px 10px;
+  border-radius: var(--radius-pill);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.course-card__meta-pill svg { color: var(--accent-lavender); }
+.course-card__foot .btn { margin-left: auto; }
+
+/* =========================================================
+   FOOT
+   ========================================================= */
+.foot {
+  margin-top: var(--space-12);
+  padding-top: var(--space-6);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  font-family: var(--font-utility);
+  font-size: var(--fs-meta);
+  color: var(--text-60);
+  display: flex; justify-content: space-between;
+}
+
+/* =========================================================
+   10. BENTO LAYOUT — composed course page
+   ========================================================= */
+.bento {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto auto auto auto;
+  grid-template-areas:
+    "instr  certs   certs"
+    "instr  chat    chat"
+    "over   over    over"
+    "kit    cta     cta";
+  gap: var(--space-4);
+}
+.bento-card {
+  position: relative;
+  border-radius: var(--radius-lg);
+  background-color: var(--glass-base);
+  background-image: var(--glass-tint);
+  border: var(--glass-border);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow);
+  padding: var(--space-5);
+  overflow: hidden;
+}
+.bento-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 50%;
+  background: linear-gradient(170deg, rgba(255,255,255,0.14) 0%, transparent 100%);
+  pointer-events: none;
+}
+.bento-card > * { position: relative; }
+.bento__head {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-pure-white);
+  letter-spacing: var(--tracking-tight);
+  margin: 0 0 var(--space-4);
+  line-height: 1.1;
+}
+
+/* Instructor */
+.bento__instr {
+  grid-area: instr;
+  text-align: center;
+  display: flex; flex-direction: column; align-items: center;
+  gap: var(--space-2);
+}
+.bento__instr .bento__head { margin-bottom: var(--space-3); }
+.bento__avatar {
+  width: 100%;
+  max-width: 180px;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius-sm);
+  background: var(--grad-orchid-bloom);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-size: 60px;
+  font-weight: 700;
+  color: var(--text-pure-white);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.32), var(--shadow-md);
+  margin-bottom: var(--space-3);
+}
+.bento__name {
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text-pure-white);
+}
+.bento__sub {
+  font-family: var(--font-body);
+  font-size: var(--fs-caption);
+  color: var(--text-70);
+}
+
+/* Certificates — featured gold-glow panel */
+.bento__certs {
+  grid-area: certs;
+  border: 1.5px solid rgba(255, 191, 0, 0.40);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 0 32px rgba(255, 191, 0, 0.22),
+    var(--glass-shadow);
+}
+.bento__cert-row { display: flex; gap: var(--space-3); }
+.bento__cert {
+  flex: 1;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-sm);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.10) 0%, transparent 30%),
+    linear-gradient(180deg, rgba(151,117,230,0.18) 0%, rgba(90,25,155,0.32) 100%);
+  border: 1px solid rgba(200,188,246,0.22);
+  padding: var(--space-3);
+  display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+  position: relative;
+}
+.bento__cert::before {
+  content: "";
+  position: absolute;
+  top: 8px; left: 50%; transform: translateX(-50%);
+  width: 50%; height: 2px;
+  background: var(--accent-lavender);
+  opacity: 0.6;
+  border-radius: 1px;
+}
+.bento__cert-title {
+  font-family: var(--font-display);
+  font-size: 11px;
+  color: var(--text-pure-white);
+  text-align: center;
+  margin-top: var(--space-3);
+  line-height: 1.2;
+}
+.bento__cert-sub {
+  font-family: var(--font-body);
+  font-size: 9px;
+  color: var(--text-70);
+  text-align: center;
+  margin-top: 2px;
+}
+.bento__cert-lock {
+  width: 28px; height: 28px;
+  border-radius: var(--radius-pill);
+  background: rgba(0,0,0,0.55);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--accent-lavender);
+  margin: var(--space-1) 0;
+}
+.bento__cert-badge {
+  font-family: var(--font-utility);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: var(--tracking-wide);
+  color: var(--text-90);
+  padding: 3px 8px;
+  border-radius: var(--radius-pill);
+  background: rgba(0,0,0,0.45);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+/* Chat strip */
+.bento__chat {
+  grid-area: chat;
+  display: flex; align-items: center;
+}
+.bento__chat-content {
+  display: flex; align-items: center; gap: var(--space-4);
+  width: 100%;
+}
+.bento__chat-icon {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--accent-lavender);
+  flex-shrink: 0;
+}
+.bento__chat-avatars { display: flex; flex-shrink: 0; }
+.bento__chat-avatars .av {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: var(--text-pure-white);
+  color: var(--bg-deep-indigo);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  display: flex; align-items: center; justify-content: center;
+  border: 2px solid var(--bg-deep-indigo);
+  margin-left: -10px;
+}
+.bento__chat-avatars .av:first-child { margin-left: 0; }
+.bento__chat-avatars .av--accent { background: var(--accent-lavender); }
+.bento__chat-text {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  color: var(--text-90);
+  line-height: 1.3;
+}
+
+/* Overview */
+.bento__over { grid-area: over; }
+.bento__over-body {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  color: var(--text-90);
+  line-height: var(--lh-relaxed);
+  margin: 0;
+  max-width: 720px;
+}
+
+/* Kit link */
+.bento__kit { grid-area: kit; }
+.bento__kit-row { display: flex; gap: var(--space-3); align-items: center; }
+.bento__kit-img {
+  width: 72px; height: 72px;
+  border-radius: var(--radius-sm);
+  background: var(--grad-orchid-bloom);
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-pure-white);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.28);
+}
+.bento__kit-divider {
+  width: 1px; align-self: stretch;
+  background: rgba(255,255,255,0.10);
+}
+.bento__kit-text {
+  font-family: var(--font-body);
+  font-size: var(--fs-caption);
+  color: var(--text-pure-white);
+  line-height: 1.3;
+  display: flex; align-items: flex-start; gap: 6px;
+}
+.bento__kit-text svg {
+  flex-shrink: 0;
+  color: var(--accent-lavender);
+  margin-top: 2px;
+}
+
+/* Start Course CTA */
+.bento__cta {
+  grid-area: cta;
+  display: flex; align-items: center; justify-content: center;
+  gap: var(--space-4);
+  background-color: var(--glass-base-button);
+  background-image: var(--glass-tint-button);
+  border: 1px solid rgba(200, 188, 246, 0.28);
+  cursor: pointer;
+  transition: transform var(--dur-fast) var(--ease-out), border-color var(--dur-base) var(--ease-out);
+}
+.bento__cta:hover {
+  transform: translateY(-1px);
+  border-color: rgba(200, 188, 246, 0.50);
+}
+.bento__cta-play {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: var(--grad-warm-flare);
+  display: flex; align-items: center; justify-content: center;
+  color: #2A1500;
+  box-shadow: var(--shadow-glow-warm), var(--shadow-md);
+  flex-shrink: 0;
+}
+.bento__cta-label {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-pure-white);
+  letter-spacing: var(--tracking-tight);
+}
+
+@media (max-width: 1000px) {
+  .bento {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "instr  certs"
+      "instr  kit"
+      "over   over"
+      "chat   chat"
+      "cta    cta";
+  }
+}
+@media (max-width: 480px) {
+  .bento {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "instr"
+      "certs"
+      "kit"
+      "over"
+      "chat"
+      "cta";
+  }
+}
+
+/* =========================================================
+   09. RESPONSIVE — device-frame demos
+   ========================================================= */
+.responsive-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 0.55fr;
+  gap: var(--space-5);
+  align-items: start;
+}
+.device {
+  border-radius: var(--radius-lg);
+  background-color: var(--glass-base);
+  background-image: var(--glass-tint);
+  border: var(--glass-border);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow);
+  overflow: hidden;
+}
+.device__chrome {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  background: rgba(0, 0, 0, 0.35);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+.device__dots { display: flex; gap: 6px; }
+.device__dots i {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+}
+.device__dots i:nth-child(1) { background: #FF5F57; }
+.device__dots i:nth-child(2) { background: #FEBC2E; }
+.device__dots i:nth-child(3) { background: #28C840; }
+.device__label {
+  font-family: var(--font-utility);
+  font-size: var(--fs-meta);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caps);
+  color: var(--accent-lavender);
+}
+.device__size {
+  font-family: var(--font-utility);
+  font-size: var(--fs-meta);
+  color: var(--text-60);
+}
+.device__screen {
+  padding: var(--space-5);
+  background: var(--bg-deep-indigo);
+  background-image: var(--grad-page-fade);
+  min-height: 480px;
+}
+.device--desktop .device__inner {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: var(--space-3);
+}
+.device--tablet .device__inner,
+.device--mobile .device__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* Mobile: phone-style chrome with notch */
+.device--mobile {
+  border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: var(--glass-shadow), 0 0 0 4px rgba(255,255,255,0.04);
+}
+.device--mobile .device__chrome {
+  padding: var(--space-2);
+  justify-content: center;
+  position: relative;
+  background: #000;
+  border-bottom: none;
+}
+.device--mobile .device__notch {
+  width: 80px; height: 18px;
+  background: #000;
+  border-radius: 0 0 12px 12px;
+}
+.device--mobile .device__screen {
+  padding: var(--space-3);
+  min-height: 540px;
+}
+.device--mobile .device__caption {
+  text-align: center;
+  font-family: var(--font-utility);
+  font-size: var(--fs-meta);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caps);
+  color: var(--accent-lavender);
+  padding: var(--space-2);
+  background: rgba(0,0,0,0.40);
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+/* Scoped card adjustments inside device frames (default = desktop frame) */
+.device .product-card,
+.device .course-card { padding: var(--space-3); border-radius: var(--radius-sm); }
+.device .product-card__media { aspect-ratio: 16 / 11; margin-bottom: var(--space-3); }
+.device .product-card__name { font-size: 16px; }
+.device .product-card__price { font-size: 22px; }
+.device .product-card__meta { font-size: 9px; }
+.device .course-card__title { font-size: 20px; line-height: 1.2; }
+.device .course-card__desc { font-size: 13px; }
+.device .course-card__avatar { width: 36px; height: 36px; font-size: 14px; }
+.device .course-card__instructor { padding: var(--space-2); }
+.device .badge { font-size: 10px; padding: 3px 8px; }
+.device .btn--sm { padding: 6px 12px; font-size: 12px; }
+
+/* Tablet — tighter than desktop, still readable */
+.device--tablet .device__screen { padding: var(--space-4); min-height: 420px; }
+.device--tablet .device__inner { gap: var(--space-3); }
+
+.device--tablet .product-card,
+.device--tablet .course-card { padding: var(--space-3); }
+.device--tablet .product-card__media {
+  aspect-ratio: 16 / 9;
+  margin-bottom: var(--space-2);
+}
+.device--tablet .product-card__icon { width: 36%; }
+.device--tablet .product-card__fav { width: 28px; height: 28px; top: 8px; right: 8px; }
+.device--tablet .product-card__tag { font-size: 9px; padding: 2px 7px; bottom: 8px; left: 8px; }
+.device--tablet .product-card__head { gap: var(--space-2); margin-bottom: var(--space-2); }
+.device--tablet .product-card__name { font-size: 13px; line-height: 1.2; margin-bottom: 2px; }
+.device--tablet .product-card__price { font-size: 18px; }
+.device--tablet .product-card__meta { font-size: 8px; letter-spacing: 0.08em; }
+.device--tablet .product-card__foot { padding-top: var(--space-2); gap: 6px; }
+
+.device--tablet .course-card__head { margin-bottom: 6px; }
+.device--tablet .course-card__eyebrow { font-size: 9px; }
+.device--tablet .course-card__title { font-size: 15px; line-height: 1.2; }
+.device--tablet .course-card__desc { font-size: 11px; line-height: 1.4; }
+.device--tablet .course-card__instructor { padding: var(--space-2); gap: var(--space-2); border-radius: 10px; }
+.device--tablet .course-card__avatar { width: 30px; height: 30px; font-size: 12px; }
+.device--tablet .course-card__inst-name { font-size: 11px; }
+.device--tablet .course-card__inst-role { font-size: 9px; }
+.device--tablet .course-card__progress-head { font-size: 9px; margin-bottom: 4px; }
+.device--tablet .course-card__foot { padding-top: var(--space-2); gap: 6px; }
+.device--tablet .course-card__meta-pill { font-size: 9px; padding: 3px 7px; }
+.device--tablet .progress { height: 5px; }
+
+.device--tablet .badge { font-size: 9px; padding: 2px 6px; }
+.device--tablet .btn--sm { padding: 5px 10px; font-size: 11px; gap: 5px; }
+.device--tablet .btn--sm svg { width: 10px; height: 10px; }
+
+.device--mobile .product-card__media { aspect-ratio: 4 / 3; }
+.device--mobile .product-card__head { flex-direction: column; gap: var(--space-2); align-items: stretch; }
+.device--mobile .product-card__price { font-size: 24px; align-self: flex-end; }
+.device--mobile .course-card__head { flex-direction: column; align-items: flex-start; gap: 6px; }
+.device--mobile .course-card__foot { gap: 6px; }
+
+/* ----- Bento inside the mobile phone mockup ----- */
+.device--mobile .bento {
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    "instr  certs"
+    "instr  kit"
+    "over   over"
+    "chat   chat"
+    "cta    cta";
+  gap: 6px;
+}
+.device--mobile .bento-card { padding: 10px; border-radius: 10px; }
+.device--mobile .bento-card::before { display: none; }
+.device--mobile .bento__head { font-size: 13px; margin-bottom: 6px; line-height: 1.1; }
+
+.device--mobile .bento__avatar {
+  max-width: none;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  font-size: 28px;
+  margin-bottom: 6px;
+  border-radius: 8px;
+}
+.device--mobile .bento__name { font-size: 11px; line-height: 1.2; }
+.device--mobile .bento__sub { font-size: 9px; }
+
+.device--mobile .bento__cert-row { flex-direction: column; gap: 6px; }
+.device--mobile .bento__cert { aspect-ratio: auto; padding: 6px; gap: 4px; min-height: 0; }
+.device--mobile .bento__cert::before { display: none; }
+.device--mobile .bento__cert-title { font-size: 8px; margin-top: 0; }
+.device--mobile .bento__cert-sub { font-size: 6px; }
+.device--mobile .bento__cert-lock { width: 18px; height: 18px; margin: 0; }
+.device--mobile .bento__cert-lock svg { width: 9px; height: 9px; }
+.device--mobile .bento__cert-badge { font-size: 6px; padding: 1px 5px; }
+
+.device--mobile .bento__kit-row { gap: 6px; }
+.device--mobile .bento__kit-img { width: 36px; height: 36px; border-radius: 6px; }
+.device--mobile .bento__kit-img svg { width: 18px; height: 18px; }
+.device--mobile .bento__kit-divider { display: none; }
+.device--mobile .bento__kit-text { font-size: 10px; line-height: 1.2; }
+.device--mobile .bento__kit-text svg { width: 10px; height: 10px; }
+
+.device--mobile .bento__over-body { font-size: 10px; line-height: 1.45; }
+
+.device--mobile .bento__chat-content { gap: 8px; }
+.device--mobile .bento__chat-icon { width: 30px; height: 30px; }
+.device--mobile .bento__chat-icon svg { width: 14px; height: 14px; }
+.device--mobile .bento__chat-avatars .av { width: 22px; height: 22px; font-size: 10px; margin-left: -7px; border-width: 1.5px; }
+.device--mobile .bento__chat-avatars .av:first-child { margin-left: 0; }
+.device--mobile .bento__chat-text { font-size: 10px; line-height: 1.3; }
+
+.device--mobile .bento__cta { padding: 8px; gap: 8px; }
+.device--mobile .bento__cta-play { width: 32px; height: 32px; }
+.device--mobile .bento__cta-play svg { width: 13px; height: 13px; }
+.device--mobile .bento__cta-label { font-size: 16px; }
+
+@media (max-width: 1100px) {
+  .responsive-grid { grid-template-columns: 1fr; }
+  .device--mobile { max-width: 320px; margin: 0 auto; }
+}
+
+@media (max-width: 900px) {
+  .swatches, .grad-grid, .shadow-grid { grid-template-columns: repeat(2, 1fr); }
+  .font-grid, .comp-grid, .patterns, .two-col, .glass-row, .intro { grid-template-columns: 1fr; }
+  .scale__row { grid-template-columns: 1fr; gap: var(--space-2); }
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <header class="brand">
+    <img class="brand__mark" src="braid-logo.png" alt="Braid" />
+    <div class="brand__meta">
+      <strong>Design System</strong>
+      2026
+    </div>
+  </header>
+
+  <!-- DESIGNER INTRO -->
+  <section class="intro">
+    <div class="intro__author">
+      <div class="intro__eyebrow">Designed by</div>
+      <div class="intro__name">Charlesa Thompson</div>
+      <div class="intro__role">Senior UX/UI Designer · Braid</div>
+    </div>
+    <div class="intro__body">
+      Braid is a beauty-tech platform for stylists and the people they style. <strong>The system below carries the brand's two non-negotiables — editorial polish and operational clarity — into every token, surface, and component.</strong> Each section opens with a designer's note that explains how the choice shapes the language.
+    </div>
+  </section>
+
+  <!-- STICKY NAV -->
+  <nav class="nav" aria-label="Section navigation">
+    <div class="nav__inner">
+      <span class="nav__label">Nav</span>
+      <div class="nav__links">
+        <a class="nav__link" href="#typography"><span class="nav__num">01</span> Typography</a>
+        <a class="nav__link" href="#color"><span class="nav__num">02</span> Color</a>
+        <a class="nav__link" href="#gradients"><span class="nav__num">03</span> Gradients</a>
+        <a class="nav__link" href="#spacing"><span class="nav__num">04</span> Spacing</a>
+        <a class="nav__link" href="#elevation"><span class="nav__num">05</span> Elevation</a>
+        <a class="nav__link" href="#glass"><span class="nav__num">06</span> Glass</a>
+        <a class="nav__link" href="#components"><span class="nav__num">07</span> Components</a>
+        <a class="nav__link" href="#patterns"><span class="nav__num">08</span> Patterns</a>
+        <a class="nav__link" href="#responsive"><span class="nav__num">09</span> Responsive</a>
+        <a class="nav__link" href="#bento"><span class="nav__num">10</span> Bento</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 01. TYPOGRAPHY -->
+  <section class="section" id="typography">
+    <header class="section__head">
+      <span class="section__num">01</span>
+      <h2 class="section__title">Typography</h2>
+      <span class="section__hint">3 families · 10-step scale</span>
+    </header>
+
+    <p class="rationale">
+      <span class="rationale__label">Designer's note</span>
+      Gyst carries the brand voice in headlines, Roboto handles every operational moment with neutral clarity, and Inter takes the precise small work — three voices, each with one clear job, so the page never speaks over itself.
+    </p>
+
+    <h3 class="subhead">Font families</h3>
+    <div class="font-grid">
+
+      <article class="font-card">
+        <div class="font-card__top">
+          <div>
+            <div class="font-card__name">Gyst Variable</div>
+            <span class="font-card__role">Display / Brand</span>
+          </div>
+          <span class="pill">Bold</span>
+        </div>
+        <div class="font-card__sample font-card__sample--display">Hair Care Curated</div>
+        <p class="font-card__desc">Licensed display font. All major headings, section labels (POSTS, COURSES), and hero copy. Bold weight only.</p>
+      </article>
+
+      <article class="font-card">
+        <div class="font-card__top">
+          <div>
+            <div class="font-card__name">Roboto</div>
+            <span class="font-card__role">Body / Product / Nav</span>
+          </div>
+          <span class="pill">Regular · Medium</span>
+        </div>
+        <div class="font-card__sample font-card__sample--body">Hair Care Curated</div>
+        <p class="font-card__desc">Primary UI font. Product names, prices, button labels, navigation, body copy.</p>
+      </article>
+
+      <article class="font-card">
+        <div class="font-card__top">
+          <div>
+            <div class="font-card__name">Inter</div>
+            <span class="font-card__role">Utility / Data</span>
+          </div>
+          <span class="pill">Medium</span>
+        </div>
+        <div class="font-card__sample font-card__sample--utility">Hair Care Curated</div>
+        <p class="font-card__desc">Compact UI elements: ratings, timestamps, small annotations, hex codes.</p>
+      </article>
+    </div>
+
+    <h3 class="subhead">Type scale</h3>
+    <div class="scale">
+      <div class="scale__row scale__row--head">
+        <div>Style</div><div>Size / Weight</div><div>Example</div>
+      </div>
+      <div class="scale__row">
+        <div class="scale__style"><strong>Display XL</strong><span>Gyst Variable</span></div>
+        <div class="scale__size"><strong>42 px</strong> Bold</div>
+        <div class="scale__example" style="font-family: var(--font-display); font-size: 42px; font-weight: 700; letter-spacing: var(--tracking-tight);">Hero & page titles</div>
+      </div>
+      <div class="scale__row">
+        <div class="scale__style"><strong>Price Display</strong><span>Roboto</span></div>
+        <div class="scale__size"><strong>30 px</strong> Regular</div>
+        <div class="scale__example" style="font-family: var(--font-body); font-size: 30px;">Product pricing</div>
+      </div>
+      <div class="scale__row">
+        <div class="scale__style"><strong>Section Title</strong><span>Gyst Variable</span></div>
+        <div class="scale__size"><strong>20 px</strong> Bold</div>
+        <div class="scale__example" style="font-family: var(--font-display); font-size: 20px; font-weight: 700; color: var(--accent-lavender); text-transform: uppercase; letter-spacing: var(--tracking-caps);">SECTION LABELS</div>
+      </div>
+      <div class="scale__row">
+        <div class="scale__style"><strong>Product Name</strong><span>Roboto</span></div>
+        <div class="scale__size"><strong>21 px</strong> Regular</div>
+        <div class="scale__example" style="font-family: var(--font-body); font-size: 21px;">Product & article headings</div>
+      </div>
+      <div class="scale__row">
+        <div class="scale__style"><strong>Button / CTA</strong><span>Roboto</span></div>
+        <div class="scale__size"><strong>18 px</strong> Regular</div>
+        <div class="scale__example" style="font-family: var(--font-body); font-size: 18px;">Profile nav buttons</div>
+      </div>
+      <div class="scale__row">
+        <div class="scale__style"><strong>Body</strong><span>Roboto</span></div>
+        <div class="scale__size"><strong>16 px</strong> Regular</div>
+        <div class="scale__example" style="font-family: var(--font-body); font-size: 16px;">Nav labels, standard body copy</div>
+      </div>
+      <div class="scale__row">
+        <div class="scale__style"><strong>Caption</strong><span>Roboto</span></div>
+        <div class="scale__size"><strong>14 px</strong> Regular</div>
+        <div class="scale__example" style="font-family: var(--font-body); font-size: 14px; color: var(--text-70);">Sub-labels, secondary descriptions</div>
+      </div>
+      <div class="scale__row">
+        <div class="scale__style"><strong>Small / Meta</strong><span>Roboto</span></div>
+        <div class="scale__size"><strong>12 px</strong> Regular</div>
+        <div class="scale__example" style="font-family: var(--font-body); font-size: 12px; color: var(--text-60);">Remaining time, micro labels</div>
+      </div>
+      <div class="scale__row">
+        <div class="scale__style"><strong>Micro</strong><span>Inter</span></div>
+        <div class="scale__size"><strong>10 px</strong> Medium</div>
+        <div class="scale__example" style="font-family: var(--font-utility); font-size: 10px; font-weight: 500; color: var(--accent-lavender); text-transform: uppercase; letter-spacing: var(--tracking-caps);">Ratings · Timestamps · Tiny annotations</div>
+      </div>
+      <div class="scale__row">
+        <div class="scale__style"><strong>System Bar</strong><span>SF Pro Text*</span></div>
+        <div class="scale__size"><strong>12 px</strong> Medium</div>
+        <div class="scale__example" style="font-family: var(--font-system); font-size: 12px; font-weight: 500; color: var(--text-90);">macOS / iOS system chrome</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02. COLOR -->
+  <section class="section" id="color">
+    <header class="section__head">
+      <span class="section__num">02</span>
+      <h2 class="section__title">Color</h2>
+      <span class="section__hint">curated palette · dark-first</span>
+    </header>
+
+    <p class="rationale">
+      <span class="rationale__label">Designer's note</span>
+      Lavender lifts and Deep Violet anchors — two accents give the system a clear emotional spectrum where light moments feel buoyant and dark moments feel intentional, without diluting either.
+    </p>
+
+    <h3 class="subhead">Backgrounds</h3>
+    <div class="swatches">
+      <div class="swatch"><div class="swatch__chip" style="background: #18172C;"></div><div class="swatch__body"><div class="swatch__name">Deep Indigo</div><div class="swatch__hex">#18172C</div><div class="swatch__use">Primary page background</div></div></div>
+      <div class="swatch"><div class="swatch__chip" style="background: #171717;"></div><div class="swatch__body"><div class="swatch__name">Jet Black</div><div class="swatch__hex">#171717</div><div class="swatch__use">NavBar, cards, close buttons</div></div></div>
+      <div class="swatch"><div class="swatch__chip" style="background: #24213C;"></div><div class="swatch__body"><div class="swatch__name">Rich Navy Purple</div><div class="swatch__hex">#24213C</div><div class="swatch__use">Sticky headers, tab bars</div></div></div>
+      <div class="swatch"><div class="swatch__chip" style="background: #382A4D;"></div><div class="swatch__body"><div class="swatch__name">Medium Purple</div><div class="swatch__hex">#382A4D</div><div class="swatch__use">Sections, panel cards</div></div></div>
+      <div class="swatch"><div class="swatch__chip" style="background: #221E3C;"></div><div class="swatch__body"><div class="swatch__name">Dark Purple</div><div class="swatch__hex">#221E3C</div><div class="swatch__use">Badge & pill backgrounds</div></div></div>
+      <div class="swatch"><div class="swatch__chip" style="background: #1F1F22;"></div><div class="swatch__body"><div class="swatch__name">Dark Charcoal</div><div class="swatch__hex">#1F1F22</div><div class="swatch__use">Toggle base, input fields</div></div></div>
+    </div>
+
+    <h3 class="subhead">Text</h3>
+    <div class="swatches">
+      <div class="swatch"><div class="swatch__chip" style="background: #FFFEFE;"></div><div class="swatch__body"><div class="swatch__name">Pure White</div><div class="swatch__hex">#FFFEFE</div><div class="swatch__use">Primary headings & body</div></div></div>
+      <div class="swatch"><div class="swatch__chip" style="background: #EFEFEF;"></div><div class="swatch__body"><div class="swatch__name">Soft White</div><div class="swatch__hex">#EFEFEF</div><div class="swatch__use">Active nav labels</div></div></div>
+      <div class="swatch"><div class="swatch__chip" style="background: #C8BFBD;"></div><div class="swatch__body"><div class="swatch__name">Warm Gray</div><div class="swatch__hex">#C8BFBD</div><div class="swatch__use">Muted / inactive text</div></div></div>
+      <div class="swatch"><div class="swatch__chip" style="background: rgba(255,255,255,0.90);"></div><div class="swatch__body"><div class="swatch__name">White 90%</div><div class="swatch__hex">rgba(255,255,255,0.90)</div><div class="swatch__use">System bar text</div></div></div>
+      <div class="swatch"><div class="swatch__chip" style="background: rgba(255,255,255,0.70);"></div><div class="swatch__body"><div class="swatch__name">White 70%</div><div class="swatch__hex">rgba(255,255,255,0.70)</div><div class="swatch__use">Secondary product info</div></div></div>
+      <div class="swatch"><div class="swatch__chip" style="background: rgba(255,255,255,0.60);"></div><div class="swatch__body"><div class="swatch__name">White 60%</div><div class="swatch__hex">rgba(255,255,255,0.60)</div><div class="swatch__use">Tertiary labels, prices</div></div></div>
+    </div>
+
+    <h3 class="subhead">Purple accents</h3>
+    <div class="swatches">
+      <div class="swatch"><div class="swatch__chip" style="background: #C8BCF6;"></div><div class="swatch__body"><div class="swatch__name">Lavender</div><div class="swatch__hex">#C8BCF6</div><div class="swatch__use">Light accent — icons, highlights, soft text</div></div></div>
+      <div class="swatch"><div class="swatch__chip" style="background: #5A199B;"></div><div class="swatch__body"><div class="swatch__name">Deep Violet</div><div class="swatch__hex">#5A199B</div><div class="swatch__use">Dark anchor — emphasis, CTA fill, gradients</div></div></div>
+    </div>
+
+    <h3 class="subhead">Warm accents</h3>
+    <div class="swatches">
+      <div class="swatch"><div class="swatch__chip" style="background: #FF9033;"></div><div class="swatch__body"><div class="swatch__name">Amber Orange</div><div class="swatch__hex">#FF9033</div><div class="swatch__use">Progress bars, CTA highlights</div></div></div>
+      <div class="swatch"><div class="swatch__chip" style="background: #FFBF00;"></div><div class="swatch__body"><div class="swatch__name">Gold</div><div class="swatch__hex">#FFBF00</div><div class="swatch__use">Star / badge glow</div></div></div>
+    </div>
+  </section>
+
+  <!-- 03. GRADIENTS -->
+  <section class="section" id="gradients">
+    <header class="section__head">
+      <span class="section__num">03</span>
+      <h2 class="section__title">Gradients</h2>
+      <span class="section__hint">7 named blends</span>
+    </header>
+
+    <p class="rationale">
+      <span class="rationale__label">Designer's note</span>
+      Gradients are where Braid's beauty lives — they carry the warmth and sheen that flat color cannot, and each blend is tied to a specific surface so the language stays unmistakable at a glance.
+    </p>
+
+    <div class="grad-grid">
+      <div class="grad-card"><div class="grad-card__chip" style="background: var(--grad-page-fade);"></div><div class="grad-card__body"><div class="grad-card__name">Page Fade</div><div class="grad-card__code">radial · #2A2350 → #18172C → #100F22</div></div></div>
+      <div class="grad-card"><div class="grad-card__chip" style="background: var(--grad-purple-pop);"></div><div class="grad-card__body"><div class="grad-card__name">Purple Pop</div><div class="grad-card__code">135° · #C8BCF6 → #5A199B</div></div></div>
+      <div class="grad-card"><div class="grad-card__chip" style="background: var(--grad-orchid-bloom);"></div><div class="grad-card__body"><div class="grad-card__name">Orchid Bloom</div><div class="grad-card__code">140° · #EBC8FE → #CAA8E9 → #624884</div></div></div>
+      <div class="grad-card"><div class="grad-card__chip" style="background: var(--grad-border-nebula);"></div><div class="grad-card__body"><div class="grad-card__name">Border Nebula</div><div class="grad-card__code">135° · #C8BCF6 → #624884 → #5A199B</div></div></div>
+      <div class="grad-card"><div class="grad-card__chip" style="background: var(--grad-deep-dusk);"></div><div class="grad-card__body"><div class="grad-card__name">Deep Dusk</div><div class="grad-card__code">180° · #382A4D → #221E3C → #18172C</div></div></div>
+      <div class="grad-card"><div class="grad-card__chip" style="background: var(--grad-violet-sterling);"></div><div class="grad-card__body"><div class="grad-card__name">Violet Sterling</div><div class="grad-card__code">135° · #A7A4DF → #5A199B</div></div></div>
+      <div class="grad-card"><div class="grad-card__chip" style="background: var(--grad-warm-flare);"></div><div class="grad-card__body"><div class="grad-card__name">Warm Flare</div><div class="grad-card__code">135° · #FFBF00 → #FF9033</div></div></div>
+    </div>
+  </section>
+
+  <!-- 04. SPACING + RADIUS -->
+  <section class="section" id="spacing">
+    <header class="section__head">
+      <span class="section__num">04</span>
+      <h2 class="section__title">Spacing &amp; Radius</h2>
+      <span class="section__hint">4px base · 3 radius steps</span>
+    </header>
+
+    <p class="rationale">
+      <span class="rationale__label">Designer's note</span>
+      Small for inputs, large for cards, pill for anything that invites action — three radii give Braid a consistent silhouette so the product reads the same on a phone, a tablet, and a poster.
+    </p>
+
+    <div class="two-col">
+      <div>
+        <h3 class="subhead">Spacing scale</h3>
+        <div class="spacing-grid">
+          <div class="spacing-row"><div class="spacing-row__label">--space-1</div><div class="spacing-row__val">4 px</div><div class="spacing-row__bar" style="width: 4px;"></div></div>
+          <div class="spacing-row"><div class="spacing-row__label">--space-2</div><div class="spacing-row__val">8 px</div><div class="spacing-row__bar" style="width: 8px;"></div></div>
+          <div class="spacing-row"><div class="spacing-row__label">--space-3</div><div class="spacing-row__val">12 px</div><div class="spacing-row__bar" style="width: 12px;"></div></div>
+          <div class="spacing-row"><div class="spacing-row__label">--space-4</div><div class="spacing-row__val">16 px</div><div class="spacing-row__bar" style="width: 16px;"></div></div>
+          <div class="spacing-row"><div class="spacing-row__label">--space-5</div><div class="spacing-row__val">20 px</div><div class="spacing-row__bar" style="width: 20px;"></div></div>
+          <div class="spacing-row"><div class="spacing-row__label">--space-6</div><div class="spacing-row__val">24 px</div><div class="spacing-row__bar" style="width: 24px;"></div></div>
+          <div class="spacing-row"><div class="spacing-row__label">--space-7</div><div class="spacing-row__val">32 px</div><div class="spacing-row__bar" style="width: 32px;"></div></div>
+          <div class="spacing-row"><div class="spacing-row__label">--space-8</div><div class="spacing-row__val">40 px</div><div class="spacing-row__bar" style="width: 40px;"></div></div>
+          <div class="spacing-row"><div class="spacing-row__label">--space-9</div><div class="spacing-row__val">48 px</div><div class="spacing-row__bar" style="width: 48px;"></div></div>
+          <div class="spacing-row"><div class="spacing-row__label">--space-10</div><div class="spacing-row__val">64 px</div><div class="spacing-row__bar" style="width: 64px;"></div></div>
+          <div class="spacing-row"><div class="spacing-row__label">--space-11</div><div class="spacing-row__val">80 px</div><div class="spacing-row__bar" style="width: 80px;"></div></div>
+          <div class="spacing-row"><div class="spacing-row__label">--space-12</div><div class="spacing-row__val">96 px</div><div class="spacing-row__bar" style="width: 96px;"></div></div>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="subhead">Border radius</h3>
+        <div class="radius-grid">
+          <div class="radius-chip" style="border-radius: 12px;">
+            <div class="radius-chip__name">SM</div>
+            <div class="radius-chip__val">12 px</div>
+            <div class="radius-chip__use">Inputs · badges · small cards · media</div>
+          </div>
+          <div class="radius-chip" style="border-radius: 20px;">
+            <div class="radius-chip__name">LG</div>
+            <div class="radius-chip__val">20 px</div>
+            <div class="radius-chip__use">Cards · panels · hero modules</div>
+          </div>
+          <div class="radius-chip" style="border-radius: 999px;">
+            <div class="radius-chip__name">PILL</div>
+            <div class="radius-chip__val">999 px</div>
+            <div class="radius-chip__use">Buttons · toggles · tabs</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05. ELEVATION -->
+  <section class="section" id="elevation">
+    <header class="section__head">
+      <span class="section__num">05</span>
+      <h2 class="section__title">Elevation</h2>
+      <span class="section__hint">5 shadows + 2 glows</span>
+    </header>
+
+    <p class="rationale">
+      <span class="rationale__label">Designer's note</span>
+      Neutral shadows carry hierarchy quietly; violet and amber glows mark the two things Braid wants users to feel — action and momentum — so attention always lands where the brand asks for it.
+    </p>
+
+    <div class="shadow-grid">
+      <div class="shadow-card" data-elev="xs"><div class="shadow-card__name">Shadow XS</div><div class="shadow-card__val">subtle separation</div></div>
+      <div class="shadow-card" data-elev="sm"><div class="shadow-card__name">Shadow SM</div><div class="shadow-card__val">card resting</div></div>
+      <div class="shadow-card" data-elev="md"><div class="shadow-card__name">Shadow MD</div><div class="shadow-card__val">interactive lift</div></div>
+      <div class="shadow-card" data-elev="lg"><div class="shadow-card__name">Shadow LG</div><div class="shadow-card__val">modal · popover</div></div>
+      <div class="shadow-card" data-elev="xl"><div class="shadow-card__name">Shadow XL</div><div class="shadow-card__val">overlay · drawer</div></div>
+      <div class="shadow-card" data-elev="glow-v"><div class="shadow-card__name">Glow Violet</div><div class="shadow-card__val">primary CTA</div></div>
+      <div class="shadow-card" data-elev="glow-w"><div class="shadow-card__name">Glow Warm</div><div class="shadow-card__val">progress · highlight</div></div>
+    </div>
+  </section>
+
+  <!-- 06. GLASS -->
+  <section class="section" id="glass">
+    <header class="section__head">
+      <span class="section__num">06</span>
+      <h2 class="section__title">Glass Surfaces</h2>
+      <span class="section__hint">glossy · reflective sheen</span>
+    </header>
+
+    <p class="rationale">
+      <span class="rationale__label">Designer's note</span>
+      Glossy glass mirrors the polish of the category — sheen, reflection, and shine are visual cues Braid users already recognize from product packaging, salon mirrors, and finished hair.
+    </p>
+
+    <div class="glass-stage">
+      <div class="glass-row">
+        <article class="glass-tile glass-tile--default">
+          <span class="glass-tile__label">Default</span>
+          <div>
+            <h4 class="glass-tile__title">Glossy &amp; clean</h4>
+            <p class="glass-tile__desc">Light blur with a top-to-bottom sheen and a bright inset highlight — reads as polished glass, not frost.</p>
+          </div>
+          <span class="glass-tile__foot">.glass</span>
+        </article>
+
+        <article class="glass-tile glass-tile--lifted">
+          <span class="glass-tile__label">Lifted</span>
+          <div>
+            <h4 class="glass-tile__title">Stronger reflection</h4>
+            <p class="glass-tile__desc">Brighter sheen and a sharper border — use for hover states, focused cards, or surfaces meant to read as foreground.</p>
+          </div>
+          <span class="glass-tile__foot">.glass--lifted</span>
+        </article>
+
+        <article class="glass-tile glass-tile--violet">
+          <span class="glass-tile__label">Branded</span>
+          <div>
+            <h4 class="glass-tile__title">Lavender-tinted</h4>
+            <p class="glass-tile__desc">Lavender sheen over a violet base — reserved for hero modules and premium surfaces.</p>
+          </div>
+          <span class="glass-tile__foot">.glass--violet</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07. COMPONENTS -->
+  <section class="section" id="components">
+    <header class="section__head">
+      <span class="section__num">07</span>
+      <h2 class="section__title">Components</h2>
+      <span class="section__hint">core building blocks</span>
+    </header>
+
+    <p class="rationale">
+      <span class="rationale__label">Designer's note</span>
+      Buttons, badges, inputs, and tabs all share the same visual grammar — rounded silhouettes, lavender highlights, soft glass — so the system reads as one product, never assembled parts.
+    </p>
+
+    <div class="comp-grid">
+      <div class="comp-card" style="grid-column: span 2;">
+        <h4 class="comp-card__title">Buttons</h4>
+
+        <div class="btn-group">
+          <h5 class="btn-group__label">Primary actions</h5>
+          <div class="comp-row">
+            <button class="btn btn--primary">
+              Get started
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+            <button class="btn btn--warm">
+              Enroll now
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="btn-group">
+          <h5 class="btn-group__label">Secondary &amp; alternate</h5>
+          <div class="comp-row">
+            <button class="btn btn--secondary">Browse courses</button>
+            <button class="btn btn--glass">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+              View profile
+            </button>
+            <button class="btn btn--ghost">
+              Skip
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="btn-group">
+          <h5 class="btn-group__label">Icon &amp; state</h5>
+          <div class="comp-row">
+            <button class="btn btn--icon" aria-label="Favorite">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l8.84 8.84 8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </button>
+            <button class="btn btn--icon btn--icon-primary" aria-label="Add">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+            </button>
+            <button class="btn btn--icon" aria-label="Share">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.59 13.51 6.83 3.98M15.41 6.51l-6.82 3.98"/></svg>
+            </button>
+            <button class="btn btn--primary" disabled>
+              Out of stock
+            </button>
+          </div>
+        </div>
+
+        <div class="btn-group">
+          <h5 class="btn-group__label">Sizes</h5>
+          <div class="comp-row">
+            <button class="btn btn--primary btn--sm">Small</button>
+            <button class="btn btn--primary">Medium</button>
+            <button class="btn btn--primary btn--lg">Large</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="comp-card">
+        <h4 class="comp-card__title">Badges</h4>
+        <div class="comp-row">
+          <span class="badge badge--lilac">New</span>
+          <span class="badge badge--violet">Featured</span>
+          <span class="badge badge--warm">Hot</span>
+          <span class="badge badge--gold">★ 4.9</span>
+          <span class="badge badge--ghost">Draft</span>
+        </div>
+      </div>
+
+      <div class="comp-card">
+        <h4 class="comp-card__title">Input</h4>
+        <input class="input" placeholder="Search courses, products, articles…" />
+        <div style="margin-top: var(--space-3);">
+          <input class="input" placeholder="email@braid.com" />
+        </div>
+      </div>
+
+      <div class="comp-card" style="grid-column: span 2;">
+        <h4 class="comp-card__title">Tabs &amp; toggle</h4>
+        <div class="comp-row">
+          <div class="tabs">
+            <button class="tabs__item tabs__item--active">All</button>
+            <button class="tabs__item">Flat Iron</button>
+            <button class="tabs__item">Blow Dryer</button>
+            <button class="tabs__item">Curlers</button>
+          </div>
+        </div>
+        <div class="comp-row" style="margin-top: var(--space-4); align-items: center;">
+          <div class="toggle"></div>
+          <div class="toggle toggle--on"></div>
+          <span style="font-family: var(--font-utility); font-size: var(--fs-caption); color: var(--text-70);">Off / On</span>
+        </div>
+      </div>
+
+      <div class="comp-card" style="grid-column: span 2;">
+        <h4 class="comp-card__title">Progress</h4>
+        <div class="progress"><div class="progress__bar" style="width: 64%;"></div></div>
+        <div style="display:flex; justify-content: space-between; margin-top: var(--space-2); font-family: var(--font-utility); font-size: var(--fs-meta); color: var(--text-60);">
+          <span>Module 4 of 6</span>
+          <span>64% complete</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08. PATTERNS -->
+  <section class="section" id="patterns">
+    <header class="section__head">
+      <span class="section__num">08</span>
+      <h2 class="section__title">Patterns</h2>
+      <span class="section__hint">tokens in context</span>
+    </header>
+
+    <p class="rationale">
+      <span class="rationale__label">Designer's note</span>
+      Cards are where the brand meets the user — gloss, gradients, and type hierarchy come together to show how the tokens add up to a feeling, not just a screen.
+    </p>
+
+    <div class="patterns">
+      <article class="product-card">
+        <div class="product-card__media">
+          <!-- Hair-tool silhouette -->
+          <svg class="product-card__icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M30 18c8 6 14 16 14 28 0 14-8 26-20 30-1 0-2-1-2-2 4-12 6-22 4-32-1-10-2-18 1-22 1-2 2-2 3-2z"/>
+            <path d="M50 14c10 8 16 20 16 32 0 16-10 28-22 32"/>
+            <path d="M70 12c12 10 18 22 18 36 0 16-10 30-22 34"/>
+          </svg>
+          <button class="product-card__fav" aria-label="Save to favorites">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l8.84 8.84 8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
+          <span class="product-card__tag">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            4.9
+          </span>
+        </div>
+
+        <div class="product-card__head">
+          <div>
+            <div class="product-card__name">Intex Loc Re-Twist Kit</div>
+            <div class="product-card__meta">Style Kit · 30 min · Pro</div>
+          </div>
+          <div class="product-card__price">$300<small>.00</small></div>
+        </div>
+
+        <div class="product-card__foot">
+          <span class="badge badge--lilac">Bestseller</span>
+          <span class="badge badge--ghost">In stock</span>
+          <button class="btn btn--primary btn--sm">
+            Add to bag
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+        </div>
+      </article>
+
+      <article class="course-card">
+        <div class="course-card__head">
+          <span class="course-card__eyebrow">Featured course</span>
+          <span class="badge badge--gold">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            4.9
+          </span>
+        </div>
+        <h3 class="course-card__title">Intro to Loc Re-Twist</h3>
+        <p class="course-card__desc">A beginner-friendly course teaching the foundations of locking, refreshing, and finishing.</p>
+
+        <div class="course-card__instructor">
+          <div class="course-card__avatar" aria-hidden="true">MJ</div>
+          <div>
+            <div class="course-card__inst-name">Maya Johnson</div>
+            <div class="course-card__inst-role">Master Stylist · 1.2k students</div>
+          </div>
+        </div>
+
+        <div class="course-card__progress">
+          <div class="course-card__progress-head">
+            <span>Module 2 of 6</span>
+            <strong>32%</strong>
+          </div>
+          <div class="progress"><div class="progress__bar" style="width: 32%;"></div></div>
+        </div>
+
+        <div class="course-card__foot">
+          <span class="course-card__meta-pill">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 4 20 12 6 20 6 4" fill="currentColor"/></svg>
+            6 modules
+          </span>
+          <span class="course-card__meta-pill">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>
+            1h 20m
+          </span>
+          <button class="btn btn--warm btn--sm">
+            Continue
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- 09. RESPONSIVE -->
+  <section class="section" id="responsive">
+    <header class="section__head">
+      <span class="section__num">09</span>
+      <h2 class="section__title">Responsive Cards</h2>
+      <span class="section__hint">desktop · tablet · mobile</span>
+    </header>
+
+    <p class="rationale">
+      <span class="rationale__label">Designer's note</span>
+      Cards collapse gracefully because spacing, type, and surfaces all stay token-driven — Braid's silhouette holds from phone to desktop without bespoke layouts for any size.
+    </p>
+
+    <div class="responsive-grid">
+
+      <!-- DESKTOP -->
+      <article class="device device--desktop">
+        <header class="device__chrome">
+          <div class="device__dots"><i></i><i></i><i></i></div>
+          <span class="device__label">Desktop</span>
+          <span class="device__size">1280+</span>
+        </header>
+        <div class="device__screen">
+          <div class="device__inner">
+
+            <article class="product-card">
+              <div class="product-card__media">
+                <svg class="product-card__icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M30 18c8 6 14 16 14 28 0 14-8 26-20 30-1 0-2-1-2-2 4-12 6-22 4-32-1-10-2-18 1-22 1-2 2-2 3-2z"/>
+                  <path d="M50 14c10 8 16 20 16 32 0 16-10 28-22 32"/>
+                  <path d="M70 12c12 10 18 22 18 36 0 16-10 30-22 34"/>
+                </svg>
+                <button class="product-card__fav" aria-label="Save"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l8.84 8.84 8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+                <span class="product-card__tag"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> 4.9</span>
+              </div>
+              <div class="product-card__head">
+                <div>
+                  <div class="product-card__name">Loc Re-Twist Kit</div>
+                  <div class="product-card__meta">30 min · Pro</div>
+                </div>
+                <div class="product-card__price">$300</div>
+              </div>
+              <div class="product-card__foot">
+                <span class="badge badge--lilac">Bestseller</span>
+                <button class="btn btn--primary btn--sm">Add</button>
+              </div>
+            </article>
+
+            <article class="course-card">
+              <div class="course-card__head">
+                <span class="course-card__eyebrow">Course</span>
+                <span class="badge badge--gold"><svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> 4.9</span>
+              </div>
+              <h3 class="course-card__title">Intro to Loc Re-Twist</h3>
+              <div class="course-card__instructor">
+                <div class="course-card__avatar">MJ</div>
+                <div>
+                  <div class="course-card__inst-name">Maya Johnson</div>
+                  <div class="course-card__inst-role">1.2k students</div>
+                </div>
+              </div>
+              <div class="course-card__progress">
+                <div class="course-card__progress-head"><span>Module 2 of 6</span><strong>32%</strong></div>
+                <div class="progress"><div class="progress__bar" style="width: 32%;"></div></div>
+              </div>
+              <div class="course-card__foot">
+                <span class="course-card__meta-pill">6 modules</span>
+                <button class="btn btn--warm btn--sm">Continue</button>
+              </div>
+            </article>
+
+          </div>
+        </div>
+      </article>
+
+      <!-- TABLET -->
+      <article class="device device--tablet">
+        <header class="device__chrome">
+          <div class="device__dots"><i></i><i></i><i></i></div>
+          <span class="device__label">Tablet</span>
+          <span class="device__size">768</span>
+        </header>
+        <div class="device__screen">
+          <div class="device__inner">
+
+            <article class="product-card">
+              <div class="product-card__media">
+                <svg class="product-card__icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M30 18c8 6 14 16 14 28 0 14-8 26-20 30-1 0-2-1-2-2 4-12 6-22 4-32-1-10-2-18 1-22 1-2 2-2 3-2z"/>
+                  <path d="M50 14c10 8 16 20 16 32 0 16-10 28-22 32"/>
+                </svg>
+                <button class="product-card__fav" aria-label="Save"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l8.84 8.84 8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+              </div>
+              <div class="product-card__head">
+                <div>
+                  <div class="product-card__name">Loc Re-Twist Kit</div>
+                  <div class="product-card__meta">30 min · Pro</div>
+                </div>
+                <div class="product-card__price">$300</div>
+              </div>
+              <div class="product-card__foot">
+                <span class="badge badge--lilac">Bestseller</span>
+                <button class="btn btn--primary btn--sm">Add</button>
+              </div>
+            </article>
+
+            <article class="course-card">
+              <div class="course-card__head">
+                <span class="course-card__eyebrow">Course</span>
+                <span class="badge badge--gold">★ 4.9</span>
+              </div>
+              <h3 class="course-card__title">Intro to Loc Re-Twist</h3>
+              <div class="course-card__instructor">
+                <div class="course-card__avatar">MJ</div>
+                <div>
+                  <div class="course-card__inst-name">Maya Johnson</div>
+                  <div class="course-card__inst-role">Master Stylist</div>
+                </div>
+              </div>
+              <div class="course-card__foot">
+                <span class="course-card__meta-pill">6 modules</span>
+                <button class="btn btn--warm btn--sm">Continue</button>
+              </div>
+            </article>
+
+          </div>
+        </div>
+      </article>
+
+      <!-- MOBILE — bento layout on phone -->
+      <article class="device device--mobile">
+        <header class="device__chrome">
+          <div class="device__notch"></div>
+        </header>
+        <div class="device__screen">
+          <div class="bento">
+
+            <article class="bento-card bento__instr">
+              <h3 class="bento__head">Instructor</h3>
+              <div class="bento__avatar">MJ</div>
+              <div class="bento__name">Maya Johnson</div>
+              <div class="bento__sub">15+ Year Loctician</div>
+            </article>
+
+            <article class="bento-card bento__certs">
+              <h3 class="bento__head">Certificates</h3>
+              <div class="bento__cert-row">
+                <div class="bento__cert">
+                  <div class="bento__cert-title">Completion</div>
+                  <div class="bento__cert-lock">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="4" y="11" width="16" height="10" rx="2"/>
+                      <path d="M8 11V7a4 4 0 0 1 8 0v4"/>
+                    </svg>
+                  </div>
+                  <span class="bento__cert-badge">C1.1</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="bento-card bento__kit">
+              <div class="bento__kit-row">
+                <div class="bento__kit-img">
+                  <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.7">
+                    <path d="M30 18c8 6 14 16 14 28 0 14-8 26-20 30-1 0-2-1-2-2 4-12 6-22 4-32-1-10-2-18 1-22 1-2 2-2 3-2z"/>
+                  </svg>
+                </div>
+                <div class="bento__kit-text">
+                  <span>Re-Twist Kit</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="7" y1="17" x2="17" y2="7"/>
+                    <polyline points="7 7 17 7 17 17"/>
+                  </svg>
+                </div>
+              </div>
+            </article>
+
+            <article class="bento-card bento__over">
+              <h3 class="bento__head">Overview</h3>
+              <p class="bento__over-body">A beginner-friendly course teaching the foundations of loc re-twisting from Maya Johnson.</p>
+            </article>
+
+            <article class="bento-card bento__chat">
+              <div class="bento__chat-content">
+                <div class="bento__chat-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+                  </svg>
+                </div>
+                <div class="bento__chat-avatars">
+                  <div class="av">C</div>
+                  <div class="av av--accent">C</div>
+                  <div class="av">C</div>
+                </div>
+                <div class="bento__chat-text">+100 chatting</div>
+              </div>
+            </article>
+
+            <button class="bento-card bento__cta">
+              <div class="bento__cta-play">
+                <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="7 4 20 12 7 20 7 4"/></svg>
+              </div>
+              <span class="bento__cta-label">Start Course</span>
+            </button>
+
+          </div>
+        </div>
+        <div class="device__caption">375 · iPhone · Bento</div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- 10. BENTO LAYOUT -->
+  <section class="section" id="bento">
+    <header class="section__head">
+      <span class="section__num">10</span>
+      <h2 class="section__title">Bento Layout</h2>
+      <span class="section__hint">composed course page</span>
+    </header>
+
+    <p class="rationale">
+      <span class="rationale__label">Designer's note</span>
+      Bento boxes let one screen carry many signals at once — instructor, certificate, social proof, overview, CTA — without competing for attention, because every tile speaks in the same glass-and-gradient vocabulary.
+    </p>
+
+    <div class="bento">
+
+      <!-- Instructor -->
+      <article class="bento-card bento__instr">
+        <h3 class="bento__head">Instructor</h3>
+        <div class="bento__avatar">MJ</div>
+        <div class="bento__name">Maya Johnson</div>
+        <div class="bento__sub">15+ Year Loctician</div>
+      </article>
+
+      <!-- Certificates — featured (gold glow) -->
+      <article class="bento-card bento__certs">
+        <h3 class="bento__head">Certificates You Can Earn</h3>
+        <div class="bento__cert-row">
+          <div class="bento__cert">
+            <div class="bento__cert-title">Certificate of Completion</div>
+            <div class="bento__cert-sub">Loc Re-Twist · Level 1</div>
+            <div class="bento__cert-lock">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="4" y="11" width="16" height="10" rx="2"/>
+                <path d="M8 11V7a4 4 0 0 1 8 0v4"/>
+              </svg>
+            </div>
+            <span class="bento__cert-badge">C1.1 BEGINNER</span>
+          </div>
+          <div class="bento__cert">
+            <div class="bento__cert-title">Certificate of Completion</div>
+            <div class="bento__cert-sub">Loc Re-Twist · Level 2</div>
+            <div class="bento__cert-lock">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="4" y="11" width="16" height="10" rx="2"/>
+                <path d="M8 11V7a4 4 0 0 1 8 0v4"/>
+              </svg>
+            </div>
+            <span class="bento__cert-badge">C1.2 INTERMEDIATE</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Chat strip -->
+      <article class="bento-card bento__chat">
+        <div class="bento__chat-content">
+          <div class="bento__chat-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+            </svg>
+          </div>
+          <div class="bento__chat-avatars">
+            <div class="av">C</div>
+            <div class="av av--accent">C</div>
+            <div class="av">C</div>
+          </div>
+          <div class="bento__chat-text"><strong style="color: var(--text-pure-white);">and 100+ others</strong> are chatting</div>
+        </div>
+      </article>
+
+      <!-- Overview -->
+      <article class="bento-card bento__over">
+        <h3 class="bento__head">Overview</h3>
+        <p class="bento__over-body">This beginner-friendly course is designed to introduce you to the fundamentals of loc re-twisting. You will learn the foundations of locking, refreshing, and finishing — straight from Maya Johnson, with a focus on building confidence at every stage.</p>
+      </article>
+
+      <!-- Kit link -->
+      <article class="bento-card bento__kit">
+        <div class="bento__kit-row">
+          <div class="bento__kit-img">
+            <svg width="36" height="36" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.7">
+              <path d="M30 18c8 6 14 16 14 28 0 14-8 26-20 30-1 0-2-1-2-2 4-12 6-22 4-32-1-10-2-18 1-22 1-2 2-2 3-2z"/>
+              <path d="M50 14c10 8 16 20 16 32 0 16-10 28-22 32"/>
+              <path d="M70 12c12 10 18 22 18 36 0 16-10 30-22 34"/>
+            </svg>
+          </div>
+          <div class="bento__kit-divider"></div>
+          <div class="bento__kit-text">
+            <span>Go to Intro to Loc Re-Twist Kit</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="7" y1="17" x2="17" y2="7"/>
+              <polyline points="7 7 17 7 17 17"/>
+            </svg>
+          </div>
+        </div>
+      </article>
+
+      <!-- Start Course CTA -->
+      <button class="bento-card bento__cta">
+        <div class="bento__cta-play">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="7 4 20 12 7 20 7 4"/></svg>
+        </div>
+        <span class="bento__cta-label">Start Course</span>
+      </button>
+
+    </div>
+  </section>
+
+  <footer class="foot">
+    <span>Braid Design System · Charlesa Thompson</span>
+    <span>tokens.css · tokens.json · index.html</span>
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  const links = document.querySelectorAll('.nav__link');
+  const sections = document.querySelectorAll('section.section[id]');
+  if (!('IntersectionObserver' in window) || !sections.length) return;
+
+  function setActive(id) {
+    links.forEach(l => {
+      l.classList.toggle('is-active', l.getAttribute('href') === '#' + id);
+    });
+  }
+
+  const obs = new IntersectionObserver((entries) => {
+    // Pick the entry closest to the top of the viewport that's intersecting.
+    const visible = entries
+      .filter(e => e.isIntersecting)
+      .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+    if (visible.length) setActive(visible[0].target.id);
+  }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+
+  sections.forEach(s => obs.observe(s));
+
+  // Smooth-scroll handler with offset for sticky nav height
+  links.forEach(link => {
+    link.addEventListener('click', (e) => {
+      const id = link.getAttribute('href').slice(1);
+      const target = document.getElementById(id);
+      if (!target) return;
+      e.preventDefault();
+      const navEl = document.querySelector('.nav__inner');
+      const navHeight = navEl ? navEl.getBoundingClientRect().height + 24 : 0;
+      const top = window.scrollY + target.getBoundingClientRect().top - navHeight;
+      window.scrollTo({ top, behavior: 'smooth' });
+      setActive(id);
+    });
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+# OS junk
+.DS_Store
+**/.DS_Store
+Thumbs.db
+
+# Editor / backup files
+*.bak
+*~
+*.swp
+
+# Local dev helpers
+start-server.py
+.vercel
+
+# Oversized video — handle via compression before committing
+Braid/courses.mp4
+
+# Local agent settings
+.claude/

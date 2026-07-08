@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project 808 — Charlesa Thompson</title>
+  <meta name="description" content="A self-initiated campaign site making the case for a creative manufacturing studio in Chicago. UX/UI, strategy, and development case study by Charlesa Thompson." />
+  <meta name="theme-color" content="#270f05" />
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    /* ── Shared wrapper — centers the phone on a soft card ── */
+    .mockup-device {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 48px 56px;
+      box-sizing: border-box;
+    }
+
+    /* ── Phone mockup (matches the Braid case study) ──────────
+       Fully CSS-drawn iPhone: rounded frame, dynamic-island
+       notch, a live status bar (time + signal/wifi/battery),
+       and the iframe clipped inside the screen. --phone-w drives
+       the size; the inner screen + iframe scale derive from it. */
+    .phone-mockup {
+      /* phone-w 240, pad 10 → screen 220 wide. vp-w 390 → scale
+         0.564 so the site's mobile layout fills the screen. */
+      --phone-w: 240px;
+      --phone-pad: 10px;
+      --vp-w: 390px;
+      --vp-h: 890px;
+
+      position: relative;
+      width: var(--phone-w);
+      aspect-ratio: 9 / 19.5;
+      margin: 0 auto;
+      background: #0f0a07;
+      border-radius: 38px;
+      padding: var(--phone-pad);
+      box-shadow:
+        0 28px 64px rgba(0, 0, 0, 0.30),
+        0 6px 18px rgba(0, 0, 0, 0.16),
+        inset 0 0 0 2px rgba(255, 255, 255, 0.06);
+    }
+    .phone-mockup::before {
+      /* dynamic island / notch */
+      content: "";
+      position: absolute;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 76px;
+      height: 20px;
+      background: #000;
+      border-radius: 999px;
+      z-index: 4;
+      pointer-events: none;
+    }
+    /* iOS-style status bar, aligned with the notch (top:14px, h:20px) */
+    .phone-mockup__statusbar {
+      position: absolute;
+      top: 14px;
+      left: 0;
+      right: 0;
+      height: 20px;
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #fff;
+      font-family: "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      line-height: 1;
+      z-index: 3;
+      pointer-events: none;
+    }
+    .phone-mockup__time { transform: translateY(-0.5px); }
+    .phone-mockup__icons { display: inline-flex; align-items: center; gap: 4px; }
+    .phone-mockup__icons svg { display: block; fill: currentColor; }
+    .phone-mockup__battery {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0;
+      line-height: 1;
+    }
+    .phone-mockup__battery-shell {
+      position: relative;
+      width: 18px;
+      height: 9px;
+      border: 1px solid currentColor;
+      border-radius: 2.5px;
+      opacity: 0.95;
+      box-sizing: border-box;
+    }
+    .phone-mockup__battery-shell::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: -2.5px;
+      transform: translateY(-50%);
+      width: 1.5px;
+      height: 4px;
+      background: currentColor;
+      border-radius: 0 1px 1px 0;
+      opacity: 0.85;
+    }
+    .phone-mockup__battery-fill {
+      position: absolute;
+      top: 1px;
+      left: 1px;
+      bottom: 1px;
+      width: calc((100% - 2px) * 0.85);
+      background: currentColor;
+      border-radius: 1px;
+    }
+    .phone-mockup__screen {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: #0f0a07;
+      border-radius: 30px;
+      overflow: hidden;
+      isolation: isolate;
+    }
+    .phone-mockup__screen iframe {
+      position: absolute;
+      /* push content below the notch/status bar */
+      top: 38px;
+      left: 0;
+      width: var(--vp-w);
+      height: var(--vp-h);
+      border: 0;
+      display: block;
+      transform-origin: top left;
+      transform: scale(calc((var(--phone-w) - 2 * var(--phone-pad)) / var(--vp-w)));
+    }
+    @media (max-width: 540px) {
+      .phone-mockup { --phone-w: 220px; }
+    }
+  </style>
+  <script defer src="../nav.js"></script>
+</head>
+<body class="cs-body-page cs-body-page--808">
+
+  <!-- ============ Fixed Nav ============ -->
+  <nav class="nav" aria-label="Primary">
+    <a href="../index.html" class="nav__logo">CHAR</a>
+    <ul class="nav__links">
+      <li><a href="../index.html#work">Work</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ============ HERO ============ -->
+  <header class="cs-hero">
+    <div class="cs-container">
+      <h1 class="cs-hero__title">Project 808</h1>
+      <p class="cs-hero__tagline">Creating Chicago's manufacturing hub.</p>
+      <div class="cs-hero__pills cs-hero__pills--justified">
+        <span class="cs-pill">Strategy</span>
+        <span class="cs-pill">Visual Design</span>
+        <span class="cs-pill">Development</span>
+      </div>
+      <p class="cs-hero__date">Live · Phase 01 · 2026</p>
+      <figure class="cs-hero__cover">
+        <img src="../Featured Media/mayor-meeting.jpeg" alt="Project 808 — Mayor Brandon Johnson at a community manufacturing event" />
+      </figure>
+    </div>
+  </header>
+
+  <!-- ============ 01 · THE BRIEF ============ -->
+  <section class="cs-section">
+    <div class="cs-container">
+      <header class="cs-section__head">
+        <span class="cs-section__num">01 — The Brief</span>
+        <h2 class="cs-section__title">One site, three jobs.</h2>
+      </header>
+      <div class="cs-section__body">
+        <div class="cs-section__copy">
+          <p class="cs-lead">A self-initiated campaign site that has to do three things at once: make the case for a creative manufacturing studio in Chicago to funders and city officials, recruit community input through a survey that doubles as proof of demand, and show how I think with no client to hide behind.</p>
+          <p>I designed, wrote, and built it solo — strategist, designer, and developer. It's live now in Phase 01 at <a href="https://project-808.vercel.app" target="_blank" rel="noopener">project-808.vercel.app</a>.</p>
+        </div>
+        <figure class="cs-figure">
+          <div class="cs-figure__img">
+            <div class="mockup-device mockup-device--phone">
+              <div class="phone-mockup" aria-hidden="true">
+                <div class="phone-mockup__screen">
+                  <iframe src="https://project-808.vercel.app" title="Project 808 — landing page" loading="lazy"></iframe>
+                </div>
+                <div class="phone-mockup__statusbar">
+                  <span class="phone-mockup__time">9:41</span>
+                  <span class="phone-mockup__icons">
+                    <!-- signal -->
+                    <svg width="13" height="9" viewBox="0 0 17 11" aria-hidden="true">
+                      <rect x="0"  y="7"  width="3" height="4"  rx="0.6"/>
+                      <rect x="4.5" y="5"  width="3" height="6"  rx="0.6"/>
+                      <rect x="9"  y="3"  width="3" height="8"  rx="0.6"/>
+                      <rect x="13.5" y="0" width="3" height="11" rx="0.6"/>
+                    </svg>
+                    <!-- wifi -->
+                    <svg width="12" height="9" viewBox="0 0 15 11" aria-hidden="true">
+                      <path d="M7.5 2.4c2.6 0 5.1 1 6.9 2.7l-1.4 1.4a7.8 7.8 0 0 0-11 0L.6 5.1A9.8 9.8 0 0 1 7.5 2.4Zm0 3.4c1.7 0 3.4.7 4.6 1.9l-1.4 1.4a4.5 4.5 0 0 0-6.4 0L2.9 7.7a6.6 6.6 0 0 1 4.6-1.9Zm0 3.4c.8 0 1.6.3 2.2.9L7.5 11 5.3 10.1c.6-.6 1.4-.9 2.2-.9Z"/>
+                    </svg>
+                    <!-- battery -->
+                    <span class="phone-mockup__battery">
+                      <span>85</span>
+                      <span class="phone-mockup__battery-shell">
+                        <span class="phone-mockup__battery-fill"></span>
+                      </span>
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <figcaption class="cs-figure__caption">Landing page — the pitch in one scroll.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 02 · THE PROBLEM ============ -->
+  <section class="cs-section">
+    <div class="cs-container">
+      <header class="cs-section__head">
+        <span class="cs-section__num">02 — Problem</span>
+        <h2 class="cs-section__title">The post-grad resource cliff.</h2>
+      </header>
+      <div class="cs-section__body">
+        <div class="cs-section__copy">
+          <p class="cs-lead">Chicago trains world-class creative talent, but it suffers from severe "brain drain" because graduates immediately lose access to the industrial machinery needed to build physical products and scale businesses.</p>
+          <p>The Resource Gap: In school, designers use $50K industrial labs. After graduation, they are left with consumer-grade hobbyist tools. Localized manufacturing infrastructure exists in NYC and LA, but Chicago has a massive void.</p>
+          <p>The Tariff Crisis: With recent apparel import tariffs soaring to 40–60%, independent designers can no longer afford to outsource production overseas. They need an affordable, local manufacturing default.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 03 · THE SOLUTION ============ -->
+  <section class="cs-section">
+    <div class="cs-container">
+      <header class="cs-section__head">
+        <span class="cs-section__num">03 — Solution</span>
+        <h2 class="cs-section__title">A physical-to-digital production hub.</h2>
+      </header>
+      <div class="cs-section__body">
+        <div class="cs-section__copy">
+          <p class="cs-lead">Project 808 is a campaign and blueprint for a multi-disciplinary creative manufacturing studio in Chicago. It bridges the gap between raw ideas and scalable production through a dual-track operational model.</p>
+          <p>The Guided Track: Connects non-technical entrepreneurs with in-house master artisans to prototype products.</p>
+          <p>The Autonomous Track: Gives certified, independent makers affordable, on-demand access to industrial equipment (textiles, CNC routers, laser cutters).</p>
+          <p>To keep the model asset-light, I designed a B2B partnership strategy where machinery brands (like Juki and Glowforge) donate equipment in exchange for regional brand activation and marketing visibility.</p>
+        </div>
+        <figure class="cs-figure">
+          <div class="cs-figure__img">
+            <div class="mockup-device mockup-device--phone">
+              <div class="phone-mockup" aria-hidden="true">
+                <div class="phone-mockup__screen">
+                  <iframe src="https://project-808.vercel.app/#survey" title="Project 808 — survey, mobile view" loading="lazy"></iframe>
+                </div>
+                <div class="phone-mockup__statusbar">
+                  <span class="phone-mockup__time">9:41</span>
+                  <span class="phone-mockup__icons">
+                    <!-- signal -->
+                    <svg width="13" height="9" viewBox="0 0 17 11" aria-hidden="true">
+                      <rect x="0"  y="7"  width="3" height="4"  rx="0.6"/>
+                      <rect x="4.5" y="5"  width="3" height="6"  rx="0.6"/>
+                      <rect x="9"  y="3"  width="3" height="8"  rx="0.6"/>
+                      <rect x="13.5" y="0" width="3" height="11" rx="0.6"/>
+                    </svg>
+                    <!-- wifi -->
+                    <svg width="12" height="9" viewBox="0 0 15 11" aria-hidden="true">
+                      <path d="M7.5 2.4c2.6 0 5.1 1 6.9 2.7l-1.4 1.4a7.8 7.8 0 0 0-11 0L.6 5.1A9.8 9.8 0 0 1 7.5 2.4Zm0 3.4c1.7 0 3.4.7 4.6 1.9l-1.4 1.4a4.5 4.5 0 0 0-6.4 0L2.9 7.7a6.6 6.6 0 0 1 4.6-1.9Zm0 3.4c.8 0 1.6.3 2.2.9L7.5 11 5.3 10.1c.6-.6 1.4-.9 2.2-.9Z"/>
+                    </svg>
+                    <!-- battery -->
+                    <span class="phone-mockup__battery">
+                      <span>85</span>
+                      <span class="phone-mockup__battery-shell">
+                        <span class="phone-mockup__battery-fill"></span>
+                      </span>
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <figcaption class="cs-figure__caption">The survey — a data tool and a persuasion artifact.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 04 · STRATEGY ============ -->
+  <section class="cs-section">
+    <div class="cs-container">
+      <header class="cs-section__head">
+        <span class="cs-section__num">04 — Strategy</span>
+        <h2 class="cs-section__title">How I designed it to become reality.</h2>
+      </header>
+      <div class="cs-section__body">
+        <div class="cs-section__copy">
+          <p class="cs-lead">I designed the digital platform to act as a strategic validation engine that actively manufactures the credibility and data needed to secure city backing and investor capital.</p>
+          <p><strong>High-End Editorial Layout:</strong> Built a premium, deeply structured interface to establish immediate legitimacy as a serious economic development initiative, not a hobbyist space.</p>
+          <p><strong>Comparative Data Visuals:</strong> Engineered scannable tables pitting Chicago's infrastructure deficit directly against NYC and LA to force stakeholders to face the competitive gap causing our talent drain.</p>
+          <p><strong>Embedded Survey Engine:</strong> Integrated a research tool directly into the core user flow to capture real-time market proof — exact machine needs and price points — providing the empirical evidence required to secure our Phase 1 seed target ($250K–$750K).</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ NEXT PROJECT CTA ============ -->
+  <section class="cs-next">
+    <div class="cs-container">
+      <p class="cs-next__eyebrow">Next Project</p>
+      <a href="braid.html" class="cs-next__title">
+        Braid <span class="cs-next__arrow">→</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="cs-footer">
+    <div class="cs-container">
+      <div class="cs-footer__row">
+        <a href="../index.html#work" class="cs-footer__back">← Back to all work</a>
+        <a href="mailto:charlesathompsondesigns@gmail.com" class="cs-footer__contact">Get in touch</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
