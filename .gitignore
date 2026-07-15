@@ -12,8 +12,6 @@ Thumbs.db
 start-server.py
 .vercel
 
-# Oversized video — handle via compression before committing
-Braid/courses.mp4
 
 # Local agent settings
 .claude/
