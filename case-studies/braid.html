@@ -359,6 +359,10 @@
       line-height: 1.15;
       color: var(--cs-ink, var(--brown));
       text-align: center;
+      /* optical centering: italic letterforms lean right, so a
+         geometrically-centered heading reads as shifted right.
+         Nudge left ~0.14em to visually center over the phone. */
+      transform: translateX(-0.14em);
     }
     .cs-subhead + .cs-video-figure,
     .cs-subhead + .cs-figure {
