@@ -1038,14 +1038,15 @@ ul  { list-style: none; }
   margin: 0;
 }
 
-/* Three pill buttons aligned left */
+/* Three pill buttons aligned left, pinned to bottom of the card */
 .case-card__btns {
   display: flex;
   flex-direction: row;
   gap: 8px;
   flex-wrap: wrap;
   align-items: center;
-  margin-top: 8px;
+  margin-top: auto;
+  padding-top: 16px;
 }
 
 .case-pill {
