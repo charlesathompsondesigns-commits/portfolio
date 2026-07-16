@@ -14,9 +14,9 @@
     btn.setAttribute('aria-controls', links.id);
     btn.setAttribute('aria-label', 'Toggle menu');
     btn.innerHTML = '<svg class="nav__toggle-icon" viewBox="0 0 28 20" aria-hidden="true" focusable="false">' +
-      '<path d="M3.2 3 C 8 1.1, 20 1.1, 24.8 3 C 20 4.9, 8 4.9, 3.2 3 Z"/>' +
-      '<path d="M3.2 10 C 8 8.1, 20 8.1, 24.8 10 C 20 11.9, 8 11.9, 3.2 10 Z"/>' +
-      '<path d="M3.2 17 C 8 15.1, 20 15.1, 24.8 17 C 20 18.9, 8 18.9, 3.2 17 Z"/>' +
+      '<path d="M3.2 3 C 8 2.15, 20 2.15, 24.8 3 C 20 3.85, 8 3.85, 3.2 3 Z"/>' +
+      '<path d="M3.2 10 C 8 9.15, 20 9.15, 24.8 10 C 20 10.85, 8 10.85, 3.2 10 Z"/>' +
+      '<path d="M3.2 17 C 8 16.15, 20 16.15, 24.8 17 C 20 17.85, 8 17.85, 3.2 17 Z"/>' +
       '</svg>';
 
     nav.appendChild(btn);
