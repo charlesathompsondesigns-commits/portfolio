@@ -372,6 +372,18 @@ ul  { list-style: none; }
   }
 }
 
+/* Availability line — sits under the hero intro, fades with it */
+.hero__availability {
+  display: block;
+  margin-top: 1.75rem;
+  font-family: var(--font-franklin);
+  font-size: clamp(0.95rem, 1.4vw, 1.15rem);
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+  color: var(--white);
+  opacity: 0.85;
+}
+
 /* Individual word spans — stagger-revealed by JS */
 .word {
   display: inline-block;
@@ -739,6 +751,18 @@ ul  { list-style: none; }
   color: rgba(252,247,230,0.5);
   line-height: 1.7;
 }
+
+.contact__email {
+  display: inline-block;
+  margin-top: 18px;
+  font-family: var(--font-franklin);
+  font-size: 15px;
+  color: var(--cream);
+  border-bottom: 1px solid rgba(252,247,230,0.35);
+  padding-bottom: 2px;
+  transition: border-color 0.25s var(--ease-in-out);
+}
+.contact__email:hover { border-bottom-color: var(--cream); }
 
 .form { display: flex; flex-direction: column; gap: 16px; }
 
@@ -1208,7 +1232,8 @@ ul  { list-style: none; }
    ============================================================ */
 .media-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 380px));
+  justify-content: center;
   gap: 20px;
 }
 
