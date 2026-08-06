@@ -754,6 +754,7 @@ ul  { list-style: none; }
 
 .contact__email {
   display: inline-block;
+  overflow-wrap: anywhere; /* long address may break so it never forces page width */
   margin-top: 18px;
   font-family: var(--font-franklin);
   font-size: 15px;
@@ -771,6 +772,7 @@ ul  { list-style: none; }
 .form__input,
 .form__textarea {
   width: 100%;
+  min-width: 0; /* let inputs shrink below their browser-default intrinsic width */
   padding: 16px 20px;
   font-family: var(--font-franklin);
   font-size: 14px;
@@ -1137,14 +1139,16 @@ ul  { list-style: none; }
 .case-card--chronicle .case-card__title { color: #0a0e1f; }
 .case-card--chronicle .case-card__desc  { color: rgba(10, 14, 31, 0.72); }
 
-/* Chronicle hero image — fill the card edge-to-edge */
+/* Chronicle hero image — contain so all three phones stay visible;
+   white backdrop matches the PNG's own background so it reads seamless */
 .case-card--chronicle .case-card__img {
   padding: 0;
+  background: #fff;
 }
 .case-card--chronicle .case-card__img img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center center;
 }
 
@@ -1165,7 +1169,9 @@ ul  { list-style: none; }
 /* Tablet portrait & below — stack image on top, full-width text */
 @media (max-width: 900px) {
   .case-card { grid-template-columns: 1fr; min-height: auto; }
-  .case-card__img { order: -1; min-height: 280px; aspect-ratio: 16 / 10; }
+  /* max-width: 100% — stops aspect-ratio from deriving a width wider than
+     the card from min-height, which overflowed and clipped the image */
+  .case-card__img { order: -1; min-height: 280px; aspect-ratio: 16 / 10; min-width: 0; max-width: 100%; }
   .case-card__text { padding: 32px 28px; }
   .case-card__title { font-size: clamp(40px, 7vw, 60px); }
   /* Text now owns the full card width, so let the description span it
