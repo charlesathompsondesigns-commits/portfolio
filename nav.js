@@ -52,9 +52,25 @@
     else if (mq.addListener) mq.addListener(onChange);
   }
 
+  // Featured Media marquee — clone the card set once so the CSS loop
+  // (translateX(-50%)) hands off seamlessly. Clones are decorative.
+  function initMarquee() {
+    var track = document.querySelector('.media-track');
+    if (!track || track.querySelector('.media-card--dupe')) return;
+    var cards = Array.prototype.slice.call(track.children);
+    cards.forEach(function (card) {
+      var dupe = card.cloneNode(true);
+      dupe.classList.add('media-card--dupe');
+      dupe.setAttribute('aria-hidden', 'true');
+      dupe.setAttribute('tabindex', '-1');
+      track.appendChild(dupe);
+    });
+  }
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('DOMContentLoaded', function () { init(); initMarquee(); });
   } else {
     init();
+    initMarquee();
   }
 })();

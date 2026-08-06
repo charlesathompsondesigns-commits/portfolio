@@ -1236,11 +1236,38 @@ ul  { list-style: none; }
 /* ============================================================
    Featured Media
    ============================================================ */
-.media-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 380px));
-  justify-content: center;
-  gap: 20px;
+/* Horizontal marquee — cards drift left in a seamless loop.
+   nav.js clones the card set once (aria-hidden) so -50% lands exactly
+   one set over; margin-right (not gap) keeps the math exact. */
+.media-marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+}
+
+.media-track {
+  display: flex;
+  width: max-content;
+  animation: media-scroll 40s linear infinite;
+}
+
+.media-marquee:hover .media-track { animation-play-state: paused; }
+
+@keyframes media-scroll {
+  to { transform: translateX(-50%); }
+}
+
+.media-track .media-card {
+  width: clamp(240px, 26vw, 340px);
+  flex-shrink: 0;
+  margin-right: 20px;
+}
+
+/* No motion preference — static, swipeable row instead */
+@media (prefers-reduced-motion: reduce) {
+  .media-track { animation: none; }
+  .media-marquee { overflow-x: auto; }
+  .media-card--dupe { display: none; }
 }
 
 .media-card {
@@ -1310,8 +1337,10 @@ ul  { list-style: none; }
 
 .media-card:hover .media-card__link { color: var(--brown); }
 
-@media (max-width: 900px) { .media-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 500px) { .media-grid { grid-template-columns: 1fr; } }
+/* Slightly quicker drift on small screens so the loop stays lively */
+@media (max-width: 600px) {
+  .media-track { animation-duration: 28s; }
+}
 
 
 /* ============================================================
