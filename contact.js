@@ -3,7 +3,7 @@
   // apps-script/Code.gs for the script and setup steps). While this is
   // blank the form falls back to opening the visitor's mail client, so
   // it is never a dead end.
-  var ENDPOINT = 'https://script.google.com/macros/s/AKfycbxcD3fTG7OBEs_-r-u3r73jLhJymBqmZ6KZxAmgeIueMPzAfuFQMCiwuHOlyA_msORLLw/exec';
+  var ENDPOINT = 'https://script.google.com/macros/s/AKfycbxAx4tuJd_E2YCq27VHrxiSQgQgER7ljIJZ7q8ZZuCyXb9ItDkuvqex_P6Xl-miCv9Z-A/exec';
 
   var FALLBACK_EMAIL = 'charlesathompsondesigns@gmail.com';
 
@@ -12,6 +12,40 @@
     if (!el) return;
     el.textContent = message;
     el.className = 'form__status' + (state ? ' form__status--' + state : '');
+  }
+
+  // Swap the whole form for a confirmation panel. Far harder to miss than a
+  // line of text under the button, and it makes double-submitting impossible.
+  function showSuccess(form, email) {
+    var panel = document.createElement('div');
+    panel.className = 'form-success';
+    panel.setAttribute('role', 'status');
+    panel.setAttribute('aria-live', 'polite');
+    panel.innerHTML =
+      '<svg class="form-success__mark" viewBox="0 0 52 52" aria-hidden="true" focusable="false">' +
+        '<circle class="form-success__circle" cx="26" cy="26" r="24" />' +
+        '<path class="form-success__check" d="M15 27.5 L22.5 35 L37.5 19" />' +
+      '</svg>' +
+      '<h3 class="form-success__title">Message sent</h3>' +
+      '<p class="form-success__text"></p>' +
+      '<button class="form-success__again" type="button">Send another message</button>';
+
+    panel.querySelector('.form-success__text').textContent =
+      'Thanks for reaching out. A confirmation is on its way to ' + email +
+      ' — I’ll be in touch soon.';
+
+    form.classList.add('is-sent');
+    form.setAttribute('hidden', '');
+    form.parentNode.insertBefore(panel, form.nextSibling);
+
+    panel.querySelector('.form-success__again').addEventListener('click', function () {
+      panel.remove();
+      form.removeAttribute('hidden');
+      form.classList.remove('is-sent');
+      setStatus(form, '', '');
+      var firstField = form.elements['first'];
+      if (firstField) firstField.focus();
+    });
   }
 
   function values(form) {
@@ -98,8 +132,10 @@
         .then(function (res) { return res.json(); })
         .then(function (data) {
           if (!data || data.result !== 'success') throw new Error('rejected');
+          var sentTo = v.email;
           form.reset();
-          setStatus(form, 'Thanks — your message is on its way. I’ll be in touch soon.', 'ok');
+          setStatus(form, '', '');
+          showSuccess(form, sentTo);
         })
         .catch(function () {
           setStatus(form, 'That didn’t send. Opening your email app instead…', 'error');

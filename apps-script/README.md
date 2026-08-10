@@ -42,12 +42,29 @@ client with the message pre-filled. It is never a dead end — but those message
 only arrive if the visitor actually hits send in their mail app, so finish the
 setup above.
 
+## What each submission triggers
+
+1. A row appended to the **Submissions** tab
+2. An email to `NOTIFY_EMAIL`, with reply-to set to the visitor
+3. An **auto-reply to the visitor** confirming their message arrived, quoting
+   it back for their records, with reply-to set to Charlesa
+
+Auto-replies are capped at `MAX_CONFIRMATIONS_PER_DAY` (40). The endpoint is
+public, so without a cap it could be pointed at strangers to send them mail —
+and it would burn the 100/day Gmail quota. If the cap is hit, the submission is
+still saved and still emailed to Charlesa; only the courtesy auto-reply is
+skipped, and the Sheet's **Confirmation** column records `rate-limited`.
+
 ## Changing the script later
 
 Edits to `Code.gs` do **not** go live until you redeploy: **Deploy → Manage
 deployments → pencil icon → Version: New version → Deploy**. The URL stays the
 same. This trips people up constantly — if a change seems to have no effect,
 this is why.
+
+**Bump `VERSION` at the top of `Code.gs` whenever you change the file.** Loading
+the Web app URL in a browser returns that number, which is the only way to tell
+from outside whether a redeploy actually took. Currently `VERSION = 2`.
 
 ## Spam
 

@@ -821,6 +821,96 @@ ul  { list-style: none; }
 
 .form .btn[disabled] { opacity: 0.55; cursor: default; }
 
+/* ---- Submission confirmation ---- */
+
+.form-success {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 36px 32px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 6px;
+  animation: form-success-in var(--dur-mid) var(--ease-in-out) both;
+}
+
+@keyframes form-success-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.form-success__mark { width: 44px; height: 44px; overflow: visible; }
+
+.form-success__circle,
+.form-success__check {
+  fill: none;
+  stroke: #7FD1A6;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.form-success__circle {
+  stroke-dasharray: 151;
+  stroke-dashoffset: 151;
+  animation: form-success-draw 0.5s var(--ease-in-out) 0.1s forwards;
+}
+
+.form-success__check {
+  stroke-width: 3;
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+  animation: form-success-draw 0.3s var(--ease-in-out) 0.5s forwards;
+}
+
+@keyframes form-success-draw { to { stroke-dashoffset: 0; } }
+
+.form-success__title {
+  margin: 0;
+  font-family: var(--font-instrument-italic);
+  font-style: italic;
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--cream);
+}
+
+.form-success__text {
+  margin: 0;
+  max-width: 42ch;
+  font-family: var(--font-franklin);
+  font-size: 14px;
+  line-height: 1.7;
+  color: rgba(252,247,230,0.6);
+  overflow-wrap: anywhere; /* long email addresses must not blow out the panel */
+}
+
+.form-success__again {
+  margin-top: 4px;
+  padding: 0;
+  font-family: var(--font-franklin);
+  font-size: 13px;
+  color: rgba(252,247,230,0.55);
+  background: none;
+  border: 0;
+  border-bottom: 1px solid rgba(252,247,230,0.3);
+  cursor: pointer;
+  transition: color var(--dur-short) var(--ease-in-out),
+              border-color var(--dur-short) var(--ease-in-out);
+}
+
+.form-success__again:hover {
+  color: var(--cream);
+  border-bottom-color: var(--cream);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .form-success { animation: none; }
+  .form-success__circle,
+  .form-success__check { animation: none; stroke-dashoffset: 0; }
+}
+
 .btn {
   display: inline-flex;
   align-items: center;
