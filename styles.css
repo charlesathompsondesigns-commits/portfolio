@@ -1370,6 +1370,25 @@ ul  { list-style: none; }
   to { transform: translateX(-50%); }
 }
 
+/* nav.js drives the transform itself once it takes over, so the keyframe
+   animation has to get out of the way — the two cannot share `transform`.
+   The animation above stays as the fallback when JS never runs. */
+.media-marquee.is-interactive .media-track {
+  animation: none;
+  cursor: grab;
+  touch-action: pan-y;          /* horizontal is ours; vertical still scrolls */
+  user-select: none;
+  -webkit-user-select: none;
+  will-change: transform;
+}
+
+.media-marquee.is-dragging .media-track { cursor: grabbing; }
+
+/* The cards are links; during a drag the grab cursor should win. */
+.media-marquee.is-interactive .media-card { cursor: inherit; }
+
+.media-marquee.is-interactive .media-card img { -webkit-user-drag: none; }
+
 .media-track .media-card {
   width: clamp(240px, 26vw, 340px);
   flex-shrink: 0;
