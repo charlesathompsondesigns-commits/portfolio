@@ -798,6 +798,29 @@ ul  { list-style: none; }
 
 .form__textarea { resize: vertical; min-height: 140px; }
 
+/* Honeypot — off-screen rather than display:none, which some bots detect. */
+.form__hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.form__status {
+  margin: 0;
+  min-height: 20px;
+  font-family: var(--font-franklin);
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(252,247,230,0.6);
+}
+
+.form__status--ok    { color: #7FD1A6; }
+.form__status--error { color: #F2A0A0; }
+
+.form .btn[disabled] { opacity: 0.55; cursor: default; }
+
 .btn {
   display: inline-flex;
   align-items: center;

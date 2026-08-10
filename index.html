@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://www.thecharlesathompson.com" crossorigin>
   <link rel="stylesheet" href="styles.css" />
   <script defer src="nav.js"></script>
+  <script defer src="contact.js"></script>
 </head>
 <body>
 
@@ -258,15 +259,20 @@
           <a class="contact__email" href="mailto:charlesathompsondesigns@gmail.com">charlesathompsondesigns@gmail.com</a>
         </div>
 
-        <form class="form reveal reveal-delay-1" action="#" method="POST">
+        <form class="form reveal reveal-delay-1" method="POST" novalidate>
           <div class="form__row">
-            <input class="form__input" type="text" name="first" placeholder="First Name" autocomplete="given-name" />
+            <input class="form__input" type="text" name="first" placeholder="First Name" autocomplete="given-name" required />
             <input class="form__input" type="text" name="last"  placeholder="Last Name"  autocomplete="family-name" />
           </div>
-          <input class="form__input" type="email" name="email" placeholder="Email" autocomplete="email" />
+          <input class="form__input" type="email" name="email" placeholder="Email" autocomplete="email" required />
           <input class="form__input" type="text"  name="subject" placeholder="Subject" />
-          <textarea class="form__textarea" name="message" placeholder="Message"></textarea>
+          <textarea class="form__textarea" name="message" placeholder="Message" required></textarea>
+          <!-- Honeypot: hidden from people, tempting to bots. Leave empty. -->
+          <div class="form__hp" aria-hidden="true">
+            <label>Company<input type="text" name="company" tabindex="-1" autocomplete="off" /></label>
+          </div>
           <button class="btn btn--light" type="submit">Send Message →</button>
+          <p class="form__status" role="status" aria-live="polite"></p>
         </form>
       </div>
     </div>
