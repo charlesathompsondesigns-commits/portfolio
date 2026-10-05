@@ -6,8 +6,9 @@
   <title>Braid — Charlesa Thompson</title>
   <meta name="description" content="An AI-powered haircare platform designed for people with textured hair. UX/UI case study by Charlesa Thompson." />
   <meta name="theme-color" content="#dfd5ed" />
-  <link rel="stylesheet" href="../styles.css" />
+  <link rel="stylesheet" href="../styles.css?v=20261005f" />
   <script defer src="../nav.js"></script>
+  <script defer src="../wall.js?v=20261005b"></script>
 
   <style>
     /* Design-system iframe preview (Braid case study only) */
@@ -60,6 +61,31 @@
       color: var(--cs-muted);
     }
 
+    /* ---------- Brand wall centre tile: the shop's loading screen ----------
+       Mirrors the intro in the shop itself (braid-fx.js): deep indigo field,
+       logo breathing with a lilac glow. */
+    .cs-wall__hero--loader {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(120% 90% at 50% 45%, rgba(90, 25, 155, 0.28) 0%, rgba(24, 23, 44, 0) 60%),
+        #18172c;
+    }
+    .cs-wall__hero--loader img {
+      width: auto;
+      height: 24%;
+      object-fit: contain;
+      animation: braid-loader-glow 1.7s ease-in-out infinite alternate;
+    }
+    @keyframes braid-loader-glow {
+      from { filter: drop-shadow(0 0 10px rgba(200, 188, 246, 0.40)) drop-shadow(0 0 30px rgba(90, 25, 155, 0.30)); transform: scale(1); }
+      to   { filter: drop-shadow(0 0 22px rgba(226, 197, 255, 0.95)) drop-shadow(0 0 54px rgba(90, 25, 155, 0.55)); transform: scale(1.04); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .cs-wall__hero--loader img { animation: none; filter: drop-shadow(0 0 16px rgba(200, 188, 246, 0.7)); }
+    }
+
     /* ---------- Waitlist promo (top of Braid case study) ---------- */
     .cs-waitlist {
       padding: clamp(48px, 7vw, 96px) 0 clamp(32px, 5vw, 56px);
@@ -72,7 +98,7 @@
     }
     @media (min-width: 860px) {
       .cs-waitlist__grid {
-        grid-template-columns: 1.05fr 0.95fr;
+        grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
       }
     }
     .cs-waitlist__eyebrow {
@@ -94,6 +120,7 @@
       color: var(--brown);
       margin-bottom: 20px;
       max-width: 14ch;
+      text-wrap: balance;
     }
     .cs-waitlist__copy {
       font-family: var(--font-source);
@@ -128,156 +155,33 @@
     .cs-waitlist__cta:hover .cs-waitlist__cta-arrow {
       transform: translateX(4px);
     }
-
-    /* ---------- Phone mockup w/ live iframe ----------
-       Strategy: render iframe at an iPhone-equivalent viewport
-       (390 × 845) so the page paints its mobile layout, then
-       CSS-scale it down to fit inside the mockup screen.
-
-       --phone-w sets the outer device width; the inner screen
-       and the iframe scale are derived from it.
-       ---------------------------------------------------- */
-    .phone-mockup {
-      /* phone-w 240, pad 10 → screen 220 × 500.
-         vp-w 390 → scale 0.564 → vp-h 890 fills screen exactly. */
-      --phone-w: 240px;
-      --phone-pad: 10px;
-      --vp-w: 390px;
-      --vp-h: 890px;
-
-      position: relative;
-      width: var(--phone-w);
-      aspect-ratio: 9 / 19.5;
-      margin: 0 auto;
-      background: #0f0a07;
-      border-radius: 38px;
-      padding: var(--phone-pad);
-      box-shadow:
-        0 28px 64px rgba(0, 0, 0, 0.30),
-        0 6px 18px rgba(0, 0, 0, 0.16),
-        inset 0 0 0 2px rgba(255, 255, 255, 0.06);
-    }
-    .phone-mockup::before {
-      /* dynamic island / notch */
-      content: "";
-      position: absolute;
-      top: 14px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 76px;
-      height: 20px;
-      background: #000;
-      border-radius: 999px;
-      z-index: 4;
-      pointer-events: none;
-    }
-
-    /* ---------- iOS-style status bar ----------
-       Aligned vertically with the dynamic island (top: 14px,
-       height: 20px) so time/icons sit on the same baseline as
-       the notch, flanking it left & right. */
-    .phone-mockup__statusbar {
-      position: absolute;
-      top: 14px;
-      left: 0;
-      right: 0;
-      height: 20px;
-      padding: 0 16px;
+    .cs-waitlist__actions {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      color: #fff;
-      font-family: "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: -0.01em;
-      line-height: 1;
-      z-index: 3;
-      pointer-events: none;
+      flex-wrap: wrap;
+      gap: 12px;
     }
-    .phone-mockup__time {
-      /* Optical adjustment: time reads slightly off-center next
-         to the notch without this tiny lift. */
-      transform: translateY(-0.5px);
+    .cs-waitlist__cta--outline {
+      background: transparent;
+      color: var(--brown);
+      box-shadow: inset 0 0 0 1.5px var(--brown);
     }
-    .phone-mockup__icons {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
+    .cs-waitlist__cta--outline:hover {
+      background: var(--brown);
+      color: var(--cream);
     }
-    .phone-mockup__icons svg {
-      display: block;
-      fill: currentColor;
-    }
-    .phone-mockup__battery {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-      gap: 2px;
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 0;
-      line-height: 1;
-    }
-    .phone-mockup__battery-shell {
-      position: relative;
-      width: 18px;
-      height: 9px;
-      border: 1px solid currentColor;
-      border-radius: 2.5px;
-      opacity: 0.95;
-      box-sizing: border-box;
-    }
-    .phone-mockup__battery-shell::after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      right: -2.5px;
-      transform: translateY(-50%);
-      width: 1.5px;
-      height: 4px;
-      background: currentColor;
-      border-radius: 0 1px 1px 0;
-      opacity: 0.85;
-    }
-    .phone-mockup__battery-fill {
-      position: absolute;
-      top: 1px;
-      left: 1px;
-      bottom: 1px;
-      width: calc((100% - 2px) * 0.85);
-      background: currentColor;
-      border-radius: 1px;
-    }
-    .phone-mockup__screen {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      background: #0f0a07;
-      border-radius: 30px;
-      overflow: hidden;
-      isolation: isolate;
-    }
-    .phone-mockup__screen iframe {
-      position: absolute;
-      /* Push iframe down so the page H1 clears the dynamic island
-         (notch occupies y=14→34 within the screen). The screen's
-         dark background fills the top safe-area band behind the
-         status bar elements. */
-      top: 38px;
-      left: 0;
-      width: var(--vp-w);
-      height: var(--vp-h);
-      border: 0;
-      display: block;
-      transform-origin: top left;
-      /* scale so iframe (vp-w wide) fits the screen inner width
-         (phone-w − 2 × phone-pad) */
-      transform: scale(calc((var(--phone-w) - 2 * var(--phone-pad)) / var(--vp-w)));
-    }
+    .cs-waitlist__cta[hidden] { display: none; }
 
-    @media (max-width: 540px) {
-      .phone-mockup { --phone-w: 220px; }
+    /* The .iphone device mockup itself lives in styles.css (shared). */
+    /* ---------- Hero phone ---------- */
+    .cs-phones {
+      display: flex;
+      justify-content: center;
+    }
+    .cs-phones .iphone { --w: 264; }
+    @media (min-width: 860px)  { .cs-phones .iphone { --w: 300; } }
+    @media (min-width: 1200px) { .cs-phones .iphone { --w: 330; } }
+    .cs-phones__item {
+      margin: 0;
     }
 
     /* ---------- Showreel (video right after the waitlist) ---------- */
@@ -423,52 +327,103 @@
         <span class="cs-pill cs-pill--right">Textured Hair</span>
       </div>
       <p class="cs-hero__date">September 2024 - Now</p>
-      <figure class="cs-hero__cover">
-        <img src="../Braid/Slide%20show.png" alt="Braid — interface, identity, and community imagery" />
-      </figure>
+    </div>
+
+    <!-- ============ BRAND WALL ============
+         Scroll-driven photo marquee (styles.css → .cs-wall, wall.js).
+         Negative data-speed moves a row right; the centre tile stays put. -->
+    <div class="cs-wall" data-wall>
+      <div class="cs-wall__stage">
+        <div class="cs-wall__row" data-speed="1">
+          <div class="cs-wall__track">
+            <img class="cs-wall__tile" src="../Braid/wall/event-listening.webp" width="870" height="580" style="aspect-ratio: 870 / 580" alt="Attendee listening during a Braid community event" decoding="async" draggable="false" />
+            <img class="cs-wall__tile" src="../Braid/wall/bag-flatlay.webp" width="326" height="580" style="aspect-ratio: 326 / 580" alt="Braid scarf, charms, and scrunchie laid out beside a leather bag" decoding="async" draggable="false" />
+            <img class="cs-wall__tile" src="../Braid/wall/screens-discovery.webp" width="1160" height="580" style="aspect-ratio: 1160 / 580" alt="Braid app screens — hair texture quiz, profile, and AI stylist" decoding="async" draggable="false" />
+            <img class="cs-wall__tile" src="../Braid/wall/salon.webp" width="547" height="547" style="aspect-ratio: 547 / 547" alt="A stylist braiding a client’s hair in a salon" decoding="async" draggable="false" />
+            <img class="cs-wall__tile" src="../Braid/wall/event-braids-bow.webp" width="387" height="580" style="aspect-ratio: 387 / 580" alt="Attendee with blonde-tipped box braids tied back with a ribbon" decoding="async" draggable="false" />
+            <img class="cs-wall__tile" src="../Braid/wall/sign.webp" width="546" height="359" style="aspect-ratio: 546 / 359" alt="Round shop sign with the braided Braid “B” logo" decoding="async" draggable="false" />
+            <img class="cs-wall__tile" src="../Braid/wall/stickers-laptop.webp" width="580" height="580" style="aspect-ratio: 580 / 580" alt="Braid sticker pack on a laptop lid" decoding="async" draggable="false" />
+          </div>
+        </div>
+        <div class="cs-wall__row cs-wall__row--main" data-speed="-0.8">
+          <div class="cs-wall__track">
+            <img class="cs-wall__tile" src="../Braid/wall/scarf-worn.webp" width="506" height="900" style="aspect-ratio: 506 / 900" alt="The Braid silk scarf and satin scrunchie worn in locs" decoding="async" draggable="false" />
+            <img class="cs-wall__tile" src="../Braid/wall/brand-mark.webp" width="1372" height="900" style="aspect-ratio: 1372 / 900" alt="Braid wordmark with app screens — “because your hair deserves better”" decoding="async" draggable="false" />
+            <img class="cs-wall__tile" src="../Braid/wall/event-speaker.webp" width="600" height="900" style="aspect-ratio: 600 / 900" alt="Speaker seated in front of a screen showing the Braid logo" decoding="async" draggable="false" />
+            <img class="cs-wall__tile" src="../Braid/wall/app-screens.webp" width="1600" height="1166" style="aspect-ratio: 1600 / 1166" alt="Braid app screens fanned out around the app’s start screen" decoding="async" draggable="false" />
+            <img class="cs-wall__tile" src="../Braid/wall/charms.webp" width="800" height="900" style="aspect-ratio: 800 / 900" alt="Braid charm keychain clipped to a leather bag" decoding="async" draggable="false" />
+            <img class="cs-wall__tile" src="../Braid/wall/event-mic.webp" width="1350" height="900" style="aspect-ratio: 1350 / 900" alt="Attendee smiling while speaking into a microphone at a Braid event" decoding="async" draggable="false" />
+            <img class="cs-wall__tile" src="../Braid/wall/bag-sky.webp" width="506" height="900" style="aspect-ratio: 506 / 900" alt="Leather bag carrying a notebook covered in Braid stickers" decoding="async" draggable="false" />
+          </div>
+        </div>
+        <div class="cs-wall__row" data-speed="1.25">
+          <div class="cs-wall__track">
+            <img class="cs-wall__tile" src="../Braid/wall/event-panel.webp" width="514" height="580" style="aspect-ratio: 514 / 580" alt="Panelist speaking into a microphone at a community event" decoding="async" draggable="false" />
+            <img class="cs-wall__tile" src="../Braid/wall/screens-onboarding.webp" width="1166" height="580" style="aspect-ratio: 1166 / 580" alt="Braid app screens — home feed, style detail, and courses" decoding="async" draggable="false" />
+            <img class="cs-wall__tile" src="../Braid/wall/scrunchie.webp" width="470" height="580" style="aspect-ratio: 470 / 580" alt="Purple satin Braid scrunchie worn in curly hair" decoding="async" draggable="false" />
+            <img class="cs-wall__tile" src="../Braid/wall/scarf-tied.webp" width="493" height="580" style="aspect-ratio: 493 / 580" alt="Model tying the Braid silk scarf around their locs" decoding="async" draggable="false" />
+            <img class="cs-wall__tile" src="../Braid/wall/braid-render.webp" width="395" height="580" style="aspect-ratio: 395 / 580" alt="3D braid render with Braid app icons" decoding="async" draggable="false" />
+            <img class="cs-wall__tile" src="../Braid/wall/stickers-held.webp" width="326" height="580" style="aspect-ratio: 326 / 580" alt="Laptop covered in Braid stickers" decoding="async" draggable="false" />
+            <img class="cs-wall__tile" src="../Braid/wall/stickers-bag.webp" width="500" height="580" style="aspect-ratio: 500 / 580" alt="Braid stickers on a notebook tucked into a leather bag" decoding="async" draggable="false" />
+          </div>
+        </div>
+        <!-- Centre tile: the Braid Shop's loading screen, rebuilt live (same
+             colour, logo and glow as the shop's own intro) so it stays sharp. -->
+        <figure class="cs-wall__hero cs-wall__hero--loader">
+          <img src="../Braid/wall/braid-logo.png" alt="The Braid Shop loading screen — the glowing braided Braid logo" fetchpriority="high" draggable="false" />
+        </figure>
+      </div>
     </div>
   </header>
 
   <!-- ============ WAITLIST PROMO ============ -->
-  <section class="cs-section cs-waitlist" aria-label="Join the Braid waitlist">
+  <section class="cs-section cs-waitlist" aria-label="The Braid Shop">
     <div class="cs-container">
       <div class="cs-waitlist__grid">
         <div>
-          <p class="cs-waitlist__eyebrow">Now Live · Waitlist Open</p>
-          <h2 class="cs-waitlist__title">Be first to Braid.</h2>
-          <p class="cs-waitlist__copy">Braid is launching to the public soon. Join the waitlist to get early access, product updates, and an invite to try the app before anyone else.</p>
-          <a class="cs-waitlist__cta" href="https://www.braidtech.org/waitlist" target="_blank" rel="noopener">
-            Sign Up for the Waitlist
-            <span class="cs-waitlist__cta-arrow" aria-hidden="true">→</span>
-          </a>
+          <p class="cs-waitlist__eyebrow">Now Live · Designed &amp; Built by Me</p>
+          <h2 class="cs-waitlist__title">The Braid Shop is open.</h2>
+          <p class="cs-waitlist__copy">I designed and built Braid's storefront — scarves, charms, and studio essentials in a mobile-first shop. It's live now: scroll it right here in the phone, or open the full site.</p>
+          <div class="cs-waitlist__actions">
+            <a class="cs-waitlist__cta" href="https://shop-braidtech.vercel.app/" target="_blank" rel="noopener">
+              Visit the Braid Shop
+              <span class="cs-waitlist__cta-arrow" aria-hidden="true">→</span>
+            </a>
+            <a class="cs-waitlist__cta cs-waitlist__cta--outline" href="https://www.braidtech.org/waitlist" target="_blank" rel="noopener" data-waitlist-cta hidden>
+              Sign Up for the Waitlist
+              <span class="cs-waitlist__cta-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
         </div>
-        <div class="phone-mockup" aria-hidden="true">
-          <div class="phone-mockup__screen">
-            <iframe src="https://www.braidtech.org/waitlist" title="Braid — Waitlist signup" loading="lazy"></iframe>
-          </div>
-          <div class="phone-mockup__statusbar">
-            <span class="phone-mockup__time">9:41</span>
-            <span class="phone-mockup__icons">
-              <!-- signal -->
-              <svg width="13" height="9" viewBox="0 0 17 11" aria-hidden="true">
-                <rect x="0"  y="7"  width="3" height="4"  rx="0.6"/>
-                <rect x="4.5" y="5"  width="3" height="6"  rx="0.6"/>
-                <rect x="9"  y="3"  width="3" height="8"  rx="0.6"/>
-                <rect x="13.5" y="0" width="3" height="11" rx="0.6"/>
-              </svg>
-              <!-- wifi -->
-              <svg width="12" height="9" viewBox="0 0 15 11" aria-hidden="true">
-                <path d="M7.5 2.4c2.6 0 5.1 1 6.9 2.7l-1.4 1.4a7.8 7.8 0 0 0-11 0L.6 5.1A9.8 9.8 0 0 1 7.5 2.4Zm0 3.4c1.7 0 3.4.7 4.6 1.9l-1.4 1.4a4.5 4.5 0 0 0-6.4 0L2.9 7.7a6.6 6.6 0 0 1 4.6-1.9Zm0 3.4c.8 0 1.6.3 2.2.9L7.5 11 5.3 10.1c.6-.6 1.4-.9 2.2-.9Z"/>
-              </svg>
-              <!-- battery -->
-              <span class="phone-mockup__battery">
-                <span>85</span>
-                <span class="phone-mockup__battery-shell">
-                  <span class="phone-mockup__battery-fill"></span>
-                </span>
-              </span>
-            </span>
-          </div>
+        <div class="cs-phones">
+          <figure class="cs-phones__item">
+            <div class="iphone" aria-hidden="true">
+              <span class="iphone__btn iphone__btn--action"></span>
+              <span class="iphone__btn iphone__btn--vol-up"></span>
+              <span class="iphone__btn iphone__btn--vol-down"></span>
+              <span class="iphone__btn iphone__btn--power"></span>
+              <span class="iphone__btn iphone__btn--camera"></span>
+              <div class="iphone__frame">
+                <div class="iphone__bezel">
+                  <div class="iphone__screen">
+                    <div class="iphone__viewport">
+                      <iframe src="https://shop-braidtech.vercel.app/" title="Braid Shop — home" tabindex="-1"></iframe>
+                      <div class="iphone__status" aria-hidden="true">
+                        <span>9:41</span>
+                        <span class="iphone__island"></span>
+                        <span class="iphone__icons">
+                          <svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="0.8"/><rect x="5" y="5.5" width="3" height="6.5" rx="0.8"/><rect x="10" y="3" width="3" height="9" rx="0.8"/><rect x="15" y="0" width="3" height="12" rx="0.8"/></svg>
+                          <svg width="17" height="12" viewBox="0 0 17 12"><path d="M8.5 2.2c2.6 0 5 1 6.8 2.7l1-1.1A11.3 11.3 0 0 0 8.5.6C5.6.6 2.9 1.7.7 3.8l1 1.1A9.8 9.8 0 0 1 8.5 2.2Zm0 3.6c1.6 0 3.1.6 4.3 1.7l1-1.1a7.800 7.800 0 0 0-10.600 0l1 1.100a6.300 6.300 0 0 1 4.300-1.700Zm0 3.600c.7 0 1.400.300 1.900.700L8.500 12l-1.900-1.900c.5-.400 1.200-.700 1.900-.700Z"/></svg>
+                          <svg width="27" height="13" viewBox="0 0 27 13"><rect x="0.5" y="0.5" width="23" height="12" rx="3.8" fill="none" stroke="currentColor" opacity="0.4"/><rect x="2" y="2" width="20" height="9" rx="2.5"/><path d="M25 4.5v4c.8-.3 1.5-1.1 1.5-2s-.7-1.700-1.500-2Z" opacity="0.45"/></svg>
+                        </span>
+                      </div>
+                      <span class="iphone__home"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </figure>
         </div>
       </div>
     </div>
@@ -501,7 +456,7 @@
       <div class="cs-section__body">
         <div class="cs-section__split">
           <div class="cs-section__copy">
-            <p class="cs-lead">Braid was inspired by the Braid team's shared experience navigating textured hair care and the frustration of having to piece together advice from social media, blogs, and inconsistent product recommendations. There was no single trusted platform that provided personalized guidance for textured hair.</p>
+            <p class="cs-lead">Braid was inspired by an experience my teammates and I shared — navigating textured hair care, and the frustration of having to piece together advice from social media, blogs, and inconsistent product recommendations. There was no single trusted platform that provided personalized guidance for textured hair.</p>
           </div>
           <figure class="cs-figure">
             <div class="cs-figure__img">
@@ -522,7 +477,7 @@
       </header>
       <div class="cs-section__body">
         <div class="cs-section__copy">
-          <p class="cs-lead">To solve this, the Braid team created Braid, an AI-powered haircare platform designed for people with textured hair. The app helps users identify their hair type, build personalized routines, discover products, and receive step-by-step recommendations tailored to their specific hair goals.</p>
+          <p class="cs-lead">To solve this, we built Braid, an AI-powered haircare platform designed for people with textured hair. The app helps users identify their hair type, build personalized routines, discover products, and receive step-by-step recommendations tailored to their specific hair goals.</p>
         </div>
 
         <h3 class="cs-subhead">Course Landing</h3>
@@ -564,7 +519,7 @@
       </header>
       <div class="cs-section__body">
         <div class="cs-section__copy">
-          <p class="cs-lead">The Braid team led the project from concept to execution by conducting user research, defining the product strategy, designing the UX/UI, and developing the business plan and MVP roadmap. Braid demonstrates the team's ability to transform a real-world problem into a thoughtful, scalable product with a clear market opportunity.</p>
+          <p class="cs-lead">I led UX/UI design, owning product structure, user flows, and the visual system from concept through MVP. The four of us — Areanna Whittington, Gabrielle Vidal, Taiwo Ayedun, and me — ran the user research together, defined the product strategy, and developed the business plan and MVP roadmap. Braid took a real-world problem and turned it into a thoughtful, scalable product with a clear market opportunity.</p>
         </div>
         <figure class="cs-figure">
           <div class="cs-figure__img">
@@ -625,6 +580,18 @@
       </div>
     </div>
   </footer>
+
+  <script>
+    /* Reveal the waitlist button only when the Braid waitlist site is
+       reachable, so it never links to an error page. */
+    (function () {
+      var cta = document.querySelector('[data-waitlist-cta]');
+      if (!cta || !window.fetch) return;
+      fetch(cta.href, { mode: 'no-cors' }).then(function () {
+        cta.hidden = false;
+      }).catch(function () {});
+    })();
+  </script>
 
 </body>
 </html>

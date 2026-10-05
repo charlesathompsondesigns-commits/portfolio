@@ -6,7 +6,7 @@
   <title>The Columbia Chronicle — Charlesa Thompson</title>
   <meta name="description" content="Designing the first mobile app experience for a legacy student newsroom. UX/UI case study by Charlesa Thompson." />
   <meta name="theme-color" content="#dce8f4" />
-  <link rel="stylesheet" href="../styles.css" />
+  <link rel="stylesheet" href="../styles.css?v=20261005f" />
   <style>
     /* Placeholder image blocks — drop a real <img> in and remove the
        --empty modifier when the visual is ready. Aspect-ratio keeps them
@@ -137,34 +137,10 @@
       align-items: center;
       gap: 18px;
     }
-    .live-proto__phone {
-      width: max-content;
-      padding: 8px;
-      border-radius: 44px;
-      background: #0a0e1f;
-      box-shadow: 0 24px 60px rgba(10, 14, 31, 0.35);
-    }
-    .live-proto__screen {
-      position: relative;
-      width: 300px;
-      aspect-ratio: 393 / 852;
-      border-radius: 36px;
-      overflow: hidden;
-      background: #fff;
-      flex-shrink: 0;
-    }
-    /* App renders at its native 375px design width, then is scaled down
-       proportionally via CSS so it fits the phone frame without stretching. */
-    .live-proto__screen iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 375px;
-      height: 813px;
-      border: 0;
-      transform-origin: top left;
-      transform: scale(0.8); /* 300 ÷ 375 */
-    }
+    /* The phone is the shared .iphone mockup (styles.css). The prototype
+       draws its own status bar, so it runs full-bleed (.iphone--app) at
+       its native 375pt design width. */
+    .live-proto .iphone { --w: 322; --vp-w: 375; --vp-h: 815; --fg: #0a0e1f; }
     .live-proto__link {
       font-family: var(--font-franklin-medium, "Inter", sans-serif);
       font-size: 13px;
@@ -217,9 +193,30 @@
       </header>
       <div class="cs-section__body">
         <div class="live-proto">
-          <div class="live-proto__phone">
-            <div class="live-proto__screen">
-              <iframe src="../Chronicle_index.html?embed=1" title="The Columbia Chronicle — live interactive prototype" loading="lazy" allow="autoplay; fullscreen"></iframe>
+          <div class="iphone iphone--app">
+            <span class="iphone__btn iphone__btn--action"></span>
+            <span class="iphone__btn iphone__btn--vol-up"></span>
+            <span class="iphone__btn iphone__btn--vol-down"></span>
+            <span class="iphone__btn iphone__btn--power"></span>
+            <span class="iphone__btn iphone__btn--camera"></span>
+            <div class="iphone__frame">
+              <div class="iphone__bezel">
+                <div class="iphone__screen">
+                  <div class="iphone__viewport">
+                    <iframe src="../Chronicle_index.html?embed=1&amp;v=20261005b" title="The Columbia Chronicle — live interactive prototype" loading="lazy" allow="autoplay; fullscreen"></iframe>
+                    <div class="iphone__status" aria-hidden="true">
+                      <span>9:41</span>
+                      <span class="iphone__island"></span>
+                      <span class="iphone__icons">
+                        <svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="0.8"/><rect x="5" y="5.5" width="3" height="6.5" rx="0.8"/><rect x="10" y="3" width="3" height="9" rx="0.8"/><rect x="15" y="0" width="3" height="12" rx="0.8"/></svg>
+                        <svg width="17" height="12" viewBox="0 0 17 12"><path d="M8.5 2.2c2.6 0 5 1 6.8 2.7l1-1.1A11.3 11.3 0 0 0 8.5.6C5.6.6 2.9 1.7.7 3.8l1 1.1A9.8 9.8 0 0 1 8.5 2.2Zm0 3.6c1.6 0 3.1.6 4.3 1.7l1-1.1a7.800 7.800 0 0 0-10.600 0l1 1.100a6.300 6.300 0 0 1 4.300-1.700Zm0 3.600c.7 0 1.400.300 1.900.700L8.500 12l-1.900-1.900c.5-.400 1.200-.700 1.900-.700Z"/></svg>
+                        <svg width="27" height="13" viewBox="0 0 27 13"><rect x="0.5" y="0.5" width="23" height="12" rx="3.8" fill="none" stroke="currentColor" opacity="0.4"/><rect x="2" y="2" width="20" height="9" rx="2.5"/><path d="M25 4.5v4c.8-.3 1.5-1.1 1.5-2s-.7-1.700-1.500-2Z" opacity="0.45"/></svg>
+                      </span>
+                    </div>
+                    <span class="iphone__home"></span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <a class="live-proto__link" href="../Chronicle_index.html" target="_blank" rel="noopener">Open the prototype in a new tab →</a>

@@ -2258,3 +2258,301 @@ ul  { list-style: none; }
   .cs-hero { padding-top: calc(var(--nav-height) + 32px); }
   .cs-overview__grid { grid-template-columns: 1fr 1fr; gap: 24px; }
 }
+
+/* ============================================================
+   iPhone 17 Pro device mockup w/ live iframe (shared)
+   Built to the real device's proportions (71.9 × 150 mm body,
+   402 × 874 pt display). Everything is derived from --u, the
+   body width, so the phone scales as one piece.
+
+   The screen content lives in .iphone__viewport, which is laid
+   out in true iOS points (402 × 874) and then scaled down to
+   the screen — so the embedded site paints its real mobile
+   layout and the status bar / Dynamic Island / home indicator
+   use Apple's actual point sizes.
+   ---------------------------------------------------- */
+.iphone {
+  --w: 260;                   /* body width in px, unitless */
+  --vp-w: 402;                /* viewport the embedded page renders at (pt) */
+  --vp-h: 874;
+  --bar: 59;                  /* status-bar safe area (pt) */
+  --safe: #18172C;            /* status-bar band — match the page's theme-color */
+  --fg: #fff;                 /* status-bar text + home indicator */
+  --u: calc(var(--w) * 1px);
+  --k: calc(var(--w) * 0.928 / var(--vp-w));
+
+  position: relative;
+  width: var(--u);
+  height: calc(var(--u) * 2.0896);
+  flex: none;
+}
+
+/* Aluminium rim */
+.iphone__frame {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  padding: calc(var(--u) * 0.012);
+  border-radius: calc(var(--u) * 0.176);
+  background:
+    linear-gradient(100deg,
+      #f5f5f7 0%, #b4b5bb 9%, #ececef 24%, #a1a2a9 50%,
+      #e6e6ea 74%, #aeafb6 91%, #f1f1f4 100%);
+  box-shadow:
+    0 calc(var(--u) * 0.16) calc(var(--u) * 0.26) calc(var(--u) * -0.08) rgba(24, 23, 44, 0.50),
+    0 calc(var(--u) * 0.04) calc(var(--u) * 0.08) rgba(24, 23, 44, 0.16),
+    inset 0 0 0 0.5px rgba(255, 255, 255, 0.55);
+}
+/* Black display border */
+.iphone__bezel {
+  width: 100%;
+  height: 100%;
+  padding: calc(var(--u) * 0.024);
+  border-radius: calc(var(--u) * 0.164);
+  background: #050506;
+  box-shadow:
+    0 0 0 0.5px rgba(0, 0, 0, 0.7),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+.iphone__screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: calc(var(--u) * 0.14);
+  background: var(--safe);
+  overflow: hidden;
+  isolation: isolate;
+  /* Safari: force its own layer so the rounded corners clip the scaled iframe */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+.iphone__viewport {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(var(--vp-w) * 1px);
+  height: calc(var(--vp-h) * 1px);
+  transform: scale(var(--k));
+  transform-origin: 0 0;
+}
+.iphone__viewport iframe {
+  position: absolute;
+  top: calc(var(--bar) * 1px); /* below the status-bar safe area */
+  left: 0;
+  width: 100%;
+  height: calc((var(--vp-h) - var(--bar)) * 1px);
+  border: 0;
+  display: block;
+  background: var(--safe);
+}
+
+/* Status bar — three columns flanking the Dynamic Island */
+.iphone__status {
+  position: absolute;
+  top: 14px;
+  left: 0;
+  width: 100%;
+  height: 37px;
+  display: grid;
+  grid-template-columns: 1fr 126px 1fr;
+  align-items: center;
+  justify-items: center;
+  color: var(--fg);
+  font-family: "SF Pro Text", -apple-system, BlinkMacSystemFont, "Helvetica Neue", system-ui, sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  pointer-events: none;
+}
+.iphone__island {
+  position: relative;
+  width: 126px;
+  height: 37px;
+  border-radius: 19px;
+  background: #000;
+}
+.iphone__island::after {
+  /* front camera lens */
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 13px;
+  width: 12px;
+  height: 12px;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #2a3350 0%, #0b0d17 45%, #020203 75%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+.iphone__icons {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.iphone__icons svg {
+  display: block;
+  fill: currentColor;
+}
+.iphone__home {
+  position: absolute;
+  left: 50%;
+  bottom: 8px;
+  width: 139px;
+  height: 5px;
+  transform: translateX(-50%);
+  border-radius: 3px;
+  background: var(--fg);
+  opacity: 0.9;
+  pointer-events: none;
+}
+/* Glass sheen */
+.iphone__screen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(118deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0) 26%);
+  pointer-events: none;
+}
+
+/* Hardware buttons — sit behind the frame, peeking past the rim */
+.iphone__btn {
+  position: absolute;
+  width: calc(var(--u) * 0.016);
+  border-radius: calc(var(--u) * 0.006);
+  background: linear-gradient(180deg, #c9cad0 0%, #96979e 12%, #b9bac0 50%, #8c8d94 88%, #c2c3c9 100%);
+}
+.iphone__btn--action,
+.iphone__btn--vol-up,
+.iphone__btn--vol-down { left: calc(var(--u) * -0.009); }
+.iphone__btn--power,
+.iphone__btn--camera   { right: calc(var(--u) * -0.009); }
+.iphone__btn--action   { top: calc(var(--u) * 0.400); height: calc(var(--u) * 0.085); }
+.iphone__btn--vol-up   { top: calc(var(--u) * 0.555); height: calc(var(--u) * 0.140); }
+.iphone__btn--vol-down { top: calc(var(--u) * 0.730); height: calc(var(--u) * 0.140); }
+.iphone__btn--power    { top: calc(var(--u) * 0.590); height: calc(var(--u) * 0.225); }
+.iphone__btn--camera {
+  /* Camera Control sits nearly flush with the frame */
+  right: calc(var(--u) * -0.003);
+  top: calc(var(--u) * 1.240);
+  height: calc(var(--u) * 0.165);
+  background: linear-gradient(180deg, #8f9097, #6f7077 50%, #8f9097);
+}
+
+/* App prototypes that draw their own status bar: run full-bleed and
+   keep only the hardware (Dynamic Island + home indicator) on top. */
+.iphone--app { --bar: 0; }
+.iphone--app .iphone__status > :not(.iphone__island) { visibility: hidden; }
+
+/* ============================================================
+   BRAND WALL — immersive photo hero for case studies
+   A full-bleed wall of photos: three marquee rows that drift on
+   their own and travel with the page scroll in alternating
+   directions. The wall is pinned for --wall-travel of scrolling,
+   so the scroll moves *through* the photos. One fixed centre
+   tile (.cs-wall__hero) is the largest image and never leaves
+   the middle. Behaviour lives in wall.js.
+
+     .cs-wall[data-wall]
+       .cs-wall__stage
+         .cs-wall__row[data-speed]   (negative speed = moves right)
+           .cs-wall__track > img.cs-wall__tile …
+         figure.cs-wall__hero > img
+   ============================================================ */
+.cs-wall {
+  --wall-travel: 110vh;                 /* scroll distance spent pinned */
+  --wall-gap: clamp(8px, 1vw, 16px);
+  --wall-vh: 100vh;
+  --wall-h: calc(var(--wall-vh) - var(--nav-height) - 2 * var(--wall-gap));
+  --wall-rows: calc(var(--wall-h) - 2 * var(--wall-gap));
+  position: relative;
+  height: calc(var(--wall-vh) + var(--wall-travel));
+  /* the stage reserves room for the fixed nav; pull that slack back in
+     while the wall is still sitting below the title */
+  margin-top: calc(var(--nav-height) * -1);
+}
+@supports (height: 100svh) {
+  .cs-wall { --wall-vh: 100svh; }
+}
+.cs-wall__stage {
+  position: sticky;
+  top: 0;
+  height: var(--wall-vh);
+  padding: calc(var(--nav-height) + var(--wall-gap)) 0 var(--wall-gap);
+  display: flex;
+  flex-direction: column;
+  gap: var(--wall-gap);
+  overflow: hidden;
+}
+.cs-wall__row {
+  flex: none;
+  height: calc(var(--wall-rows) * 0.27);
+}
+.cs-wall__row--main {
+  height: calc(var(--wall-rows) * 0.46);
+}
+.cs-wall__track {
+  display: flex;
+  gap: var(--wall-gap);
+  width: max-content;
+  height: 100%;
+  will-change: transform;
+}
+.cs-wall__tile {
+  flex: none;
+  height: 100%;
+  width: auto;
+  max-width: none;
+  border-radius: clamp(12px, 1.4vw, 20px);
+  object-fit: cover;
+  background: var(--cs-card);
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+/* Fixed centre tile — the biggest image on the wall. The ring in the page
+   colour reads as the same gap that separates every other tile. */
+.cs-wall__hero {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: calc(var(--nav-height) + var(--wall-gap) + var(--wall-h) / 2);
+  height: calc(var(--wall-h) * 0.62);
+  aspect-ratio: 1600 / 1166;
+  max-width: calc(100vw - 2 * clamp(28px, 7vw, 64px));
+  margin: 0;
+  transform: translate(-50%, -50%) scale(calc(1 + var(--wall-p, 0) * 0.05));
+  border-radius: clamp(16px, 1.8vw, 28px);
+  overflow: hidden;
+  background: #18172c;
+  box-shadow: 0 0 0 var(--wall-gap) var(--cs-bg);
+}
+.cs-wall__hero img {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: 62% 50%;
+}
+
+/* Phones: the centre tile is as wide as the screen, so it gets the middle
+   band to itself and wall.js deals the middle row's photos into the outer
+   rows (it reads --wall-compact). */
+@media (max-width: 700px) {
+  .cs-wall {
+    --wall-compact: 1;
+    --wall-travel: 90vh;
+  }
+  .cs-wall__row--main { visibility: hidden; }
+  .cs-wall__hero {
+    height: calc(var(--wall-rows) * 0.46);
+    width: calc(100vw - 2 * var(--wall-gap));
+    max-width: none;
+    aspect-ratio: auto;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cs-wall { --wall-travel: 0px; }
+}

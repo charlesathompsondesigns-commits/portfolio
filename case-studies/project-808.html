@@ -6,7 +6,7 @@
   <title>Project 808 — Charlesa Thompson</title>
   <meta name="description" content="A self-initiated campaign site making the case for a creative manufacturing studio in Chicago. UX/UI, strategy, and development case study by Charlesa Thompson." />
   <meta name="theme-color" content="#270f05" />
-  <link rel="stylesheet" href="../styles.css" />
+  <link rel="stylesheet" href="../styles.css?v=20261005f" />
   <style>
     /* ── Shared wrapper — centers the phone on a soft card ── */
     .mockup-device {
@@ -18,131 +18,11 @@
       box-sizing: border-box;
     }
 
-    /* ── Phone mockup (matches the Braid case study) ──────────
-       Fully CSS-drawn iPhone: rounded frame, dynamic-island
-       notch, a live status bar (time + signal/wifi/battery),
-       and the iframe clipped inside the screen. --phone-w drives
-       the size; the inner screen + iframe scale derive from it. */
-    .phone-mockup {
-      /* phone-w 240, pad 10 → screen 220 wide. vp-w 390 → scale
-         0.564 so the site's mobile layout fills the screen. */
-      --phone-w: 240px;
-      --phone-pad: 10px;
-      --vp-w: 390px;
-      --vp-h: 890px;
-
-      position: relative;
-      width: var(--phone-w);
-      aspect-ratio: 9 / 19.5;
-      margin: 0 auto;
-      background: #0f0a07;
-      border-radius: 38px;
-      padding: var(--phone-pad);
-      box-shadow:
-        0 28px 64px rgba(0, 0, 0, 0.30),
-        0 6px 18px rgba(0, 0, 0, 0.16),
-        inset 0 0 0 2px rgba(255, 255, 255, 0.06);
-    }
-    .phone-mockup::before {
-      /* dynamic island / notch */
-      content: "";
-      position: absolute;
-      top: 14px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 76px;
-      height: 20px;
-      background: #000;
-      border-radius: 999px;
-      z-index: 4;
-      pointer-events: none;
-    }
-    /* iOS-style status bar, aligned with the notch (top:14px, h:20px) */
-    .phone-mockup__statusbar {
-      position: absolute;
-      top: 14px;
-      left: 0;
-      right: 0;
-      height: 20px;
-      padding: 0 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      color: #fff;
-      font-family: "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: -0.01em;
-      line-height: 1;
-      z-index: 3;
-      pointer-events: none;
-    }
-    .phone-mockup__time { transform: translateY(-0.5px); }
-    .phone-mockup__icons { display: inline-flex; align-items: center; gap: 4px; }
-    .phone-mockup__icons svg { display: block; fill: currentColor; }
-    .phone-mockup__battery {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-      gap: 2px;
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 0;
-      line-height: 1;
-    }
-    .phone-mockup__battery-shell {
-      position: relative;
-      width: 18px;
-      height: 9px;
-      border: 1px solid currentColor;
-      border-radius: 2.5px;
-      opacity: 0.95;
-      box-sizing: border-box;
-    }
-    .phone-mockup__battery-shell::after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      right: -2.5px;
-      transform: translateY(-50%);
-      width: 1.5px;
-      height: 4px;
-      background: currentColor;
-      border-radius: 0 1px 1px 0;
-      opacity: 0.85;
-    }
-    .phone-mockup__battery-fill {
-      position: absolute;
-      top: 1px;
-      left: 1px;
-      bottom: 1px;
-      width: calc((100% - 2px) * 0.85);
-      background: currentColor;
-      border-radius: 1px;
-    }
-    .phone-mockup__screen {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      background: #0f0a07;
-      border-radius: 30px;
-      overflow: hidden;
-      isolation: isolate;
-    }
-    .phone-mockup__screen iframe {
-      position: absolute;
-      /* push content below the notch/status bar */
-      top: 38px;
-      left: 0;
-      width: var(--vp-w);
-      height: var(--vp-h);
-      border: 0;
-      display: block;
-      transform-origin: top left;
-      transform: scale(calc((var(--phone-w) - 2 * var(--phone-pad)) / var(--vp-w)));
-    }
+    /* The phone itself is the shared .iphone mockup in styles.css. */
+    .mockup-device .iphone { --w: 270; --safe: #f4f7fc; --fg: #0a1628; }
     @media (max-width: 540px) {
-      .phone-mockup { --phone-w: 220px; }
+      .mockup-device { padding: 40px 24px; }
+      .mockup-device .iphone { --w: 236; }
     }
   </style>
   <script defer src="../nav.js"></script>
@@ -191,32 +71,30 @@
         <figure class="cs-figure">
           <div class="cs-figure__img">
             <div class="mockup-device mockup-device--phone">
-              <div class="phone-mockup" aria-hidden="true">
-                <div class="phone-mockup__screen">
-                  <iframe src="https://project-808.vercel.app" title="Project 808 — landing page" loading="lazy"></iframe>
-                </div>
-                <div class="phone-mockup__statusbar">
-                  <span class="phone-mockup__time">9:41</span>
-                  <span class="phone-mockup__icons">
-                    <!-- signal -->
-                    <svg width="13" height="9" viewBox="0 0 17 11" aria-hidden="true">
-                      <rect x="0"  y="7"  width="3" height="4"  rx="0.6"/>
-                      <rect x="4.5" y="5"  width="3" height="6"  rx="0.6"/>
-                      <rect x="9"  y="3"  width="3" height="8"  rx="0.6"/>
-                      <rect x="13.5" y="0" width="3" height="11" rx="0.6"/>
-                    </svg>
-                    <!-- wifi -->
-                    <svg width="12" height="9" viewBox="0 0 15 11" aria-hidden="true">
-                      <path d="M7.5 2.4c2.6 0 5.1 1 6.9 2.7l-1.4 1.4a7.8 7.8 0 0 0-11 0L.6 5.1A9.8 9.8 0 0 1 7.5 2.4Zm0 3.4c1.7 0 3.4.7 4.6 1.9l-1.4 1.4a4.5 4.5 0 0 0-6.4 0L2.9 7.7a6.6 6.6 0 0 1 4.6-1.9Zm0 3.4c.8 0 1.6.3 2.2.9L7.5 11 5.3 10.1c.6-.6 1.4-.9 2.2-.9Z"/>
-                    </svg>
-                    <!-- battery -->
-                    <span class="phone-mockup__battery">
-                      <span>85</span>
-                      <span class="phone-mockup__battery-shell">
-                        <span class="phone-mockup__battery-fill"></span>
-                      </span>
-                    </span>
-                  </span>
+              <div class="iphone" aria-hidden="true">
+                <span class="iphone__btn iphone__btn--action"></span>
+                <span class="iphone__btn iphone__btn--vol-up"></span>
+                <span class="iphone__btn iphone__btn--vol-down"></span>
+                <span class="iphone__btn iphone__btn--power"></span>
+                <span class="iphone__btn iphone__btn--camera"></span>
+                <div class="iphone__frame">
+                  <div class="iphone__bezel">
+                    <div class="iphone__screen">
+                      <div class="iphone__viewport">
+                        <iframe src="https://project-808.vercel.app" title="Project 808 — landing page" loading="lazy" tabindex="-1"></iframe>
+                        <div class="iphone__status" aria-hidden="true">
+                          <span>9:41</span>
+                          <span class="iphone__island"></span>
+                          <span class="iphone__icons">
+                            <svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="0.8"/><rect x="5" y="5.5" width="3" height="6.5" rx="0.8"/><rect x="10" y="3" width="3" height="9" rx="0.8"/><rect x="15" y="0" width="3" height="12" rx="0.8"/></svg>
+                            <svg width="17" height="12" viewBox="0 0 17 12"><path d="M8.5 2.2c2.6 0 5 1 6.8 2.7l1-1.1A11.3 11.3 0 0 0 8.5.6C5.6.6 2.9 1.7.7 3.8l1 1.1A9.8 9.8 0 0 1 8.5 2.2Zm0 3.6c1.6 0 3.1.6 4.3 1.7l1-1.1a7.800 7.800 0 0 0-10.600 0l1 1.100a6.300 6.300 0 0 1 4.300-1.700Zm0 3.600c.7 0 1.400.300 1.900.700L8.500 12l-1.900-1.900c.5-.400 1.200-.700 1.900-.700Z"/></svg>
+                            <svg width="27" height="13" viewBox="0 0 27 13"><rect x="0.5" y="0.5" width="23" height="12" rx="3.8" fill="none" stroke="currentColor" opacity="0.4"/><rect x="2" y="2" width="20" height="9" rx="2.5"/><path d="M25 4.5v4c.8-.3 1.5-1.1 1.5-2s-.7-1.700-1.500-2Z" opacity="0.45"/></svg>
+                          </span>
+                        </div>
+                        <span class="iphone__home"></span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -261,32 +139,30 @@
         <figure class="cs-figure">
           <div class="cs-figure__img">
             <div class="mockup-device mockup-device--phone">
-              <div class="phone-mockup" aria-hidden="true">
-                <div class="phone-mockup__screen">
-                  <iframe src="https://project-808.vercel.app/#survey" title="Project 808 — survey, mobile view" loading="lazy"></iframe>
-                </div>
-                <div class="phone-mockup__statusbar">
-                  <span class="phone-mockup__time">9:41</span>
-                  <span class="phone-mockup__icons">
-                    <!-- signal -->
-                    <svg width="13" height="9" viewBox="0 0 17 11" aria-hidden="true">
-                      <rect x="0"  y="7"  width="3" height="4"  rx="0.6"/>
-                      <rect x="4.5" y="5"  width="3" height="6"  rx="0.6"/>
-                      <rect x="9"  y="3"  width="3" height="8"  rx="0.6"/>
-                      <rect x="13.5" y="0" width="3" height="11" rx="0.6"/>
-                    </svg>
-                    <!-- wifi -->
-                    <svg width="12" height="9" viewBox="0 0 15 11" aria-hidden="true">
-                      <path d="M7.5 2.4c2.6 0 5.1 1 6.9 2.7l-1.4 1.4a7.8 7.8 0 0 0-11 0L.6 5.1A9.8 9.8 0 0 1 7.5 2.4Zm0 3.4c1.7 0 3.4.7 4.6 1.9l-1.4 1.4a4.5 4.5 0 0 0-6.4 0L2.9 7.7a6.6 6.6 0 0 1 4.6-1.9Zm0 3.4c.8 0 1.6.3 2.2.9L7.5 11 5.3 10.1c.6-.6 1.4-.9 2.2-.9Z"/>
-                    </svg>
-                    <!-- battery -->
-                    <span class="phone-mockup__battery">
-                      <span>85</span>
-                      <span class="phone-mockup__battery-shell">
-                        <span class="phone-mockup__battery-fill"></span>
-                      </span>
-                    </span>
-                  </span>
+              <div class="iphone" aria-hidden="true">
+                <span class="iphone__btn iphone__btn--action"></span>
+                <span class="iphone__btn iphone__btn--vol-up"></span>
+                <span class="iphone__btn iphone__btn--vol-down"></span>
+                <span class="iphone__btn iphone__btn--power"></span>
+                <span class="iphone__btn iphone__btn--camera"></span>
+                <div class="iphone__frame">
+                  <div class="iphone__bezel">
+                    <div class="iphone__screen">
+                      <div class="iphone__viewport">
+                        <iframe src="https://project-808.vercel.app/#survey" title="Project 808 — survey, mobile view" loading="lazy" tabindex="-1"></iframe>
+                        <div class="iphone__status" aria-hidden="true">
+                          <span>9:41</span>
+                          <span class="iphone__island"></span>
+                          <span class="iphone__icons">
+                            <svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="0.8"/><rect x="5" y="5.5" width="3" height="6.5" rx="0.8"/><rect x="10" y="3" width="3" height="9" rx="0.8"/><rect x="15" y="0" width="3" height="12" rx="0.8"/></svg>
+                            <svg width="17" height="12" viewBox="0 0 17 12"><path d="M8.5 2.2c2.6 0 5 1 6.8 2.7l1-1.1A11.3 11.3 0 0 0 8.5.6C5.6.6 2.9 1.7.7 3.8l1 1.1A9.8 9.8 0 0 1 8.5 2.2Zm0 3.6c1.6 0 3.1.6 4.3 1.7l1-1.1a7.800 7.800 0 0 0-10.600 0l1 1.100a6.300 6.300 0 0 1 4.300-1.700Zm0 3.600c.7 0 1.400.300 1.900.700L8.500 12l-1.900-1.900c.5-.400 1.200-.700 1.900-.700Z"/></svg>
+                            <svg width="27" height="13" viewBox="0 0 27 13"><rect x="0.5" y="0.5" width="23" height="12" rx="3.8" fill="none" stroke="currentColor" opacity="0.4"/><rect x="2" y="2" width="20" height="9" rx="2.5"/><path d="M25 4.5v4c.8-.3 1.5-1.1 1.5-2s-.7-1.700-1.500-2Z" opacity="0.45"/></svg>
+                          </span>
+                        </div>
+                        <span class="iphone__home"></span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -307,9 +183,9 @@
       <div class="cs-section__body">
         <div class="cs-section__copy">
           <p class="cs-lead">I designed the digital platform to act as a strategic validation engine that actively manufactures the credibility and data needed to secure city backing and investor capital.</p>
-          <p><strong>High-End Editorial Layout:</strong> Built a premium, deeply structured interface to establish immediate legitimacy as a serious economic development initiative, not a hobbyist space.</p>
-          <p><strong>Comparative Data Visuals:</strong> Engineered scannable tables pitting Chicago's infrastructure deficit directly against NYC and LA to force stakeholders to face the competitive gap causing our talent drain.</p>
-          <p><strong>Embedded Survey Engine:</strong> Integrated a research tool directly into the core user flow to capture real-time market proof — exact machine needs and price points — providing the empirical evidence required to secure our Phase 1 seed target ($250K–$750K).</p>
+          <p><strong>High-End Editorial Layout:</strong> I built a premium, deeply structured interface to establish immediate legitimacy as a serious economic development initiative, not a hobbyist space.</p>
+          <p><strong>Comparative Data Visuals:</strong> I engineered scannable tables pitting Chicago's infrastructure deficit directly against NYC and LA to force stakeholders to face the competitive gap causing our talent drain.</p>
+          <p><strong>Embedded Survey Engine:</strong> I integrated a research tool directly into the core user flow to capture real-time market proof — exact machine needs and price points — providing the empirical evidence required to secure my Phase 1 seed target ($250K–$750K).</p>
         </div>
       </div>
     </div>

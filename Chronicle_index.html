@@ -152,6 +152,9 @@ body.embed .phone-shell {
 body.embed .nav-strip,
 body.embed .nav-arrows,
 body.embed .screen-label { display: none; }
+/* The host phone frame has a Dynamic Island — drop the status bar so the
+   time and icons sit level with it and the screen content clears it. */
+body.embed .status-bar { padding-top: 22px; }
 
 /* ─── STATUS BAR ────────────────────────────────────── */
 .status-bar {
