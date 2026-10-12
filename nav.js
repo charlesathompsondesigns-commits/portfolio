@@ -14,9 +14,10 @@
     btn.setAttribute('aria-controls', links.id);
     btn.setAttribute('aria-label', 'Toggle menu');
     btn.innerHTML = '<svg class="nav__toggle-icon" viewBox="0 0 28 20" aria-hidden="true" focusable="false">' +
-      '<path d="M3.2 3 C 8 2.15, 20 2.15, 24.8 3 C 20 3.85, 8 3.85, 3.2 3 Z"/>' +
-      '<path d="M3.2 10 C 8 9.15, 20 9.15, 24.8 10 C 20 10.85, 8 10.85, 3.2 10 Z"/>' +
-      '<path d="M3.2 17 C 8 16.15, 20 16.15, 24.8 17 C 20 17.85, 8 17.85, 3.2 17 Z"/>' +
+      // Even-weight bars with fully rounded ends (pill shapes)
+      '<path d="M4.2 2.15h19.6a0.85 0.85 0 0 1 0 1.7H4.2a0.85 0.85 0 0 1 0-1.7Z"/>' +
+      '<path d="M4.2 9.15h19.6a0.85 0.85 0 0 1 0 1.7H4.2a0.85 0.85 0 0 1 0-1.7Z"/>' +
+      '<path d="M4.2 16.15h19.6a0.85 0.85 0 0 1 0 1.7H4.2a0.85 0.85 0 0 1 0-1.7Z"/>' +
       '</svg>';
 
     nav.appendChild(btn);
