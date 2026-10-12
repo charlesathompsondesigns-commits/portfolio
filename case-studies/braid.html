@@ -721,6 +721,91 @@
       .braid-logos { grid-template-columns: repeat(2, 1fr); }
       .braid-quotes { grid-template-columns: 1fr; }
     }
+
+    /* ---------- Hero: keep "For" glued to "Textured Hair" ---------- */
+    .cs-hero__for { display: inline-flex; align-items: center; gap: 12px; white-space: nowrap; }
+
+    /* ---------- Hero on phones: tighter, even, left-aligned rhythm ---------- */
+    @media (max-width: 600px) {
+      .cs-body-page--braid .cs-hero__tagline {
+        font-size: clamp(30px, 8.6vw, 40px);
+        line-height: 1.08;
+        margin-bottom: clamp(20px, 6vw, 28px);
+        text-wrap: balance;
+      }
+      .cs-body-page--braid .cs-hero__pills { gap: 8px; margin-bottom: clamp(18px, 5vw, 24px); }
+      .cs-body-page--braid .cs-hero__for { gap: 8px; }
+      .cs-body-page--braid .cs-pill { height: 32px; padding: 0 13px; font-size: 12px; border-radius: 9px; }
+      .cs-body-page--braid .cs-hero__inline { font-size: 16px; padding: 0 2px; }
+      .cs-body-page--braid .cs-hero__date { font-size: 15px; margin-bottom: clamp(28px, 8vw, 40px); }
+      .cs-hero__titlerow { column-gap: 14px; row-gap: 12px; margin-bottom: 10px; }
+    }
+
+    /* ---------- YouTube pitch (click-to-load, privacy-enhanced) ---------- */
+    .braid-yt {
+      grid-column: 1 / -1;
+      position: relative;
+      aspect-ratio: 16 / 9;
+      margin: clamp(20px, 3vh, 32px) 0 20px;
+      border-radius: 20px;
+      overflow: hidden;
+      background: #18172c;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.22);
+    }
+    .braid-yt iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .braid-yt__play {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      padding: 0;
+      border: 0;
+      cursor: pointer;
+      background: none;
+    }
+    .braid-yt__play img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s var(--ease-out); }
+    .braid-yt__play::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(24, 23, 44, 0) 45%, rgba(24, 23, 44, 0.7) 100%);
+    }
+    .braid-yt__play:hover img { transform: scale(1.02); }
+    .braid-yt__play:focus-visible { outline: 3px solid #fff; outline-offset: -6px; }
+    .braid-yt__btn {
+      position: absolute;
+      z-index: 1;
+      left: 50%;
+      top: 50%;
+      display: grid;
+      place-items: center;
+      width: clamp(56px, 7vw, 76px);
+      height: clamp(56px, 7vw, 76px);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(255, 255, 255, 0.9);
+      color: #18172c;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      transition: transform 0.25s var(--ease-out);
+    }
+    .braid-yt__btn svg { margin-left: 3px; }
+    .braid-yt__play:hover .braid-yt__btn { transform: translate(-50%, -50%) scale(1.06); }
+    .braid-yt__label {
+      position: absolute;
+      z-index: 1;
+      left: clamp(16px, 3vw, 28px);
+      bottom: clamp(14px, 2.5vw, 24px);
+      font-family: var(--font-franklin-medium);
+      font-size: clamp(11px, 1vw, 13px);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #fff;
+    }
+
+    /* ---------- Pitch video section (after the shop film) ---------- */
+    .braid-pitch { padding-top: clamp(24px, 4vw, 56px); padding-bottom: clamp(56px, 8vw, 112px); }
+    .braid-pitch__head { margin-bottom: clamp(16px, 2.5vw, 24px); }
+    .braid-pitch__head .braid-h3 { margin-bottom: 0; }
+    .braid-pitch .braid-yt { margin: 0; }
   </style>
 </head>
 <body class="cs-body-page cs-body-page--braid">
@@ -754,8 +839,8 @@
       <div class="cs-hero__pills cs-hero__pills--justified">
         <span class="cs-pill">Design</span>
         <span class="cs-pill">Experience</span>
-        <span class="cs-hero__inline">For</span>
-        <span class="cs-pill cs-pill--right">Textured Hair</span>
+        <span class="cs-hero__for"><span class="cs-hero__inline">For</span>
+        <span class="cs-pill cs-pill--right">Textured Hair</span></span>
       </div>
       <p class="cs-hero__date">September 2024 - Now</p>
     </div>
@@ -878,6 +963,25 @@
           <svg class="cs-sound__icon cs-sound__icon--off" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
           <svg class="cs-sound__icon cs-sound__icon--on" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></svg>
           <span class="cs-sound__label">Sound on</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PITCH VIDEO ============ -->
+  <section class="cs-section braid-pitch" aria-label="Braid pitch video">
+    <div class="cs-container">
+      <div class="braid-pitch__head">
+        <span class="braid-eyebrow">The Pitch</span>
+        <h2 class="braid-h3">Our Black Ambition application video.</h2>
+      </div>
+      <div class="braid-yt" data-yt="jQpKNYUjEm0">
+        <button class="braid-yt__play" type="button" aria-label="Play video: Braid Tech Black Ambition Application Video">
+          <img src="https://i.ytimg.com/vi/jQpKNYUjEm0/maxresdefault.jpg" alt="" loading="lazy" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/jQpKNYUjEm0/hqdefault.jpg'" />
+          <span class="braid-yt__btn" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg>
+          </span>
+          <span class="braid-yt__label">Watch our Black Ambition pitch</span>
         </button>
       </div>
     </div>
@@ -1280,6 +1384,22 @@
   </footer>
 
   <script>
+    /* YouTube pitch: load the player only when the visitor presses play. */
+    (function () {
+      var box = document.querySelector('[data-yt]');
+      if (!box) return;
+      box.querySelector('button').addEventListener('click', function () {
+        var f = document.createElement('iframe');
+        f.src = 'https://www.youtube-nocookie.com/embed/' + box.getAttribute('data-yt') + '?autoplay=1&rel=0&modestbranding=1';
+        f.title = 'Braid Tech Black Ambition Application Video';
+        f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+        f.allowFullscreen = true;
+        f.referrerPolicy = 'strict-origin-when-cross-origin';
+        box.innerHTML = '';
+        box.appendChild(f);
+      });
+    })();
+
     /* Showreel sound toggle: starts muted for autoplay, visitor can unmute. */
     (function () {
       var btn = document.querySelector('[data-sound-toggle]');
