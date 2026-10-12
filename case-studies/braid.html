@@ -511,28 +511,48 @@
       color: var(--cs-ink);
     }
 
-    /* "How might we" — the question the product answers */
+    /* "How might we" — the question the product answers, in frosted glass */
     .braid-hmw {
       grid-column: 1 / -1;
+      position: relative;
       margin-top: clamp(40px, 6vh, 72px);
-      background: var(--cs-ink);
-      color: #fff;
-      border-radius: 20px;
-      padding: clamp(32px, 5vw, 64px);
+      padding: clamp(28px, 5vw, 64px);
+      border-radius: 24px;
+      background: linear-gradient(160deg, rgba(255, 255, 255, 0.66) 0%, rgba(255, 255, 255, 0.28) 100%);
+      -webkit-backdrop-filter: blur(18px) saturate(160%);
+      backdrop-filter: blur(18px) saturate(160%);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.95),
+        inset 0 -1px 0 rgba(90, 60, 160, 0.1),
+        0 2px 8px rgba(40, 24, 90, 0.06),
+        0 24px 56px rgba(60, 36, 130, 0.16);
     }
     .braid-hmw__label {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
       font-family: var(--font-franklin-medium);
       font-size: 12px;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.6);
+      color: var(--cs-muted);
       margin-bottom: 20px;
+    }
+    .braid-hmw__label::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2a1f57 0%, #5a3aa8 100%);
+      box-shadow: 0 0 10px rgba(120, 80, 220, 0.6);
     }
     .braid-hmw__body {
       font-family: var(--font-instrument);
       font-size: clamp(24px, 2.6vw, 38px);
       line-height: 1.3;
-      color: #fff;
+      color: var(--cs-ink);
+      text-wrap: pretty;
     }
 
     /* Split row: media one side, copy the other */
@@ -1018,25 +1038,6 @@
     </div>
   </section>
 
-  <!-- ============ PITCH VIDEO ============ -->
-  <section class="cs-section braid-pitch" aria-label="Braid pitch video">
-    <div class="cs-container">
-      <div class="braid-pitch__head">
-        <span class="braid-eyebrow">The Pitch</span>
-        <h2 class="braid-h3">Our Black Ambition application video.</h2>
-      </div>
-      <div class="braid-yt" data-yt="jQpKNYUjEm0">
-        <button class="braid-yt__play" type="button" aria-label="Play video: Braid Tech Black Ambition Application Video">
-          <img src="https://i.ytimg.com/vi/jQpKNYUjEm0/maxresdefault.jpg" alt="" loading="lazy" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/jQpKNYUjEm0/hqdefault.jpg'" />
-          <span class="braid-yt__btn" aria-hidden="true">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg>
-          </span>
-          <span class="braid-yt__label">Watch our Black Ambition pitch</span>
-        </button>
-      </div>
-    </div>
-  </section>
-
   <!-- ============ 01 · THE GIG ============ -->
   <section class="cs-section cs-section--gig">
     <div class="cs-container">
@@ -1059,6 +1060,25 @@
           <p class="braid-hmw__label">The Challenge</p>
           <p class="braid-hmw__body">How can we effectively connect cosmetology students and people with textured hair who are seeking to learn techniques for styling and maintaining their hair, while also fostering a community within the industry?</p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PITCH VIDEO ============ -->
+  <section class="cs-section braid-pitch" aria-label="Braid pitch video">
+    <div class="cs-container">
+      <div class="braid-pitch__head">
+        <span class="braid-eyebrow">The Pitch</span>
+        <h2 class="braid-h3">Our Black Ambition application video.</h2>
+      </div>
+      <div class="braid-yt" data-yt="jQpKNYUjEm0">
+        <button class="braid-yt__play" type="button" aria-label="Play video: Braid Tech Black Ambition Application Video">
+          <img src="https://i.ytimg.com/vi/jQpKNYUjEm0/maxresdefault.jpg" alt="" loading="lazy" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/jQpKNYUjEm0/hqdefault.jpg'" />
+          <span class="braid-yt__btn" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg>
+          </span>
+          <span class="braid-yt__label">Watch our Black Ambition pitch</span>
+        </button>
       </div>
     </div>
   </section>
