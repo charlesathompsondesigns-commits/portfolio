@@ -274,52 +274,84 @@ ul  { list-style: none; }
   stroke-width: 0.35;
   stroke-linejoin: round;
   stroke-linecap: round;
-  transform-box: view-box;
-  transform-origin: 14px 10px;
+  /* each bar rotates/scales around its own centre, then slides to the
+     middle row, so the arms cross exactly at the centre of the icon */
+  transform-box: fill-box;
+  transform-origin: center;
   transition:
     transform 0.32s var(--ease-in-out),
     opacity   0.18s var(--ease-in-out);
 }
 
 /* Open state — morph into editorial X (top → 45°, bottom → -45°, middle fades) */
-.nav.is-open .nav__toggle-icon path:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+/* Arms shorten as they rotate (scaleX) so the X is compact and balanced
+   rather than two full-width bars crossed. */
+.nav.is-open .nav__toggle-icon path:nth-child(1) { transform: translateY(7px) rotate(45deg) scaleX(0.72); }
 .nav.is-open .nav__toggle-icon path:nth-child(2) { opacity: 0; transform: scaleX(0); }
-.nav.is-open .nav__toggle-icon path:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.nav.is-open .nav__toggle-icon path:nth-child(3) { transform: translateY(-7px) rotate(-45deg) scaleX(0.72); }
 
 @media (max-width: 720px) {
   .nav__toggle { display: inline-flex; }
+  /* Logo + toggle sit above the overlay so the menu can always be closed */
+  .nav__logo,
+  .nav__toggle { position: relative; z-index: 2; }
+  .nav__toggle { position: absolute; }
+
+  /* Full-screen overlay menu */
   .nav__links {
     position: fixed;
-    top: var(--nav-height);
-    left: 0;
-    right: 0;
+    inset: 0;
+    z-index: 1;
+    height: 100vh;
+    height: 100dvh;
     flex-direction: column;
+    justify-content: center;
     gap: 0;
-    background: rgba(39, 15, 5, 0.96);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    padding: 8px 24px 24px;
-    border-top: 1px solid rgba(252, 247, 230, 0.08);
-    transform: translateY(-12px);
+    padding: calc(var(--nav-height) + 24px) clamp(24px, 8vw, 48px) calc(40px + env(safe-area-inset-bottom, 0px));
+    background: rgba(28, 16, 10, 0.94);
+    backdrop-filter: blur(28px) saturate(140%);
+    -webkit-backdrop-filter: blur(28px) saturate(140%);
     opacity: 0;
+    visibility: hidden;
     pointer-events: none;
-    transition: opacity 0.22s var(--ease-in-out), transform 0.22s var(--ease-in-out);
+    transition: opacity 0.28s var(--ease-in-out), visibility 0s linear 0.28s;
   }
   .nav__links li {
     width: 100%;
-    border-bottom: 1px solid rgba(252, 247, 230, 0.10);
+    border-bottom: 1px solid rgba(252, 247, 230, 0.12);
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.35s var(--ease-out), transform 0.35s var(--ease-out);
   }
   .nav__links li:last-child { border-bottom: none; }
   .nav__links a {
     display: block;
-    padding: 18px 0;
-    font-size: 22px;
+    padding: clamp(14px, 3.2vh, 22px) 0;
+    font-size: clamp(36px, 11vw, 52px);
+    line-height: 1.1;
+    letter-spacing: 0;
+  }
+  /* A backdrop-filter on the nav would trap the fixed overlay inside the
+     nav bar, so the bar hands its blur over to the overlay while open. */
+  .nav.is-open {
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
   .nav.is-open .nav__links {
     opacity: 1;
-    transform: translateY(0);
+    visibility: visible;
     pointer-events: auto;
+    transition: opacity 0.28s var(--ease-in-out), visibility 0s;
   }
+  .nav.is-open .nav__links li { opacity: 1; transform: none; }
+  .nav.is-open .nav__links li:nth-child(1) { transition-delay: 0.06s; }
+  .nav.is-open .nav__links li:nth-child(2) { transition-delay: 0.12s; }
+  .nav.is-open .nav__links li:nth-child(3) { transition-delay: 0.18s; }
+  .nav.is-open .nav__links li:nth-child(4) { transition-delay: 0.24s; }
+}
+@media (max-width: 720px) and (prefers-reduced-motion: reduce) {
+  .nav__links li { transform: none; transition: opacity 0.2s linear; }
 }
 
 
@@ -1610,8 +1642,6 @@ ul  { list-style: none; }
   .nav      { padding: 0 16px; height: 56px; }
   .nav__toggle { right: 12px; }
   .nav__logo { font-size: 20px; }
-  .nav__links { gap: 18px; }
-  .nav__links a { font-size: 16px; }
   .hero     { padding-left: 20px; padding-right: 20px; }
   .section  { padding-left: 20px; padding-right: 20px; padding-top: clamp(56px, 9vw, 80px); padding-bottom: clamp(56px, 9vw, 80px); }
   .container { padding: 0 20px; }
@@ -1623,8 +1653,6 @@ ul  { list-style: none; }
 
 /* Very narrow phones — hide secondary nav text, keep just logo + 1–2 items */
 @media (max-width: 380px) {
-  .nav__links { gap: 14px; }
-  .nav__links a { font-size: 14px; }
   :root { --nav-height: 52px; }
 }
 
