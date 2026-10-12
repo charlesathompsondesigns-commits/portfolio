@@ -521,7 +521,16 @@
       line-height: 1.1;
       color: var(--cs-ink);
     }
-    .braid-tools { display: flex; flex-wrap: wrap; gap: 14px; }
+    .braid-tools {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 14px 18px;
+    }
+    @media (max-width: 480px) {
+      .braid-tools { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 10px; }
+      .braid-tool { font-size: 13px; gap: 8px; }
+      .braid-tool img { width: 32px; height: 32px; }
+    }
     .braid-tool {
       display: flex;
       align-items: center;
@@ -944,10 +953,14 @@
           <div class="cs-labeled">
             <span class="cs-labeled__label">Tools</span>
             <div class="braid-tools">
+              <span class="braid-tool"><img src="../Braid/case/logo-claude.png" alt="" />Claude Code</span>
               <span class="braid-tool"><img src="../Braid/case/logo-figma.png" alt="" />Figma</span>
-              <span class="braid-tool"><img src="../Braid/case/logo-basecamp.png" alt="" />Basecamp</span>
-              <span class="braid-tool"><img src="../Braid/case/logo-capcut.png" alt="" />CapCut</span>
               <span class="braid-tool"><img src="../Braid/case/logo-maze.png" alt="" />Maze</span>
+              <span class="braid-tool"><img src="../Braid/case/logo-basecamp.png" alt="" />Basecamp</span>
+              <span class="braid-tool"><img src="../Braid/case/logo-photoshop.svg" alt="" />Photoshop</span>
+              <span class="braid-tool"><img src="../Braid/case/logo-illustrator.svg" alt="" />Illustrator</span>
+              <span class="braid-tool"><img src="../Braid/case/logo-premiere.svg" alt="" />Premiere Pro</span>
+              <span class="braid-tool"><img src="../Braid/case/logo-aftereffects.svg" alt="" />After Effects</span>
             </div>
           </div>
         </div>
