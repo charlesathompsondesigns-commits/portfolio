@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Braid — Charlesa Thompson</title>
   <meta name="description" content="An AI-powered haircare platform designed for people with textured hair. UX/UI case study by Charlesa Thompson." />
   <meta name="theme-color" content="#dfd5ed" />
@@ -242,18 +242,23 @@
       -webkit-backdrop-filter: blur(16px) saturate(160%);
       backdrop-filter: blur(16px) saturate(160%);
       color: var(--navy);
-      font-family: var(--font-franklin-medium);
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
+      font-family: var(--font-instrument-italic);
+      font-style: italic;
+      font-size: clamp(19px, 1.6vw, 22px);
+      font-weight: 400;
+      letter-spacing: 0;
+      text-transform: none;
       border-radius: 999px;
       border: 1px solid rgba(255, 255, 255, 0.85);
+      /* Same lilac edge halo as the challenge card */
       box-shadow:
         inset 0 1px 0 rgba(255, 255, 255, 0.95),
-        inset 0 -1px 0 rgba(90, 60, 160, 0.12),
-        0 2px 6px rgba(40, 24, 90, 0.08),
-        0 14px 32px rgba(60, 36, 130, 0.22);
+        inset 0 0 16px rgba(190, 150, 255, 0.18),
+        0 0 0 1px rgba(200, 170, 255, 0.45),
+        0 0 14px rgba(170, 120, 255, 0.35),
+        0 0 36px rgba(160, 110, 255, 0.26),
+        0 0 72px rgba(160, 110, 255, 0.14),
+        0 12px 28px rgba(60, 36, 130, 0.14);
       transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out), background 0.25s var(--ease-in-out);
     }
     .cs-waitlist__cta:hover {
@@ -262,10 +267,12 @@
         linear-gradient(180deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.46) 100%);
       box-shadow:
         inset 0 1px 0 rgba(255, 255, 255, 1),
-        inset 0 -1px 0 rgba(90, 60, 160, 0.12),
-        0 4px 10px rgba(40, 24, 90, 0.1),
-        0 20px 44px rgba(60, 36, 130, 0.28),
-        0 0 0 6px rgba(255, 255, 255, 0.18);
+        inset 0 0 18px rgba(190, 150, 255, 0.22),
+        0 0 0 1px rgba(200, 170, 255, 0.6),
+        0 0 18px rgba(170, 120, 255, 0.45),
+        0 0 44px rgba(160, 110, 255, 0.34),
+        0 0 88px rgba(160, 110, 255, 0.2),
+        0 18px 36px rgba(60, 36, 130, 0.18);
     }
     .cs-waitlist__cta:active {
       transform: translateY(0);
@@ -522,11 +529,15 @@
       -webkit-backdrop-filter: blur(18px) saturate(160%);
       backdrop-filter: blur(18px) saturate(160%);
       border: 1px solid rgba(255, 255, 255, 0.85);
+      /* Lilac halo hugging the card's edges, fading outward */
       box-shadow:
         inset 0 1px 0 rgba(255, 255, 255, 0.95),
-        inset 0 -1px 0 rgba(90, 60, 160, 0.1),
-        0 2px 8px rgba(40, 24, 90, 0.06),
-        0 24px 56px rgba(60, 36, 130, 0.16);
+        inset 0 0 24px rgba(190, 150, 255, 0.18),
+        0 0 0 1px rgba(200, 170, 255, 0.45),
+        0 0 18px rgba(170, 120, 255, 0.35),
+        0 0 48px rgba(160, 110, 255, 0.28),
+        0 0 96px rgba(160, 110, 255, 0.16),
+        0 24px 56px rgba(60, 36, 130, 0.12);
     }
     .braid-hmw__label {
       display: inline-flex;
@@ -538,14 +549,6 @@
       text-transform: uppercase;
       color: var(--cs-muted);
       margin-bottom: 20px;
-    }
-    .braid-hmw__label::before {
-      content: "";
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #2a1f57 0%, #5a3aa8 100%);
-      box-shadow: 0 0 10px rgba(120, 80, 220, 0.6);
     }
     .braid-hmw__body {
       font-family: var(--font-instrument);
@@ -876,6 +879,59 @@
     .braid-pitch__head { margin-bottom: clamp(16px, 2.5vw, 24px); }
     .braid-pitch__head .braid-h3 { margin-bottom: 0; }
     .braid-pitch .braid-yt { margin: 0; }
+
+    /* ============================================================
+       Glass chrome (Braid page only): light frosted nav + a matching
+       glass edge pinned to the bottom on touch screens, so the top and
+       bottom of the viewport read as one continuous lilac surface.
+       Safari on iOS tints its toolbars from fixed elements touching the
+       screen edges, so these also keep the browser UI lilac instead of
+       picking up whatever dark content is scrolling underneath.
+       ============================================================ */
+    .cs-body-page--braid .nav {
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, rgba(240, 232, 252, 0.38) 100%);
+      -webkit-backdrop-filter: blur(22px) saturate(180%);
+      backdrop-filter: blur(22px) saturate(180%);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+      box-shadow:
+        inset 0 -1px 0 rgba(90, 60, 160, 0.08),
+        0 8px 28px rgba(60, 36, 130, 0.10);
+    }
+    .cs-body-page--braid .nav__logo,
+    .cs-body-page--braid .nav__links a,
+    .cs-body-page--braid .nav__toggle { color: var(--cs-ink); }
+
+    @media (max-width: 720px) {
+      .cs-body-page--braid .nav__links {
+        background:
+          linear-gradient(180deg, rgba(250, 246, 255, 0.82) 0%, rgba(236, 228, 250, 0.74) 100%);
+        -webkit-backdrop-filter: blur(24px) saturate(180%);
+        backdrop-filter: blur(24px) saturate(180%);
+        border-top: 1px solid rgba(255, 255, 255, 0.7);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+        box-shadow: 0 18px 40px rgba(60, 36, 130, 0.14);
+      }
+      .cs-body-page--braid .nav__links li { border-bottom-color: rgba(28, 33, 55, 0.1); }
+    }
+
+    .glass-edge { display: none; }
+    @media (max-width: 900px) {
+      .glass-edge {
+        display: block;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 90;
+        height: calc(22px + env(safe-area-inset-bottom, 0px));
+        background: rgba(232, 224, 246, 0.55);
+        -webkit-backdrop-filter: blur(14px) saturate(170%);
+        backdrop-filter: blur(14px) saturate(170%);
+        border-top: 1px solid rgba(255, 255, 255, 0.55);
+        pointer-events: none;
+      }
+    }
   </style>
 </head>
 <body class="cs-body-page cs-body-page--braid">
@@ -1452,6 +1508,8 @@
       </div>
     </div>
   </footer>
+
+  <div class="glass-edge" aria-hidden="true"></div>
 
   <script>
     /* YouTube pitch: load the player only when the visitor presses play. */
