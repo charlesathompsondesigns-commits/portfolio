@@ -86,6 +86,99 @@
       .cs-wall__hero--loader img { animation: none; filter: drop-shadow(0 0 16px rgba(200, 188, 246, 0.7)); }
     }
 
+    /* ---------- Hero title row: "Braid" header + award badge beside it ---------- */
+    .cs-hero__titlerow {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      column-gap: clamp(16px, 3vw, 32px);
+      row-gap: 14px;
+      margin-bottom: clamp(8px, 1.5vw, 16px);
+    }
+    .cs-body-page--braid .cs-hero__title {
+      font-size: clamp(64px, 11vw, 148px);
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      margin-bottom: 0;
+    }
+
+    /* Award badge — compact frosted-glass pill with a slow gold glow */
+    .cs-award {
+      position: relative;
+      isolation: isolate;
+      display: inline-grid;
+      grid-template-columns: auto auto auto;
+      grid-template-rows: auto auto;
+      column-gap: clamp(10px, 1.2vw, 14px);
+      row-gap: 1px;
+      align-items: center;
+      padding: clamp(8px, 0.9vw, 10px) clamp(16px, 1.8vw, 22px) clamp(8px, 0.9vw, 10px) clamp(8px, 0.9vw, 10px);
+      border-radius: 999px;
+      background: linear-gradient(160deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 244, 214, 0.22) 100%);
+      -webkit-backdrop-filter: blur(18px) saturate(140%);
+      backdrop-filter: blur(18px) saturate(140%);
+      border: 1px solid rgba(255, 214, 120, 0.75);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 0 0 1px rgba(255, 199, 77, 0.3), 0 0 22px rgba(255, 186, 40, 0.4), 0 8px 24px rgba(120, 80, 10, 0.12);
+      color: var(--cs-ink);
+      text-decoration: none;
+      transition: transform 0.3s var(--ease-out);
+    }
+    .cs-award:hover { transform: translateY(-2px); }
+    .cs-award:focus-visible { outline: 2px solid var(--cs-ink); outline-offset: 4px; }
+    .cs-award__glow {
+      position: absolute;
+      inset: -12px;
+      z-index: -1;
+      border-radius: 999px;
+      background: radial-gradient(closest-side, rgba(255, 190, 40, 0.9) 0%, rgba(255, 190, 40, 0.45) 60%, rgba(255, 176, 32, 0) 100%);
+      filter: blur(14px);
+      animation: cs-award-glow 2.6s ease-in-out infinite alternate;
+    }
+    .cs-award__medal {
+      grid-row: 1 / 3;
+      display: grid;
+      place-items: center;
+      width: clamp(34px, 3.4vw, 42px);
+      height: clamp(34px, 3.4vw, 42px);
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2a1f57 0%, #18172c 100%);
+      color: #ffcf5a;
+      box-shadow: 0 0 0 1.5px rgba(255, 199, 77, 0.85), 0 0 14px rgba(255, 186, 40, 0.6);
+    }
+    .cs-award__medal svg { width: 18px; height: 18px; }
+    .cs-award__year {
+      grid-column: 2;
+      font-family: var(--font-franklin-medium);
+      font-size: clamp(9.5px, 0.85vw, 11px);
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--cs-muted);
+      white-space: nowrap;
+    }
+    .cs-award__title {
+      grid-column: 2;
+      font-family: var(--font-instrument);
+      font-size: clamp(20px, 2vw, 26px);
+      line-height: 1;
+      color: var(--cs-ink);
+    }
+    .cs-award__arrow {
+      grid-column: 3;
+      grid-row: 1 / 3;
+      margin-left: 2px;
+      font-size: 16px;
+      transition: transform 0.25s var(--ease-out);
+    }
+    .cs-award:hover .cs-award__arrow { transform: translate(2px, -2px); }
+    @keyframes cs-award-glow {
+      from { opacity: 0.45; transform: scale(0.96); }
+      to   { opacity: 1;    transform: scale(1.04); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .cs-award__glow { animation: none; opacity: 0.8; }
+    }
+
     /* ---------- Waitlist promo (top of Braid case study) ---------- */
     .cs-waitlist {
       padding: clamp(48px, 7vw, 96px) 0 clamp(32px, 5vw, 56px);
@@ -203,6 +296,41 @@
       height: auto;
       object-fit: cover;
     }
+    /* Sound toggle — video autoplays muted (browsers require it);
+       this lets visitors opt in to the music. */
+    .cs-sound {
+      position: absolute;
+      right: clamp(12px, 2vw, 24px);
+      bottom: clamp(12px, 2vw, 24px);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 44px;
+      padding: 0 18px 0 14px;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: 999px;
+      background: rgba(24, 23, 44, 0.55);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      font-family: var(--font-franklin-medium);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s var(--ease-in-out), transform 0.2s var(--ease-out);
+    }
+    .cs-sound:hover { background: rgba(24, 23, 44, 0.8); transform: translateY(-1px); }
+    .cs-sound:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+    .cs-sound__icon--on { display: none; }
+    .cs-sound[aria-pressed="true"] .cs-sound__icon--on { display: block; }
+    .cs-sound[aria-pressed="true"] .cs-sound__icon--off { display: none; }
+    @media (max-width: 600px) {
+      .cs-sound { width: 44px; padding: 0; justify-content: center; right: 10px; bottom: 10px; }
+      .cs-sound__label { display: none; }
+    }
+
     .cs-showreel__caption {
       margin-top: 14px;
       font-family: var(--font-source-italic);
@@ -301,6 +429,289 @@
       object-fit: cover;
       transform: scale(1.035);
     }
+
+    /* ============================================================
+       Story sections (01–09) — page-scoped Braid components
+       ============================================================ */
+    .braid-gap-top { margin-top: clamp(48px, 7vh, 88px); }
+    .braid-flush-top { margin-top: 0 !important; }
+    .braid-tight-top { margin-top: 12px !important; }
+
+    .braid-eyebrow {
+      display: block;
+      font-family: var(--font-franklin-medium);
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cs-muted);
+      margin-bottom: 14px;
+    }
+    .braid-h3 {
+      font-family: var(--font-instrument);
+      font-weight: 400;
+      font-size: clamp(28px, 2.8vw, 40px);
+      line-height: 1.1;
+      color: var(--cs-ink);
+      margin-bottom: 20px;
+    }
+    .braid-body {
+      font-family: var(--font-source);
+      font-size: clamp(17px, 1.3vw, 19px);
+      line-height: 1.65;
+      color: var(--cs-ink);
+    }
+
+    /* "How might we" — the question the product answers */
+    .braid-hmw {
+      grid-column: 1 / -1;
+      margin-top: clamp(40px, 6vh, 72px);
+      background: var(--cs-ink);
+      color: #fff;
+      border-radius: 20px;
+      padding: clamp(32px, 5vw, 64px);
+    }
+    .braid-hmw__label {
+      font-family: var(--font-franklin-medium);
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 20px;
+    }
+    .braid-hmw__body {
+      font-family: var(--font-instrument);
+      font-size: clamp(24px, 2.6vw, 38px);
+      line-height: 1.3;
+      color: #fff;
+    }
+
+    /* Split row: media one side, copy the other */
+    .braid-split {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(28px, 4vw, 64px);
+      align-items: center;
+      margin: clamp(40px, 6vh, 72px) 0;
+    }
+    .braid-split--reverse > :first-child { order: 2; }
+    .braid-split__media { border-radius: 16px; overflow: hidden; }
+    .braid-split__media img { display: block; width: 100%; height: auto; }
+    .braid-split__copy > p {
+      font-family: var(--font-source);
+      font-size: clamp(17px, 1.3vw, 19px);
+      line-height: 1.65;
+      color: var(--cs-ink);
+      margin-bottom: 20px;
+    }
+    .braid-split__copy > p:last-child { margin-bottom: 0; }
+
+    /* Title + tools strip */
+    .braid-role {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 20px;
+      margin-top: 24px;
+    }
+    .braid-role > .cs-labeled { margin: 0; }
+    .braid-role__title {
+      font-family: var(--font-instrument);
+      font-size: clamp(26px, 2.4vw, 34px);
+      line-height: 1.1;
+      color: var(--cs-ink);
+    }
+    .braid-tools { display: flex; flex-wrap: wrap; gap: 14px; }
+    .braid-tool {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-franklin-medium);
+      font-size: 14px;
+      color: var(--cs-ink);
+    }
+    .braid-tool img {
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+      border-radius: 9px;
+      background: #fff;
+    }
+
+    /* Persona cards */
+    .braid-personas {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin: clamp(32px, 4vh, 56px) 0;
+    }
+    .braid-persona {
+      background: var(--cs-card);
+      border: 1px solid var(--cs-rule);
+      border-radius: 20px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .braid-persona__img { aspect-ratio: 4 / 3; overflow: hidden; }
+    .braid-persona__img img { width: 100%; height: 100%; object-fit: cover; object-position: center 25%; display: block; }
+    .braid-persona__body { padding: 28px; display: flex; flex-direction: column; gap: 16px; }
+    .braid-persona__name {
+      font-family: var(--font-instrument);
+      font-weight: 400;
+      font-size: clamp(26px, 2.2vw, 32px);
+      line-height: 1.1;
+      color: var(--cs-ink);
+    }
+    .braid-persona__meta {
+      font-family: var(--font-franklin-medium);
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--cs-muted);
+      margin-top: -8px;
+    }
+    .braid-persona dl { margin: 0; display: grid; gap: 14px; }
+    .braid-persona dt {
+      font-family: var(--font-franklin-medium);
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--cs-muted);
+      margin-bottom: 4px;
+    }
+    .braid-persona dd {
+      margin: 0;
+      font-family: var(--font-source);
+      font-size: 16px;
+      line-height: 1.55;
+      color: var(--cs-ink);
+    }
+
+    /* Competitor logos */
+    .braid-logos {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin: clamp(28px, 4vh, 48px) 0 24px;
+    }
+    .braid-logo {
+      background: var(--cs-card);
+      border: 1px solid var(--cs-rule);
+      border-radius: 16px;
+      padding: 24px 16px 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+    .braid-logo img { width: 56px; height: 56px; object-fit: contain; border-radius: 12px; }
+    .braid-logo span {
+      font-family: var(--font-franklin-medium);
+      font-size: 13px;
+      color: var(--cs-ink);
+    }
+
+    /* User quotes */
+    .braid-quotes {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin: clamp(24px, 3vh, 40px) 0 clamp(32px, 4vh, 56px);
+    }
+    .braid-quote {
+      margin: 0;
+      padding: 28px 26px;
+      border-radius: 18px;
+      background: var(--cs-card);
+      border: 1px solid var(--cs-rule);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .braid-quote p {
+      font-family: var(--font-source);
+      font-style: normal;
+      font-size: clamp(17px, 1.35vw, 19px);
+      line-height: 1.6;
+      color: var(--cs-ink);
+    }
+    .braid-quote p::before {
+      content: "“";
+      display: block;
+      font-family: var(--font-instrument);
+      font-size: 64px;
+      line-height: 0.6;
+      height: 28px;
+      color: var(--cs-muted);
+      opacity: 0.6;
+    }
+    .braid-quote cite {
+      font-style: normal;
+      font-family: var(--font-franklin-medium);
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--cs-muted);
+    }
+
+    /* Wireframe boards sit on white so the sketches read cleanly */
+    .braid-board { background: #fff !important; padding: clamp(16px, 3vw, 40px); }
+
+    /* Final-design feature: phone + what I designed */
+    .braid-feature {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: minmax(240px, 0.8fr) 1.2fr;
+      gap: clamp(32px, 5vw, 80px);
+      align-items: center;
+      margin: clamp(48px, 7vh, 96px) 0;
+    }
+    .braid-feature--reverse > :first-child { order: 2; }
+    .braid-feature__video,
+    .braid-feature__stage {
+      background: var(--cs-ink);
+      border-radius: 24px;
+      padding: clamp(28px, 4vw, 48px);
+      display: flex;
+      justify-content: center;
+    }
+    .braid-feature__video { grid-column: auto; margin: 0; }
+    .braid-feature__video .cs-video-figure__frame { width: min(100%, 300px); }
+    .braid-feature__stage img {
+      width: min(100%, 300px);
+      height: auto;
+      display: block;
+      border-radius: 28px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+    }
+    .braid-feature .cs-list { margin-top: 8px; }
+
+    /* Competition tiles */
+    .braid-comps {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 1.6fr 1fr;
+      gap: 20px;
+    }
+    .braid-comps figure { margin: 0; border-radius: 16px; overflow: hidden; }
+    .braid-comps img { width: 100%; height: 100%; object-fit: cover; display: block; aspect-ratio: 16 / 10; }
+
+    @media (max-width: 900px) {
+      .braid-split,
+      .braid-role,
+      .braid-personas,
+      .braid-feature,
+      .braid-comps { grid-template-columns: 1fr; }
+      .braid-split--reverse > :first-child,
+      .braid-feature--reverse > :first-child { order: 0; }
+      .braid-logos { grid-template-columns: repeat(2, 1fr); }
+      .braid-quotes { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body class="cs-body-page cs-body-page--braid">
@@ -318,7 +729,18 @@
   <!-- ============ HERO ============ -->
   <header class="cs-hero">
     <div class="cs-container">
-      <h1 class="cs-hero__title">Braid</h1>
+      <div class="cs-hero__titlerow">
+        <h1 class="cs-hero__title">Braid</h1>
+        <a class="cs-award" href="https://ux-design-awards.com/winners/2025-2-braid-tech" target="_blank" rel="noopener" aria-label="2025 UX Awards Nominee — view Braid on the UX Design Awards site">
+          <span class="cs-award__glow" aria-hidden="true"></span>
+          <span class="cs-award__medal" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="M8.5 13.8 7 22l5-3 5 3-1.5-8.2"/></svg>
+          </span>
+          <span class="cs-award__year">2025 UX Awards</span>
+          <span class="cs-award__title">Nominee</span>
+          <span class="cs-award__arrow" aria-hidden="true">↗</span>
+        </a>
+      </div>
       <p class="cs-hero__tagline">Knowledge That Shapes Confidence.</p>
       <div class="cs-hero__pills cs-hero__pills--justified">
         <span class="cs-pill">Design</span>
@@ -434,14 +856,20 @@
     <div class="cs-container">
       <div class="cs-showreel__media">
         <video
-          src="../Braid/showreel.mp4"
+          src="../Braid/braid-film.mp4"
           autoplay
           muted
           loop
           playsinline
-          preload="metadata"
-          aria-label="Braid app showreel — mobile gallery">
+          preload="auto"
+          data-sound-video
+          aria-label="Braid Shop promo film — scrunchies, stickers, scarves and charms">
         </video>
+        <button class="cs-sound" type="button" data-sound-toggle aria-pressed="false" aria-label="Turn sound on">
+          <svg class="cs-sound__icon cs-sound__icon--off" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+          <svg class="cs-sound__icon cs-sound__icon--on" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></svg>
+          <span class="cs-sound__label">Sound on</span>
+        </button>
       </div>
     </div>
   </section>
@@ -464,48 +892,33 @@
             </div>
           </figure>
         </div>
+        <div class="braid-hmw">
+          <p class="braid-hmw__label">The Challenge</p>
+          <p class="braid-hmw__body">How can we effectively connect cosmetology students and people with textured hair who are seeking to learn techniques for styling and maintaining their hair, while also fostering a community within the industry?</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ============ 02 · THE SOLUTION ============ -->
+  <!-- ============ 02 · WHY NOW ============ -->
   <section class="cs-section">
     <div class="cs-container">
       <header class="cs-section__head">
-        <span class="cs-section__num">02 — Solution</span>
-        <h2 class="cs-section__title">A haircare platform for textured hair.</h2>
+        <span class="cs-section__num">02 — Why Now</span>
+        <h2 class="cs-section__title">The policy is catching up.</h2>
       </header>
       <div class="cs-section__body">
-        <div class="cs-section__copy">
-          <p class="cs-lead">To solve this, we built Braid, an AI-powered haircare platform designed for people with textured hair. The app helps users identify their hair type, build personalized routines, discover products, and receive step-by-step recommendations tailored to their specific hair goals.</p>
-        </div>
-
-        <h3 class="cs-subhead">Course Landing</h3>
-        <div class="cs-video-figure">
-          <div class="cs-video-figure__frame">
-            <video
-              class="cs-video-figure__video"
-              src="../Braid/courses.mp4"
-              autoplay
-              muted
-              loop
-              playsinline
-              preload="metadata"
-              aria-label="Braid — Courses landing screen walkthrough">
-            </video>
+        <div class="braid-split">
+          <div class="braid-split__media">
+            <img src="../Braid/case/texture.png" alt="A hand gently stretching a coil of natural textured hair" loading="lazy" />
+          </div>
+          <div class="braid-split__copy">
+            <span class="braid-eyebrow">Legislative Change</span>
+            <h3 class="braid-h3">The Texture Positive Act of 2024</h3>
+            <p>Introduced by Rep. Nydia M. Velázquez, the Texture Positive Act incentivizes cosmetology schools to teach textured hair care. It also creates accessible educational resources for licensed professionals and for people learning to care for their own textured hair.</p>
+            <p>This is the gap Braid was built to fill. Schools are being pushed to teach this craft, and individuals are looking for credible resources. Braid is designed to serve both.</p>
           </div>
         </div>
-
-        <figure class="cs-figure">
-          <div class="cs-figure__img">
-            <img src="../Braid/screens-onboarding.jpg" alt="Braid — onboarding, trends, garden glamour, courses, lesson detail" />
-          </div>
-        </figure>
-        <figure class="cs-figure">
-          <div class="cs-figure__img">
-            <img src="../Braid/screens-discovery.jpg" alt="Braid — texture quiz, profile, AI guide, hair simulator" />
-          </div>
-        </figure>
       </div>
     </div>
   </section>
@@ -515,31 +928,274 @@
     <div class="cs-container">
       <header class="cs-section__head">
         <span class="cs-section__num">03 — My Role</span>
-        <h2 class="cs-section__title">From concept to execution.</h2>
+        <h2 class="cs-section__title">Four founders, four pillars.</h2>
       </header>
       <div class="cs-section__body">
         <div class="cs-section__copy">
-          <p class="cs-lead">I led UX/UI design, owning product structure, user flows, and the visual system from concept through MVP. The four of us — Areanna Whittington, Gabrielle Vidal, Taiwo Ayedun, and me — ran the user research together, defined the product strategy, and developed the business plan and MVP roadmap. Braid took a real-world problem and turned it into a thoughtful, scalable product with a clear market opportunity.</p>
+          <p class="cs-lead">I led UX/UI design, owning product structure, user flows, and the visual system from concept through MVP. The four of us — Areanna Whittington, Gabrielle Vidal, Taiwo Ayedun, and me — ran the user research together, defined the product strategy, and developed the business plan and MVP roadmap.</p>
+          <p>Each of us leads a core pillar (design, product, marketing or operations), and we work together on our shared vision for textured hair education.</p>
+        </div>
+        <div class="braid-role">
+          <div class="cs-labeled cs-labeled--accent">
+            <span class="cs-labeled__label">Title</span>
+            <span class="braid-role__title">COD — Chief Officer of Design</span>
+            <span class="cs-labeled__body">I lead the vision, strategy and execution of all design work at Braid, shaping the user experience and the brand identity to drive the company’s growth and impact.</span>
+          </div>
+          <div class="cs-labeled">
+            <span class="cs-labeled__label">Tools</span>
+            <div class="braid-tools">
+              <span class="braid-tool"><img src="../Braid/case/logo-figma.png" alt="" />Figma</span>
+              <span class="braid-tool"><img src="../Braid/case/logo-basecamp.png" alt="" />Basecamp</span>
+              <span class="braid-tool"><img src="../Braid/case/logo-capcut.png" alt="" />CapCut</span>
+              <span class="braid-tool"><img src="../Braid/case/logo-maze.png" alt="" />Maze</span>
+            </div>
+          </div>
         </div>
         <figure class="cs-figure">
           <div class="cs-figure__img">
-            <img src="../Braid/brand-mark.jpg" alt="Braid — hand-lettered B logo with product lockup" />
-          </div>
-        </figure>
-        <figure class="cs-figure">
-          <div class="cs-figure__img">
-            <img src="../Braid/screens-hero.jpg" alt="Braid — angled-phone cinematic composition" />
+            <img src="../Braid/brand-mark.jpg" alt="Braid — hand-lettered B logo with product lockup" loading="lazy" />
           </div>
         </figure>
       </div>
     </div>
   </section>
 
-  <!-- ============ 04 · DESIGN SYSTEM ============ -->
+  <!-- ============ 04 · RESEARCH ============ -->
   <section class="cs-section">
     <div class="cs-container">
       <header class="cs-section__head">
-        <span class="cs-section__num">04 — Design System</span>
+        <span class="cs-section__num">04 — Research</span>
+        <h2 class="cs-section__title">Two people, one missing place.</h2>
+      </header>
+      <div class="cs-section__body">
+        <div class="cs-section__copy">
+          <p class="cs-lead">Our research kept pointing to two people. One has the expertise and needs a platform. The other has the curiosity and needs a guide.</p>
+        </div>
+
+        <div class="braid-personas">
+          <article class="braid-persona">
+            <div class="braid-persona__img"><img src="../Braid/case/persona-stylist.jpg" alt="Persona: a professional loctician in her salon" loading="lazy" /></div>
+            <div class="braid-persona__body">
+              <h3 class="braid-persona__name">Professional Hairstylist</h3>
+              <p class="braid-persona__meta">Loctician · Age 40 · Chicago, IL</p>
+              <dl>
+                <div><dt>Needs</dt><dd>Access to ongoing education, a platform to showcase and grow her work, and a community for networking and collaboration.</dd></div>
+                <div><dt>Pain Points</dt><dd>Struggles with client education, staying competitive with trends, and limited marketing resources for growth.</dd></div>
+              </dl>
+            </div>
+          </article>
+          <article class="braid-persona">
+            <div class="braid-persona__img"><img src="../Braid/case/persona-seeker.jpg" alt="Persona: a college student with long braids sitting in her bedroom" loading="lazy" /></div>
+            <div class="braid-persona__body">
+              <h3 class="braid-persona__name">Knowledge Seeker</h3>
+              <p class="braid-persona__meta">College Student · Age 21 · Chicago, IL</p>
+              <dl>
+                <div><dt>Needs</dt><dd>Clear tutorials, access to trusted textured hair professionals, and a supportive environment for her natural hair journey.</dd></div>
+                <div><dt>Pain Points</dt><dd>Struggles to find clear tutorials, connect with trusted textured hair professionals, and get reliable resources to care for her natural hair with confidence.</dd></div>
+              </dl>
+            </div>
+          </article>
+        </div>
+
+        <div class="cs-section__copy braid-gap-top">
+          <span class="braid-eyebrow">Competitive Analysis</span>
+          <p>Both personas already spend hours on the same four platforms, and still come away without what they need.</p>
+        </div>
+        <div class="braid-logos">
+          <div class="braid-logo"><img src="../Braid/case/logo-tiktok.png" alt="" /><span>TikTok</span></div>
+          <div class="braid-logo"><img src="../Braid/case/logo-styleseat.png" alt="" /><span>StyleSeat</span></div>
+          <div class="braid-logo"><img src="../Braid/case/logo-instagram.png" alt="" /><span>Instagram</span></div>
+          <div class="braid-logo"><img src="../Braid/case/logo-youtube.png" alt="" /><span>YouTube</span></div>
+        </div>
+        <div class="cs-section__copy">
+          <p>StyleSeat, TikTok, YouTube and Instagram all offer visibility, education and community around textured hair care. But they share the same problems: fragmented experiences, inconsistent quality and little personalized support. That leaves clear room for a more trusted, tailored solution.</p>
+        </div>
+
+        <div class="braid-split braid-split--reverse">
+          <div class="braid-split__media">
+            <img src="../Braid/case/testing-interview.jpg" alt="A remote one-on-one user interview with three participants on a video call" loading="lazy" />
+          </div>
+          <div class="braid-split__copy">
+            <span class="braid-eyebrow">User Interviews &amp; Experience Validation</span>
+            <h3 class="braid-h3">We designed from conversations, not assumptions.</h3>
+            <p>Our team has run multiple rounds of user testing, including surveys, one-on-one interviews and live product demo events like the ones pictured at the top of this page. Each round helps us refine the product to better meet our users’ needs.</p>
+          </div>
+        </div>
+
+        <div class="cs-section__copy">
+          <span class="braid-eyebrow">What We Heard</span>
+        </div>
+        <div class="braid-quotes">
+          <blockquote class="braid-quote">
+            <p>A platform, like an app or website, featuring people with textured hair and have a big sister vibe.</p>
+            <cite>— Knowledge Seeker</cite>
+          </blockquote>
+          <blockquote class="braid-quote">
+            <p>There’s a need to bridge the education gap regarding textured hair in hairstyling schools, which often focus only on theory.</p>
+            <cite>— Hairstylist</cite>
+          </blockquote>
+          <blockquote class="braid-quote">
+            <p>I’ve wasted so much time and money at beauty supply stores on products I thought would work for my hair, but they didn’t.</p>
+            <cite>— Knowledge Seeker</cite>
+          </blockquote>
+        </div>
+        <div class="cs-section__copy">
+          <p>These three quotes became three design directions: a guide that feels like a <strong>big sister</strong>, <strong>hands-on courses</strong> that go beyond theory, and a <strong>calmer way to shop</strong> for products that actually work.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 05 · IDEATION ============ -->
+  <section class="cs-section">
+    <div class="cs-container">
+      <header class="cs-section__head">
+        <span class="cs-section__num">05 — Ideation</span>
+        <h2 class="cs-section__title">Eight minutes, a table of ideas.</h2>
+      </header>
+      <div class="cs-section__body">
+        <figure class="cs-figure braid-flush-top">
+          <div class="cs-figure__img">
+            <img src="../Braid/case/crazy8s.jpg" alt="Hand-drawn Crazy 8's sketches spread across a table: login, filters, discussion board, trends and course ideas" loading="lazy" />
+          </div>
+          <figcaption class="cs-figure__caption">Crazy 8’s sketches covering login, hair-type filters, discussion boards, trends and custom courses.</figcaption>
+        </figure>
+        <div class="cs-section__copy">
+          <p class="cs-lead">After synthesizing our research, we ran a Crazy 8’s sketching exercise to quickly explore feature ideas for Braid.</p>
+          <p>We then reviewed the concepts as a team, looking for patterns and the opportunities worth developing further. Ideas like sorting tutorials by hair type, community discussion boards and trend discovery all started on this table.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 06 · PROTOTYPE ============ -->
+  <section class="cs-section">
+    <div class="cs-container">
+      <header class="cs-section__head">
+        <span class="cs-section__num">06 — Prototype</span>
+        <h2 class="cs-section__title">From sketch to structure.</h2>
+      </header>
+      <div class="cs-section__body">
+        <div class="cs-section__copy">
+          <span class="braid-eyebrow">Low-Fidelity Wireframes</span>
+          <p class="cs-lead">I used what we learned from users to set the content hierarchy and layout for three core screens: the homepage, the AI interface and the course module.</p>
+        </div>
+        <figure class="cs-figure">
+          <div class="cs-figure__img braid-board">
+            <img src="../Braid/case/lofi.png" alt="Low-fidelity wireframes for the Braid home page, AI chat and course modules, with annotations" loading="lazy" />
+          </div>
+        </figure>
+        <div class="cs-section__copy">
+          <ul class="cs-list">
+            <li>The <strong>homepage</strong> greets users by name and serves personalized content and video recommendations.</li>
+            <li>A <strong>personified AI chatbot</strong> reinforces the “older sibling” dynamic users said they wanted, so the guidance feels warm and relatable.</li>
+            <li><strong>Segmented, modular courses</strong> introduce knowledge gradually, which reduces cognitive load and keeps learning intuitive.</li>
+          </ul>
+        </div>
+
+        <div class="cs-section__copy braid-gap-top">
+          <span class="braid-eyebrow">Medium-Fidelity Wireframes</span>
+        </div>
+        <figure class="cs-figure braid-tight-top">
+          <div class="cs-figure__img braid-board">
+            <img src="../Braid/case/midfi.png" alt="Medium-fidelity wireframes: home, course overview, lesson, shop, product detail and cart screens" loading="lazy" />
+          </div>
+        </figure>
+        <div class="cs-section__copy">
+          <ul class="cs-list">
+            <li>The <strong>Shop</strong> makes buying textured hair products simpler. It offers a calm, curated alternative to the often overwhelming beauty supply store.</li>
+            <li><strong>Course modules</strong> borrow from familiar ed-tech interfaces, with more flexibility built into the information architecture.</li>
+          </ul>
+          <p>Once we finalized the navigation bar, the team divided the features and screens so each of us could focus on one area. <strong>I own the Shop and Module screens.</strong></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 07 · THE SOLUTION ============ -->
+  <section class="cs-section">
+    <div class="cs-container">
+      <header class="cs-section__head">
+        <span class="cs-section__num">07 — Solution</span>
+        <h2 class="cs-section__title">A haircare platform for textured hair.</h2>
+      </header>
+      <div class="cs-section__body">
+        <div class="cs-section__copy">
+          <p class="cs-lead">To solve this, we built Braid, an AI-powered haircare platform designed for people with textured hair. The app helps users identify their hair type, build personalized routines, discover products, and receive step-by-step recommendations tailored to their specific hair goals.</p>
+        </div>
+
+        <div class="braid-feature">
+          <div class="cs-video-figure braid-feature__video">
+            <div class="cs-video-figure__frame">
+              <video
+                class="cs-video-figure__video"
+                src="../Braid/courses.mp4"
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="metadata"
+                aria-label="Braid — Courses landing screen walkthrough">
+              </video>
+            </div>
+          </div>
+          <div>
+            <span class="braid-eyebrow">Courses</span>
+            <h3 class="braid-h3">From cultural history to hands-on mastery.</h3>
+            <p class="braid-body">I designed an intuitive course flow that takes users from cultural theory to hands-on styling, featuring:</p>
+            <ul class="cs-list">
+              <li>Seamless progress tracking with “Continue Your Course”</li>
+              <li>Personalized recommendations like “Your Top Picks” and trending lessons</li>
+              <li>A modular learning path that starts with cultural history and leads to technical mastery</li>
+              <li>Integrated course kits to support hands-on learning</li>
+              <li>Community features that build connection and support</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="braid-feature braid-feature--reverse">
+          <div class="braid-feature__stage">
+            <img src="../Braid/case/hifi-shop.jpg" alt="Braid in-app Shop screen: What's best for your Hair Chemistry, product kits and Course Kits" loading="lazy" />
+          </div>
+          <div>
+            <span class="braid-eyebrow">In-App Shop</span>
+            <h3 class="braid-h3">Shopping with purpose, not guesswork.</h3>
+            <p class="braid-body">I designed a lifestyle-driven shop that combines education and commerce to support each user’s textured hair care journey:</p>
+            <ul class="cs-list">
+              <li>Personalized shopping with curated product kits tied to course content</li>
+              <li>A seamless blend of learning and buying (for example, the Hair Steamer is sold alongside related modules)</li>
+              <li>Product storytelling that leads with benefits, not just features</li>
+              <li>A clean, mobile-first layout that guides users through rituals, not just categories</li>
+              <li>An aspirational but accessible experience that helps users shop with purpose</li>
+            </ul>
+          </div>
+        </div>
+
+        <figure class="cs-figure">
+          <div class="cs-figure__img">
+            <img src="../Braid/screens-onboarding.jpg" alt="Braid — onboarding, trends, garden glamour, courses, lesson detail" loading="lazy" />
+          </div>
+        </figure>
+        <figure class="cs-figure braid-flush-top">
+          <div class="cs-figure__img">
+            <img src="../Braid/screens-discovery.jpg" alt="Braid — texture quiz, profile, AI guide, hair simulator" loading="lazy" />
+          </div>
+        </figure>
+        <figure class="cs-figure braid-flush-top">
+          <div class="cs-figure__img">
+            <img src="../Braid/screens-hero.jpg" alt="Braid — angled-phone cinematic composition" loading="lazy" />
+          </div>
+          <figcaption class="cs-figure__caption">The full Braid app experience, designed by the team.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 08 · DESIGN SYSTEM ============ -->
+  <section class="cs-section">
+    <div class="cs-container">
+      <header class="cs-section__head">
+        <span class="cs-section__num">08 — Design System</span>
         <h2 class="cs-section__title">A single source of truth.</h2>
       </header>
       <div class="cs-section__body">
@@ -556,6 +1212,35 @@
             </a>
             <span class="cs-ds-preview__meta">Tokens, typography, color, components &amp; patterns.</span>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 09 · IMPACT ============ -->
+  <section class="cs-section">
+    <div class="cs-container">
+      <header class="cs-section__head">
+        <span class="cs-section__num">09 — Impact</span>
+        <h2 class="cs-section__title">From classroom to company.</h2>
+      </header>
+      <div class="cs-section__body">
+        <div class="cs-section__copy">
+          <p class="cs-lead">What began as a classroom project is now a registered LLC with copyright protection, and we’re just getting started.</p>
+          <p>As a team, we’re applying to grants and competitions to bring Braid to life. We believe textured hair education should be accessible, empowering and everywhere. Our users deserve this, and we’re doing the work to make sure they get it.</p>
+        </div>
+        <figure class="cs-figure">
+          <div class="cs-figure__img">
+            <img src="../Braid/case/promo-still.jpg" alt="Still from the Braid promo film: an elder and a young man looking at the Braid courses screen together" loading="lazy" />
+          </div>
+          <figcaption class="cs-figure__caption">Still from the Braid promo film.</figcaption>
+        </figure>
+        <div class="cs-section__copy">
+          <span class="braid-eyebrow">Competitions We’ve Entered</span>
+        </div>
+        <div class="braid-comps">
+          <figure><img src="../Braid/case/comp-black-ambition.jpg" alt="Black Ambition" loading="lazy" /></figure>
+          <figure><img src="../Braid/case/comp-cartier.jpg" alt="Cartier Women’s Initiative Awards" loading="lazy" /></figure>
         </div>
       </div>
     </div>
@@ -582,6 +1267,22 @@
   </footer>
 
   <script>
+    /* Showreel sound toggle: starts muted for autoplay, visitor can unmute. */
+    (function () {
+      var btn = document.querySelector('[data-sound-toggle]');
+      var video = document.querySelector('[data-sound-video]');
+      if (!btn || !video) return;
+      var label = btn.querySelector('.cs-sound__label');
+      btn.addEventListener('click', function () {
+        var turnOn = video.muted;
+        video.muted = !turnOn;
+        if (turnOn) video.play().catch(function () {});
+        btn.setAttribute('aria-pressed', String(turnOn));
+        btn.setAttribute('aria-label', turnOn ? 'Turn sound off' : 'Turn sound on');
+        label.textContent = turnOn ? 'Sound off' : 'Sound on';
+      });
+    })();
+
     /* Reveal the waitlist button only when the Braid waitlist site is
        reachable, so it never links to an error page. */
     (function () {
