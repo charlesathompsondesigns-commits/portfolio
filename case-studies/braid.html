@@ -180,8 +180,11 @@
     }
 
     /* ---------- Waitlist promo (top of Braid case study) ---------- */
+    /* The brand wall closes the hero, so drop the hero's bottom padding
+       and keep a modest, fluid gap before the shop section. */
+    .cs-body-page--braid .cs-hero { padding-bottom: 0; }
     .cs-waitlist {
-      padding: clamp(48px, 7vw, 96px) 0 clamp(32px, 5vw, 56px);
+      padding: clamp(28px, 4vw, 56px) 0 clamp(32px, 5vw, 56px);
     }
     .cs-waitlist__grid {
       display: grid;
@@ -207,13 +210,15 @@
       font-family: var(--font-instrument);
       font-style: italic;
       font-weight: 400;
-      font-size: clamp(36px, 5vw, 64px);
+      font-size: clamp(28px, 9.4vw, 64px);
       line-height: 1.05;
       letter-spacing: -0.01em;
       color: var(--brown);
       margin-bottom: 20px;
-      max-width: 14ch;
-      text-wrap: balance;
+      white-space: nowrap;
+    }
+    @media (min-width: 860px) {
+      .cs-waitlist__title { font-size: clamp(40px, 4.4vw, 64px); }
     }
     .cs-waitlist__copy {
       font-family: var(--font-source);
@@ -223,30 +228,72 @@
       max-width: 48ch;
       margin-bottom: 32px;
     }
+    /* Primary CTA — raised frosted-glass pill */
     .cs-waitlist__cta {
+      position: relative;
+      isolation: isolate;
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      padding: 16px 28px;
-      background: var(--brown);
-      color: var(--cream);
+      gap: 14px;
+      min-height: 54px;
+      padding: 7px 8px 7px 26px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.72) 0%, rgba(255, 255, 255, 0.34) 100%);
+      -webkit-backdrop-filter: blur(16px) saturate(160%);
+      backdrop-filter: blur(16px) saturate(160%);
+      color: var(--navy);
       font-family: var(--font-franklin-medium);
       font-size: 12px;
-      font-weight: 500;
+      font-weight: 600;
       letter-spacing: 0.14em;
       text-transform: uppercase;
       border-radius: 999px;
-      transition: transform 0.25s var(--ease-out), background 0.25s var(--ease-in-out);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.95),
+        inset 0 -1px 0 rgba(90, 60, 160, 0.12),
+        0 2px 6px rgba(40, 24, 90, 0.08),
+        0 14px 32px rgba(60, 36, 130, 0.22);
+      transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out), background 0.25s var(--ease-in-out);
     }
     .cs-waitlist__cta:hover {
-      transform: translateY(-2px);
-      background: #1a0a03;
+      transform: translateY(-3px);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.46) 100%);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 1),
+        inset 0 -1px 0 rgba(90, 60, 160, 0.12),
+        0 4px 10px rgba(40, 24, 90, 0.1),
+        0 20px 44px rgba(60, 36, 130, 0.28),
+        0 0 0 6px rgba(255, 255, 255, 0.18);
     }
+    .cs-waitlist__cta:active {
+      transform: translateY(0);
+      box-shadow:
+        inset 0 2px 6px rgba(60, 36, 130, 0.18),
+        0 4px 12px rgba(60, 36, 130, 0.18);
+    }
+    .cs-waitlist__cta:focus-visible { outline: 2px solid var(--navy); outline-offset: 4px; }
+    /* Arrow chip — the shop's deep indigo with a lilac arrow */
     .cs-waitlist__cta-arrow {
+      display: grid;
+      place-items: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2a1f57 0%, #18172c 100%);
+      color: #e2c5ff;
+      font-size: 15px;
+      box-shadow: 0 4px 12px rgba(24, 23, 44, 0.3);
       transition: transform 0.25s var(--ease-out);
     }
     .cs-waitlist__cta:hover .cs-waitlist__cta-arrow {
-      transform: translateX(4px);
+      transform: translateX(3px);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .cs-waitlist__cta,
+      .cs-waitlist__cta:hover,
+      .cs-waitlist__cta:hover .cs-waitlist__cta-arrow { transform: none; }
     }
     .cs-waitlist__actions {
       display: flex;
@@ -255,13 +302,16 @@
     }
     .cs-waitlist__cta--outline {
       background: transparent;
-      color: var(--brown);
-      box-shadow: inset 0 0 0 1.5px var(--brown);
+      color: var(--navy);
+      border-color: var(--navy);
+      box-shadow: none;
     }
     .cs-waitlist__cta--outline:hover {
-      background: var(--brown);
+      background: var(--navy);
       color: var(--cream);
+      box-shadow: 0 10px 24px rgba(28, 33, 55, 0.25);
     }
+    .cs-waitlist__cta--outline .cs-waitlist__cta-arrow { background: transparent; color: currentColor; }
     .cs-waitlist__cta[hidden] { display: none; }
 
     /* The .iphone device mockup itself lives in styles.css (shared). */
@@ -854,7 +904,7 @@
           <div class="cs-wall__track">
             <img class="cs-wall__tile" src="../Braid/wall/event-listening.webp" width="870" height="580" style="aspect-ratio: 870 / 580" alt="Attendee listening during a Braid community event" decoding="async" draggable="false" />
             <img class="cs-wall__tile" src="../Braid/wall/bag-flatlay.webp" width="326" height="580" style="aspect-ratio: 326 / 580" alt="Braid scarf, charms, and scrunchie laid out beside a leather bag" decoding="async" draggable="false" />
-            <img class="cs-wall__tile" src="../Braid/wall/screens-discovery.webp" width="1160" height="580" style="aspect-ratio: 1160 / 580" alt="Braid app screens — hair texture quiz, profile, and AI stylist" decoding="async" draggable="false" />
+            <img class="cs-wall__tile" src="../Braid/wall/app-screens.webp" width="1600" height="1166" style="aspect-ratio: 1600 / 1166" alt="Braid app screens fanned out around the app’s start screen" decoding="async" draggable="false" />
             <img class="cs-wall__tile" src="../Braid/wall/salon.webp" width="547" height="547" style="aspect-ratio: 547 / 547" alt="A stylist braiding a client’s hair in a salon" decoding="async" draggable="false" />
             <img class="cs-wall__tile" src="../Braid/wall/event-braids-bow.webp" width="387" height="580" style="aspect-ratio: 387 / 580" alt="Attendee with blonde-tipped box braids tied back with a ribbon" decoding="async" draggable="false" />
             <img class="cs-wall__tile" src="../Braid/wall/sign.webp" width="546" height="359" style="aspect-ratio: 546 / 359" alt="Round shop sign with the braided Braid “B” logo" decoding="async" draggable="false" />
@@ -897,9 +947,9 @@
     <div class="cs-container">
       <div class="cs-waitlist__grid">
         <div>
-          <p class="cs-waitlist__eyebrow">Now Live · Designed &amp; Built by Me</p>
+          <p class="cs-waitlist__eyebrow">Now Live · Braid Tech</p>
           <h2 class="cs-waitlist__title">The Braid Shop is open.</h2>
-          <p class="cs-waitlist__copy">I designed and built Braid's storefront — scarves, charms, and studio essentials in a mobile-first shop. It's live now: scroll it right here in the phone, or open the full site.</p>
+          <p class="cs-waitlist__copy">Scarves, charms and studio essentials for the textured hair community we’re building at Braid. As Chief Officer of Design, I designed and built our storefront: a mobile-first shop that carries the Braid brand into commerce. Scroll it right here in the phone, or open the full site.</p>
           <div class="cs-waitlist__actions">
             <a class="cs-waitlist__cta" href="https://shop-braidtech.vercel.app/" target="_blank" rel="noopener">
               Visit the Braid Shop
