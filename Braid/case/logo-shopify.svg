@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 234" role="img" aria-label="Shopify">
+  <rect width="240" height="234" rx="42.5" fill="#ffffff"/>
+  <!-- bag handle -->
+  <path d="M92 74c0-20 12-34 28-34s28 14 28 34" fill="none" stroke="#5e8e3e" stroke-width="10" stroke-linecap="round"/>
+  <!-- bag body: front panel + darker side panel -->
+  <path d="M66 70h96l14 128-112 0z" fill="#95bf47"/>
+  <path d="M162 70l20 4 12 122-18 2z" fill="#5e8e3e"/>
+  <!-- S -->
+  <path d="M138 104c-6-4-13-5-19-5-14 0-23 8-23 19 0 18 31 17 31 30 0 5-5 9-12 9-8 0-15-4-19-7l-4 13c4 3 13 7 23 7 17 0 27-9 27-22 0-19-31-18-31-30 0-3 3-7 10-7 6 0 11 2 14 4z" fill="#ffffff"/>
+</svg>
