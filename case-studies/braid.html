@@ -1210,6 +1210,24 @@
 
     .ds-progress span { transition: width 0.45s var(--ease-out); }
     .ds-progress__label { margin-top: -4px; }
+
+    /* Research: 2×2 grid of event photos beside the interviews copy */
+    .braid-research-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      border-radius: 0;
+      overflow: visible;
+    }
+    .braid-research-grid img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 14px;
+    }
+
+    /* Copy block that starts at the content's left edge (aligned with cards below) */
+    .braid-copy-full { grid-column: 1 / -1; max-width: 68ch; }
   </style>
 </head>
 <body class="cs-body-page cs-body-page--braid">
@@ -1493,19 +1511,35 @@
     <div class="cs-container">
       <header class="cs-section__head">
         <span class="cs-section__num">04 — Research</span>
-        <h2 class="cs-section__title">Two people, one missing place.</h2>
+        <h2 class="cs-section__title">We started by listening.</h2>
       </header>
       <div class="cs-section__body">
-        <div class="cs-section__copy">
-          <p class="cs-lead">Our research kept pointing to two people. One has the expertise and needs a platform. The other has the curiosity and needs a guide.</p>
+        <div class="braid-split braid-split--reverse braid-flush-top">
+          <div class="braid-split__media braid-research-grid">
+            <img src="../Braid/case/research-laptop.jpg" alt="A Braid co-founder smiling behind a sticker-covered laptop during a community session" loading="lazy" style="object-position: 50% 30%" />
+            <img src="../Braid/case/research-mic-locs.jpg" alt="A loctician sharing feedback into a microphone at a Braid event" loading="lazy" style="object-position: 55% 35%" />
+            <img src="../Braid/case/research-mic-curls.jpg" alt="An attendee with natural curls laughing as she speaks into a microphone" loading="lazy" style="object-position: 50% 35%" />
+            <img src="../Braid/case/research-listening.jpg" alt="A Braid co-founder listening to attendees beneath a screen showing the Braid logo" loading="lazy" style="object-position: 50% 45%" />
+          </div>
+          <div class="braid-split__copy">
+            <span class="braid-eyebrow">User Interviews &amp; Experience Validation</span>
+            <h3 class="braid-h3">We designed from conversations, not assumptions.</h3>
+            <p>Our team has run multiple rounds of user testing, including surveys, one-on-one interviews and live product demo events like the ones pictured here. Each round helps us refine the product to better meet our users’ needs.</p>
+          </div>
+        </div>
+
+        <div class="cs-section__copy braid-gap-top braid-copy-full">
+          <span class="braid-eyebrow">Personas</span>
+          <h3 class="braid-h3">Two people, one missing place.</h3>
+          <p class="braid-body">Our research kept pointing to two people. One has the expertise and needs a platform. The other has the curiosity and needs a guide.</p>
         </div>
 
         <div class="braid-personas">
           <article class="braid-persona">
-            <div class="braid-persona__img"><img src="../Braid/case/persona-stylist.jpg" alt="Persona: a professional loctician in her salon" loading="lazy" /></div>
+            <div class="braid-persona__img"><img src="../Braid/case/persona-stylist-event.jpg" alt="Persona: a professional hairstylist with a green-tipped natural updo and beaded braids, speaking at a Braid community session" loading="lazy" style="object-position: 50% 18%" /></div>
             <div class="braid-persona__body">
               <h3 class="braid-persona__name">Professional Hairstylist</h3>
-              <p class="braid-persona__meta">Loctician · Age 40 · Chicago, IL</p>
+              <p class="braid-persona__meta">Braider</p>
               <dl>
                 <div><dt>Needs</dt><dd>Access to ongoing education, a platform to showcase and grow her work, and a community for networking and collaboration.</dd></div>
                 <div><dt>Pain Points</dt><dd>Struggles with client education, staying competitive with trends, and limited marketing resources for growth.</dd></div>
@@ -1513,10 +1547,10 @@
             </div>
           </article>
           <article class="braid-persona">
-            <div class="braid-persona__img"><img src="../Braid/case/persona-seeker.jpg" alt="Persona: a college student with long braids sitting in her bedroom" loading="lazy" /></div>
+            <div class="braid-persona__img"><img src="../Braid/case/persona-seeker-styling.jpg" alt="Persona: a young woman with natural curls having her hair styled by a friend with locs, outdoors in a garden" loading="lazy" style="object-position: 50% 50%" /></div>
             <div class="braid-persona__body">
               <h3 class="braid-persona__name">Knowledge Seeker</h3>
-              <p class="braid-persona__meta">College Student · Age 21 · Chicago, IL</p>
+              <p class="braid-persona__meta">College Student</p>
               <dl>
                 <div><dt>Needs</dt><dd>Clear tutorials, access to trusted textured hair professionals, and a supportive environment for her natural hair journey.</dd></div>
                 <div><dt>Pain Points</dt><dd>Struggles to find clear tutorials, connect with trusted textured hair professionals, and get reliable resources to care for her natural hair with confidence.</dd></div>
@@ -1537,17 +1571,6 @@
         </div>
         <div class="cs-section__copy">
           <p>StyleSeat, TikTok, YouTube and Instagram all offer visibility, education and community around textured hair care. But they share the same problems: fragmented experiences, inconsistent quality and little personalized support. That leaves clear room for a more trusted, tailored solution.</p>
-        </div>
-
-        <div class="braid-split braid-split--reverse">
-          <div class="braid-split__media">
-            <img src="../Braid/case/testing-interview.jpg" alt="A remote one-on-one user interview with three participants on a video call" loading="lazy" />
-          </div>
-          <div class="braid-split__copy">
-            <span class="braid-eyebrow">User Interviews &amp; Experience Validation</span>
-            <h3 class="braid-h3">We designed from conversations, not assumptions.</h3>
-            <p>Our team has run multiple rounds of user testing, including surveys, one-on-one interviews and live product demo events like the ones pictured at the top of this page. Each round helps us refine the product to better meet our users’ needs.</p>
-          </div>
         </div>
 
         <div class="cs-section__copy">
