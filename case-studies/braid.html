@@ -930,231 +930,218 @@
     }
 
     /* ============================================================
-       Design-system boards — native, token-accurate presentation
-       of the Braid system on its own deep-indigo product surface.
+       Style guide sheet — one grainy, paper-like indigo surface with
+       quiet hairline panels. Sized to read in a single view on desktop.
        ============================================================ */
-    .ds-bento {
+    .ds-sheet {
       grid-column: 1 / -1;
-      display: grid;
-      grid-template-columns: repeat(6, minmax(0, 1fr));
-      gap: clamp(12px, 1.4vw, 18px);
-      margin-top: clamp(32px, 5vh, 56px);
-      --ds-bg: #18172C;
-      --ds-ink: #FFFEFE;
-      --ds-muted: rgba(255, 255, 255, 0.6);
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      margin-top: clamp(28px, 4vh, 48px);
+      padding: clamp(18px, 2vw, 28px);
+      border-radius: 28px;
+      color: #FFFEFE;
+      background:
+        radial-gradient(120% 90% at 20% 0%, rgba(120, 90, 200, 0.22) 0%, rgba(120, 90, 200, 0) 55%),
+        radial-gradient(90% 80% at 100% 100%, rgba(90, 25, 155, 0.22) 0%, rgba(90, 25, 155, 0) 60%),
+        #1A1830;
+      box-shadow: 0 30px 70px rgba(30, 20, 70, 0.25);
       --ds-display: "Gyst Variable", "Playfair Display", Georgia, serif;
       --ds-body: "Roboto", -apple-system, "Segoe UI", sans-serif;
       --ds-util: "Inter", -apple-system, "Segoe UI", sans-serif;
+      --ds-muted: rgba(255, 254, 254, 0.58);
+      --ds-line: rgba(255, 254, 254, 0.09);
     }
-    .ds-board {
-      position: relative;
-      overflow: hidden;
-      padding: clamp(20px, 2.2vw, 28px);
-      border-radius: 20px;
-      background: radial-gradient(120% 80% at 50% 0%, #2A2350 0%, #18172C 60%, #100F22 100%);
-      color: var(--ds-ink);
-      box-shadow: 0 0 0 1px rgba(200, 188, 246, 0.14), 0 20px 48px rgba(24, 23, 44, 0.28);
+    /* Paper grain: fractal noise tile, blended softly over the indigo */
+    .ds-sheet::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      /* high-contrast speckle (alpha = 3·noise − 1.25) shown at low opacity */
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.05' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 0.97 0 0 0 0 0.93 3 0 0 0 -1.25'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 160px 160px;
+      opacity: 0.09;
+      pointer-events: none;
     }
-    .ds-board__label {
+    /* Soft vignette so the sheet has depth */
+    .ds-sheet::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: radial-gradient(140% 120% at 50% 40%, transparent 55%, rgba(8, 6, 20, 0.45) 100%);
+      pointer-events: none;
+    }
+    .ds-sheet__head {
+      display: flex;
+      justify-content: space-between;
+      padding: 2px 4px 14px;
       font-family: var(--ds-util);
       font-size: 11px;
-      font-weight: 500;
       letter-spacing: 0.14em;
       text-transform: uppercase;
+      color: var(--ds-muted);
+      border-bottom: 1px solid var(--ds-line);
+      margin-bottom: clamp(12px, 1.4vw, 18px);
+    }
+
+    .ds-grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: clamp(10px, 1.1vw, 14px);
+    }
+    .ds-cell {
+      min-width: 0;
+      padding: clamp(14px, 1.5vw, 20px);
+      border-radius: 18px;
+      background: #211F37;
+      border: 1px solid var(--ds-line);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+    .ds-cell--type  { grid-column: span 6; }
+    .ds-cell--color { grid-column: span 3; }
+    .ds-cell--grad  { grid-column: span 3; }
+    .ds-cell--shape { grid-column: span 4; }
+    .ds-cell--glass { grid-column: span 4; }
+    .ds-cell--comp  { grid-column: span 4; }
+
+    .ds-label {
+      font-family: var(--ds-util);
+      font-size: 10.5px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
       color: #C8BCF6;
-      margin-bottom: 18px;
+      margin-bottom: 12px;
     }
-    .ds-board__foot {
-      margin-top: 12px;
+    .ds-sheet code {
       font-family: var(--ds-util);
-      font-size: 11px;
+      font-size: 10.5px;
       color: var(--ds-muted);
     }
-    .ds-board code {
-      font-family: var(--ds-util);
-      font-size: 11px;
-      color: var(--ds-muted);
-    }
+    .ds-foot { display: block; margin-top: 8px; }
     .ds-f-display { font-family: var(--ds-display); font-weight: 700; }
-    .ds-f-body { font-family: var(--ds-body); font-weight: 400; }
+    .ds-f-body { font-family: var(--ds-body); }
     .ds-muted { color: var(--ds-muted); }
 
-    .ds-board--type  { grid-column: span 4; }
-    .ds-board--color { grid-column: span 2; }
-    .ds-board--grad  { grid-column: span 2; }
-    .ds-board--shape { grid-column: span 2; }
-    .ds-board--glass { grid-column: span 2; }
-    .ds-board--comp  { grid-column: span 6; }
-
     /* Typography */
-    .ds-type { display: grid; grid-template-columns: auto 1fr; gap: clamp(20px, 3vw, 40px); align-items: center; }
-    .ds-type__hero { display: flex; flex-direction: column; gap: 10px; }
+    .ds-type { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: clamp(14px, 2vw, 26px); align-items: center; }
     .ds-type__aa {
+      display: block;
       font-family: var(--ds-display);
       font-weight: 700;
-      font-size: clamp(96px, 11vw, 150px);
-      line-height: 0.9;
-      background: linear-gradient(140deg, #EBC8FE 0%, #CAA8E9 45%, #8a6bc0 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+      font-size: clamp(72px, 7vw, 104px);
+      line-height: 0.95;
+      color: #FFFEFE; /* brand Pure White */
+      margin-bottom: 8px;
     }
-    .ds-type__family { font-family: var(--ds-util); font-size: 13px; font-weight: 600; }
-    .ds-type__note { font-family: var(--ds-util); font-size: 11px; color: var(--ds-muted); margin-top: 2px; }
-    .ds-scale { list-style: none; margin: 0; padding: 0; display: grid; }
+    .ds-type__family { font-family: var(--ds-util); font-size: 12px; font-weight: 600; }
+    .ds-type__family em { font-style: normal; font-weight: 400; color: var(--ds-muted); margin-left: 4px; }
+    .ds-type__family--body { margin-top: 2px; }
+    .ds-scale { list-style: none; margin: 0; padding: 0; }
     .ds-scale li {
       display: flex;
       align-items: baseline;
       justify-content: space-between;
-      gap: 16px;
-      padding: 10px 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      min-width: 0;
+      gap: 12px;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--ds-line);
     }
     .ds-scale li:last-child { border-bottom: 0; }
-    .ds-scale__sample { line-height: 1.15; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
-    /* 42px at full width; scales down so the specimen never truncates */
-    .ds-scale__xl { font-size: clamp(30px, 3vw, 42px); }
-    .ds-scale__meta { font-family: var(--ds-util); font-size: 11px; color: var(--ds-muted); white-space: nowrap; flex-shrink: 0; }
+    .ds-scale li > span { line-height: 1.15; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+    .ds-scale li > code { white-space: nowrap; flex-shrink: 0; }
+    .ds-scale__xl { font-size: clamp(28px, 2.4vw, 36px); }
 
     /* Color */
-    .ds-swatch {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      gap: 2px;
-      padding: 12px;
-      border-radius: 12px;
-      color: #FFFEFE;
-      min-height: 64px;
-    }
-    .ds-swatch span { font-family: var(--ds-util); font-size: 12px; font-weight: 600; }
-    .ds-swatch code { color: inherit; opacity: 0.75; font-size: 10.5px; }
-    .ds-swatch--lg { min-height: 108px; }
-    .ds-accents, .ds-warm { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
-    .ds-surfaces { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-radius: 12px; overflow: hidden; box-shadow: inset 0 0 0 1px rgba(255,255,255,.12); height: 36px; }
-    .ds-surfaces span { display: block; height: 100%; }
+    .ds-swatches { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+    .ds-sw { display: flex; align-items: flex-end; padding: 10px; border-radius: 12px; min-height: 44px; }
+    .ds-sw--lg { min-height: 78px; }
+    .ds-sw span { display: flex; flex-direction: column; font-family: var(--ds-util); font-size: 11.5px; font-weight: 600; color: #FFFEFE; }
+    .ds-sw code { color: inherit; opacity: 0.72; font-size: 10px; font-weight: 400; }
+    .ds-surfaces { display: grid; grid-template-columns: repeat(4, 1fr); height: 22px; margin-top: 6px; border-radius: 999px; overflow: hidden; box-shadow: inset 0 0 0 1px rgba(255,255,255,.12); }
 
     /* Gradients */
-    .ds-grads { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-    .ds-grad {
-      display: flex;
-      align-items: flex-end;
-      aspect-ratio: 1 / 0.8;
-      padding: 10px;
-      border-radius: 12px;
+    .ds-grads { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 8px; }
+    .ds-grads figure { margin: 0; display: grid; gap: 6px; }
+    .ds-grads span { display: block; aspect-ratio: 1 / 0.78; border-radius: 12px; }
+    .ds-grads figcaption, .ds-radii figcaption, .ds-ruler figcaption {
+      font-family: var(--ds-util);
+      font-size: 10.5px;
+      color: var(--ds-muted);
     }
-    .ds-grad span { font-family: var(--ds-util); font-size: 11px; font-weight: 600; color: #FFFEFE; }
 
     /* Shape & spacing */
-    .ds-radii { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 22px; }
-    .ds-radii > div { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
-    .ds-radius {
+    .ds-radii { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 14px; }
+    .ds-radii figure { margin: 0; display: grid; gap: 6px; }
+    .ds-radii span {
       display: block;
-      width: 100%;
-      aspect-ratio: 1 / 0.75;
-      background: linear-gradient(135deg, rgba(200,188,246,.28), rgba(90,25,155,.35));
-      border: 1.5px solid rgba(200, 188, 246, 0.75);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+      height: 46px;
+      background: linear-gradient(135deg, rgba(200,188,246,.22), rgba(90,25,155,.32));
+      border: 1px solid rgba(200, 188, 246, 0.6);
     }
-    .ds-radius--pill { border-radius: 999px; aspect-ratio: 1 / 0.5; margin-top: auto; }
-    .ds-space { display: grid; gap: 7px; }
-    .ds-space > div { display: grid; grid-template-columns: 96px auto; align-items: center; gap: 10px; }
-    .ds-space span { display: block; height: 8px; border-radius: 2px; background: linear-gradient(90deg, #C8BCF6, #8f6ad8); }
+    .ds-radii .is-pill { border-radius: 999px; height: 30px; align-self: end; margin-top: 16px; }
+    .ds-ruler { display: flex; align-items: flex-end; justify-content: space-between; gap: 6px; padding-top: 6px; border-top: 1px dashed var(--ds-line); }
+    .ds-ruler figure { margin: 0; display: grid; justify-items: center; gap: 6px; }
+    .ds-ruler span { display: block; border-radius: 3px; background: linear-gradient(135deg, #C8BCF6, #8f6ad8); }
 
     /* Glass */
-    .ds-glass-stage { position: relative; display: grid; gap: 10px; padding: 6px 0; isolation: isolate; }
-    .ds-blob { position: absolute; z-index: -1; border-radius: 50%; filter: blur(6px); }
-    .ds-blob--a { width: 62%; aspect-ratio: 1; top: -8%; right: -10%; background: linear-gradient(135deg, #C8BCF6, #5A199B); }
-    .ds-blob--b { width: 40%; aspect-ratio: 1; bottom: -6%; left: -6%; background: linear-gradient(135deg, #FFBF00, #FF9033); opacity: 0.8; }
+    .ds-glass-stage { position: relative; isolation: isolate; display: grid; gap: 8px; }
+    .ds-blob { position: absolute; z-index: -1; border-radius: 50%; filter: blur(4px); }
+    .ds-blob--a { width: 58%; aspect-ratio: 1; top: -14%; right: -8%; background: linear-gradient(135deg, #C8BCF6, #5A199B); opacity: 0.9; }
+    .ds-blob--b { width: 34%; aspect-ratio: 1; bottom: -14%; left: -4%; background: linear-gradient(135deg, #FFBF00, #FF9033); opacity: 0.75; }
     .ds-glass {
       display: flex;
       align-items: baseline;
       justify-content: space-between;
-      padding: 14px 16px;
-      border-radius: 20px;
+      padding: 10px 14px;
+      border-radius: 14px;
       -webkit-backdrop-filter: blur(6px) saturate(160%);
       backdrop-filter: blur(6px) saturate(160%);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.32), 0 8px 20px rgba(0,0,0,.25);
     }
-    .ds-glass span { font-family: var(--ds-util); font-size: 13px; font-weight: 600; }
-    .ds-glass small { font-family: var(--ds-util); font-size: 11px; color: var(--ds-muted); }
-    .ds-glass--base {
-      background-color: rgba(24, 23, 44, 0.55);
-      background-image: linear-gradient(180deg, rgba(255,255,255,.16) 0%, rgba(255,255,255,.06) 38%, rgba(255,255,255,.02) 62%, rgba(255,255,255,.08) 100%);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.35), inset 0 -1px 0 rgba(0,0,0,.25), 0 10px 28px rgba(0,0,0,.32);
-    }
-    .ds-glass--lifted {
-      background-color: rgba(24, 23, 44, 0.55);
-      background-image: linear-gradient(180deg, rgba(255,255,255,.22) 0%, rgba(255,255,255,.08) 38%, rgba(255,255,255,.03) 62%, rgba(255,255,255,.10) 100%);
-      border: 1px solid rgba(255, 255, 255, 0.28);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.35), inset 0 -1px 0 rgba(0,0,0,.25), 0 10px 28px rgba(0,0,0,.32);
-    }
-    .ds-glass--violet {
-      background-color: rgba(37, 32, 65, 0.55);
-      background-image: linear-gradient(180deg, rgba(200,188,246,.20) 0%, rgba(200,188,246,.06) 38%, rgba(90,25,155,.04) 62%, rgba(200,188,246,.10) 100%);
-      border: 1px solid rgba(200, 188, 246, 0.30);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.35), inset 0 -1px 0 rgba(0,0,0,.25), 0 10px 28px rgba(0,0,0,.32);
-    }
+    .ds-glass span { font-family: var(--ds-util); font-size: 12.5px; font-weight: 600; }
+    .ds-glass--base { background-color: rgba(24,23,44,.55); background-image: linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,.04)); border: 1px solid rgba(255,255,255,.18); }
+    .ds-glass--lifted { background-color: rgba(24,23,44,.5); background-image: linear-gradient(180deg, rgba(255,255,255,.24), rgba(255,255,255,.06)); border: 1px solid rgba(255,255,255,.28); }
+    .ds-glass--violet { background-color: rgba(37,32,65,.55); background-image: linear-gradient(180deg, rgba(200,188,246,.22), rgba(90,25,155,.06)); border: 1px solid rgba(200,188,246,.3); }
 
     /* Components */
-    .ds-comp { display: grid; grid-template-columns: repeat(4, minmax(0, auto)); gap: 14px clamp(20px, 3vw, 40px); align-items: center; justify-content: start; }
-    .ds-comp .ds-board__foot { grid-column: 1 / -1; display: none; }
-    .ds-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-    .ds-row--between { gap: 18px; }
-    .ds-btn {
-      display: inline-flex;
-      align-items: center;
-      height: 44px;
-      padding: 0 22px;
-      border-radius: 999px;
-      font-family: var(--ds-body);
-      font-size: 16px;
-      color: #FFFEFE;
-      white-space: nowrap;
-    }
+    .ds-comp { display: grid; gap: 10px; }
+    .ds-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+    .ds-row--meta { gap: 14px; }
+    .ds-btn { display: inline-flex; align-items: center; height: 38px; padding: 0 18px; border-radius: 999px; font-family: var(--ds-body); font-size: 14px; white-space: nowrap; color: #FFFEFE; }
     .ds-btn--primary {
       background-color: rgba(58, 24, 110, 0.55);
-      background-image: linear-gradient(180deg, rgba(200,188,246,.30) 0%, rgba(151,117,230,.16) 42%, rgba(90,25,155,.10) 68%, rgba(200,188,246,.20) 100%);
-      border: 1px solid rgba(255, 255, 255, 0.28);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.35), 0 0 24px rgba(151, 117, 230, 0.35);
+      background-image: linear-gradient(180deg, rgba(200,188,246,.32) 0%, rgba(151,117,230,.16) 45%, rgba(200,188,246,.2) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.26);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.32), 0 0 18px rgba(151,117,230,.3);
     }
-    .ds-btn--ghost { border: 1.5px solid rgba(200, 188, 246, 0.5); color: #C8BCF6; }
-    .ds-chip {
-      display: inline-flex;
-      align-items: center;
-      height: 32px;
-      padding: 0 14px;
-      border-radius: 999px;
-      background: #221E3C;
-      font-family: var(--ds-body);
-      font-size: 13px;
-      color: rgba(255, 255, 255, 0.7);
-      white-space: nowrap;
-    }
+    .ds-btn--ghost { border: 1px solid rgba(200, 188, 246, 0.5); color: #C8BCF6; }
+    .ds-chip { display: inline-flex; align-items: center; height: 28px; padding: 0 12px; border-radius: 999px; background: #221E3C; font-family: var(--ds-body); font-size: 12px; color: rgba(255,254,254,.72); white-space: nowrap; box-shadow: inset 0 0 0 1px rgba(255,255,255,.06); }
     .ds-chip--on { background: #C8BCF6; color: #18172C; font-weight: 500; }
-    .ds-toggle { position: relative; width: 48px; height: 28px; border-radius: 999px; background: linear-gradient(135deg, #C8BCF6, #5A199B); }
-    .ds-toggle span { position: absolute; top: 3px; right: 3px; width: 22px; height: 22px; border-radius: 50%; background: #FFFEFE; box-shadow: 0 2px 6px rgba(0,0,0,.28); }
-    .ds-stars { font-size: 14px; letter-spacing: 1px; color: #FFBF00; text-shadow: 0 0 12px rgba(255, 191, 0, 0.45); white-space: nowrap; }
-    .ds-stars em { font-style: normal; font-family: var(--ds-util); font-size: 11px; font-weight: 500; color: var(--ds-muted); margin-left: 4px; }
-    .ds-progress { width: clamp(140px, 16vw, 220px); height: 6px; border-radius: 999px; background: rgba(255,255,255,.12); overflow: hidden; }
-    .ds-progress span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(135deg, #FFBF00, #FF9033); box-shadow: 0 0 12px rgba(255, 144, 51, 0.5); }
+    .ds-toggle { position: relative; width: 42px; height: 24px; border-radius: 999px; background: linear-gradient(135deg, #C8BCF6, #5A199B); }
+    .ds-toggle span { position: absolute; top: 3px; right: 3px; width: 18px; height: 18px; border-radius: 50%; background: #FFFEFE; box-shadow: 0 2px 5px rgba(0,0,0,.28); }
+    .ds-stars { font-size: 13px; letter-spacing: 1px; color: #FFBF00; white-space: nowrap; }
+    .ds-stars em { font-style: normal; font-family: var(--ds-util); font-size: 10.5px; color: var(--ds-muted); margin-left: 6px; letter-spacing: 0; }
+    .ds-progress { height: 5px; border-radius: 999px; background: rgba(255,255,255,.1); overflow: hidden; }
+    .ds-progress span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #FFBF00, #FF9033); }
 
+    /* Tablet: two columns, still compact */
     @media (max-width: 1024px) {
-      .ds-bento { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .ds-board--type, .ds-board--comp { grid-column: span 2; }
-      .ds-board--color, .ds-board--grad, .ds-board--shape, .ds-board--glass { grid-column: span 1; }
-      .ds-comp { grid-template-columns: 1fr 1fr; }
+      .ds-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .ds-cell--type { grid-column: span 2; }
+      .ds-cell--color, .ds-cell--grad, .ds-cell--shape, .ds-cell--glass, .ds-cell--comp { grid-column: span 1; }
+      .ds-cell--comp { grid-column: span 2; }
     }
+    /* Phone: single column */
     @media (max-width: 640px) {
-      .ds-bento { grid-template-columns: 1fr; }
-      .ds-board--type, .ds-board--comp, .ds-board--color, .ds-board--grad, .ds-board--shape, .ds-board--glass { grid-column: auto; }
+      .ds-grid { grid-template-columns: 1fr; }
+      .ds-cell { grid-column: auto !important; }
       .ds-type { grid-template-columns: 1fr; }
-      .ds-type__hero { flex-direction: row; align-items: center; gap: 16px; }
-      .ds-type__aa { font-size: 88px; }
-      .ds-scale li { flex-direction: column; align-items: flex-start; gap: 4px; }
-      .ds-scale__sample { white-space: normal; }
-      .ds-comp { grid-template-columns: 1fr; }
+      .ds-type__hero { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+      .ds-type__aa { margin-bottom: 0; font-size: 72px; }
+      .ds-scale li > span { white-space: normal; }
     }
 
     /* YouTube autoplay: poster fades away once the muted player is running */
@@ -1163,6 +1150,66 @@
     /* bottom-left: YouTube's own "Watch on YouTube" link owns bottom-right */
     .braid-yt .cs-sound { z-index: 3; right: auto; left: clamp(12px, 2vw, 24px); }
     .cs-sound[hidden] { display: none; }
+
+    /* ---------- Style guide: lifted glass + live interactions ---------- */
+    .ds-glass-stage { padding: 4px 2px 8px; }
+    .ds-glass {
+      transform: translateY(-2px);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.5),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+        0 2px 4px rgba(0, 0, 0, 0.25),
+        0 14px 30px rgba(8, 6, 24, 0.55);
+      transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out);
+    }
+    .ds-glass:hover {
+      transform: translateY(-6px);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.6),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+        0 4px 8px rgba(0, 0, 0, 0.25),
+        0 22px 40px rgba(8, 6, 24, 0.6);
+    }
+
+    .ds-sw, .ds-grads span, .ds-radii span {
+      transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out);
+    }
+    .ds-sw { border: 0; cursor: pointer; text-align: left; font: inherit; }
+    .ds-sw:hover, .ds-grads figure:hover span, .ds-radii figure:hover span {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 22px rgba(8, 6, 24, 0.45);
+    }
+    .ds-sw:focus-visible { outline: 2px solid #C8BCF6; outline-offset: 2px; }
+    .ds-sw.is-copied code::after { content: " · copied"; }
+
+    .ds-btn { border: 0; cursor: pointer; transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out), background-color 0.2s, color 0.2s; }
+    .ds-btn--primary:hover { transform: translateY(-1px); box-shadow: inset 0 1px 0 rgba(255,255,255,.4), 0 0 26px rgba(151,117,230,.55); }
+    .ds-btn--primary:active { transform: translateY(0); }
+    .ds-btn--ghost { background: transparent; box-shadow: inset 0 0 0 1px rgba(200, 188, 246, 0.55); }
+    .ds-btn--ghost:hover { background: rgba(200, 188, 246, 0.1); }
+    .ds-btn--ghost[aria-pressed="true"] { background: #C8BCF6; color: #18172C; border-color: #C8BCF6; }
+    .ds-btn:focus-visible, .ds-chip:focus-visible, .ds-toggle:focus-visible, .ds-stars button:focus-visible { outline: 2px solid #C8BCF6; outline-offset: 2px; }
+
+    .ds-chip { border: 0; cursor: pointer; background: rgba(255, 254, 254, 0.06); box-shadow: inset 0 0 0 1px rgba(255, 254, 254, 0.1); transition: background-color 0.2s, color 0.2s; }
+    .ds-chip:hover { background: #2E2950; color: #FFFEFE; }
+    .ds-chip[aria-pressed="true"] { background: #C8BCF6; color: #18172C; font-weight: 500; box-shadow: none; }
+
+    .ds-toggle { border: 0; padding: 0; cursor: pointer; background: #2E2A48; transition: background 0.25s var(--ease-in-out); }
+    .ds-toggle span { right: auto; left: 3px; transition: left 0.25s var(--ease-out); }
+    .ds-toggle[aria-checked="true"] { background: linear-gradient(135deg, #C8BCF6, #5A199B); }
+    .ds-toggle[aria-checked="true"] span { left: 21px; }
+
+    .ds-stars { display: inline-flex; align-items: center; gap: 1px; }
+    .ds-stars button {
+      border: 0; padding: 0 1px; background: none; cursor: pointer;
+      font-size: 15px; line-height: 1; color: rgba(255, 255, 255, 0.22);
+      transition: color 0.15s, transform 0.15s;
+    }
+    .ds-stars button.is-on { color: #FFBF00; }
+    .ds-stars button:hover { transform: scale(1.15); }
+
+    .ds-progress span { transition: width 0.45s var(--ease-out); }
+    .ds-progress__label { margin-top: -4px; }
   </style>
 </head>
 <body class="cs-body-page cs-body-page--braid">
@@ -1674,111 +1721,111 @@
           <p>The system is deliberately small: two purple accents, three corner radii and one glass language, so every screen feels like Braid without a long list of rules to remember.</p>
         </div>
 
-        <div class="ds-bento">
-          <!-- Typography -->
-          <article class="ds-board ds-board--type">
-            <p class="ds-board__label">Typography</p>
-            <div class="ds-type">
-              <div class="ds-type__hero">
-                <span class="ds-type__aa">Aa</span>
-                <div>
-                  <p class="ds-type__family">Gyst · Display</p>
-                  <p class="ds-type__note">Headlines &amp; section labels</p>
+        <div class="ds-sheet">
+          <div class="ds-sheet__head">
+            <span>Braid · Style Guide</span>
+          </div>
+
+          <div class="ds-grid">
+            <!-- Typography -->
+            <section class="ds-cell ds-cell--type" aria-label="Typography">
+              <p class="ds-label">Typography</p>
+              <div class="ds-type">
+                <div class="ds-type__hero">
+                  <span class="ds-type__aa">Aa</span>
+                  <p class="ds-type__family">Gyst <em>Display</em></p>
+                  <p class="ds-type__family ds-type__family--body">Roboto <em>Body</em></p>
                 </div>
+                <ul class="ds-scale">
+                  <li><span class="ds-f-display ds-scale__xl">Courses</span><code>Display · 42</code></li>
+                  <li><span class="ds-f-body" style="font-size:19px">Intro to Loc Re‑Twist</span><code>Product · 21</code></li>
+                  <li><span class="ds-f-display" style="font-size:18px">Your Top Picks</span><code>Section · 20</code></li>
+                  <li><span class="ds-f-body" style="font-size:15px">Guidance for your hair goals.</span><code>Body · 16</code></li>
+                  <li><span class="ds-f-body ds-muted" style="font-size:12px">5 modules · 60 min</span><code>Meta · 12</code></li>
+                </ul>
               </div>
-              <ul class="ds-scale">
-                <li><span class="ds-scale__sample ds-f-display ds-scale__xl">Courses</span><span class="ds-scale__meta">Display XL · 42</span></li>
-                <li><span class="ds-scale__sample ds-f-body" style="font-size:21px">Intro to Loc Re‑Twist</span><span class="ds-scale__meta">Product · 21</span></li>
-                <li><span class="ds-scale__sample ds-f-display" style="font-size:20px">Your Top Picks</span><span class="ds-scale__meta">Section · 20</span></li>
-                <li><span class="ds-scale__sample ds-f-body" style="font-size:16px">Step-by-step guidance for your hair goals.</span><span class="ds-scale__meta">Body · 16 · Roboto</span></li>
-                <li><span class="ds-scale__sample ds-f-body ds-muted" style="font-size:12px">5 modules · 60 min</span><span class="ds-scale__meta">Meta · 12</span></li>
-              </ul>
-            </div>
-          </article>
+            </section>
 
-          <!-- Color -->
-          <article class="ds-board ds-board--color">
-            <p class="ds-board__label">Color</p>
-            <div class="ds-accents">
-              <div class="ds-swatch ds-swatch--lg" style="background:#C8BCF6;color:#18172C"><span>Lavender</span><code>#C8BCF6</code></div>
-              <div class="ds-swatch ds-swatch--lg" style="background:#5A199B"><span>Deep Violet</span><code>#5A199B</code></div>
-            </div>
-            <div class="ds-warm">
-              <div class="ds-swatch" style="background:#FF9033;color:#18172C"><span>Amber</span><code>#FF9033</code></div>
-              <div class="ds-swatch" style="background:#FFBF00;color:#18172C"><span>Gold</span><code>#FFBF00</code></div>
-            </div>
-            <div class="ds-surfaces" aria-label="Surface colors">
-              <span style="background:#18172C" title="Deep Indigo #18172C"></span>
-              <span style="background:#24213C" title="Rich Navy #24213C"></span>
-              <span style="background:#221E3C" title="Dark Purple #221E3C"></span>
-              <span style="background:#382A4D" title="Medium Purple #382A4D"></span>
-            </div>
-            <p class="ds-board__foot">Surfaces · Deep Indigo → Medium Purple</p>
-          </article>
-
-          <!-- Gradients -->
-          <article class="ds-board ds-board--grad">
-            <p class="ds-board__label">Gradients</p>
-            <div class="ds-grads">
-              <div class="ds-grad" style="background:linear-gradient(135deg,#C8BCF6 0%,#5A199B 100%)"><span>Purple Pop</span></div>
-              <div class="ds-grad" style="background:linear-gradient(140deg,#EBC8FE 0%,#CAA8E9 45%,#624884 100%)"><span>Orchid Bloom</span></div>
-              <div class="ds-grad" style="background:linear-gradient(180deg,#382A4D 0%,#221E3C 50%,#18172C 100%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)"><span>Deep Dusk</span></div>
-              <div class="ds-grad" style="background:linear-gradient(135deg,#FFBF00 0%,#FF9033 100%)"><span style="color:#18172C">Warm Flare</span></div>
-            </div>
-          </article>
-
-          <!-- Shape & spacing -->
-          <article class="ds-board ds-board--shape">
-            <p class="ds-board__label">Shape &amp; Spacing</p>
-            <div class="ds-radii">
-              <div><span class="ds-radius" style="border-radius:12px"></span><code>12 · Small</code></div>
-              <div><span class="ds-radius" style="border-radius:20px"></span><code>20 · Large</code></div>
-              <div><span class="ds-radius ds-radius--pill"></span><code>999 · Pill</code></div>
-            </div>
-            <div class="ds-space">
-              <div><span style="width:4px"></span><code>4</code></div>
-              <div><span style="width:8px"></span><code>8</code></div>
-              <div><span style="width:16px"></span><code>16</code></div>
-              <div><span style="width:24px"></span><code>24</code></div>
-              <div><span style="width:40px"></span><code>40</code></div>
-              <div><span style="width:64px"></span><code>64</code></div>
-              <div><span style="width:96px"></span><code>96</code></div>
-            </div>
-          </article>
-
-          <!-- Glass -->
-          <article class="ds-board ds-board--glass">
-            <p class="ds-board__label">Glass Surfaces</p>
-            <div class="ds-glass-stage">
-              <span class="ds-blob ds-blob--a" aria-hidden="true"></span>
-              <span class="ds-blob ds-blob--b" aria-hidden="true"></span>
-              <div class="ds-glass ds-glass--base"><span>Glass</span><small>blur 6 · sheen</small></div>
-              <div class="ds-glass ds-glass--lifted"><span>Lifted</span><small>stronger edge</small></div>
-              <div class="ds-glass ds-glass--violet"><span>Violet</span><small>accent tint</small></div>
-            </div>
-          </article>
-
-          <!-- Components -->
-          <article class="ds-board ds-board--comp">
-            <p class="ds-board__label">Components</p>
-            <div class="ds-comp">
-              <div class="ds-row">
-                <span class="ds-btn ds-btn--primary">Start Course</span>
-                <span class="ds-btn ds-btn--ghost">Save</span>
+            <!-- Color -->
+            <section class="ds-cell ds-cell--color" aria-label="Color">
+              <p class="ds-label">Color</p>
+              <div class="ds-swatches">
+                <button type="button" class="ds-sw ds-sw--lg" data-copy="#C8BCF6" style="background:#C8BCF6;color:#18172C"><span>Lavender<code>#C8BCF6</code></span></button>
+                <button type="button" class="ds-sw ds-sw--lg" data-copy="#5A199B" style="background:#5A199B"><span>Deep Violet<code>#5A199B</code></span></button>
+                <button type="button" class="ds-sw" data-copy="#FF9033" style="background:#FF9033;color:#18172C"><span>Amber<code>#FF9033</code></span></button>
+                <button type="button" class="ds-sw" data-copy="#FFBF00" style="background:#FFBF00;color:#18172C"><span>Gold<code>#FFBF00</code></span></button>
               </div>
-              <div class="ds-row">
-                <span class="ds-chip ds-chip--on">Type 4C</span>
-                <span class="ds-chip">Low porosity</span>
-                <span class="ds-chip">Locs</span>
+              <div class="ds-surfaces" aria-label="Surface colors: Deep Indigo, Rich Navy, Dark Purple, Medium Purple">
+                <span style="background:#18172C"></span><span style="background:#24213C"></span><span style="background:#221E3C"></span><span style="background:#382A4D"></span>
               </div>
-              <div class="ds-row ds-row--between">
-                <span class="ds-toggle" aria-hidden="true"><span></span></span>
-                <span class="ds-stars" aria-label="Rated 4.9">★★★★★ <em>4.9</em></span>
+              <code class="ds-foot">Surfaces · Indigo → Plum</code>
+            </section>
+
+            <!-- Gradients -->
+            <section class="ds-cell ds-cell--grad" aria-label="Gradients">
+              <p class="ds-label">Gradients</p>
+              <div class="ds-grads">
+                <figure><span style="background:linear-gradient(135deg,#C8BCF6 0%,#5A199B 100%)"></span><figcaption>Purple Pop</figcaption></figure>
+                <figure><span style="background:linear-gradient(140deg,#EBC8FE 0%,#CAA8E9 45%,#624884 100%)"></span><figcaption>Orchid Bloom</figcaption></figure>
+                <figure><span style="background:linear-gradient(180deg,#382A4D 0%,#221E3C 50%,#18172C 100%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)"></span><figcaption>Deep Dusk</figcaption></figure>
+                <figure><span style="background:linear-gradient(135deg,#FFBF00 0%,#FF9033 100%)"></span><figcaption>Warm Flare</figcaption></figure>
               </div>
-              <div class="ds-progress"><span style="width:62%"></span></div>
-              <p class="ds-board__foot">2.5 / 5 modules complete</p>
-            </div>
-          </article>
+            </section>
+
+            <!-- Shape & spacing -->
+            <section class="ds-cell ds-cell--shape" aria-label="Shape and spacing">
+              <p class="ds-label">Shape &amp; Spacing</p>
+              <div class="ds-radii">
+                <figure><span style="border-radius:12px"></span><figcaption>12</figcaption></figure>
+                <figure><span style="border-radius:20px"></span><figcaption>20</figcaption></figure>
+                <figure><span class="is-pill"></span><figcaption>Pill</figcaption></figure>
+              </div>
+              <div class="ds-ruler" aria-label="Spacing scale 4 to 64">
+                <figure><span style="width:4px;height:4px"></span><figcaption>4</figcaption></figure>
+                <figure><span style="width:8px;height:8px"></span><figcaption>8</figcaption></figure>
+                <figure><span style="width:16px;height:16px"></span><figcaption>16</figcaption></figure>
+                <figure><span style="width:24px;height:24px"></span><figcaption>24</figcaption></figure>
+                <figure><span style="width:40px;height:40px"></span><figcaption>40</figcaption></figure>
+                <figure><span style="width:64px;height:64px"></span><figcaption>64</figcaption></figure>
+              </div>
+            </section>
+
+            <!-- Glass -->
+            <section class="ds-cell ds-cell--glass" aria-label="Glass surfaces">
+              <p class="ds-label">Glass</p>
+              <div class="ds-glass-stage">
+                <span class="ds-blob ds-blob--a" aria-hidden="true"></span>
+                <span class="ds-blob ds-blob--b" aria-hidden="true"></span>
+                <div class="ds-glass ds-glass--base"><span>Glass</span><code>blur 6</code></div>
+                <div class="ds-glass ds-glass--lifted"><span>Lifted</span><code>edge 28%</code></div>
+                <div class="ds-glass ds-glass--violet"><span>Violet</span><code>tint</code></div>
+              </div>
+            </section>
+
+            <!-- Components -->
+            <section class="ds-cell ds-cell--comp" aria-label="Components">
+              <p class="ds-label">Components</p>
+              <div class="ds-comp" data-ds-comp>
+                <div class="ds-row">
+                  <button type="button" class="ds-btn ds-btn--primary" data-ds-start>Start Course</button>
+                  <button type="button" class="ds-btn ds-btn--ghost" data-ds-save aria-pressed="false">Save</button>
+                </div>
+                <div class="ds-row">
+                  <button type="button" class="ds-chip" data-ds-chip aria-pressed="true">Type 4C</button>
+                  <button type="button" class="ds-chip" data-ds-chip aria-pressed="false">Low porosity</button>
+                </div>
+                <div class="ds-row ds-row--meta">
+                  <button type="button" class="ds-toggle" role="switch" aria-checked="true" aria-label="Course reminders" data-ds-switch><span></span></button>
+                  <div class="ds-stars" data-ds-stars data-value="5" role="radiogroup" aria-label="Rate this course">
+                    <button type="button" role="radio" aria-label="1 star">★</button><button type="button" role="radio" aria-label="2 stars">★</button><button type="button" role="radio" aria-label="3 stars">★</button><button type="button" role="radio" aria-label="4 stars">★</button><button type="button" role="radio" aria-label="5 stars">★</button>
+                    <em data-ds-rating>4.9</em>
+                  </div>
+                </div>
+                <div class="ds-progress" role="progressbar" aria-label="Course progress" aria-valuemin="0" aria-valuemax="5" aria-valuenow="2.5"><span data-ds-bar style="width:50%"></span></div>
+                <code class="ds-progress__label" data-ds-progress-label>2.5 / 5 modules</code>
+              </div>
+            </section>
+          </div>
         </div>
       </div>
     </div>
@@ -1835,6 +1882,71 @@
   <div class="glass-edge" aria-hidden="true"></div>
 
   <script>
+    /* Style guide: working components */
+    (function () {
+      var sheet = document.querySelector('.ds-sheet');
+      if (!sheet) return;
+
+      sheet.querySelectorAll('[data-copy]').forEach(function (el) {
+        el.addEventListener('click', function () {
+          var hex = el.getAttribute('data-copy');
+          if (navigator.clipboard) navigator.clipboard.writeText(hex).catch(function () {});
+          el.classList.add('is-copied');
+          setTimeout(function () { el.classList.remove('is-copied'); }, 1400);
+        });
+      });
+
+      var save = sheet.querySelector('[data-ds-save]');
+      save && save.addEventListener('click', function () {
+        var on = save.getAttribute('aria-pressed') !== 'true';
+        save.setAttribute('aria-pressed', String(on));
+        save.textContent = on ? 'Saved' : 'Save';
+      });
+
+      sheet.querySelectorAll('[data-ds-chip]').forEach(function (chip) {
+        chip.addEventListener('click', function () {
+          chip.setAttribute('aria-pressed', String(chip.getAttribute('aria-pressed') !== 'true'));
+        });
+      });
+
+      var sw = sheet.querySelector('[data-ds-switch]');
+      sw && sw.addEventListener('click', function () {
+        sw.setAttribute('aria-checked', String(sw.getAttribute('aria-checked') !== 'true'));
+      });
+
+      var stars = sheet.querySelector('[data-ds-stars]');
+      if (stars) {
+        var btns = stars.querySelectorAll('button');
+        var rating = stars.querySelector('[data-ds-rating]');
+        var paint = function (n) { btns.forEach(function (b, i) { b.classList.toggle('is-on', i < n); }); };
+        var value = 5;
+        paint(value);
+        btns.forEach(function (b, i) {
+          b.addEventListener('mouseenter', function () { paint(i + 1); });
+          b.addEventListener('focus', function () { paint(i + 1); });
+          b.addEventListener('click', function () {
+            value = i + 1;
+            paint(value);
+            rating.textContent = value.toFixed(1);
+            btns.forEach(function (x, j) { x.setAttribute('aria-checked', String(j === i)); });
+          });
+        });
+        stars.addEventListener('mouseleave', function () { paint(value); });
+      }
+
+      var start = sheet.querySelector('[data-ds-start]');
+      var bar = sheet.querySelector('[data-ds-bar]');
+      var label = sheet.querySelector('[data-ds-progress-label]');
+      var done = 2.5;
+      start && start.addEventListener('click', function () {
+        done = done >= 5 ? 0 : Math.min(5, done + 0.5);
+        bar.style.width = (done / 5 * 100) + '%';
+        bar.parentElement.setAttribute('aria-valuenow', String(done));
+        label.textContent = done + ' / 5 modules';
+        start.textContent = done >= 5 ? 'Completed' : done === 0 ? 'Start Course' : 'Continue';
+      });
+    })();
+
     /* YouTube pitch: starts muted + looping once it scrolls into view (the
        thumbnail stays as a poster until then); the sound toggle unmutes it
        through the YouTube iframe API, matching the shop film above. */
