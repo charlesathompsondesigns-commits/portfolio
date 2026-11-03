@@ -219,7 +219,7 @@ ul  { list-style: none; }
 .footer__logo {
   display: block;
   flex-shrink: 0;
-  height: 52px;
+  height: clamp(36px, 32px + 0.8vw, 46px);
   aspect-ratio: 921 / 498;
   font-size: 0;
   color: var(--cream);
@@ -1635,7 +1635,6 @@ ul  { list-style: none; }
   .form__row { grid-template-columns: 1fr; }
   .nav      { padding: 0 16px; height: 56px; }
   .nav__toggle { right: 12px; }
-  .nav__logo { height: 44px; }
   .hero     { padding-left: 20px; padding-right: 20px; }
   .section  { padding-left: 20px; padding-right: 20px; padding-top: clamp(56px, 9vw, 80px); padding-bottom: clamp(56px, 9vw, 80px); }
   .container { padding: 0 20px; }
