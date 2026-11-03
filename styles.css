@@ -213,14 +213,28 @@ ul  { list-style: none; }
   padding: 0 var(--gutter);
 }
 
-.nav__logo {
-  font-family: var(--font-instrument-italic);
-  font-style: italic;
-  font-weight: 400;
-  font-size: clamp(22px, 2.4vw, 32px);
+/* Logo is masked so it takes the nav's text color on every page.
+   "CHAR" stays in the markup as the link's accessible name. */
+.nav__logo,
+.footer__logo {
+  display: block;
+  flex-shrink: 0;
+  height: 52px;
+  aspect-ratio: 921 / 498;
+  font-size: 0;
   color: var(--cream);
-  letter-spacing: 0.01em;
   transition: opacity var(--dur-short) var(--ease-in-out);
+}
+
+.nav__logo::before,
+.footer__logo::before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: currentColor;
+  -webkit-mask: url("logo.svg") center / contain no-repeat;
+  mask: url("logo.svg") center / contain no-repeat;
 }
 
 .nav__logo:hover { opacity: 0.65; }
@@ -983,14 +997,6 @@ ul  { list-style: none; }
   gap: 24px;
 }
 
-.footer__logo {
-  font-family: var(--font-instrument-italic);
-  font-style: italic;
-  font-size: 18px;
-  color: var(--cream);
-  transition: opacity var(--dur-short) var(--ease-in-out);
-}
-
 .footer__logo:hover { opacity: 0.65; }
 
 .footer__links {
@@ -1629,7 +1635,7 @@ ul  { list-style: none; }
   .form__row { grid-template-columns: 1fr; }
   .nav      { padding: 0 16px; height: 56px; }
   .nav__toggle { right: 12px; }
-  .nav__logo { font-size: 20px; }
+  .nav__logo { height: 44px; }
   .hero     { padding-left: 20px; padding-right: 20px; }
   .section  { padding-left: 20px; padding-right: 20px; padding-top: clamp(56px, 9vw, 80px); padding-bottom: clamp(56px, 9vw, 80px); }
   .container { padding: 0 20px; }
