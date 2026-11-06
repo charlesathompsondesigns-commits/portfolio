@@ -163,13 +163,13 @@ body {
     rgb(166, 189, 214)  14%,
     rgb(252, 247, 230)  18%,
     rgb(252, 247, 230)  26%,
-    rgb(228, 218, 240)  33%,
-    rgb(228, 218, 240)  38%,
-    rgb(218, 230, 244)  44%,
-    rgb(218, 230, 244)  49%,
-    rgb(232, 230, 200)  55%,
-    rgb(232, 230, 200)  60%,
-    rgb(252, 250, 245)  68%,
+    rgb(220, 223, 184)  32%,
+    rgb(220, 223, 184)  37%,
+    rgb(223, 213, 237)  41%,
+    rgb(223, 213, 237)  45%,
+    rgb(220, 232, 244)  48%,
+    rgb(220, 232, 244)  52%,
+    rgb(252, 250, 245)  62%,
     rgb(252, 250, 245)  74%,
     rgb(225, 230, 234)  80%,
     rgb(140, 165, 195)  88%,
@@ -455,7 +455,7 @@ ul  { list-style: none; }
   background: transparent;
   position: relative;
   width: 100%;
-  min-height: 120vh;
+  min-height: 105vh;
   padding: 0 clamp(48px, 4vw, 72px);
 }
 
@@ -1252,7 +1252,8 @@ ul  { list-style: none; }
   overflow: hidden;
 }
 
-.case-card__img img {
+.case-card__img img,
+.case-card__img video {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -1261,7 +1262,31 @@ ul  { list-style: none; }
   transition: transform 0.6s var(--ease-out);
 }
 
-.case-card:hover .case-card__img img { transform: scale(1.03); }
+.case-card:hover .case-card__img img,
+.case-card:hover .case-card__img video { transform: scale(1.03); }
+/* Project 808 card video: paper colour behind it so the first frame lands seamlessly */
+.case-card__img.is-paper { background: #F8F3E3; }
+
+/* Projects: each card sits on its own brand colour. The homepage script
+   measures the cards and writes the bands into --work-bands: brand olive
+   above, light olive behind 808, Braid lavender, then Chronicle blue.
+   The layer reaches up into the approach section so the olive arrives
+   gradually. Without the script, the body gradient's bands are the fallback. */
+#work {
+  position: relative;
+  padding-top: clamp(24px, 3vw, 48px);   /* sits closer to the approach line above */
+}
+#work::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(-1 * var(--work-lead, 0px));
+  bottom: 0;
+  z-index: -1;
+  background: var(--work-bands, none);
+  pointer-events: none;
+}
 
 /* --- Variants — translucent tints so body gradient flows through --------- */
 
@@ -1291,9 +1316,9 @@ ul  { list-style: none; }
   object-position: center center;
 }
 
-/* NASCAR — warm cream glass */
+/* Project 808 — light olive glass (class name kept from the old NASCAR card) */
 .case-card--nascar {
-  background: rgba(239, 232, 214, 0.45);
+  background: rgba(228, 231, 198, 0.5);
 }
 
 /* Tablet — tighten internal padding so 50/50 cards breathe at 768–1024 */

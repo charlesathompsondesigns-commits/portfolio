@@ -3,7 +3,10 @@
 
    Each row drifts slowly on its own and travels with the page scroll, in
    alternating directions, looping forever. The wall is pinned for a stretch
-   (CSS sticky), so scrolling moves through the photos rather than past them. */
+   (CSS sticky), so scrolling moves through the photos rather than past them.
+
+   Opt in with data-wall-drag to let visitors drag or swipe a row sideways
+   (and use a trackpad's horizontal scroll); walls without it behave as before. */
 (function () {
   'use strict';
 
@@ -24,6 +27,7 @@
         home: Array.prototype.slice.call(track.children),   // tiles as authored
         tiles: [],         // tiles this row currently shows
         speed: parseFloat(track.parentNode.getAttribute('data-speed')) || 1,
+        user: 0,           // extra offset from the visitor dragging the row
         phase: 0.29 * i,   // stagger the rows so tiles never line up in columns
         span: 0,           // width of one full set of tiles, incl. trailing gap
         sets: 0            // cloned sets appended so far
@@ -103,7 +107,7 @@
       var still = reduceMotion.matches;
       rows.forEach(function (row) {
         if (!(row.span > 0)) return;
-        var x = row.phase * row.span + (still ? 0 : row.speed * (drift + eased * SCROLL));
+        var x = row.phase * row.span + (still ? 0 : row.speed * (drift + eased * SCROLL)) + row.user;
         x = ((x % row.span) + row.span) % row.span;
         row.track.style.transform = 'translate3d(' + (-x).toFixed(2) + 'px,0,0)';
       });
@@ -136,8 +140,71 @@
     }
     function stop() { running = false; }
 
+    /* Drag, swipe or trackpad-scroll a row sideways. Vertical moves are left to
+       the page so the wall still scrolls normally. A drag never counts as a click. */
+    function enableDrag() {
+      var active = null;
+
+      function rowFor(el) {
+        for (var i = 0; i < rows.length; i++) {
+          if (rows[i].track.parentNode.contains(el)) return rows[i];
+        }
+        return null;
+      }
+      function swallowClick() {
+        function swallow(ev) { ev.stopPropagation(); ev.preventDefault(); }
+        wall.addEventListener('click', swallow, true);
+        setTimeout(function () { wall.removeEventListener('click', swallow, true); }, 60);
+      }
+
+      wall.addEventListener('pointerdown', function (e) {
+        if (e.button) return;
+        var row = rowFor(e.target);
+        if (row) active = { row: row, id: e.pointerId, x0: e.clientX, y0: e.clientY, last: e.clientX, dragging: false };
+      });
+      wall.addEventListener('pointermove', function (e) {
+        if (!active || e.pointerId !== active.id) return;
+        var dx = e.clientX - active.x0, dy = e.clientY - active.y0;
+        if (!active.dragging) {
+          if (Math.abs(dx) > 6 && Math.abs(dx) > Math.abs(dy)) {
+            active.dragging = true;
+            wall.classList.add('is-dragging');
+            try { wall.setPointerCapture(e.pointerId); } catch (err) {}
+          } else if (Math.abs(dy) > 6) {
+            active = null;
+            return;
+          } else {
+            return;
+          }
+        }
+        active.row.user -= e.clientX - active.last;
+        active.last = e.clientX;
+        render();
+      });
+      function end(e) {
+        if (!active || e.pointerId !== active.id) return;
+        if (active.dragging) {
+          wall.classList.remove('is-dragging');
+          swallowClick();
+        }
+        active = null;
+      }
+      wall.addEventListener('pointerup', end);
+      wall.addEventListener('pointercancel', end);
+
+      wall.addEventListener('wheel', function (e) {
+        if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
+        var row = rowFor(e.target);
+        if (!row) return;
+        e.preventDefault();
+        row.user += e.deltaX;
+        render();
+      }, { passive: false });
+    }
+
     measure();
     render();
+    if (wall.hasAttribute('data-wall-drag')) enableDrag();
 
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (entries) {

@@ -318,6 +318,18 @@
       .p808-live__grid--flip > :not(.p808-live__phone) { order: -1; }
     }
 
+    /* Tighter rhythm than the shared case study template: less air between sections */
+    .cs-body-page--808 .cs-section { padding: clamp(40px, 6vh, 72px) 0; }
+    .cs-body-page--808 .cs-section__head { margin-bottom: clamp(24px, 3.5vh, 36px); }
+    .cs-body-page--808 .cs-figure,
+    .cs-body-page--808 .cs-grid-2,
+    .cs-body-page--808 .cs-grid-3 { margin: clamp(24px, 3.5vh, 40px) 0; }
+    .cs-body-page--808 .cs-grid-2 .cs-figure,
+    .cs-body-page--808 .cs-grid-3 .cs-figure { margin: 0; }
+    .cs-body-page--808 .cs-stats { margin: clamp(20px, 3vh, 36px) 0; }
+    .cs-body-page--808 .cs-quote { margin: clamp(28px, 4vh, 48px) 0; }
+    .cs-body-page--808 .cs-section__body > :last-child { margin-bottom: 0; }
+
     /* The wall closes the hero, so the hero drops its bottom padding */
     .cs-body-page--808 .cs-hero { padding-bottom: 0; }
     .cs-body-page--808 .cs-hero__pills { margin-bottom: 48px; row-gap: 16px; }
@@ -355,37 +367,128 @@
     }
     .p808-swatch span:last-child { opacity: 0.72; }
     .p808-swatch--edge { box-shadow: inset 0 0 0 1px var(--cs-rule); }
-    /* Mayor photos under Solution: a slow horizontal marquee. The set of three
-       repeats four times and the track moves one set, so the loop never shows a gap. */
+    /* the wall's rows can be dragged sideways; photos open in the viewer */
+    .cs-wall[data-wall-drag] .cs-wall__row { touch-action: pan-y; }
+    .cs-wall[data-wall-drag] img.cs-wall__tile { cursor: zoom-in; }
+    img[data-zoom] { cursor: zoom-in; }
+    .cs-wall.is-dragging, .cs-wall.is-dragging img.cs-wall__tile { cursor: grabbing; }
+
+    /* Photo viewer: the tapped photo, large, over a dimmed page */
+    .p808-lb {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: grid;
+      place-items: center;
+      padding: clamp(56px, 8vh, 80px) clamp(12px, 6vw, 96px);
+      background: rgba(22, 20, 4, 0.84);
+      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+    .p808-lb[hidden] { display: none; }
+    .p808-lb.is-open { opacity: 1; }
+    .p808-lb figure {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      max-width: 100%;
+    }
+    .p808-lb img {
+      display: block;
+      max-width: 100%;
+      max-height: calc(100vh - 2 * clamp(56px, 8vh, 80px) - 40px);
+      width: auto;
+      height: auto;
+      border-radius: 14px;
+      box-shadow: 0 40px 90px -20px rgba(0, 0, 0, 0.7), 0 12px 30px rgba(0, 0, 0, 0.35);
+      transform: scale(0.97);
+      transition: transform 0.25s ease;
+    }
+    .p808-lb.is-open img { transform: none; }
+    .p808-lb figcaption {
+      max-width: 60ch;
+      text-align: center;
+      font-family: var(--font-source-italic);
+      font-style: italic;
+      font-size: 15px;
+      color: rgba(252, 247, 230, 0.86);
+    }
+    .p808-lb__count {
+      font-family: var(--font-franklin-medium);
+      font-style: normal;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      color: rgba(252, 247, 230, 0.55);
+      margin-left: 8px;
+    }
+    .p808-lb button {
+      position: absolute;
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      border: 1px solid rgba(252, 247, 230, 0.3);
+      border-radius: 50%;
+      background: rgba(252, 247, 230, 0.12);
+      color: #fcf7e6;
+      font-size: 22px;
+      line-height: 1;
+      cursor: pointer;
+    }
+    .p808-lb button:hover { background: rgba(252, 247, 230, 0.24); }
+    .p808-lb button:focus-visible { outline: 2px solid #d6dc55; outline-offset: 3px; }
+    .p808-lb__close { top: 16px; right: 16px; }
+    .p808-lb__prev { left: 16px; top: 50%; margin-top: -24px; }
+    .p808-lb__next { right: 16px; top: 50%; margin-top: -24px; }
+    @media (max-width: 700px) {
+      .p808-lb__prev, .p808-lb__next { top: auto; bottom: 16px; margin-top: 0; }
+      .p808-lb__prev { left: calc(50% - 60px); }
+      .p808-lb__next { right: calc(50% - 60px); }
+    }
+    /* Mayor photos under Solution: a slow, self-scrolling strip that visitors can
+       also scroll, swipe or drag themselves. The set of three repeats four times
+       so the loop never shows a gap (script at the end of the page). */
     .p808-marquee-wrap { min-width: 0; }   /* keeps the long track from widening the grid */
     .p808-marquee {
       max-width: 100%;
-      overflow: hidden;
-      -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
-      mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+      overflow-x: auto;
+      overflow-y: hidden;
+      overscroll-behavior-x: contain;
+      scrollbar-width: none;
+      cursor: grab;
+      -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 5%, #000 95%, transparent 100%);
+      mask-image: linear-gradient(90deg, transparent 0, #000 5%, #000 95%, transparent 100%);
     }
+    .p808-marquee::-webkit-scrollbar { display: none; }
+    .p808-marquee.is-dragging { cursor: grabbing; }
     .p808-marquee__track {
       --gap: clamp(12px, 1.4vw, 20px);
       display: flex;
       gap: var(--gap);
       width: max-content;
-      animation: p808-marquee 48s linear infinite;
     }
-    .p808-marquee:hover .p808-marquee__track { animation-play-state: paused; }
     .p808-marquee__track img {
       flex: none;
-      height: clamp(200px, 24vw, 320px);
+      height: clamp(240px, 34vw, 460px);
       width: auto;
-      border-radius: 16px;
+      border-radius: 18px;
+      cursor: zoom-in;
       -webkit-user-drag: none;
       user-select: none;
     }
-    @keyframes p808-marquee {
-      to { transform: translateX(calc(-25% - var(--gap) / 4)); }
+    .p808-marquee.is-dragging img { cursor: grabbing; }
+    .p808-sketches .p808-marquee__track img {
+      height: clamp(220px, 28vw, 400px);
+      background: #f4f1e6;
+      box-shadow: 0 0 0 1px var(--cs-rule);
     }
+    .p808-marquee__track img:focus-visible { outline: 3px solid #808808; outline-offset: -3px; }
     @media (prefers-reduced-motion: reduce) {
-      .p808-marquee { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
-      .p808-marquee__track { animation: none; }
+      .p808-marquee { -webkit-mask-image: none; mask-image: none; }
       .p808-marquee__track img[aria-hidden] { display: none; }
     }
     .p808-feature {
@@ -458,8 +561,6 @@
       background: #1d1f02;
     }
 
-    /* Plans sit on matching paper, so the pair reads as one sheet */
-    .p808-plans .cs-figure__img { background: #e9e6df; }
 
     /* Model / sketch compare */
     .p808-tabs {
@@ -549,9 +650,158 @@
     }
     .p808-compare__tag--left { left: 12px; }
     .p808-compare__tag--right { right: 12px; }
+    /* ── Strategy: the path to opening ── */
+    .p808-path {
+      grid-column: 1 / -1;
+      list-style: none;
+      margin: clamp(4px, 1vh, 12px) 0 clamp(28px, 4vh, 44px);
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    .p808-path__step {
+      position: relative;
+      padding: 40px clamp(16px, 2vw, 32px) 0 0;
+    }
+    /* track segment */
+    .p808-path__step::before {
+      content: "";
+      position: absolute;
+      top: 9px; left: 0; right: 0;
+      height: 2px;
+      background: var(--cs-ink);
+      transform-origin: left center;
+      transition: transform 0.7s cubic-bezier(.2,.7,.2,1);
+    }
+    .p808-path__step.is-open::before {
+      background: linear-gradient(90deg, var(--cs-ink) 0 40%, var(--cs-rule) 40%);
+    }
+    .p808-path__step.is-next::before {
+      background: repeating-linear-gradient(90deg, var(--cs-muted) 0 6px, transparent 6px 12px);
+      opacity: 0.6;
+      -webkit-mask-image: linear-gradient(90deg, #000 50%, transparent);
+      mask-image: linear-gradient(90deg, #000 50%, transparent);
+    }
+    /* node */
+    .p808-path__step::after {
+      content: "";
+      position: absolute;
+      top: 2px; left: 0;
+      width: 16px; height: 16px;
+      box-sizing: border-box;
+      border-radius: 50%;
+      background: var(--cs-ink);
+      box-shadow: 0 0 0 5px var(--cs-bg);
+      transition: transform 0.4s cubic-bezier(.3,1.6,.5,1);
+    }
+    .p808-path__step.is-open::after { background: var(--cs-bg); border: 4px solid var(--cs-ink); }
+    .p808-path__step.is-next::after { background: var(--cs-bg); border: 2px dashed var(--cs-muted); }
+    .p808-path__meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .p808-path__num {
+      font-family: var(--font-franklin-medium);
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      color: var(--cs-muted);
+    }
+    .p808-path__status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px 4px 9px;
+      border-radius: 999px;
+      font-family: var(--font-franklin-medium);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+    .is-live .p808-path__status { background: var(--cs-ink); color: var(--cs-bg); }
+    .is-live .p808-path__status::before {
+      content: "";
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #c9d36a;
+      box-shadow: 0 0 0 0 rgba(201, 211, 106, 0.7);
+      animation: p808Pulse 2.4s ease-out infinite;
+    }
+    .is-open .p808-path__status { box-shadow: inset 0 0 0 1px var(--cs-ink); color: var(--cs-ink); }
+    .is-next .p808-path__status { box-shadow: inset 0 0 0 1px var(--cs-rule); color: var(--cs-muted); }
+    @keyframes p808Pulse {
+      0% { box-shadow: 0 0 0 0 rgba(201, 211, 106, 0.7); }
+      70%, 100% { box-shadow: 0 0 0 7px rgba(201, 211, 106, 0); }
+    }
+    .p808-path__title {
+      font-family: var(--font-instrument);
+      font-weight: 400;
+      font-size: clamp(26px, 2.4vw, 34px);
+      line-height: 1.05;
+      color: var(--cs-ink);
+      margin: 0 0 10px;
+    }
+    .p808-path__body {
+      font-family: var(--font-source);
+      font-size: 16px;
+      line-height: 1.55;
+      color: var(--cs-ink);
+      margin: 0;
+      max-width: 30ch;
+    }
+    /* draw-in when scrolled to (only once JS marks it ready) */
+    .p808-path.is-ready .p808-path__step::before { transform: scaleX(0); }
+    .p808-path.is-ready .p808-path__step::after { transform: scale(0); }
+    .p808-path.is-ready .p808-path__meta,
+    .p808-path.is-ready .p808-path__title,
+    .p808-path.is-ready .p808-path__body {
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .p808-path.is-in .p808-path__step::before { transform: none; }
+    .p808-path.is-in .p808-path__step::after { transform: none; }
+    .p808-path.is-in .p808-path__meta,
+    .p808-path.is-in .p808-path__title,
+    .p808-path.is-in .p808-path__body { opacity: 1; transform: none; }
+    .p808-path.is-in .p808-path__step:nth-child(2) > *, .p808-path.is-in .p808-path__step:nth-child(2)::before, .p808-path.is-in .p808-path__step:nth-child(2)::after { transition-delay: 0.18s; }
+    .p808-path.is-in .p808-path__step:nth-child(3) > *, .p808-path.is-in .p808-path__step:nth-child(3)::before, .p808-path.is-in .p808-path__step:nth-child(3)::after { transition-delay: 0.36s; }
+    .p808-path.is-in .p808-path__step:nth-child(4) > *, .p808-path.is-in .p808-path__step:nth-child(4)::before, .p808-path.is-in .p808-path__step:nth-child(4)::after { transition-delay: 0.54s; }
+    @media (max-width: 900px) {
+      .p808-path { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 36px; }
+      .p808-path__step:nth-child(2)::before { -webkit-mask-image: linear-gradient(90deg, #000 60%, transparent); mask-image: linear-gradient(90deg, #000 60%, transparent); }
+    }
+    @media (max-width: 600px) {
+      .p808-path { grid-template-columns: 1fr; row-gap: 0; }
+      .p808-path__step { padding: 0 0 28px 36px; }
+      .p808-path__step:last-child { padding-bottom: 0; }
+      .p808-path__step::before {
+        top: 22px; bottom: -2px; left: 7px; right: auto;
+        width: 2px; height: auto;
+        transform-origin: center top;
+      }
+      .p808-path__step:nth-child(2)::before { -webkit-mask-image: none; mask-image: none; }
+      .p808-path__step.is-open::before { background: linear-gradient(180deg, var(--cs-ink) 0 40%, var(--cs-rule) 40%); }
+      .p808-path__step.is-next::before { display: none; }
+      .p808-path__step::after { top: 4px; }
+      .p808-path.is-ready .p808-path__step::before { transform: scaleY(0); }
+      .p808-path.is-in .p808-path__step::before { transform: none; }
+      .p808-path__body { max-width: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .is-live .p808-path__status::before { animation: none; }
+      .p808-path.is-ready .p808-path__step::before,
+      .p808-path.is-ready .p808-path__step::after,
+      .p808-path.is-ready .p808-path__meta,
+      .p808-path.is-ready .p808-path__title,
+      .p808-path.is-ready .p808-path__body { transform: none; opacity: 1; transition: none; }
+    }
   </style>
   <script defer src="../nav.js?v=20261012"></script>
-  <script defer src="../wall.js?v=20261005b"></script>
+  <script defer src="../wall.js?v=20261106"></script>
 </head>
 <body class="cs-body-page cs-body-page--808">
 
@@ -569,7 +819,7 @@
   <header class="cs-hero">
     <div class="cs-container">
       <h1 class="cs-hero__title">Project 808</h1>
-      <p class="cs-hero__tagline">Creating Chicago's manufacturing hub.</p>
+      <p class="cs-hero__tagline">Creating Chicago's makerspace.</p>
       <div class="cs-hero__pills cs-hero__pills--justified">
         <span class="cs-pill">Strategy</span>
         <span class="cs-pill">Visual Design</span>
@@ -587,51 +837,51 @@
 
     <!-- ============ BRAND WALL ============
          Same scroll-driven wall as Braid (styles.css → .cs-wall, wall.js). -->
-    <div class="cs-wall" data-wall>
+    <div class="cs-wall" data-wall data-wall-drag>
       <div class="cs-wall__stage">
         <div class="cs-wall__row" data-speed="1">
           <div class="cs-wall__track">
-            <img class="cs-wall__tile" src="../Project808/wall/event-cnc.webp" width="407" height="580" style="aspect-ratio: 407 / 580" decoding="async" alt="Concept image: hands guiding a CNC cut, in olive duotone." draggable="false" />
-            <img class="cs-wall__tile" src="../Project808/wall/exterior-pencil.webp" width="908" height="580" style="aspect-ratio: 908 / 580" decoding="async" alt="My sketch of the building exterior." draggable="false" />
+            <img class="cs-wall__tile" src="../Project808/wall/event-cnc.webp" data-full="../Project808/wall/full/event-cnc.webp" width="407" height="580" style="aspect-ratio: 407 / 580" decoding="async" alt="Concept image: hands guiding a CNC cut, in olive duotone." draggable="false" />
+            <img class="cs-wall__tile" src="../Project808/wall/exterior-pencil.webp" data-full="../Project808/wall/full/exterior-pencil.webp" width="908" height="580" style="aspect-ratio: 908 / 580" decoding="async" alt="My sketch of the building exterior." draggable="false" />
             <div class="cs-wall__tile p808-swatch" style="aspect-ratio: 1 / 1; background: #808808; color: #FCF7E6"><span>Olive</span><span>#808808</span></div>
-            <img class="cs-wall__tile" src="../Project808/wall/saw-photo.webp" width="865" height="580" style="aspect-ratio: 865 / 580" decoding="async" alt="Concept image of a table saw in a sunlit workshop." draggable="false" />
-            <img class="cs-wall__tile" src="../Project808/wall/plan-ground.webp" width="580" height="580" style="aspect-ratio: 580 / 580" decoding="async" alt="My sketch of the ground floor plan." draggable="false" />
-            <img class="cs-wall__tile" src="../Project808/wall/thread.webp" width="580" height="580" style="aspect-ratio: 580 / 580" decoding="async" alt="A cone of olive thread." draggable="false" />
+            <img class="cs-wall__tile" src="../Project808/wall/saw-photo.webp" data-full="../Project808/wall/full/saw-photo.webp" width="865" height="580" style="aspect-ratio: 865 / 580" decoding="async" alt="Concept image of a table saw in a sunlit workshop." draggable="false" />
+            <img class="cs-wall__tile" src="../Project808/wall/plan-ground.webp" data-full="../Project808/wall/full/plan-ground.webp" width="580" height="580" style="aspect-ratio: 580 / 580" decoding="async" alt="My sketch of the ground floor plan." draggable="false" />
+            <img class="cs-wall__tile" src="../Project808/wall/thread.webp" data-full="../Project808/wall/full/thread.webp" width="580" height="580" style="aspect-ratio: 580 / 580" decoding="async" alt="A cone of olive thread." draggable="false" />
             <div class="cs-wall__tile p808-swatch p808-swatch--edge" style="aspect-ratio: 1 / 1; background: #DCDFB8; color: #270F05"><span>Light olive</span><span>#DCDFB8</span></div>
-            <img class="cs-wall__tile" src="../Project808/wall/study-model.webp" width="908" height="580" style="aspect-ratio: 908 / 580" decoding="async" alt="Concept model of the study, with trees growing through a planted room." draggable="false" />
-            <img class="cs-wall__tile" src="../Project808/wall/study-render-2.webp" width="326" height="580" style="aspect-ratio: 326 / 580" decoding="async" alt="Rendered still of the study with its curved glass wall at golden hour." draggable="false" />
-            <img class="cs-wall__tile" src="../Project808/wall/kiln-photo.webp" width="865" height="580" style="aspect-ratio: 865 / 580" decoding="async" alt="Concept image of an open ceramics kiln." draggable="false" />
+            <img class="cs-wall__tile" src="../Project808/wall/study-model.webp" data-full="../Project808/wall/full/study-model.webp" width="908" height="580" style="aspect-ratio: 908 / 580" decoding="async" alt="Concept model of the study, with trees growing through a planted room." draggable="false" />
+            <img class="cs-wall__tile" src="../Project808/wall/study-render-2.webp" data-full="../Project808/wall/full/study-render-2.webp" width="326" height="580" style="aspect-ratio: 326 / 580" decoding="async" alt="Rendered still of the study with its curved glass wall at golden hour." draggable="false" />
+            <img class="cs-wall__tile" src="../Project808/wall/kiln-photo.webp" data-full="../Project808/wall/full/kiln-photo.webp" width="865" height="580" style="aspect-ratio: 865 / 580" decoding="async" alt="Concept image of an open ceramics kiln." draggable="false" />
           </div>
         </div>
         <div class="cs-wall__row cs-wall__row--main" data-speed="-0.8">
           <div class="cs-wall__track">
-            <img class="cs-wall__tile p808-feature" src="../Project808/wall/mayor-columbia.webp" width="1350" height="900" style="aspect-ratio: 1350 / 900" decoding="async" alt="Charlesa with Mayor Brandon Johnson at a Columbia College Chicago event." draggable="false" />
-            <img class="cs-wall__tile" src="../Project808/wall/exterior-gouache.webp" width="1409" height="900" style="aspect-ratio: 1409 / 900" decoding="async" alt="Olive gouache-style view of the building exterior." draggable="false" />
-            <img class="cs-wall__tile" src="../Project808/wall/study-render.webp" width="506" height="900" style="aspect-ratio: 506 / 900" decoding="async" alt="Rendered still of the study: a tree growing through a planted room at golden hour." draggable="false" />
+            <img class="cs-wall__tile p808-feature" src="../Project808/wall/mayor-columbia.webp" data-full="../Project808/wall/full/mayor-columbia.webp" width="1350" height="900" style="aspect-ratio: 1350 / 900" decoding="async" alt="Charlesa with Mayor Brandon Johnson at a Columbia College Chicago event." draggable="false" />
+            <img class="cs-wall__tile" src="../Project808/wall/exterior-gouache.webp" data-full="../Project808/wall/full/exterior-gouache.webp" width="1409" height="900" style="aspect-ratio: 1409 / 900" decoding="async" alt="Olive gouache-style view of the building exterior." draggable="false" />
+            <img class="cs-wall__tile" src="../Project808/wall/study-render.webp" data-full="../Project808/wall/full/study-render.webp" width="506" height="900" style="aspect-ratio: 506 / 900" decoding="async" alt="Rendered still of the study: a tree growing through a planted room at golden hour." draggable="false" />
             <div class="cs-wall__tile p808-swatch" style="aspect-ratio: 3 / 4; background: #D6DC55; color: #270F05"><span>Olive glow</span><span>#D6DC55</span></div>
-            <img class="cs-wall__tile p808-feature" src="../Project808/wall/mayor-meeting.webp" width="1280" height="895" style="aspect-ratio: 1280 / 895" decoding="async" alt="Mayor Brandon Johnson at a community manufacturing event." draggable="false" />
-            <img class="cs-wall__tile" src="../Project808/wall/vine-stair-pencil.webp" width="1409" height="900" style="aspect-ratio: 1409 / 900" decoding="async" alt="My sketch of the vine stairs." draggable="false" />
-            <img class="cs-wall__tile" src="../Project808/wall/stair-render.webp" width="506" height="900" style="aspect-ratio: 506 / 900" decoding="async" alt="Rendered still of the vine stairs spiraling up through the building at golden hour." draggable="false" />
-            <img class="cs-wall__tile" src="../Project808/wall/laser-green.webp" width="1341" height="900" style="aspect-ratio: 1341 / 900" decoding="async" alt="Green painted concept image of a laser engraving a pattern." draggable="false" />
-            <img class="cs-wall__tile p808-feature" src="../Project808/wall/mayor-tent.webp" width="1350" height="900" style="aspect-ratio: 1350 / 900" decoding="async" alt="Charlesa with Mayor Brandon Johnson at an outdoor event." draggable="false" />
-            <img class="cs-wall__tile" src="../Project808/wall/study-pencil.webp" width="1409" height="900" style="aspect-ratio: 1409 / 900" decoding="async" alt="My sketch of the study, with handwritten notes." draggable="false" />
-            <img class="cs-wall__tile" src="../Project808/wall/sewing-photo.webp" width="1264" height="848" style="aspect-ratio: 1264 / 848" decoding="async" alt="Concept image of an industrial sewing machine on a wood table." draggable="false" />
+            <img class="cs-wall__tile p808-feature" src="../Project808/wall/mayor-meeting.webp" data-full="../Project808/wall/full/mayor-meeting.webp" width="1280" height="895" style="aspect-ratio: 1280 / 895" decoding="async" alt="Mayor Brandon Johnson at a community manufacturing event." draggable="false" />
+            <img class="cs-wall__tile" src="../Project808/wall/vine-stair-pencil.webp" data-full="../Project808/wall/full/vine-stair-pencil.webp" width="1409" height="900" style="aspect-ratio: 1409 / 900" decoding="async" alt="My sketch of the vine stairs." draggable="false" />
+            <img class="cs-wall__tile" src="../Project808/wall/stair-render.webp" data-full="../Project808/wall/full/stair-render.webp" width="506" height="900" style="aspect-ratio: 506 / 900" decoding="async" alt="Rendered still of the vine stairs spiraling up through the building at golden hour." draggable="false" />
+            <img class="cs-wall__tile" src="../Project808/wall/laser-green.webp" data-full="../Project808/wall/full/laser-green.webp" width="1341" height="900" style="aspect-ratio: 1341 / 900" decoding="async" alt="Green painted concept image of a laser engraving a pattern." draggable="false" />
+            <img class="cs-wall__tile p808-feature" src="../Project808/wall/mayor-tent.webp" data-full="../Project808/wall/full/mayor-tent.webp" width="1350" height="900" style="aspect-ratio: 1350 / 900" decoding="async" alt="Charlesa with Mayor Brandon Johnson at an outdoor event." draggable="false" />
+            <img class="cs-wall__tile" src="../Project808/wall/study-pencil.webp" data-full="../Project808/wall/full/study-pencil.webp" width="1409" height="900" style="aspect-ratio: 1409 / 900" decoding="async" alt="My sketch of the study, with handwritten notes." draggable="false" />
+            <img class="cs-wall__tile" src="../Project808/wall/sewing-photo.webp" data-full="../Project808/wall/full/sewing-photo.webp" width="1264" height="848" style="aspect-ratio: 1264 / 848" decoding="async" alt="Concept image of an industrial sewing machine on a wood table." draggable="false" />
           </div>
         </div>
         <div class="cs-wall__row" data-speed="1.25">
           <div class="cs-wall__track">
-            <img class="cs-wall__tile" src="../Project808/wall/event-sewing.webp" width="407" height="580" style="aspect-ratio: 407 / 580" decoding="async" alt="Concept image: hands guiding fabric through a sewing machine, in olive duotone." draggable="false" />
-            <img class="cs-wall__tile" src="../Project808/wall/vine-stair-model.webp" width="908" height="580" style="aspect-ratio: 908 / 580" decoding="async" alt="Concept model of a spiral stair climbing around a column of vines." draggable="false" />
-            <img class="cs-wall__tile" src="../Project808/wall/stair-render-2.webp" width="326" height="580" style="aspect-ratio: 326 / 580" decoding="async" alt="Rendered still looking up the vine stairs at golden hour." draggable="false" />
+            <img class="cs-wall__tile" src="../Project808/wall/event-sewing.webp" data-full="../Project808/wall/full/event-sewing.webp" width="407" height="580" style="aspect-ratio: 407 / 580" decoding="async" alt="Concept image: hands guiding fabric through a sewing machine, in olive duotone." draggable="false" />
+            <img class="cs-wall__tile" src="../Project808/wall/vine-stair-model.webp" data-full="../Project808/wall/full/vine-stair-model.webp" width="908" height="580" style="aspect-ratio: 908 / 580" decoding="async" alt="Concept model of a spiral stair climbing around a column of vines." draggable="false" />
+            <img class="cs-wall__tile" src="../Project808/wall/stair-render-2.webp" data-full="../Project808/wall/full/stair-render-2.webp" width="326" height="580" style="aspect-ratio: 326 / 580" decoding="async" alt="Rendered still looking up the vine stairs at golden hour." draggable="false" />
             <div class="cs-wall__tile p808-swatch" style="aspect-ratio: 1 / 1; background: #270F05; color: #FCF7E6"><span>Ink</span><span>#270F05</span></div>
-            <img class="cs-wall__tile" src="../Project808/wall/copper.webp" width="580" height="580" style="aspect-ratio: 580 / 580" decoding="async" alt="A sheet of copper." draggable="false" />
-            <img class="cs-wall__tile" src="../Project808/wall/table-saw-green.webp" width="908" height="580" style="aspect-ratio: 908 / 580" decoding="async" alt="Green painted view of a person at a table saw." draggable="false" />
-            <img class="cs-wall__tile" src="../Project808/wall/plan-second.webp" width="580" height="580" style="aspect-ratio: 580 / 580" decoding="async" alt="My sketch of the second floor plan." draggable="false" />
+            <img class="cs-wall__tile" src="../Project808/wall/copper.webp" data-full="../Project808/wall/full/copper.webp" width="580" height="580" style="aspect-ratio: 580 / 580" decoding="async" alt="A sheet of copper." draggable="false" />
+            <img class="cs-wall__tile" src="../Project808/wall/table-saw-green.webp" data-full="../Project808/wall/full/table-saw-green.webp" width="908" height="580" style="aspect-ratio: 908 / 580" decoding="async" alt="Green painted view of a person at a table saw." draggable="false" />
+            <img class="cs-wall__tile" src="../Project808/wall/plan-second.webp" data-full="../Project808/wall/full/plan-second.webp" width="580" height="580" style="aspect-ratio: 580 / 580" decoding="async" alt="My sketch of the second floor plan." draggable="false" />
             <div class="cs-wall__tile p808-swatch" style="aspect-ratio: 1 / 1; background: #FCF7E6; color: #270F05"><span>Cream</span><span>#FCF7E6</span></div>
-            <img class="cs-wall__tile" src="../Project808/wall/laser-photo.webp" width="865" height="580" style="aspect-ratio: 865 / 580" decoding="async" alt="Concept image of a laser cutter on a workbench." draggable="false" />
-            <img class="cs-wall__tile" src="../Project808/wall/crib-pencil.webp" width="908" height="580" style="aspect-ratio: 908 / 580" decoding="async" alt="My sketch of the materials crib." draggable="false" />
-            <img class="cs-wall__tile" src="../Project808/wall/event-kiln.webp" width="407" height="580" style="aspect-ratio: 407 / 580" decoding="async" alt="Concept image: gloved hands at a kiln, in olive duotone." draggable="false" />
-            <img class="cs-wall__tile" src="../Project808/wall/offcuts.webp" width="580" height="580" style="aspect-ratio: 580 / 580" decoding="async" alt="A tied bundle of wood offcuts." draggable="false" />
+            <img class="cs-wall__tile" src="../Project808/wall/laser-photo.webp" data-full="../Project808/wall/full/laser-photo.webp" width="865" height="580" style="aspect-ratio: 865 / 580" decoding="async" alt="Concept image of a laser cutter on a workbench." draggable="false" />
+            <img class="cs-wall__tile" src="../Project808/wall/crib-pencil.webp" data-full="../Project808/wall/full/crib-pencil.webp" width="908" height="580" style="aspect-ratio: 908 / 580" decoding="async" alt="My sketch of the materials crib." draggable="false" />
+            <img class="cs-wall__tile" src="../Project808/wall/event-kiln.webp" data-full="../Project808/wall/full/event-kiln.webp" width="407" height="580" style="aspect-ratio: 407 / 580" decoding="async" alt="Concept image: gloved hands at a kiln, in olive duotone." draggable="false" />
+            <img class="cs-wall__tile" src="../Project808/wall/offcuts.webp" data-full="../Project808/wall/full/offcuts.webp" width="580" height="580" style="aspect-ratio: 580 / 580" decoding="async" alt="A tied bundle of wood offcuts." draggable="false" />
           </div>
         </div>
         <figure class="cs-wall__hero p808-wall-hero">
@@ -788,23 +1038,23 @@
     <div class="cs-container">
       <header class="cs-section__head">
         <span class="cs-section__num">02 — Solution</span>
-        <h2 class="cs-section__title">A physical-to-digital production hub.</h2>
+        <h2 class="cs-section__title">A place to make at scale.</h2>
       </header>
       <div class="cs-section__body">
         <div class="cs-section__copy">
           <p class="cs-lead">Project 808 is a shared, professionally equipped makerspace for Chicago creatives, built to carry makers from one prototype to a production run.</p>
-          <p>There are two ways in: prototype with in-house artisans, or get certified and book the machines yourself. Machine brands donate equipment in exchange for visibility, which keeps memberships affordable.</p>
+          <p>There are two ways in: prototype with in-house artisans, or get certified and book the machines yourself.</p>
           <div class="cs-callout">
             <span class="cs-callout__label">Hypothesis</span>
             <div class="cs-callout__body">If Chicago creatives have a space to create at scale, independent creative careers will boom.</div>
           </div>
         </div>
         <figure class="cs-figure p808-marquee-wrap">
-          <div class="p808-marquee">
+          <div class="p808-marquee" data-copies="4" aria-label="Photos with Mayor Brandon Johnson">
             <div class="p808-marquee__track">
-            <img src="../Project808/mayor-columbia.jpg" width="1400" height="933" loading="lazy" decoding="async" alt="Charlesa with Mayor Brandon Johnson at a Columbia College Chicago event." draggable="false" />
-            <img src="../Project808/mayor-meeting.jpg" width="1280" height="895" loading="lazy" decoding="async" alt="Charlesa talking with Mayor Brandon Johnson at a community event." draggable="false" />
-            <img src="../Project808/mayor-tent.jpg" width="1400" height="933" loading="lazy" decoding="async" alt="Charlesa with Mayor Brandon Johnson at an outdoor event." draggable="false" />
+            <img tabindex="0" role="button" src="../Project808/mayor-columbia.jpg" width="1400" height="933" loading="lazy" decoding="async" alt="Charlesa with Mayor Brandon Johnson at a Columbia College Chicago event." draggable="false" />
+            <img tabindex="0" role="button" src="../Project808/mayor-meeting.jpg" width="1280" height="895" loading="lazy" decoding="async" alt="Charlesa talking with Mayor Brandon Johnson at a community event." draggable="false" />
+            <img tabindex="0" role="button" src="../Project808/mayor-tent.jpg" width="1400" height="933" loading="lazy" decoding="async" alt="Charlesa with Mayor Brandon Johnson at an outdoor event." draggable="false" />
             <img src="../Project808/mayor-columbia.jpg" width="1400" height="933" loading="lazy" decoding="async" alt="" draggable="false" aria-hidden="true" />
             <img src="../Project808/mayor-meeting.jpg" width="1280" height="895" loading="lazy" decoding="async" alt="" draggable="false" aria-hidden="true" />
             <img src="../Project808/mayor-tent.jpg" width="1400" height="933" loading="lazy" decoding="async" alt="" draggable="false" aria-hidden="true" />
@@ -827,15 +1077,38 @@
     <div class="cs-container">
       <header class="cs-section__head">
         <span class="cs-section__num">03 — Strategy</span>
-        <h2 class="cs-section__title">How I designed it to become reality.</h2>
+        <h2 class="cs-section__title">How I'm making it real.</h2>
       </header>
       <div class="cs-section__body">
         <div class="cs-section__copy">
-          <p class="cs-lead">I designed the digital platform to act as a strategic validation engine that actively manufactures the credibility and data needed to secure city backing and investor capital.</p>
-          <p><strong>High-End Editorial Layout:</strong> I built a premium, deeply structured interface to establish immediate legitimacy as a serious economic development initiative, not a hobbyist space.</p>
-          <p><strong>Comparative Data Visuals:</strong> I engineered scannable tables pitting Chicago's infrastructure deficit directly against NYC and LA to force stakeholders to face the competitive gap causing our talent drain.</p>
-          <p><strong>Embedded Survey Engine:</strong> I integrated a research tool directly into the core user flow to capture real-time market proof (exact machine needs and price points), providing the empirical evidence required to secure my Phase 1 seed target ($250K–$750K).</p>
+          <p class="cs-lead">808 needs a building, machines and money. Nobody funds a space they can't picture, so I'm building the proof first, one piece at a time.</p>
         </div>
+        <ol class="p808-path" aria-label="The path to opening 808">
+          <li class="p808-path__step is-live">
+            <div class="p808-path__meta"><span class="p808-path__num">01</span><span class="p808-path__status">Live</span></div>
+            <h3 class="p808-path__title">Show it</h3>
+            <p class="p808-path__body">A walkthrough anyone can explore, so the city and funders can stand inside 808 before it exists.</p>
+          </li>
+          <li class="p808-path__step is-live">
+            <div class="p808-path__meta"><span class="p808-path__num">02</span><span class="p808-path__status">Live</span></div>
+            <h3 class="p808-path__title">Run it</h3>
+            <p class="p808-path__body">A member app for getting certified and booking machine time, so the day to day is worked out up front.</p>
+          </li>
+          <li class="p808-path__step is-open">
+            <div class="p808-path__meta"><span class="p808-path__num">03</span><span class="p808-path__status">Survey open</span></div>
+            <h3 class="p808-path__title">Prove it</h3>
+            <p class="p808-path__body">A survey asking Chicago creatives which machines they lost, what they'd pay and where they'd come.</p>
+          </li>
+          <li class="p808-path__step is-next">
+            <div class="p808-path__meta"><span class="p808-path__num">04</span><span class="p808-path__status">Up next</span></div>
+            <h3 class="p808-path__title">Fund it</h3>
+            <p class="p808-path__body">Machine brands donate equipment for visibility, so a $250K to $750K Phase 01 seed goes to the building.</p>
+          </li>
+        </ol>
+        <figure class="cs-figure">
+          <div class="cs-figure__img"><img src="../Project808/front-render.jpg" data-full="../Project808/front-render-full.jpg" data-zoom width="2000" height="1125" loading="lazy" decoding="async" alt="Rendered photo of the front of the building at golden hour: two rounded glass towers around a timber-framed entrance." /></div>
+          <figcaption class="cs-figure__caption">The front of the building at golden hour. A concept render, not a built space.</figcaption>
+        </figure>
       </div>
     </div>
   </section>
@@ -849,23 +1122,38 @@
       </header>
       <div class="cs-section__body">
         <div class="cs-section__copy">
-          <p class="cs-lead">Anyone can walk in off the street. Members head upstairs to make things. What they make comes back down and goes on sale.</p>
-          <p>The ground floor is public: an inquiry desk, a store, a study and a courtyard. The second floor is for members: wood, CNC, lasers and metal engraving, a print room and darkroom, and a full sewing wing.</p>
-          <p>Material gets its own route. The loading dock, storage and freight elevator sit at the back of the building, with the lumber rack and CNC routers right beside that elevator so full sheets have a short path. The loud, dusty machines sit behind a glass wall with doors.</p>
-          <p>The store closes the loop. Finished pieces go on the shelves, so the building sells what gets made inside it.</p>
+          <p class="cs-lead">Anyone can walk in off the street. Members head upstairs to make things, and what they make comes back down to sell.</p>
+          <p>The ground floor is public: a store, a study and a courtyard. Upstairs are the workshops for wood, CNC, lasers, print and sewing, with a freight route for materials.</p>
         </div>
-        <div class="cs-grid-2 p808-plans">
-          <figure class="cs-figure">
-            <div class="cs-figure__img"><img src="../Project808/plan-ground.jpg" width="1400" height="1400" loading="lazy" decoding="async" alt="My sketch of the ground floor plan, with a store, study, courtyard, main hall, members' conservatory and loading dock." /></div>
-            <figcaption class="cs-figure__caption">My sketch of the ground floor: open to the public.</figcaption>
-          </figure>
-          <figure class="cs-figure">
-            <div class="cs-figure__img"><img src="../Project808/plan-second.jpg" width="1400" height="1400" loading="lazy" decoding="async" alt="My sketch of the second floor plan, with wood, CNC, laser and sewing wings around a central vine stair." /></div>
-            <figcaption class="cs-figure__caption">My sketch of the second floor: members' workshops.</figcaption>
-          </figure>
-        </div>
+        <figure class="cs-figure p808-marquee-wrap p808-sketches">
+          <div class="p808-marquee" data-copies="2" aria-label="My sketches of the space">
+            <div class="p808-marquee__track">
+            <img tabindex="0" role="button" src="../Project808/plan-ground.jpg" width="1400" height="1400" loading="lazy" decoding="async" alt="My sketch of the ground floor plan, open to the public." draggable="false" />
+            <img tabindex="0" role="button" src="../Project808/exterior-pencil.jpg" width="1600" height="1022" loading="lazy" decoding="async" alt="My sketch of the building from the street." draggable="false" />
+            <img tabindex="0" role="button" src="../Project808/study-notes-pencil.jpg" width="1600" height="1022" loading="lazy" decoding="async" alt="My sketch of the study, with handwritten notes." draggable="false" />
+            <img tabindex="0" role="button" src="../Project808/store-pencil.jpg" width="1600" height="1022" loading="lazy" decoding="async" alt="My sketch of the store." draggable="false" />
+            <img tabindex="0" role="button" src="../Project808/vine-stair-pencil.jpg" width="1600" height="1022" loading="lazy" decoding="async" alt="My sketch of the vine stairs." draggable="false" />
+            <img tabindex="0" role="button" src="../Project808/plan-second.jpg" width="1400" height="1400" loading="lazy" decoding="async" alt="My sketch of the second floor plan, the members' workshops." draggable="false" />
+            <img tabindex="0" role="button" src="../Project808/crib-pencil.jpg" width="1600" height="1022" loading="lazy" decoding="async" alt="My sketch of the materials crib." draggable="false" />
+            <img tabindex="0" role="button" src="../Project808/cnc-pencil.jpg" width="1600" height="1022" loading="lazy" decoding="async" alt="My sketch of the CNC and engraver wing." draggable="false" />
+            <img tabindex="0" role="button" src="../Project808/table-saw-pencil.jpg" width="1600" height="1022" loading="lazy" decoding="async" alt="My sketch of the wood shop table saw." draggable="false" />
+            <img tabindex="0" role="button" src="../Project808/sewing-pencil.jpg" width="1600" height="1022" loading="lazy" decoding="async" alt="My sketch of the sewing wing." draggable="false" />
+            <img src="../Project808/plan-ground.jpg" width="1400" height="1400" loading="lazy" decoding="async" alt="" draggable="false" aria-hidden="true" />
+            <img src="../Project808/exterior-pencil.jpg" width="1600" height="1022" loading="lazy" decoding="async" alt="" draggable="false" aria-hidden="true" />
+            <img src="../Project808/study-notes-pencil.jpg" width="1600" height="1022" loading="lazy" decoding="async" alt="" draggable="false" aria-hidden="true" />
+            <img src="../Project808/store-pencil.jpg" width="1600" height="1022" loading="lazy" decoding="async" alt="" draggable="false" aria-hidden="true" />
+            <img src="../Project808/vine-stair-pencil.jpg" width="1600" height="1022" loading="lazy" decoding="async" alt="" draggable="false" aria-hidden="true" />
+            <img src="../Project808/plan-second.jpg" width="1400" height="1400" loading="lazy" decoding="async" alt="" draggable="false" aria-hidden="true" />
+            <img src="../Project808/crib-pencil.jpg" width="1600" height="1022" loading="lazy" decoding="async" alt="" draggable="false" aria-hidden="true" />
+            <img src="../Project808/cnc-pencil.jpg" width="1600" height="1022" loading="lazy" decoding="async" alt="" draggable="false" aria-hidden="true" />
+            <img src="../Project808/table-saw-pencil.jpg" width="1600" height="1022" loading="lazy" decoding="async" alt="" draggable="false" aria-hidden="true" />
+            <img src="../Project808/sewing-pencil.jpg" width="1600" height="1022" loading="lazy" decoding="async" alt="" draggable="false" aria-hidden="true" />
+            </div>
+          </div>
+          <figcaption class="cs-figure__caption">My sketches of the space. Drag, swipe or tap one to look closer.</figcaption>
+        </figure>
         <div class="cs-section__copy">
-          <p>The whole plan is built around one ladder. Independent makers can prototype one thing. What they can't do is get from "I made one" to "I can make five hundred."</p>
+          <p>It's all built around one ladder:</p>
         </div>
         <div class="cs-grid-3">
           <div class="cs-labeled">
@@ -1154,6 +1442,181 @@
   </script>
 
   <script>
+    /* Photo viewer shared by the wall and the mayor strip. */
+    var p808Viewer = (function () {
+      var lb = document.createElement('div');
+      lb.className = 'p808-lb';
+      lb.hidden = true;
+      lb.setAttribute('role', 'dialog');
+      lb.setAttribute('aria-modal', 'true');
+      lb.setAttribute('aria-label', 'Photo viewer');
+      lb.innerHTML = '<button class="p808-lb__close" type="button" aria-label="Close">×</button>' +
+        '<button class="p808-lb__prev" type="button" aria-label="Previous photo">‹</button>' +
+        '<figure><img alt="" /><figcaption></figcaption></figure>' +
+        '<button class="p808-lb__next" type="button" aria-label="Next photo">›</button>';
+      document.body.appendChild(lb);
+      var img = lb.querySelector('img'), cap = lb.querySelector('figcaption');
+      var list = [], index = 0, back = null;
+
+      function show() {
+        var el = list[index];
+        img.src = el.getAttribute('data-full') || el.getAttribute('src');
+        img.alt = el.getAttribute('alt') || '';
+        cap.textContent = img.alt;
+        if (list.length > 1) {
+          var n = document.createElement('span');
+          n.className = 'p808-lb__count';
+          n.textContent = (index + 1) + ' / ' + list.length;
+          cap.appendChild(n);
+        }
+      }
+      function open(items, i) {
+        list = items;
+        index = i;
+        back = document.activeElement;
+        lb.querySelector('.p808-lb__prev').hidden = lb.querySelector('.p808-lb__next').hidden = items.length < 2;
+        show();
+        lb.hidden = false;
+        document.documentElement.style.overflow = 'hidden';
+        requestAnimationFrame(function () { lb.classList.add('is-open'); });
+        lb.querySelector('.p808-lb__close').focus();
+      }
+      function close() {
+        lb.classList.remove('is-open');
+        document.documentElement.style.overflow = '';
+        setTimeout(function () { lb.hidden = true; img.removeAttribute('src'); }, 250);
+        if (back && back.focus) back.focus();
+      }
+      function step(d) { index = (index + d + list.length) % list.length; show(); }
+
+      lb.addEventListener('click', function (e) {
+        if (e.target.closest('.p808-lb__close')) return close();
+        if (e.target.closest('.p808-lb__prev')) return step(-1);
+        if (e.target.closest('.p808-lb__next')) return step(1);
+        if (e.target === lb || e.target.tagName === 'FIGURE') close();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (lb.hidden) return;
+        if (e.key === 'Escape') close();
+        else if (e.key === 'ArrowLeft' && list.length > 1) step(-1);
+        else if (e.key === 'ArrowRight' && list.length > 1) step(1);
+      });
+      return { open: open };
+    })();
+
+    /* Single photos marked data-zoom open in the viewer too */
+    document.addEventListener('click', function (e) {
+      var el = e.target.closest('img[data-zoom]');
+      if (el) p808Viewer.open([el], 0);
+    });
+
+    /* Wall: tap or click any photo (clones included) to open it */
+    (function () {
+      var wall = document.querySelector('.cs-wall[data-wall-drag]');
+      if (!wall) return;
+      wall.addEventListener('click', function (e) {
+        var tile = e.target.closest('img.cs-wall__tile');
+        if (!tile) return;
+        var originals = [].slice.call(wall.querySelectorAll('img.cs-wall__tile:not([aria-hidden])'));
+        var src = tile.getAttribute('src');
+        var i = originals.findIndex(function (o) { return o.getAttribute('src') === src; });
+        p808Viewer.open(originals, Math.max(0, i));
+      });
+    })();
+
+    /* Photo strips (mayor photos, sketches): drift on their own, but visitors can
+       scroll, swipe or drag them. Hovering pauses; after a manual move each strip
+       waits a moment, then carries on. data-copies says how many times the set repeats. */
+    Array.prototype.forEach.call(document.querySelectorAll('.p808-marquee'), function (box) {
+      var track = box.querySelector('.p808-marquee__track');
+      var originals = [].slice.call(track.querySelectorAll('img:not([aria-hidden])'));
+      var copies = parseInt(box.getAttribute('data-copies'), 10) || 4;
+      var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var SPEED = 30, set = 0, carry = 0, last = 0, hover = false, resumeAt = 0, running = false, drag = null;
+
+      function measure() {
+        if (still) return;
+        set = track.scrollWidth / copies;
+        if (box.scrollLeft < set * 0.5) box.scrollLeft = set;
+      }
+      function wrap() {
+        if (still || !set) return;
+        var d = 0;
+        if (box.scrollLeft >= set * (copies / 2 + 0.5)) d = -set;
+        else if (box.scrollLeft < set * 0.5) d = set;
+        if (d) { box.scrollLeft += d; if (drag) drag.start += d; }
+      }
+      function hold(ms) { resumeAt = performance.now() + (ms || 2500); }
+      function frame(t) {
+        if (!running) return;
+        var dt = last ? Math.min(t - last, 80) : 16;
+        last = t;
+        if (!still && !hover && !drag && t >= resumeAt) {
+          carry += SPEED * dt / 1000;
+          var px = Math.floor(carry);
+          if (px) { box.scrollLeft += px; carry -= px; }
+        }
+        wrap();
+        requestAnimationFrame(frame);
+      }
+
+      box.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') hover = true; });
+      box.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') hover = false; });
+      box.addEventListener('wheel', function () { hold(); }, { passive: true });
+      box.addEventListener('touchstart', function () { hold(3500); }, { passive: true });
+      box.addEventListener('scroll', wrap, { passive: true });
+
+      // mouse drag (touch and trackpads scroll natively)
+      box.addEventListener('pointerdown', function (e) {
+        if (e.pointerType !== 'mouse' || e.button) return;
+        drag = { x: e.clientX, start: box.scrollLeft, moved: false };
+      });
+      window.addEventListener('pointermove', function (e) {
+        if (!drag) return;
+        var dx = e.clientX - drag.x;
+        if (!drag.moved && Math.abs(dx) > 5) { drag.moved = true; box.classList.add('is-dragging'); }
+        if (drag.moved) box.scrollLeft = drag.start - dx;
+      });
+      window.addEventListener('pointerup', function () {
+        if (!drag) return;
+        if (drag.moved) {
+          var swallow = function (ev) { ev.stopPropagation(); ev.preventDefault(); };
+          box.addEventListener('click', swallow, true);
+          setTimeout(function () { box.removeEventListener('click', swallow, true); }, 60);
+        }
+        box.classList.remove('is-dragging');
+        drag = null;
+        hold();
+      });
+
+      // open a photo
+      function openFrom(el) {
+        var src = el.getAttribute('src');
+        var i = originals.findIndex(function (o) { return o.getAttribute('src') === src; });
+        p808Viewer.open(originals, Math.max(0, i));
+      }
+      box.addEventListener('click', function (e) {
+        var el = e.target.closest('img');
+        if (el) openFrom(el);
+      });
+      box.addEventListener('keydown', function (e) {
+        if ((e.key === 'Enter' || e.key === ' ') && e.target.tagName === 'IMG') { e.preventDefault(); openFrom(e.target); }
+      });
+
+      measure();
+      window.addEventListener('load', measure);
+      window.addEventListener('resize', function () { set = track.scrollWidth / copies; });
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (en) {
+          if (en[en.length - 1].isIntersecting) { if (!running) { running = true; last = 0; measure(); requestAnimationFrame(frame); } }
+          else running = false;
+        }).observe(box);
+      } else {
+        running = true;
+        requestAnimationFrame(frame);
+      }
+    });
+
     /* Part one video: starts muted (autoplay rules), visitors can turn sound on.
        It pauses while off screen. */
     (function () {
@@ -1383,6 +1846,19 @@
           doc.head.appendChild(style);
         } catch (e) { /* not same-origin: the app keeps its own layout */ }
       });
+    })();
+    /* Strategy path: draw the track in when it scrolls into view */
+    (function () {
+      var path = document.querySelector('.p808-path');
+      if (!path || !('IntersectionObserver' in window)) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      path.classList.add('is-ready');
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { path.classList.add('is-in'); io.disconnect(); }
+        });
+      }, { threshold: 0.35 });
+      io.observe(path);
     })();
   </script>
 

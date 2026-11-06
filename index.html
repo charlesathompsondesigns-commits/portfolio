@@ -7,7 +7,7 @@
   <meta name="description" content="Charlesa Thompson is a designer and artist who brings clarity and emotion to every experience she creates." />
   <meta name="theme-color" content="#270f05" />
   <link rel="preconnect" href="https://www.thecharlesathompson.com" crossorigin>
-  <link rel="stylesheet" href="styles.css?v=20261103" />
+  <link rel="stylesheet" href="styles.css?v=20261106" />
   <script defer src="nav.js?v=20261012"></script>
   <script defer src="contact.js"></script>
 </head>
@@ -84,6 +84,22 @@
 
       <div class="case-stack">
 
+        <!-- Project 808 — light olive card, text left / app opening right -->
+        <a href="case-studies/project-808.html" class="case-card case-card--nascar reveal">
+          <div class="case-card__text">
+            <h2 class="case-card__title">Project 808</h2>
+            <p class="case-card__desc">Chicago trains world-class creatives, then loses them. This campaign site builds the case to keep them here.</p>
+            <div class="case-card__btns">
+              <span class="case-pill case-pill--filled">See Project</span>
+              <span class="case-pill case-pill--outline">Concept</span>
+              <span class="case-pill case-pill--outline">Community Impact</span>
+            </div>
+          </div>
+          <div class="case-card__img">
+            <video class="case-card__video" src="Project808/card/808-card.mp4" poster="Project808/card/808-card-poster.jpg" width="1440" height="960" muted playsinline preload="none" aria-hidden="true"></video>
+          </div>
+        </a>
+
         <!-- Braid — lavender card, text left / phone mockups right -->
         <a href="case-studies/braid.html" class="case-card case-card--braid reveal">
           <div class="case-card__text">
@@ -113,22 +129,6 @@
           </div>
           <div class="case-card__img">
             <img src="Columbia%20Chronicle/Image.png" alt="The Columbia Chronicle — mobile app mockups" loading="lazy" />
-          </div>
-        </a>
-
-        <!-- Project 808 — warm cream card, text left / photo right -->
-        <a href="case-studies/project-808.html" class="case-card case-card--nascar reveal">
-          <div class="case-card__text">
-            <h2 class="case-card__title">Project 808</h2>
-            <p class="case-card__desc">Chicago trains world-class creatives, then loses them. This campaign site builds the case to keep them here.</p>
-            <div class="case-card__btns">
-              <span class="case-pill case-pill--filled">See Project</span>
-              <span class="case-pill case-pill--outline">Concept</span>
-              <span class="case-pill case-pill--outline">Community Impact</span>
-            </div>
-          </div>
-          <div class="case-card__img">
-            <img src="Featured%20Media/mayor-meeting.jpeg" alt="Project 808" loading="lazy" />
           </div>
         </a>
 
@@ -446,6 +446,88 @@
         window.addEventListener('scroll', onApproachScroll, { passive: true });
       })();
 
+    })();
+  </script>
+  <script>
+    /* Projects background: a soft brand olive above the 808 card, light olive behind it,
+       Braid lavender behind Braid, Chronicle blue behind Chronicle. Stops are
+       measured from the real layout so they line up at every screen size. */
+    (function () {
+      var work = document.getElementById('work');
+      if (!work || !window.ResizeObserver) return;
+      var cards = [
+        { el: work.querySelector('.case-card--nascar'),    c: '220,223,184' },
+        { el: work.querySelector('.case-card--braid'),     c: '223,213,237' },
+        { el: work.querySelector('.case-card--chronicle'), c: '220,232,244' }
+      ].filter(function (x) { return x.el; });
+      if (cards.length !== 3) return;
+      /* a whisper of the brand olive #808808, only a little deeper than the light olive behind the card */
+      var OLIVE = [207, 211, 162];
+      function rgb(s) { return s.split(',').map(Number); }
+      function top(el) { var y = 0; while (el) { y += el.offsetTop; el = el.offsetParent; } return y; }
+      /* eased blend between two colour stops, so no transition reads as a hard line */
+      function ease(t) { return t * t * (3 - 2 * t); }
+      function css(c, a) { return 'rgba(' + Math.round(c[0]) + ',' + Math.round(c[1]) + ',' + Math.round(c[2]) + ',' + (+a.toFixed(3)) + ')'; }
+      function paint() {
+        var base = top(work), h = work.offsetHeight;
+        var lead = Math.round(Math.min(420, window.innerHeight * 0.5));
+        var pts = [
+          { p: 0, c: OLIVE, a: 0 },
+          { p: lead, c: OLIVE, a: 1 }
+        ];
+        cards.forEach(function (x) {
+          var a = top(x.el) - base + lead, b = a + x.el.offsetHeight, c = rgb(x.c);
+          pts.push({ p: a, c: c, a: 1 }, { p: b, c: c, a: 1 });
+        });
+        pts.push({ p: h + lead, c: pts[pts.length - 1].c, a: 0 });
+        var stops = [];
+        for (var i = 0; i < pts.length - 1; i++) {
+          var A = pts[i], B = pts[i + 1], same = A.a === B.a && A.c.join() === B.c.join();
+          var n = same ? 1 : 10;
+          for (var k = (i ? 1 : 0); k <= n; k++) {
+            var t = k / n, e = ease(t);
+            var c = [0, 1, 2].map(function (j) { return A.c[j] + (B.c[j] - A.c[j]) * e; });
+            stops.push(css(c, A.a + (B.a - A.a) * e) + ' ' + Math.round(A.p + (B.p - A.p) * t) + 'px');
+          }
+        }
+        work.style.setProperty('--work-lead', lead + 'px');
+        work.style.setProperty('--work-bands', 'linear-gradient(to bottom,' + stops.join(',') + ')');
+      }
+      var queued = false;
+      function queue() { if (queued) return; queued = true; requestAnimationFrame(function () { queued = false; paint(); }); }
+      new ResizeObserver(queue).observe(work);
+      window.addEventListener('resize', queue);
+      paint();
+    })();
+  </script>
+
+  <script>
+    /* Project 808 card: the app's pencil-to-wash opening plays once when the card
+       comes into view, holds on the building, and replays on hover. If autoplay is
+       blocked (Low Power Mode) or motion is reduced, the last frame shows as a still. */
+    (function () {
+      var v = document.querySelector('.case-card__video');
+      if (!v) return;
+      var still = v.getAttribute('poster');
+      var calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (calm || !('IntersectionObserver' in window)) return;
+      v.removeAttribute('poster');            /* the paper shows until the first frame lands */
+      v.parentNode.classList.add('is-paper');
+      function play() {
+        try { v.currentTime = 0; } catch (e) {}
+        var pr = v.play();
+        if (pr && pr.catch) pr.catch(function () { v.setAttribute('poster', still); });
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { play(); io.disconnect(); }
+        });
+      }, { threshold: 0.5 });
+      io.observe(v);
+      var card = v.closest('.case-card');
+      if (card && window.matchMedia('(hover: hover)').matches) {
+        card.addEventListener('mouseenter', function () { if (v.ended) play(); });
+      }
     })();
   </script>
 
