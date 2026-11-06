@@ -177,8 +177,21 @@
       min-height: min(78vh, 760px);
       padding: clamp(96px, 16vh, 180px) 0;
       border-bottom: 0;
-      color: #fcf7e6;
-      background: radial-gradient(120% 90% at 50% 0%, #4c5106 0%, #2d3003 58%, #1d1f02 100%);
+      color: #270f05;
+      /* her pencil floor plan under the green wash, the look of the member app reels */
+      background: #c4ca86 url("../Project808/hmw-sketch.jpg") center / cover no-repeat;
+      -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 16%, #000 84%, transparent 100%);
+      mask-image: linear-gradient(180deg, transparent 0, #000 16%, #000 84%, transparent 100%);
+    }
+    /* no divider line above the stage, so the fade reads cleanly */
+    .p808-reel-sec { border-bottom: 0; }
+    /* a pale paper glow behind the question keeps it readable over the sketch */
+    .p808-hmw::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 55% at 50% 52%, rgba(248, 244, 226, 0.78) 0%, rgba(248, 244, 226, 0.45) 45%, rgba(248, 244, 226, 0) 75%);
+      pointer-events: none;
     }
     .p808-hmw__gl {
       position: absolute;
@@ -193,11 +206,6 @@
       width: 100%;
       text-align: center;
     }
-    .p808-hmw__num {
-      display: block;
-      margin-bottom: clamp(20px, 3vh, 32px);
-      color: rgba(252, 247, 230, 0.6);
-    }
     .p808-hmw__q {
       max-width: 17ch;
       margin: 0 auto;
@@ -206,7 +214,7 @@
       font-size: clamp(38px, 5.6vw, 80px);
       line-height: 1.08;
       letter-spacing: -0.01em;
-      color: #fcf7e6;
+      color: #270f05;
       text-wrap: balance;
     }
     .p808-sr {
@@ -234,8 +242,8 @@
       bottom: 0.1em;
       width: 0.055em;
       border-radius: 1px;
-      background: #d6dc55;
-      box-shadow: 0 0 12px rgba(214, 220, 85, 0.8);
+      background: #808808;
+      box-shadow: 0 0 10px rgba(128, 136, 8, 0.55);
       animation: p808-blink 1s steps(1) infinite;
     }
     .p808-caret.is-out { opacity: 0; transition: opacity 0.6s ease; animation: none; }
@@ -347,6 +355,39 @@
     }
     .p808-swatch span:last-child { opacity: 0.72; }
     .p808-swatch--edge { box-shadow: inset 0 0 0 1px var(--cs-rule); }
+    /* Mayor photos under Solution: a slow horizontal marquee. The set of three
+       repeats four times and the track moves one set, so the loop never shows a gap. */
+    .p808-marquee-wrap { min-width: 0; }   /* keeps the long track from widening the grid */
+    .p808-marquee {
+      max-width: 100%;
+      overflow: hidden;
+      -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+      mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+    }
+    .p808-marquee__track {
+      --gap: clamp(12px, 1.4vw, 20px);
+      display: flex;
+      gap: var(--gap);
+      width: max-content;
+      animation: p808-marquee 48s linear infinite;
+    }
+    .p808-marquee:hover .p808-marquee__track { animation-play-state: paused; }
+    .p808-marquee__track img {
+      flex: none;
+      height: clamp(200px, 24vw, 320px);
+      width: auto;
+      border-radius: 16px;
+      -webkit-user-drag: none;
+      user-select: none;
+    }
+    @keyframes p808-marquee {
+      to { transform: translateX(calc(-25% - var(--gap) / 4)); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .p808-marquee { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
+      .p808-marquee__track { animation: none; }
+      .p808-marquee__track img[aria-hidden] { display: none; }
+    }
     .p808-feature {
       outline: 3px solid #d6dc55;
       outline-offset: -3px;
@@ -396,13 +437,16 @@
 
     .cs-body-page--808 .cs-callout { background: var(--cs-ink); }
 
-    /* Portrait video pair stays two-up on phones */
+    /* Portrait video pair: side by side on larger screens, stacked on phones */
     .p808-photos {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: clamp(12px, 2vw, 24px);
       max-width: 680px;
       margin: 0 auto;
+    }
+    @media (max-width: 600px) {
+      .p808-photos { grid-template-columns: minmax(0, 1fr); max-width: 380px; row-gap: 16px; }
     }
     .p808-photos video {
       width: 100%;
@@ -675,7 +719,7 @@
   </section>
 
   <!-- ============ PART ONE VIDEO ============ -->
-  <section class="cs-section" aria-label="Part one of the video series">
+  <section class="cs-section p808-reel-sec" aria-label="Part one of the video series">
     <div class="cs-container p808-reel__grid">
       <div>
         <span class="cs-award">
@@ -708,7 +752,6 @@
   <section class="cs-section p808-hmw" aria-labelledby="p808HmwQ">
     <canvas class="p808-hmw__gl" aria-hidden="true"></canvas>
     <div class="cs-container p808-hmw__inner">
-      <span class="cs-section__num p808-hmw__num">01 — The Brief</span>
       <h2 class="p808-hmw__q" id="p808HmwQ">How might we make a makerspace for Chicago creatives?</h2>
     </div>
   </section>
@@ -717,15 +760,13 @@
   <section class="cs-section">
     <div class="cs-container">
       <header class="cs-section__head">
-        <span class="cs-section__num">02 — Problem</span>
-        <h2 class="cs-section__title">The post-grad resource cliff.</h2>
+        <span class="cs-section__num">01 — Problem</span>
+        <h2 class="cs-section__title">Graduating means losing the tools.</h2>
       </header>
       <div class="cs-section__body">
         <div class="cs-section__copy">
-          <p class="cs-lead">Chicago trains world-class creative talent, but it suffers from severe "brain drain" because graduates immediately lose access to the industrial machinery needed to build physical products and scale businesses.</p>
-          <p>The Resource Gap: In school, designers use $50K industrial labs. After graduation, they are left with consumer-grade hobbyist tools. Localized manufacturing infrastructure exists in NYC and LA, but Chicago has a massive void.</p>
-          <p>The Tariff Crisis: With recent apparel import tariffs soaring to 40–60%, independent designers can no longer afford to outsource production overseas. They need an affordable, local manufacturing default.</p>
-          <p>This idea matters to me because I lived it. I worked in my college makerspace all four years of my degree, teaching people laser cutters and CNC. It was a place where my wildest dreams could be imagined, and sometimes even made. Having access to tools gave me the bandwidth to create, instead of feeling stifled by only what I could make in my own bedroom. Then I graduated and lost access to the machines I built my work on.</p>
+          <p class="cs-lead">Creative students in Chicago train on professional machines, then lose access to them the day they graduate.</p>
+          <p>I lived this. I worked in my college makerspace all four years of my degree, teaching people laser cutters and CNC. It was a place where my wildest dreams could be imagined, and sometimes even made. Having access to tools gave me the bandwidth to create, instead of feeling stifled by what I could make in my own bedroom. That space changed my life. Then I graduated and lost it.</p>
         </div>
         <figure class="cs-figure">
           <div class="p808-photos">
@@ -746,16 +787,37 @@
   <section class="cs-section">
     <div class="cs-container">
       <header class="cs-section__head">
-        <span class="cs-section__num">03 — Solution</span>
+        <span class="cs-section__num">02 — Solution</span>
         <h2 class="cs-section__title">A physical-to-digital production hub.</h2>
       </header>
       <div class="cs-section__body">
         <div class="cs-section__copy">
-          <p class="cs-lead">Project 808 is a campaign and blueprint for a multi-disciplinary creative manufacturing studio in Chicago. It carries independent makers up a ladder, from one prototype to a production line, through a dual-track operational model.</p>
-          <p>The Guided Track: Connects non-technical entrepreneurs with in-house master artisans to prototype products.</p>
-          <p>The Autonomous Track: Gives certified, independent makers affordable, on-demand access to industrial equipment (textiles, CNC routers, laser cutters).</p>
-          <p>To keep the model asset-light, I designed a B2B partnership strategy where machinery brands donate equipment in exchange for regional brand activation and marketing visibility.</p>
+          <p class="cs-lead">Project 808 is a shared, professionally equipped makerspace for Chicago creatives, built to carry makers from one prototype to a production run.</p>
+          <p>There are two ways in: prototype with in-house artisans, or get certified and book the machines yourself. Machine brands donate equipment in exchange for visibility, which keeps memberships affordable.</p>
+          <div class="cs-callout">
+            <span class="cs-callout__label">Hypothesis</span>
+            <div class="cs-callout__body">If Chicago creatives have a space to create at scale, independent creative careers will boom.</div>
+          </div>
         </div>
+        <figure class="cs-figure p808-marquee-wrap">
+          <div class="p808-marquee">
+            <div class="p808-marquee__track">
+            <img src="../Project808/mayor-columbia.jpg" width="1400" height="933" loading="lazy" decoding="async" alt="Charlesa with Mayor Brandon Johnson at a Columbia College Chicago event." draggable="false" />
+            <img src="../Project808/mayor-meeting.jpg" width="1280" height="895" loading="lazy" decoding="async" alt="Charlesa talking with Mayor Brandon Johnson at a community event." draggable="false" />
+            <img src="../Project808/mayor-tent.jpg" width="1400" height="933" loading="lazy" decoding="async" alt="Charlesa with Mayor Brandon Johnson at an outdoor event." draggable="false" />
+            <img src="../Project808/mayor-columbia.jpg" width="1400" height="933" loading="lazy" decoding="async" alt="" draggable="false" aria-hidden="true" />
+            <img src="../Project808/mayor-meeting.jpg" width="1280" height="895" loading="lazy" decoding="async" alt="" draggable="false" aria-hidden="true" />
+            <img src="../Project808/mayor-tent.jpg" width="1400" height="933" loading="lazy" decoding="async" alt="" draggable="false" aria-hidden="true" />
+            <img src="../Project808/mayor-columbia.jpg" width="1400" height="933" loading="lazy" decoding="async" alt="" draggable="false" aria-hidden="true" />
+            <img src="../Project808/mayor-meeting.jpg" width="1280" height="895" loading="lazy" decoding="async" alt="" draggable="false" aria-hidden="true" />
+            <img src="../Project808/mayor-tent.jpg" width="1400" height="933" loading="lazy" decoding="async" alt="" draggable="false" aria-hidden="true" />
+            <img src="../Project808/mayor-columbia.jpg" width="1400" height="933" loading="lazy" decoding="async" alt="" draggable="false" aria-hidden="true" />
+            <img src="../Project808/mayor-meeting.jpg" width="1280" height="895" loading="lazy" decoding="async" alt="" draggable="false" aria-hidden="true" />
+            <img src="../Project808/mayor-tent.jpg" width="1400" height="933" loading="lazy" decoding="async" alt="" draggable="false" aria-hidden="true" />
+            </div>
+          </div>
+          <figcaption class="cs-figure__caption">With Chicago Mayor Brandon Johnson. I've raised the idea for 808 with him twice, in one-on-one conversations.</figcaption>
+        </figure>
       </div>
     </div>
   </section>
@@ -764,7 +826,7 @@
   <section class="cs-section">
     <div class="cs-container">
       <header class="cs-section__head">
-        <span class="cs-section__num">04 — Strategy</span>
+        <span class="cs-section__num">03 — Strategy</span>
         <h2 class="cs-section__title">How I designed it to become reality.</h2>
       </header>
       <div class="cs-section__body">
@@ -782,7 +844,7 @@
   <section class="cs-section">
     <div class="cs-container">
       <header class="cs-section__head">
-        <span class="cs-section__num">05 — The Space</span>
+        <span class="cs-section__num">04 — The Space</span>
         <h2 class="cs-section__title">A building that follows how work gets made.</h2>
       </header>
       <div class="cs-section__body">
@@ -827,7 +889,7 @@
   <section class="cs-section">
     <div class="cs-container">
       <header class="cs-section__head">
-        <span class="cs-section__num">06 — The Model</span>
+        <span class="cs-section__num">05 — The Model</span>
         <h2 class="cs-section__title">Twenty-two versions, rough on purpose.</h2>
       </header>
       <div class="cs-section__body">
@@ -881,7 +943,7 @@
   <section class="cs-section">
     <div class="cs-container">
       <header class="cs-section__head">
-        <span class="cs-section__num">07 — Walk It</span>
+        <span class="cs-section__num">06 — Walk It</span>
         <h2 class="cs-section__title">A model anyone can walk through.</h2>
       </header>
       <div class="cs-section__body">
@@ -909,7 +971,7 @@
   <section class="cs-section">
     <div class="cs-container">
       <header class="cs-section__head">
-        <span class="cs-section__num">08 — Learnings</span>
+        <span class="cs-section__num">07 — Learnings</span>
         <h2 class="cs-section__title">What 808 has taught me so far.</h2>
       </header>
       <div class="cs-section__body">
@@ -945,7 +1007,7 @@
   <section class="cs-section">
     <div class="cs-container">
       <header class="cs-section__head">
-        <span class="cs-section__num">09 — Status</span>
+        <span class="cs-section__num">08 — Status</span>
         <h2 class="cs-section__title">Still a concept, and honest about it.</h2>
       </header>
       <div class="cs-section__body">
@@ -1227,9 +1289,9 @@
         '  float beam=1.-smoothstep(0.,.62,length(d));',
         '  float m=motes(uv,6.,.045,.11,t)*.55+motes(uv+11.,11.,.075,.1,t)*.38+motes(uv+23.,19.,.11,.09,t)*.26;',
         '  float lit=.18+.95*beam;',
-        '  vec3 glow=vec3(.839,.863,.333);vec3 cream=vec3(.988,.969,.902);',
-        '  float a=clamp(beam*.22+m*lit,0.,1.);',
-        '  vec3 col=glow*beam*.22+mix(glow,cream,.55)*m*lit;',
+        '  vec3 warm=vec3(1.,.96,.78);vec3 cream=vec3(1.,.99,.94);',
+        '  float a=clamp(beam*.26+m*lit*.9,0.,1.);',
+        '  vec3 col=warm*beam*.26+cream*m*lit*.9;',
         '  gl_FragColor=vec4(col,a);',
         '}'
       ].join('\n');
