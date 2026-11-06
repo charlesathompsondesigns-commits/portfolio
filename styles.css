@@ -395,7 +395,9 @@ ul  { list-style: none; }
 .hero__text {
   position: sticky;
   top: 30%;
-  transform: translateY(-50%);
+  /* centred on its line; the scroll script only adds --hero-drift, so the
+     text returns to exactly this spot whenever you scroll back to the top */
+  transform: translateY(calc(-50% + var(--hero-drift, 0%)));
   max-width: 56rem;
   font-family: "Instrument Serif:Regular", "Instrument Serif", serif;
   font-style: normal;
@@ -413,7 +415,7 @@ ul  { list-style: none; }
 @media (min-width: 768px) {
   .hero__text {
     top: calc(var(--nav-height) + 10vh);
-    transform: translateY(0);
+    transform: translateY(var(--hero-drift, 0%));
     max-width: none;
   }
 }
