@@ -4,28 +4,510 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Project 808 — Charlesa Thompson</title>
-  <meta name="description" content="A self-initiated campaign site making the case for a creative manufacturing studio in Chicago. UX/UI, strategy, and development case study by Charlesa Thompson." />
-  <meta name="theme-color" content="#270f05" />
+  <meta name="description" content="A self-initiated campaign and 3D concept for a creative manufacturing studio in Chicago. Strategy, visual design, and development case study by Charlesa Thompson." />
+  <meta name="theme-color" content="#dcdfb8" />
   <link rel="stylesheet" href="../styles.css?v=20261103" />
   <style>
-    /* ── Shared wrapper — centers the phone on a soft card ── */
-    .mockup-device {
-      width: 100%;
-      display: flex;
-      justify-content: center;
+    /* ── Part one video + gold sponsor badge (badge styled after Braid's award pill) ── */
+    .p808-reel__grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
       align-items: center;
-      padding: 48px 56px;
-      box-sizing: border-box;
+      column-gap: clamp(32px, 6vw, 96px);
+    }
+    .p808-reel__line {
+      max-width: 40ch;
+      margin: 22px 0 18px;
+      font-family: var(--font-source);
+      font-size: clamp(17px, 1.3vw, 19px);
+      line-height: 1.6;
+      color: var(--cs-ink);
+    }
+    .p808-reel__ig {
+      font-family: var(--font-franklin-medium);
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      color: var(--cs-ink);
+    }
+    .p808-reel__media {
+      position: relative;
+      width: clamp(250px, 26vw, 340px);
+      aspect-ratio: 9 / 16;
+      border-radius: 24px;
+      overflow: hidden;
+      background: #1d1f02;
+      box-shadow: 0 30px 70px -20px rgba(39, 15, 5, 0.45), 0 10px 24px rgba(39, 15, 5, 0.14);
+    }
+    .p808-reel__media video {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .cs-award {
+      position: relative;
+      isolation: isolate;
+      display: inline-grid;
+      grid-template-columns: auto auto;
+      grid-template-rows: auto auto;
+      column-gap: clamp(10px, 1.2vw, 14px);
+      row-gap: 1px;
+      align-items: center;
+      padding: clamp(8px, 0.9vw, 10px) clamp(18px, 2vw, 24px) clamp(8px, 0.9vw, 10px) clamp(8px, 0.9vw, 10px);
+      border-radius: 999px;
+      background: linear-gradient(160deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 244, 214, 0.22) 100%);
+      -webkit-backdrop-filter: blur(18px) saturate(140%);
+      backdrop-filter: blur(18px) saturate(140%);
+      border: 1px solid rgba(255, 214, 120, 0.75);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85), 0 0 0 1px rgba(255, 199, 77, 0.45), 0 0 26px rgba(255, 186, 40, 0.65), 0 0 64px rgba(255, 186, 40, 0.32), 0 8px 24px rgba(120, 80, 10, 0.14);
+      color: var(--cs-ink);
+      animation: cs-award-pulse 2.4s ease-in-out infinite alternate;
+    }
+    /* a soft light sweeps across the pill every few seconds */
+    .cs-award::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(105deg, rgba(255, 255, 255, 0) 38%, rgba(255, 252, 235, 0.85) 50%, rgba(255, 255, 255, 0) 62%) no-repeat;
+      background-size: 260% 100%;
+      background-position: 160% 0;
+      mix-blend-mode: soft-light;
+      pointer-events: none;
+      animation: cs-award-sheen 4.2s ease-in-out infinite;
+    }
+    .cs-award__glow {
+      position: absolute;
+      inset: -20px;
+      z-index: -1;
+      border-radius: 999px;
+      background: radial-gradient(closest-side, rgba(255, 196, 48, 1) 0%, rgba(255, 190, 40, 0.55) 55%, rgba(255, 176, 32, 0) 100%);
+      filter: blur(18px);
+      animation: cs-award-glow 2.4s ease-in-out infinite alternate;
+    }
+    .cs-award__medal {
+      grid-row: 1 / 3;
+      display: grid;
+      place-items: center;
+      width: clamp(34px, 3.4vw, 42px);
+      height: clamp(34px, 3.4vw, 42px);
+      border-radius: 50%;
+      background: linear-gradient(135deg, #4c5106 0%, #2d3003 100%);
+      color: #ffcf5a;
+      box-shadow: 0 0 0 1.5px rgba(255, 199, 77, 0.85), 0 0 14px rgba(255, 186, 40, 0.6);
+    }
+    .cs-award__medal svg { width: 18px; height: 18px; }
+    .cs-award__year {
+      grid-column: 2;
+      font-family: var(--font-franklin-medium);
+      font-size: clamp(9.5px, 0.85vw, 11px);
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--cs-muted);
+      white-space: nowrap;
+    }
+    .cs-award__title {
+      grid-column: 2;
+      font-family: var(--font-instrument);
+      font-size: clamp(20px, 2vw, 26px);
+      line-height: 1;
+      color: var(--cs-ink);
+    }
+    @keyframes cs-award-glow {
+      from { opacity: 0.55; transform: scale(0.94); }
+      to   { opacity: 1;    transform: scale(1.08); }
+    }
+    @keyframes cs-award-pulse {
+      from { border-color: rgba(255, 214, 120, 0.65); }
+      to   { border-color: rgba(255, 226, 150, 1); }
+    }
+    @keyframes cs-award-sheen {
+      0%, 35% { background-position: 160% 0; }
+      75%, 100% { background-position: -60% 0; }
+    }
+    /* Sound toggle: the video autoplays muted, visitors can opt in to sound */
+    .cs-sound {
+      position: absolute;
+      right: 12px;
+      bottom: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 44px;
+      padding: 0 16px 0 13px;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: 999px;
+      background: rgba(29, 31, 2, 0.55);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      font-family: var(--font-franklin-medium);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s var(--ease-in-out), transform 0.2s var(--ease-out);
+    }
+    .cs-sound:hover { background: rgba(29, 31, 2, 0.8); transform: translateY(-1px); }
+    .cs-sound:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+    .cs-sound__icon--on { display: none; }
+    .cs-sound[aria-pressed="true"] .cs-sound__icon--on { display: block; }
+    .cs-sound[aria-pressed="true"] .cs-sound__icon--off { display: none; }
+    @media (max-width: 900px) {
+      .p808-reel__grid { grid-template-columns: minmax(0, 1fr); row-gap: 36px; }
+      .p808-reel__media { width: min(78vw, 320px); justify-self: center; }
+    }
+    @media (max-width: 600px) {
+      .cs-sound { width: 44px; padding: 0; justify-content: center; right: 10px; bottom: 10px; }
+      .cs-sound__label { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .cs-award, .cs-award::after { animation: none; }
+      .cs-award__glow { animation: none; opacity: 0.9; }
     }
 
-    /* The phone itself is the shared .iphone mockup in styles.css. */
-    .mockup-device .iphone { --w: 270; --safe: #f4f7fc; --fg: #0a1628; }
-    @media (max-width: 540px) {
-      .mockup-device { padding: 40px 24px; }
-      .mockup-device .iphone { --w: 236; }
+    /* ── 01 · How Might We: deep olive stage, typed question, WebGL dust ── */
+    .p808-hmw {
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      min-height: min(78vh, 760px);
+      padding: clamp(96px, 16vh, 180px) 0;
+      border-bottom: 0;
+      color: #fcf7e6;
+      background: radial-gradient(120% 90% at 50% 0%, #4c5106 0%, #2d3003 58%, #1d1f02 100%);
     }
+    .p808-hmw__gl {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .p808-hmw__inner {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      text-align: center;
+    }
+    .p808-hmw__num {
+      display: block;
+      margin-bottom: clamp(20px, 3vh, 32px);
+      color: rgba(252, 247, 230, 0.6);
+    }
+    .p808-hmw__q {
+      max-width: 17ch;
+      margin: 0 auto;
+      font-family: var(--font-instrument);
+      font-weight: 400;
+      font-size: clamp(38px, 5.6vw, 80px);
+      line-height: 1.08;
+      letter-spacing: -0.01em;
+      color: #fcf7e6;
+      text-wrap: balance;
+    }
+    .p808-sr {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+    /* Words float on their own once typed; letters start hidden only after the script runs */
+    .p808-hmw__q .w { display: inline-block; white-space: nowrap; }
+    .p808-hmw__q .c { position: relative; }
+    .p808-hmw__q.is-ready .c { opacity: 0; }
+    .p808-hmw__q.is-ready .c.on { opacity: 1; transition: opacity 90ms linear; }
+    .p808-hmw__q.is-floating .w { animation: p808-bob 6.5s ease-in-out infinite; animation-delay: calc(var(--i) * -0.8s); }
+    @keyframes p808-bob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-0.06em); }
+    }
+    .p808-caret {
+      position: absolute;
+      right: -0.08em;
+      top: 0.14em;
+      bottom: 0.1em;
+      width: 0.055em;
+      border-radius: 1px;
+      background: #d6dc55;
+      box-shadow: 0 0 12px rgba(214, 220, 85, 0.8);
+      animation: p808-blink 1s steps(1) infinite;
+    }
+    .p808-caret.is-out { opacity: 0; transition: opacity 0.6s ease; animation: none; }
+    @keyframes p808-blink { 50% { opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) {
+      .p808-hmw__q.is-floating .w, .p808-caret { animation: none; }
+    }
+
+    /* Live phone, directly below the photo wall */
+    .p808-live__grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      column-gap: clamp(32px, 6vw, 96px);
+    }
+    .p808-live__title { margin-bottom: 20px; }
+    .p808-live__try {
+      max-width: 44ch;
+      margin: 0 0 24px;
+      font-family: var(--font-source);
+      font-size: clamp(17px, 1.3vw, 19px);
+      line-height: 1.6;
+      color: var(--cs-ink);
+    }
+    a.p808-live__open { text-decoration: none; }
+    /* Status bar takes the site's own top colour (#A4AA61 outside), so it reads
+       as one surface. The soft fade hides the small shift on the indoor floors. */
+    .p808-live__phone .iphone { --w: 290; --safe: #a4aa61; --fg: #270f05; }
+    .p808-live__phone .iphone__viewport::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: calc(var(--bar) * 1px);
+      height: 18px;
+      background: linear-gradient(180deg, var(--safe), rgba(164, 170, 97, 0));
+      pointer-events: none;
+    }
+    .p808-live__hint {
+      display: none;
+      margin: 18px 0 0;
+      text-align: center;
+      font-family: var(--font-source-italic);
+      font-style: italic;
+      font-size: 14px;
+      color: var(--cs-muted);
+    }
+    @media (hover: none) { .p808-live__hint { display: block; } }
+
+    /* Second phone: the member app, phone on the left */
+    .p808-live__grid + .p808-live__grid { margin-top: clamp(72px, 12vh, 144px); }
+    .p808-live__grid--flip { grid-template-columns: auto minmax(0, 1fr); }
+    /* The app is served from this site, so the page gives it a real iPhone
+       safe area (see the script at the end) and it runs edge to edge,
+       painting its own colour behind the status bar on every screen. */
+    .p808-app__phone .iphone { --safe: #fcf7e6; }
+    .p808-app__phone .iphone__viewport iframe {
+      top: 0;
+      height: calc(var(--vp-h) * 1px);
+    }
+    /* First site: its light header colours the status bar */
+    .p808-first__phone .iphone { --safe: #f4f7fc; --fg: #0a1628; }
+    .p808-first__phone .iphone__viewport::after { display: none; }
+
+    /* The walkthrough's top fade isn't needed here: the app fills the bar itself */
+    .p808-app__phone .iphone__viewport::after { display: none; }
+    @media (max-width: 900px) {
+      .p808-live__grid { grid-template-columns: minmax(0, 1fr); row-gap: 36px; }
+      .p808-live__phone { display: flex; flex-direction: column; align-items: center; }
+      .p808-live__phone .iphone { --w: 256; }
+      .p808-live__grid--flip { grid-template-columns: minmax(0, 1fr); }
+      .p808-live__grid--flip > :not(.p808-live__phone) { order: -1; }
+    }
+
+    /* The wall closes the hero, so the hero drops its bottom padding */
+    .cs-body-page--808 .cs-hero { padding-bottom: 0; }
+    .cs-body-page--808 .cs-hero__pills { margin-bottom: 48px; row-gap: 16px; }
+    .cs-hero__pills .cs-award { margin-left: 8px; }
+    @media (max-width: 600px) { .cs-hero__pills .cs-award { margin-left: 0; } }
+
+    /* Centre tile: the 808 lockup in cream on the brand olive */
+    .p808-wall-hero {
+      background: #808808;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .p808-wall-hero__mark {
+      display: block;
+      width: 62%;
+      aspect-ratio: 1178 / 442;
+      background-color: #fcf7e6;
+      -webkit-mask: url("../Project808/lockup.svg") center / contain no-repeat;
+      mask: url("../Project808/lockup.svg") center / contain no-repeat;
+    }
+
+    /* Color tiles sit in the wall like any other tile */
+    .p808-swatch {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      gap: 2px;
+      padding: clamp(10px, 1.2vw, 18px);
+      box-sizing: border-box;
+      font-family: var(--font-franklin-medium);
+      font-size: clamp(11px, 1vw, 14px);
+      line-height: 1.25;
+      letter-spacing: 0.02em;
+    }
+    .p808-swatch span:last-child { opacity: 0.72; }
+    .p808-swatch--edge { box-shadow: inset 0 0 0 1px var(--cs-rule); }
+    .p808-feature {
+      outline: 3px solid #d6dc55;
+      outline-offset: -3px;
+      box-shadow: 0 0 0 1px rgba(128, 136, 8, 0.35), 0 0 26px rgba(214, 220, 85, 0.75), 0 0 60px rgba(214, 220, 85, 0.35);
+    }
+
+    .p808-wall-note {
+      margin: 0;
+      padding: 16px 0 clamp(48px, 8vh, 96px);
+    }
+
+    /* Frosted green nav, same treatment as Braid's lilac one */
+    .cs-body-page--808 .nav {
+      background: linear-gradient(180deg, rgb(220, 223, 184) 0%, rgba(220, 223, 184, 0.82) 35%, rgba(228, 231, 200, 0.5) 100%);
+      -webkit-backdrop-filter: blur(22px) saturate(180%);
+      backdrop-filter: blur(22px) saturate(180%);
+      border-bottom: 0;
+      box-shadow: none;
+    }
+    .cs-body-page--808 .nav::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 100%;
+      height: 22px;
+      background: linear-gradient(180deg, rgba(228, 231, 200, 0.5) 0%, rgba(228, 231, 200, 0) 100%);
+      -webkit-backdrop-filter: blur(10px) saturate(160%);
+      backdrop-filter: blur(10px) saturate(160%);
+      -webkit-mask-image: linear-gradient(180deg, #000 0%, transparent 100%);
+      mask-image: linear-gradient(180deg, #000 0%, transparent 100%);
+      pointer-events: none;
+    }
+    .cs-body-page--808 .nav.is-open::after { opacity: 0; }
+    .cs-body-page--808 .nav__logo,
+    .cs-body-page--808 .nav__links a,
+    .cs-body-page--808 .nav__toggle { color: var(--cs-ink); }
+    @media (max-width: 720px) {
+      .cs-body-page--808 .nav__links {
+        background: linear-gradient(180deg, rgba(228, 231, 200, 0.97) 0%, rgba(220, 223, 184, 0.98) 100%);
+        -webkit-backdrop-filter: blur(30px) saturate(160%);
+        backdrop-filter: blur(30px) saturate(160%);
+      }
+      .cs-body-page--808 .nav__links li { border-bottom-color: rgba(39, 15, 5, 0.14); }
+      .cs-body-page--808 .nav.is-open { background: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; }
+    }
+
+    .cs-body-page--808 .cs-callout { background: var(--cs-ink); }
+
+    /* Portrait video pair stays two-up on phones */
+    .p808-photos {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(12px, 2vw, 24px);
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .p808-photos video {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 9 / 16;
+      display: block;
+      object-fit: cover;
+      border-radius: 16px;
+      background: #1d1f02;
+    }
+
+    /* Plans sit on matching paper, so the pair reads as one sheet */
+    .p808-plans .cs-figure__img { background: #e9e6df; }
+
+    /* Model / sketch compare */
+    .p808-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .p808-tabs .cs-pill {
+      appearance: none;
+      cursor: pointer;
+      transition: background-color var(--dur-short) var(--ease-in-out), color var(--dur-short) var(--ease-in-out);
+    }
+    .p808-compare {
+      --pos: 50%;
+      position: relative;
+      aspect-ratio: 1600 / 1022;
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--cs-card);
+      cursor: ew-resize;
+      touch-action: pan-y;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    .p808-compare img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      pointer-events: none;
+    }
+    .p808-compare__pencil { clip-path: inset(0 calc(100% - var(--pos)) 0 0); }
+    .p808-compare input {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .p808-compare__line {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: var(--pos);
+      width: 2px;
+      margin-left: -1px;
+      background: #fff;
+      box-shadow: 0 0 0 1px rgba(10, 14, 31, 0.16);
+      pointer-events: none;
+    }
+    .p808-compare__knob {
+      position: absolute;
+      top: 50%;
+      left: var(--pos);
+      width: 44px;
+      height: 44px;
+      margin: -22px 0 0 -22px;
+      border-radius: 50%;
+      background: #fff;
+      color: var(--cs-ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 10px rgba(10, 14, 31, 0.24);
+      pointer-events: none;
+    }
+    .p808-compare input:focus-visible ~ .p808-compare__knob {
+      outline: 2px solid var(--cs-ink);
+      outline-offset: 2px;
+    }
+    .p808-compare__tag {
+      position: absolute;
+      bottom: 12px;
+      padding: 4px 10px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.88);
+      color: var(--cs-ink);
+      font-family: var(--font-franklin-medium);
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      pointer-events: none;
+    }
+    .p808-compare__tag--left { left: 12px; }
+    .p808-compare__tag--right { right: 12px; }
   </style>
   <script defer src="../nav.js?v=20261012"></script>
+  <script defer src="../wall.js?v=20261005b"></script>
 </head>
 <body class="cs-body-page cs-body-page--808">
 
@@ -48,60 +530,186 @@
         <span class="cs-pill">Strategy</span>
         <span class="cs-pill">Visual Design</span>
         <span class="cs-pill">Development</span>
+        <span class="cs-award">
+          <span class="cs-award__glow" aria-hidden="true"></span>
+          <span class="cs-award__medal" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="M8.5 13.8 7 22l5-3 5 3-1.5-8.2"/></svg>
+          </span>
+          <span class="cs-award__year">Approved for a 3-part series</span>
+          <span class="cs-award__title">Sponsored by Anthropic</span>
+        </span>
       </div>
-      <p class="cs-hero__date">Live · Phase 01 · 2026</p>
-      <figure class="cs-hero__cover">
-        <img src="../Featured Media/mayor-meeting.jpeg" alt="Project 808 — Mayor Brandon Johnson at a community manufacturing event" />
-      </figure>
+    </div>
+
+    <!-- ============ BRAND WALL ============
+         Same scroll-driven wall as Braid (styles.css → .cs-wall, wall.js). -->
+    <div class="cs-wall" data-wall>
+      <div class="cs-wall__stage">
+        <div class="cs-wall__row" data-speed="1">
+          <div class="cs-wall__track">
+            <img class="cs-wall__tile" src="../Project808/wall/event-cnc.webp" width="407" height="580" style="aspect-ratio: 407 / 580" decoding="async" alt="Concept image: hands guiding a CNC cut, in olive duotone." draggable="false" />
+            <img class="cs-wall__tile" src="../Project808/wall/exterior-pencil.webp" width="908" height="580" style="aspect-ratio: 908 / 580" decoding="async" alt="My sketch of the building exterior." draggable="false" />
+            <div class="cs-wall__tile p808-swatch" style="aspect-ratio: 1 / 1; background: #808808; color: #FCF7E6"><span>Olive</span><span>#808808</span></div>
+            <img class="cs-wall__tile" src="../Project808/wall/saw-photo.webp" width="865" height="580" style="aspect-ratio: 865 / 580" decoding="async" alt="Concept image of a table saw in a sunlit workshop." draggable="false" />
+            <img class="cs-wall__tile" src="../Project808/wall/plan-ground.webp" width="580" height="580" style="aspect-ratio: 580 / 580" decoding="async" alt="My sketch of the ground floor plan." draggable="false" />
+            <img class="cs-wall__tile" src="../Project808/wall/thread.webp" width="580" height="580" style="aspect-ratio: 580 / 580" decoding="async" alt="A cone of olive thread." draggable="false" />
+            <div class="cs-wall__tile p808-swatch p808-swatch--edge" style="aspect-ratio: 1 / 1; background: #DCDFB8; color: #270F05"><span>Light olive</span><span>#DCDFB8</span></div>
+            <img class="cs-wall__tile" src="../Project808/wall/study-model.webp" width="908" height="580" style="aspect-ratio: 908 / 580" decoding="async" alt="Concept model of the study, with trees growing through a planted room." draggable="false" />
+            <img class="cs-wall__tile" src="../Project808/wall/study-render-2.webp" width="326" height="580" style="aspect-ratio: 326 / 580" decoding="async" alt="Rendered still of the study with its curved glass wall at golden hour." draggable="false" />
+            <img class="cs-wall__tile" src="../Project808/wall/kiln-photo.webp" width="865" height="580" style="aspect-ratio: 865 / 580" decoding="async" alt="Concept image of an open ceramics kiln." draggable="false" />
+          </div>
+        </div>
+        <div class="cs-wall__row cs-wall__row--main" data-speed="-0.8">
+          <div class="cs-wall__track">
+            <img class="cs-wall__tile p808-feature" src="../Project808/wall/mayor-columbia.webp" width="1350" height="900" style="aspect-ratio: 1350 / 900" decoding="async" alt="Charlesa with Mayor Brandon Johnson at a Columbia College Chicago event." draggable="false" />
+            <img class="cs-wall__tile" src="../Project808/wall/exterior-gouache.webp" width="1409" height="900" style="aspect-ratio: 1409 / 900" decoding="async" alt="Olive gouache-style view of the building exterior." draggable="false" />
+            <img class="cs-wall__tile" src="../Project808/wall/study-render.webp" width="506" height="900" style="aspect-ratio: 506 / 900" decoding="async" alt="Rendered still of the study: a tree growing through a planted room at golden hour." draggable="false" />
+            <div class="cs-wall__tile p808-swatch" style="aspect-ratio: 3 / 4; background: #D6DC55; color: #270F05"><span>Olive glow</span><span>#D6DC55</span></div>
+            <img class="cs-wall__tile p808-feature" src="../Project808/wall/mayor-meeting.webp" width="1280" height="895" style="aspect-ratio: 1280 / 895" decoding="async" alt="Mayor Brandon Johnson at a community manufacturing event." draggable="false" />
+            <img class="cs-wall__tile" src="../Project808/wall/vine-stair-pencil.webp" width="1409" height="900" style="aspect-ratio: 1409 / 900" decoding="async" alt="My sketch of the vine stairs." draggable="false" />
+            <img class="cs-wall__tile" src="../Project808/wall/stair-render.webp" width="506" height="900" style="aspect-ratio: 506 / 900" decoding="async" alt="Rendered still of the vine stairs spiraling up through the building at golden hour." draggable="false" />
+            <img class="cs-wall__tile" src="../Project808/wall/laser-green.webp" width="1341" height="900" style="aspect-ratio: 1341 / 900" decoding="async" alt="Green painted concept image of a laser engraving a pattern." draggable="false" />
+            <img class="cs-wall__tile p808-feature" src="../Project808/wall/mayor-tent.webp" width="1350" height="900" style="aspect-ratio: 1350 / 900" decoding="async" alt="Charlesa with Mayor Brandon Johnson at an outdoor event." draggable="false" />
+            <img class="cs-wall__tile" src="../Project808/wall/study-pencil.webp" width="1409" height="900" style="aspect-ratio: 1409 / 900" decoding="async" alt="My sketch of the study, with handwritten notes." draggable="false" />
+            <img class="cs-wall__tile" src="../Project808/wall/sewing-photo.webp" width="1264" height="848" style="aspect-ratio: 1264 / 848" decoding="async" alt="Concept image of an industrial sewing machine on a wood table." draggable="false" />
+          </div>
+        </div>
+        <div class="cs-wall__row" data-speed="1.25">
+          <div class="cs-wall__track">
+            <img class="cs-wall__tile" src="../Project808/wall/event-sewing.webp" width="407" height="580" style="aspect-ratio: 407 / 580" decoding="async" alt="Concept image: hands guiding fabric through a sewing machine, in olive duotone." draggable="false" />
+            <img class="cs-wall__tile" src="../Project808/wall/vine-stair-model.webp" width="908" height="580" style="aspect-ratio: 908 / 580" decoding="async" alt="Concept model of a spiral stair climbing around a column of vines." draggable="false" />
+            <img class="cs-wall__tile" src="../Project808/wall/stair-render-2.webp" width="326" height="580" style="aspect-ratio: 326 / 580" decoding="async" alt="Rendered still looking up the vine stairs at golden hour." draggable="false" />
+            <div class="cs-wall__tile p808-swatch" style="aspect-ratio: 1 / 1; background: #270F05; color: #FCF7E6"><span>Ink</span><span>#270F05</span></div>
+            <img class="cs-wall__tile" src="../Project808/wall/copper.webp" width="580" height="580" style="aspect-ratio: 580 / 580" decoding="async" alt="A sheet of copper." draggable="false" />
+            <img class="cs-wall__tile" src="../Project808/wall/table-saw-green.webp" width="908" height="580" style="aspect-ratio: 908 / 580" decoding="async" alt="Green painted view of a person at a table saw." draggable="false" />
+            <img class="cs-wall__tile" src="../Project808/wall/plan-second.webp" width="580" height="580" style="aspect-ratio: 580 / 580" decoding="async" alt="My sketch of the second floor plan." draggable="false" />
+            <div class="cs-wall__tile p808-swatch" style="aspect-ratio: 1 / 1; background: #FCF7E6; color: #270F05"><span>Cream</span><span>#FCF7E6</span></div>
+            <img class="cs-wall__tile" src="../Project808/wall/laser-photo.webp" width="865" height="580" style="aspect-ratio: 865 / 580" decoding="async" alt="Concept image of a laser cutter on a workbench." draggable="false" />
+            <img class="cs-wall__tile" src="../Project808/wall/crib-pencil.webp" width="908" height="580" style="aspect-ratio: 908 / 580" decoding="async" alt="My sketch of the materials crib." draggable="false" />
+            <img class="cs-wall__tile" src="../Project808/wall/event-kiln.webp" width="407" height="580" style="aspect-ratio: 407 / 580" decoding="async" alt="Concept image: gloved hands at a kiln, in olive duotone." draggable="false" />
+            <img class="cs-wall__tile" src="../Project808/wall/offcuts.webp" width="580" height="580" style="aspect-ratio: 580 / 580" decoding="async" alt="A tied bundle of wood offcuts." draggable="false" />
+          </div>
+        </div>
+        <figure class="cs-wall__hero p808-wall-hero">
+          <span class="p808-wall-hero__mark" role="img" aria-label="The Project 808 logo"></span>
+        </figure>
+      </div>
+    </div>
+    <div class="cs-container">
+      <p class="cs-figure__caption p808-wall-note">The world of Project 808: my photos, my sketches of the space, concept images and palette. The workshops are concept images, not a built space.</p>
     </div>
   </header>
 
-  <!-- ============ 01 · THE BRIEF ============ -->
+  <!-- ============ LIVE SITE ============ -->
   <section class="cs-section">
-    <div class="cs-container">
-      <header class="cs-section__head">
-        <span class="cs-section__num">01 — The Brief</span>
-        <h2 class="cs-section__title">One site, three jobs.</h2>
-      </header>
-      <div class="cs-section__body">
-        <div class="cs-section__copy">
-          <p class="cs-lead">A self-initiated campaign site that has to do three things at once: make the case for a creative manufacturing studio in Chicago to funders and city officials, recruit community input through a survey that doubles as proof of demand, and show how I think with no client to hide behind.</p>
-          <p>I designed, wrote, and built it solo — strategist, designer, and developer. It's live now in Phase 01 at <a href="https://project-808.vercel.app" target="_blank" rel="noopener">project-808.vercel.app</a>.</p>
-        </div>
-        <figure class="cs-figure">
-          <div class="cs-figure__img">
-            <div class="mockup-device mockup-device--phone">
-              <div class="iphone" aria-hidden="true">
-                <span class="iphone__btn iphone__btn--action"></span>
-                <span class="iphone__btn iphone__btn--vol-up"></span>
-                <span class="iphone__btn iphone__btn--vol-down"></span>
-                <span class="iphone__btn iphone__btn--power"></span>
-                <span class="iphone__btn iphone__btn--camera"></span>
-                <div class="iphone__frame">
-                  <div class="iphone__bezel">
-                    <div class="iphone__screen">
-                      <div class="iphone__viewport">
-                        <iframe src="https://project-808.vercel.app" title="Project 808 — landing page" loading="lazy" tabindex="-1"></iframe>
-                        <div class="iphone__status" aria-hidden="true">
-                          <span>9:41</span>
-                          <span class="iphone__island"></span>
-                          <span class="iphone__icons">
-                            <svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="0.8"/><rect x="5" y="5.5" width="3" height="6.5" rx="0.8"/><rect x="10" y="3" width="3" height="9" rx="0.8"/><rect x="15" y="0" width="3" height="12" rx="0.8"/></svg>
-                            <svg width="17" height="12" viewBox="0 0 17 12"><path d="M8.5 2.2c2.6 0 5 1 6.8 2.7l1-1.1A11.3 11.3 0 0 0 8.5.6C5.6.6 2.9 1.7.7 3.8l1 1.1A9.8 9.8 0 0 1 8.5 2.2Zm0 3.6c1.6 0 3.1.6 4.3 1.7l1-1.1a7.800 7.800 0 0 0-10.600 0l1 1.100a6.300 6.300 0 0 1 4.300-1.700Zm0 3.600c.7 0 1.400.300 1.900.700L8.500 12l-1.900-1.900c.5-.400 1.200-.700 1.900-.700Z"/></svg>
-                            <svg width="27" height="13" viewBox="0 0 27 13"><rect x="0.5" y="0.5" width="23" height="12" rx="3.8" fill="none" stroke="currentColor" opacity="0.4"/><rect x="2" y="2" width="20" height="9" rx="2.5"/><path d="M25 4.5v4c.8-.3 1.5-1.1 1.5-2s-.7-1.700-1.500-2Z" opacity="0.45"/></svg>
-                          </span>
-                        </div>
-                        <span class="iphone__home"></span>
-                      </div>
+    <div class="cs-container p808-live__grid">
+      <div>
+        <h2 class="cs-section__title p808-live__title">Walk the building yourself.</h2>
+        <p class="p808-live__try">This phone is live. Switch floors, tap a room to go there, or press Start walking.</p>
+        <a class="cs-pill cs-pill--solid p808-live__open" href="https://makerspace-chicago.vercel.app/" target="_blank" rel="noopener">Open the full site ↗</a>
+      </div>
+        <div class="p808-live__phone">
+          <div class="iphone">
+            <span class="iphone__btn iphone__btn--action"></span>
+            <span class="iphone__btn iphone__btn--vol-up"></span>
+            <span class="iphone__btn iphone__btn--vol-down"></span>
+            <span class="iphone__btn iphone__btn--power"></span>
+            <span class="iphone__btn iphone__btn--camera"></span>
+            <div class="iphone__frame">
+              <div class="iphone__bezel">
+                <div class="iphone__screen">
+                  <div class="iphone__viewport">
+                    <iframe src="https://makerspace-chicago.vercel.app/" title="The Makerspace: a live, walkable 3D model of the building" loading="lazy" allow="fullscreen; accelerometer; gyroscope"></iframe>
+                    <div class="iphone__status" aria-hidden="true">
+                      <span>9:41</span>
+                      <span class="iphone__island"></span>
+                      <span class="iphone__icons">
+                        <svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="0.8"/><rect x="5" y="5.5" width="3" height="6.5" rx="0.8"/><rect x="10" y="3" width="3" height="9" rx="0.8"/><rect x="15" y="0" width="3" height="12" rx="0.8"/></svg>
+                        <svg width="27" height="13" viewBox="0 0 27 13"><rect x="0.5" y="0.5" width="23" height="12" rx="3.8" fill="none" stroke="currentColor" opacity="0.4"/><rect x="2" y="2" width="20" height="9" rx="2.5"/><path d="M25 4.5v4c.8-.3 1.5-1.1 1.5-2s-.7-1.700-1.500-2Z" opacity="0.45"/></svg>
+                      </span>
                     </div>
+                    <span class="iphone__home" aria-hidden="true"></span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <figcaption class="cs-figure__caption">Landing page — the pitch in one scroll.</figcaption>
-        </figure>
+          <p class="p808-live__hint">Swipe beside the phone to keep scrolling.</p>
+        </div>
+    </div>
+    <div class="cs-container p808-live__grid p808-live__grid--flip">
+      <div class="p808-live__phone p808-app__phone">
+          <div class="iphone">
+            <span class="iphone__btn iphone__btn--action"></span>
+            <span class="iphone__btn iphone__btn--vol-up"></span>
+            <span class="iphone__btn iphone__btn--vol-down"></span>
+            <span class="iphone__btn iphone__btn--power"></span>
+            <span class="iphone__btn iphone__btn--camera"></span>
+            <div class="iphone__frame">
+              <div class="iphone__bezel">
+                <div class="iphone__screen">
+                  <div class="iphone__viewport">
+                    <iframe id="p808AppFrame" src="../Project808/app/index.html" title="808 Maker Space: the member app for booking machine time" loading="lazy"></iframe>
+                    <div class="iphone__status" aria-hidden="true">
+                      <span>9:41</span>
+                      <span class="iphone__island"></span>
+                      <span class="iphone__icons">
+                        <svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="0.8"/><rect x="5" y="5.5" width="3" height="6.5" rx="0.8"/><rect x="10" y="3" width="3" height="9" rx="0.8"/><rect x="15" y="0" width="3" height="12" rx="0.8"/></svg>
+                        <svg width="27" height="13" viewBox="0 0 27 13"><rect x="0.5" y="0.5" width="23" height="12" rx="3.8" fill="none" stroke="currentColor" opacity="0.4"/><rect x="2" y="2" width="20" height="9" rx="2.5"/><path d="M25 4.5v4c.8-.3 1.5-1.1 1.5-2s-.7-1.700-1.500-2Z" opacity="0.45"/></svg>
+                      </span>
+                    </div>
+                    <span class="iphone__home" aria-hidden="true"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="p808-live__hint">Swipe beside the phone to keep scrolling.</p>
+        </div>
+      <div>
+        <h2 class="cs-section__title p808-live__title">Book time on a machine.</h2>
+        <p class="p808-live__try">This is the member app I built for the makerspace. Tell it what you make, book a machine, and keep your bookings and member card in one place, with member spotlights, project plans, a materials shop and the week's events alongside.</p>
+        <a class="cs-pill cs-pill--solid p808-live__open" href="../Project808/app/index.html" target="_blank" rel="noopener">Open the app ↗</a>
       </div>
+    </div>
+  </section>
+
+  <!-- ============ PART ONE VIDEO ============ -->
+  <section class="cs-section" aria-label="Part one of the video series">
+    <div class="cs-container p808-reel__grid">
+      <div>
+        <span class="cs-award">
+          <span class="cs-award__glow" aria-hidden="true"></span>
+          <span class="cs-award__medal" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="M8.5 13.8 7 22l5-3 5 3-1.5-8.2"/></svg>
+          </span>
+          <span class="cs-award__year">Sponsored by</span>
+          <span class="cs-award__title">Anthropic</span>
+        </span>
+        <p class="p808-reel__line">Part one of my video series, posted on Instagram on October 22, 2026: a rough 3D model of the makerspace and a walkable site anyone can explore.</p>
+        <a class="p808-reel__ig" href="https://www.instagram.com/p/DezeN5-xJhV/" target="_blank" rel="noopener">Watch it on Instagram ↗</a>
+      </div>
+      <div class="p808-reel__media">
+        <video autoplay muted loop playsinline preload="metadata" poster="../Project808/video/part01-poster.jpg" data-reel-video aria-label="Part one of the video series: the makerspace idea, a rough 3D model and a walkable site">
+          <source src="../Project808/video/part01.mp4" type="video/mp4" />
+        </video>
+        <button class="cs-sound" type="button" data-reel-sound aria-pressed="false" aria-label="Turn sound on">
+          <svg class="cs-sound__icon cs-sound__icon--off" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+          <svg class="cs-sound__icon cs-sound__icon--on" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></svg>
+          <span class="cs-sound__label">Sound on</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 01 · THE BRIEF ============
+       The question types itself out over a WebGL layer of drifting dust
+       in a spotlight (script at the end of the page). -->
+  <section class="cs-section p808-hmw" aria-labelledby="p808HmwQ">
+    <canvas class="p808-hmw__gl" aria-hidden="true"></canvas>
+    <div class="cs-container p808-hmw__inner">
+      <span class="cs-section__num p808-hmw__num">01 — The Brief</span>
+      <h2 class="p808-hmw__q" id="p808HmwQ">How might we make a makerspace for Chicago creatives?</h2>
     </div>
   </section>
 
@@ -117,7 +725,19 @@
           <p class="cs-lead">Chicago trains world-class creative talent, but it suffers from severe "brain drain" because graduates immediately lose access to the industrial machinery needed to build physical products and scale businesses.</p>
           <p>The Resource Gap: In school, designers use $50K industrial labs. After graduation, they are left with consumer-grade hobbyist tools. Localized manufacturing infrastructure exists in NYC and LA, but Chicago has a massive void.</p>
           <p>The Tariff Crisis: With recent apparel import tariffs soaring to 40–60%, independent designers can no longer afford to outsource production overseas. They need an affordable, local manufacturing default.</p>
+          <p>This idea matters to me because I lived it. I worked in my college makerspace all four years of my degree, teaching people laser cutters and CNC. It was a place where my wildest dreams could be imagined, and sometimes even made. Having access to tools gave me the bandwidth to create, instead of feeling stifled by only what I could make in my own bedroom. Then I graduated and lost access to the machines I built my work on.</p>
         </div>
+        <figure class="cs-figure">
+          <div class="p808-photos">
+            <video autoplay muted loop playsinline preload="metadata" poster="../Project808/video/booking-flow-poster.jpg" data-loop-video aria-label="The member app's booking flow, with handwritten notes and zooms, ending on the booked screen.">
+              <source src="../Project808/video/booking-flow.mp4" type="video/mp4" />
+            </video>
+            <video autoplay muted loop playsinline preload="metadata" poster="../Project808/video/study-render-poster.jpg" data-loop-video aria-label="Full render of the study at golden hour, moving past the tree in the planted room.">
+              <source src="../Project808/video/study-render.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <figcaption class="cs-figure__caption">The booking flow in the member app, and the study at golden hour.</figcaption>
+        </figure>
       </div>
     </div>
   </section>
@@ -131,44 +751,11 @@
       </header>
       <div class="cs-section__body">
         <div class="cs-section__copy">
-          <p class="cs-lead">Project 808 is a campaign and blueprint for a multi-disciplinary creative manufacturing studio in Chicago. It bridges the gap between raw ideas and scalable production through a dual-track operational model.</p>
+          <p class="cs-lead">Project 808 is a campaign and blueprint for a multi-disciplinary creative manufacturing studio in Chicago. It carries independent makers up a ladder, from one prototype to a production line, through a dual-track operational model.</p>
           <p>The Guided Track: Connects non-technical entrepreneurs with in-house master artisans to prototype products.</p>
           <p>The Autonomous Track: Gives certified, independent makers affordable, on-demand access to industrial equipment (textiles, CNC routers, laser cutters).</p>
-          <p>To keep the model asset-light, I designed a B2B partnership strategy where machinery brands (like Juki and Glowforge) donate equipment in exchange for regional brand activation and marketing visibility.</p>
+          <p>To keep the model asset-light, I designed a B2B partnership strategy where machinery brands donate equipment in exchange for regional brand activation and marketing visibility.</p>
         </div>
-        <figure class="cs-figure">
-          <div class="cs-figure__img">
-            <div class="mockup-device mockup-device--phone">
-              <div class="iphone" aria-hidden="true">
-                <span class="iphone__btn iphone__btn--action"></span>
-                <span class="iphone__btn iphone__btn--vol-up"></span>
-                <span class="iphone__btn iphone__btn--vol-down"></span>
-                <span class="iphone__btn iphone__btn--power"></span>
-                <span class="iphone__btn iphone__btn--camera"></span>
-                <div class="iphone__frame">
-                  <div class="iphone__bezel">
-                    <div class="iphone__screen">
-                      <div class="iphone__viewport">
-                        <iframe src="https://project-808.vercel.app/#survey" title="Project 808 — survey, mobile view" loading="lazy" tabindex="-1"></iframe>
-                        <div class="iphone__status" aria-hidden="true">
-                          <span>9:41</span>
-                          <span class="iphone__island"></span>
-                          <span class="iphone__icons">
-                            <svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="0.8"/><rect x="5" y="5.5" width="3" height="6.5" rx="0.8"/><rect x="10" y="3" width="3" height="9" rx="0.8"/><rect x="15" y="0" width="3" height="12" rx="0.8"/></svg>
-                            <svg width="17" height="12" viewBox="0 0 17 12"><path d="M8.5 2.2c2.6 0 5 1 6.8 2.7l1-1.1A11.3 11.3 0 0 0 8.5.6C5.6.6 2.9 1.7.7 3.8l1 1.1A9.8 9.8 0 0 1 8.5 2.2Zm0 3.6c1.6 0 3.1.6 4.3 1.7l1-1.1a7.800 7.800 0 0 0-10.600 0l1 1.100a6.300 6.300 0 0 1 4.300-1.700Zm0 3.600c.7 0 1.400.300 1.900.700L8.500 12l-1.900-1.900c.5-.400 1.200-.700 1.900-.700Z"/></svg>
-                            <svg width="27" height="13" viewBox="0 0 27 13"><rect x="0.5" y="0.5" width="23" height="12" rx="3.8" fill="none" stroke="currentColor" opacity="0.4"/><rect x="2" y="2" width="20" height="9" rx="2.5"/><path d="M25 4.5v4c.8-.3 1.5-1.1 1.5-2s-.7-1.700-1.500-2Z" opacity="0.45"/></svg>
-                          </span>
-                        </div>
-                        <span class="iphone__home"></span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <figcaption class="cs-figure__caption">The survey — a data tool and a persuasion artifact.</figcaption>
-        </figure>
       </div>
     </div>
   </section>
@@ -185,9 +772,236 @@
           <p class="cs-lead">I designed the digital platform to act as a strategic validation engine that actively manufactures the credibility and data needed to secure city backing and investor capital.</p>
           <p><strong>High-End Editorial Layout:</strong> I built a premium, deeply structured interface to establish immediate legitimacy as a serious economic development initiative, not a hobbyist space.</p>
           <p><strong>Comparative Data Visuals:</strong> I engineered scannable tables pitting Chicago's infrastructure deficit directly against NYC and LA to force stakeholders to face the competitive gap causing our talent drain.</p>
-          <p><strong>Embedded Survey Engine:</strong> I integrated a research tool directly into the core user flow to capture real-time market proof — exact machine needs and price points — providing the empirical evidence required to secure my Phase 1 seed target ($250K–$750K).</p>
+          <p><strong>Embedded Survey Engine:</strong> I integrated a research tool directly into the core user flow to capture real-time market proof (exact machine needs and price points), providing the empirical evidence required to secure my Phase 1 seed target ($250K–$750K).</p>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- ============ 05 · THE SPACE ============ -->
+  <section class="cs-section">
+    <div class="cs-container">
+      <header class="cs-section__head">
+        <span class="cs-section__num">05 — The Space</span>
+        <h2 class="cs-section__title">A building that follows how work gets made.</h2>
+      </header>
+      <div class="cs-section__body">
+        <div class="cs-section__copy">
+          <p class="cs-lead">Anyone can walk in off the street. Members head upstairs to make things. What they make comes back down and goes on sale.</p>
+          <p>The ground floor is public: an inquiry desk, a store, a study and a courtyard. The second floor is for members: wood, CNC, lasers and metal engraving, a print room and darkroom, and a full sewing wing.</p>
+          <p>Material gets its own route. The loading dock, storage and freight elevator sit at the back of the building, with the lumber rack and CNC routers right beside that elevator so full sheets have a short path. The loud, dusty machines sit behind a glass wall with doors.</p>
+          <p>The store closes the loop. Finished pieces go on the shelves, so the building sells what gets made inside it.</p>
+        </div>
+        <div class="cs-grid-2 p808-plans">
+          <figure class="cs-figure">
+            <div class="cs-figure__img"><img src="../Project808/plan-ground.jpg" width="1400" height="1400" loading="lazy" decoding="async" alt="My sketch of the ground floor plan, with a store, study, courtyard, main hall, members' conservatory and loading dock." /></div>
+            <figcaption class="cs-figure__caption">My sketch of the ground floor: open to the public.</figcaption>
+          </figure>
+          <figure class="cs-figure">
+            <div class="cs-figure__img"><img src="../Project808/plan-second.jpg" width="1400" height="1400" loading="lazy" decoding="async" alt="My sketch of the second floor plan, with wood, CNC, laser and sewing wings around a central vine stair." /></div>
+            <figcaption class="cs-figure__caption">My sketch of the second floor: members' workshops.</figcaption>
+          </figure>
+        </div>
+        <div class="cs-section__copy">
+          <p>The whole plan is built around one ladder. Independent makers can prototype one thing. What they can't do is get from "I made one" to "I can make five hundred."</p>
+        </div>
+        <div class="cs-grid-3">
+          <div class="cs-labeled">
+            <span class="cs-labeled__label">Step 1</span>
+            <div class="cs-labeled__body"><strong>Prototype</strong> at the fidelity you need, with in-house artisans.</div>
+          </div>
+          <div class="cs-labeled">
+            <span class="cs-labeled__label">Step 2</span>
+            <div class="cs-labeled__body"><strong>Make 1 to 5 real units</strong> on production-grade machines rented by the hour.</div>
+          </div>
+          <div class="cs-labeled">
+            <span class="cs-labeled__label">Step 3</span>
+            <div class="cs-labeled__body"><strong>Fund a production line</strong> from those first sales. The early sales pay for the next rung.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 06 · THE MODEL ============ -->
+  <section class="cs-section">
+    <div class="cs-container">
+      <header class="cs-section__head">
+        <span class="cs-section__num">06 — The Model</span>
+        <h2 class="cs-section__title">Twenty-two versions, rough on purpose.</h2>
+      </header>
+      <div class="cs-section__body">
+        <div class="cs-section__copy">
+          <p class="cs-lead">I built a 3D model of the building from months of sketching and design research, and kept every major version as it changed.</p>
+          <p>The saved files tell the story. A blockout came first, then the store and conservatory, the rounded wings, the stacked floors and the second-floor layout. The sewing and CNC wings followed. Later rounds were about feel: the vine stairs, the courtyard, the grand entry, the lobby ceiling, the trees.</p>
+        </div>
+        <div class="cs-stats">
+          <div>
+            <div class="cs-stat__num">22</div>
+            <div class="cs-stat__label">saved versions of the model</div>
+          </div>
+          <div>
+            <div class="cs-stat__num">2</div>
+            <div class="cs-stat__label">floors: public below, members above</div>
+          </div>
+          <div>
+            <div class="cs-stat__num">12</div>
+            <div class="cs-stat__label">equipment categories scoped</div>
+          </div>
+        </div>
+        <div class="cs-section__copy">
+          <p>Then I made it look less finished. Every room also has a sketch at the exact same camera angle as the model. A polished render reads as decided. A rough one invites people to argue with it, and that's the point: it's unfinished intentionally, so we can keep thinking about how it could look together.</p>
+          <p>Working at several levels of fidelity kept each question in the right place: sketches for what's still open, 3D for proportion, and a walkable site for how it feels to move through.</p>
+        </div>
+        <figure class="cs-figure">
+          <div class="p808-tabs" id="p808Tabs" role="group" aria-label="Choose a room">
+            <button type="button" class="cs-pill cs-pill--solid" aria-pressed="true" data-room="exterior" data-name="the exterior" data-cap="The building from the street: public ground floor, members' workshops upstairs.">Exterior</button>
+            <button type="button" class="cs-pill" aria-pressed="false" data-room="study" data-name="the study" data-cap="Free to use. A quiet, planted room for reading, sketching and meeting clients before any machine gets switched on.">Study</button>
+            <button type="button" class="cs-pill" aria-pressed="false" data-room="vine-stair" data-name="the vine stairs" data-cap="The stairs spiral up around a column of climbing vines, from the main hall to the workshops.">Vine stairs</button>
+            <button type="button" class="cs-pill" aria-pressed="false" data-room="crib" data-name="the crib" data-cap="The first thing you see upstairs: where members buy materials and small parts, next to walls of samples to touch and compare.">Crib</button>
+            <button type="button" class="cs-pill" aria-pressed="false" data-room="store" data-name="the store" data-cap="Free to use. Finished pieces by members go on the shelves.">Store</button>
+            <button type="button" class="cs-pill" aria-pressed="false" data-room="cnc" data-name="the CNC wing" data-cap="The CNC and engraver wing on the second floor.">CNC wing</button>
+          </div>
+          <div class="p808-compare" id="p808Compare">
+            <img class="p808-compare__model" src="../Project808/exterior-model.jpg" width="1600" height="1022" decoding="async" alt="Concept model view of the exterior." />
+            <img class="p808-compare__pencil" src="../Project808/exterior-pencil.jpg" width="1600" height="1022" decoding="async" alt="My sketch of the exterior." />
+            <input type="range" min="0" max="100" value="50" aria-label="Move between my sketch and the model view" />
+            <span class="p808-compare__line" aria-hidden="true"></span>
+            <span class="p808-compare__knob" aria-hidden="true"><svg width="20" height="12" viewBox="0 0 20 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 1 1 6l5 5M14 1l5 5-5 5"/></svg></span>
+            <span class="p808-compare__tag p808-compare__tag--left" aria-hidden="true">My sketch of the space</span>
+            <span class="p808-compare__tag p808-compare__tag--right" aria-hidden="true">Model</span>
+          </div>
+          <figcaption class="cs-figure__caption" id="p808Caption" aria-live="polite">The building from the street: public ground floor, members' workshops upstairs.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 07 · WALK IT ============ -->
+  <section class="cs-section">
+    <div class="cs-container">
+      <header class="cs-section__head">
+        <span class="cs-section__num">07 — Walk It</span>
+        <h2 class="cs-section__title">A model anyone can walk through.</h2>
+      </header>
+      <div class="cs-section__body">
+        <div class="cs-section__copy">
+          <p class="cs-lead">A 3D file only helps people who can open one. I wanted a walkable website anyone could explore, and that's where Claude came in.</p>
+          <p>I built the site with Claude Code, and it's the live phone just below the photo wall. It runs in the browser on phones, tablets and laptops. Switch floors, tap a room to go there, or press Start walking to follow a route through the building. The walking routes come from the model itself: each floor is mapped at knee, waist and head height, so every path keeps clear of walls, glass and furniture and only uses real openings.</p>
+          <p>The idea, the building and the calls on how it should feel are mine. Claude thought through the build with me and wrote the code alongside me.</p>
+          <p><a href="https://makerspace-chicago.vercel.app/" target="_blank" rel="noopener">Open the walkthrough in a new tab</a>.</p>
+        </div>
+        <figure class="cs-figure">
+          <div class="cs-figure__img"><img src="../Project808/vine-stair-model.jpg" width="1600" height="1022" loading="lazy" decoding="async" alt="Concept model view of a spiral stair climbing around a column of vines." /></div>
+          <figcaption class="cs-figure__caption">The vine stairs, one stop on the walk. Concept model, not a built space.</figcaption>
+        </figure>
+        <div class="cs-section__copy">
+          <div class="cs-callout">
+            <span class="cs-callout__label">Disclosure</span>
+            <div class="cs-callout__body">This video series is sponsored by Anthropic, the team behind Claude. I started Project 808 before the series, and the opinions here are my own.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 08 · LEARNINGS ============ -->
+  <section class="cs-section">
+    <div class="cs-container">
+      <header class="cs-section__head">
+        <span class="cs-section__num">08 — Learnings</span>
+        <h2 class="cs-section__title">What 808 has taught me so far.</h2>
+      </header>
+      <div class="cs-section__body">
+        <div class="cs-section__copy">
+          <p class="cs-lead">I grew up on the South Side, modifying my parents' functional aids so our home still felt like home. That's where I learned that dignity is a design problem. 808 is the same idea at the scale of a neighborhood: people deserve to make things where they live.</p>
+        </div>
+        <blockquote class="cs-quote">
+          <p class="cs-quote__body">If there can be liquor stores on every corner, there can also be maker spaces in every neighborhood.</p>
+        </blockquote>
+        <div class="cs-grid-2">
+          <div class="cs-labeled">
+            <span class="cs-labeled__label">The reframe</span>
+            <div class="cs-labeled__body"><strong>The problem is the ladder, not just access.</strong> I used to say 808 bridges the gap between raw ideas and production. That was too vague. Independent designers can make one thing. They can't get from "I made one" to "I can make five hundred." Naming the ladder explained why the two tracks exist and why the order matters: early sales unlock the next rung.</div>
+          </div>
+          <div class="cs-labeled">
+            <span class="cs-labeled__label">The research</span>
+            <div class="cs-labeled__body"><strong>Start with the machines people actually need.</strong> I researched which machines were really needed, then built the case for a space where artisans rent time. That research became twelve equipment categories, and the building's wings are organized around them.</div>
+          </div>
+          <div class="cs-labeled">
+            <span class="cs-labeled__label">The feedback</span>
+            <div class="cs-labeled__body"><strong>Show it before it feels ready.</strong> Showing work before it's perfect is hard for me. I shared a deliberately rough model anyway and asked people what they'd want in a space like this. The comments asked how to get in.</div>
+          </div>
+          <div class="cs-labeled">
+            <span class="cs-labeled__label">The tools</span>
+            <div class="cs-labeled__body"><strong>The problem has to come from somewhere real.</strong> 808 came from four years in a college makerspace, then losing it at graduation. AI helped me check my numbers and later build with me, but it didn't define the problem.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 09 · STATUS ============ -->
+  <section class="cs-section">
+    <div class="cs-container">
+      <header class="cs-section__head">
+        <span class="cs-section__num">09 — Status</span>
+        <h2 class="cs-section__title">Still a concept, and honest about it.</h2>
+      </header>
+      <div class="cs-section__body">
+        <div class="cs-section__copy">
+          <p class="cs-lead">Nothing on this page is built yet. The workshops and interiors you see are concept images and models, and the building has not been reviewed by a licensed architect or a fire marshal.</p>
+        </div>
+        <div class="cs-grid-2">
+          <div class="cs-labeled">
+            <span class="cs-labeled__label">The survey</span>
+            <div class="cs-labeled__body">Still open. It measures equipment loss, tariff impact, willingness to pay and preferred neighborhood. I'll share results here once there are enough responses to stand behind.</div>
+          </div>
+          <div class="cs-labeled">
+            <span class="cs-labeled__label">Safety and code</span>
+            <div class="cs-labeled__body">I'm working through what a real inspection would ask for: dust collection, laser fumes, spray finishing, exits and accessibility. Those answers will change the model.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WHERE IT STARTED ============ -->
+  <section class="cs-section">
+    <div class="cs-container p808-live__grid">
+      <div>
+        <h2 class="cs-section__title p808-live__title">Where it started.</h2>
+        <p class="p808-live__try">This is the first version of the site, from when I first announced the idea publicly on July 4, 2026. It's still live, so you can scroll the original pitch on the phone.</p>
+        <a class="cs-pill cs-pill--solid p808-live__open" href="https://project-808.vercel.app" target="_blank" rel="noopener">Open the first site ↗</a>
+      </div>
+      <div class="p808-live__phone p808-first__phone">
+          <div class="iphone">
+            <span class="iphone__btn iphone__btn--action"></span>
+            <span class="iphone__btn iphone__btn--vol-up"></span>
+            <span class="iphone__btn iphone__btn--vol-down"></span>
+            <span class="iphone__btn iphone__btn--power"></span>
+            <span class="iphone__btn iphone__btn--camera"></span>
+            <div class="iphone__frame">
+              <div class="iphone__bezel">
+                <div class="iphone__screen">
+                  <div class="iphone__viewport">
+                    <iframe src="https://project-808.vercel.app" title="Project 808: the first version of the site, from July 4, 2026" loading="lazy"></iframe>
+                    <div class="iphone__status" aria-hidden="true">
+                      <span>9:41</span>
+                      <span class="iphone__island"></span>
+                      <span class="iphone__icons">
+                        <svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="0.8"/><rect x="5" y="5.5" width="3" height="6.5" rx="0.8"/><rect x="10" y="3" width="3" height="9" rx="0.8"/><rect x="15" y="0" width="3" height="12" rx="0.8"/></svg>
+                        <svg width="27" height="13" viewBox="0 0 27 13"><rect x="0.5" y="0.5" width="23" height="12" rx="3.8" fill="none" stroke="currentColor" opacity="0.4"/><rect x="2" y="2" width="20" height="9" rx="2.5"/><path d="M25 4.5v4c.8-.3 1.5-1.1 1.5-2s-.7-1.700-1.500-2Z" opacity="0.45"/></svg>
+                      </span>
+                    </div>
+                    <span class="iphone__home" aria-hidden="true"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="p808-live__hint">Swipe beside the phone to keep scrolling.</p>
+        </div>
     </div>
   </section>
 
@@ -210,6 +1024,305 @@
       </div>
     </div>
   </footer>
+
+  <script>
+    (function () {
+      var stage = document.getElementById('p808Compare');
+      var tabs = document.getElementById('p808Tabs');
+      var caption = document.getElementById('p808Caption');
+      if (!stage || !tabs) return;
+      var model = stage.querySelector('.p808-compare__model');
+      var pencil = stage.querySelector('.p808-compare__pencil');
+      var input = stage.querySelector('input');
+      var buttons = [].slice.call(tabs.querySelectorAll('button'));
+      var dir = '../Project808/';
+
+      function setPos(v) {
+        v = Math.max(0, Math.min(100, v));
+        stage.style.setProperty('--pos', v + '%');
+        input.value = v;
+      }
+
+      function fromPointer(e) {
+        var r = stage.getBoundingClientRect();
+        setPos((e.clientX - r.left) / r.width * 100);
+      }
+
+      stage.addEventListener('pointerdown', function (e) {
+        stage.setPointerCapture(e.pointerId);
+        stage.dataset.dragging = '1';
+        fromPointer(e);
+      });
+      stage.addEventListener('pointermove', function (e) {
+        if (stage.dataset.dragging) fromPointer(e);
+      });
+      ['pointerup', 'pointercancel'].forEach(function (t) {
+        stage.addEventListener(t, function () { delete stage.dataset.dragging; });
+      });
+      input.addEventListener('input', function () { setPos(+input.value); });
+
+      buttons.forEach(function (b) {
+        b.addEventListener('click', function () {
+          buttons.forEach(function (o) {
+            var on = o === b;
+            o.classList.toggle('cs-pill--solid', on);
+            o.setAttribute('aria-pressed', on ? 'true' : 'false');
+          });
+          model.src = dir + b.dataset.room + '-model.jpg';
+          pencil.src = dir + b.dataset.room + '-pencil.jpg';
+          model.alt = 'Concept model view of ' + b.dataset.name + '.';
+          pencil.alt = 'My sketch of ' + b.dataset.name + '.';
+          caption.textContent = b.dataset.cap;
+        });
+      });
+
+      // Load the other rooms once the compare is close to the viewport
+      if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          if (!entries[0].isIntersecting) return;
+          io.disconnect();
+          buttons.slice(1).forEach(function (b) {
+            new Image().src = dir + b.dataset.room + '-model.jpg';
+            new Image().src = dir + b.dataset.room + '-pencil.jpg';
+          });
+        }, { rootMargin: '400px' });
+        io.observe(stage);
+      }
+    })();
+  </script>
+
+  <script>
+    /* Part one video: starts muted (autoplay rules), visitors can turn sound on.
+       It pauses while off screen. */
+    (function () {
+      var video = document.querySelector('[data-reel-video]');
+      var btn = document.querySelector('[data-reel-sound]');
+      if (!video || !btn) return;
+      var label = btn.querySelector('.cs-sound__label');
+      btn.addEventListener('click', function () {
+        var turnOn = video.muted;
+        video.muted = !turnOn;
+        if (turnOn) video.play().catch(function () {});
+        btn.setAttribute('aria-pressed', String(turnOn));
+        btn.setAttribute('aria-label', turnOn ? 'Turn sound off' : 'Turn sound on');
+        label.textContent = turnOn ? 'Sound off' : 'Sound on';
+      });
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (e) {
+          if (e[e.length - 1].isIntersecting) video.play().catch(function () {});
+          else video.pause();
+        }, { threshold: 0.25 }).observe(video);
+      }
+    })();
+
+    /* Short looping videos in section 02 pause while off screen */
+    (function () {
+      var vids = document.querySelectorAll('[data-loop-video]');
+      if (!vids.length || !('IntersectionObserver' in window)) return;
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) e.target.play().catch(function () {});
+          else e.target.pause();
+        });
+      }, { threshold: 0.2 });
+      Array.prototype.forEach.call(vids, function (v) { io.observe(v); });
+    })();
+
+    /* 01 · How Might We: type the question out, then let the words float,
+       over a WebGL layer of dust drifting up through a spotlight. */
+    (function () {
+      var sec = document.querySelector('.p808-hmw');
+      if (!sec) return;
+      var q = document.getElementById('p808HmwQ');
+      var canvas = sec.querySelector('.p808-hmw__gl');
+      var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      /* ---- Typed question ---- */
+      var text = q.textContent.trim();
+      var chars = [];
+      var vis = document.createElement('span');
+      vis.setAttribute('aria-hidden', 'true');
+      text.split(' ').forEach(function (word, i) {
+        if (i) vis.appendChild(document.createTextNode(' '));
+        var w = document.createElement('span');
+        w.className = 'w';
+        w.style.setProperty('--i', i);
+        word.split('').forEach(function (ch) {
+          var c = document.createElement('span');
+          c.className = 'c';
+          c.textContent = ch;
+          w.appendChild(c);
+          chars.push(c);
+        });
+        vis.appendChild(w);
+      });
+      q.innerHTML = '<span class="p808-sr">' + text + '</span>';
+      q.appendChild(vis);
+
+      function settle(caret) {
+        q.classList.add('is-floating');
+        if (caret) setTimeout(function () { caret.classList.add('is-out'); }, 3200);
+      }
+
+      if (still) {
+        settle(null);
+      } else {
+        q.classList.add('is-ready');
+        var caret = document.createElement('span');
+        caret.className = 'p808-caret';
+        chars[0].appendChild(caret);
+        var typed = false;
+        var typeIt = function () {
+          if (typed) return;
+          typed = true;
+          var i = 0;
+          (function next() {
+            var c = chars[i];
+            c.classList.add('on');
+            c.appendChild(caret);
+            i++;
+            if (i >= chars.length) return settle(caret);
+            // a human rhythm: quick letters, a beat after each word
+            var gap = 38 + Math.random() * 34 + (chars[i].previousSibling ? 0 : 90);
+            setTimeout(next, gap);
+          })();
+        };
+        if ('IntersectionObserver' in window) {
+          var tio = new IntersectionObserver(function (e) {
+            if (e[0].isIntersecting) { tio.disconnect(); setTimeout(typeIt, 250); }
+          }, { threshold: 0.45 });
+          tio.observe(sec);
+        } else {
+          typeIt();
+        }
+      }
+
+      /* ---- WebGL dust in a spotlight ---- */
+      var gl = canvas.getContext('webgl', { alpha: true, premultipliedAlpha: true, antialias: false });
+      if (!gl) return;   // the CSS gradient stage still stands on its own
+
+      var vsrc = 'attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}';
+      var fsrc = [
+        'precision mediump float;',
+        'uniform vec2 uRes;uniform float uTime;uniform vec2 uLight;',
+        'float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}',
+        // one layer of motes: a jittered grid that rises and sways
+        'float motes(vec2 uv,float sc,float sp,float sz,float t){',
+        '  vec2 p=uv*sc;p.y-=t*sp;',
+        '  vec2 id=floor(p);vec2 f=fract(p)-.5;',
+        '  float r=h(id);',
+        '  vec2 o=vec2(h(id+3.1),h(id+7.7))-.5;',
+        '  o.x+=.22*sin(t*.55+r*6.283);',
+        '  float d=length(f-o*.75);',
+        '  float s=sz*(.45+.55*h(id+1.3));',
+        '  float m=(1.-smoothstep(0.,s,d))*step(.42,r);',
+        '  return m*(.55+.45*sin(t*1.7+r*40.));',
+        '}',
+        'void main(){',
+        '  vec2 q=gl_FragCoord.xy/uRes;',
+        '  vec2 uv=gl_FragCoord.xy/uRes.y;',
+        '  float t=uTime;',
+        // a soft cone of light falling from above toward the pointer
+        '  vec2 d=(q-uLight)*vec2(uRes.x/uRes.y*.55,1.);',
+        '  float beam=1.-smoothstep(0.,.62,length(d));',
+        '  float m=motes(uv,6.,.045,.11,t)*.55+motes(uv+11.,11.,.075,.1,t)*.38+motes(uv+23.,19.,.11,.09,t)*.26;',
+        '  float lit=.18+.95*beam;',
+        '  vec3 glow=vec3(.839,.863,.333);vec3 cream=vec3(.988,.969,.902);',
+        '  float a=clamp(beam*.22+m*lit,0.,1.);',
+        '  vec3 col=glow*beam*.22+mix(glow,cream,.55)*m*lit;',
+        '  gl_FragColor=vec4(col,a);',
+        '}'
+      ].join('\n');
+
+      function shader(type, src) {
+        var sh = gl.createShader(type);
+        gl.shaderSource(sh, src);
+        gl.compileShader(sh);
+        return gl.getShaderParameter(sh, gl.COMPILE_STATUS) ? sh : null;
+      }
+      var vs = shader(gl.VERTEX_SHADER, vsrc), fs = shader(gl.FRAGMENT_SHADER, fsrc);
+      if (!vs || !fs) return;
+      var prog = gl.createProgram();
+      gl.attachShader(prog, vs);
+      gl.attachShader(prog, fs);
+      gl.linkProgram(prog);
+      if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
+      gl.useProgram(prog);
+
+      var buf = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+      var loc = gl.getAttribLocation(prog, 'p');
+      gl.enableVertexAttribArray(loc);
+      gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+      gl.enable(gl.BLEND);
+      gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+
+      var uRes = gl.getUniformLocation(prog, 'uRes');
+      var uTime = gl.getUniformLocation(prog, 'uTime');
+      var uLight = gl.getUniformLocation(prog, 'uLight');
+
+      var light = { x: 0.5, y: 1.05 }, aim = { x: 0.5, y: 1.05 };
+      function resize() {
+        var dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+        var w = Math.round(sec.clientWidth * dpr), h = Math.round(sec.clientHeight * dpr);
+        if (canvas.width !== w || canvas.height !== h) {
+          canvas.width = w;
+          canvas.height = h;
+          gl.viewport(0, 0, w, h);
+        }
+        gl.uniform2f(uRes, w, h);
+      }
+      function draw(time) {
+        light.x += (aim.x - light.x) * 0.06;
+        light.y += (aim.y - light.y) * 0.06;
+        gl.uniform1f(uTime, time / 1000);
+        gl.uniform2f(uLight, light.x, light.y);
+        gl.clearColor(0, 0, 0, 0);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+        gl.drawArrays(gl.TRIANGLES, 0, 3);
+      }
+
+      // the light leans toward the pointer, staying up near the top
+      sec.addEventListener('pointermove', function (e) {
+        var r = sec.getBoundingClientRect();
+        aim.x = 0.5 + ((e.clientX - r.left) / r.width - 0.5) * 0.7;
+        aim.y = 1.05 - ((e.clientY - r.top) / r.height) * 0.35;
+      });
+      sec.addEventListener('pointerleave', function () { aim.x = 0.5; aim.y = 1.05; });
+
+      var running = false, raf = 0;
+      function frame(t) { draw(t); raf = requestAnimationFrame(frame); }
+      function start() { if (running || still) return; running = true; raf = requestAnimationFrame(frame); }
+      function stop() { running = false; cancelAnimationFrame(raf); }
+
+      resize();
+      draw(4000);   // one frame right away, and the only one with reduced motion
+      window.addEventListener('resize', function () { resize(); if (!running) draw(4000); });
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (e) {
+          e[e.length - 1].isIntersecting ? start() : stop();
+        }, { rootMargin: '10% 0px' }).observe(sec);
+      } else {
+        start();
+      }
+    })();
+
+    /* Give the embedded member app the same safe areas a real iPhone would,
+       so its own background fills the space behind the status bar. */
+    (function () {
+      var app = document.getElementById('p808AppFrame');
+      if (!app) return;
+      app.addEventListener('load', function () {
+        try {
+          var doc = app.contentDocument;
+          var style = doc.createElement('style');
+          style.textContent = ':root{--safe-t:59px!important;--safe-b:34px!important}';
+          doc.head.appendChild(style);
+        } catch (e) { /* not same-origin: the app keeps its own layout */ }
+      });
+    })();
+  </script>
 
 </body>
 </html>

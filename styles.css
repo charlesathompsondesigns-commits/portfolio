@@ -1695,11 +1695,11 @@ ul  { list-style: none; }
 
 /* Project 808 — light blue */
 .cs-body-page--808 {
-  --cs-bg:    rgb(220, 232, 244);
-  --cs-ink:   rgb(10, 14, 31);
-  --cs-muted: rgb(85, 95, 115);
-  --cs-rule:  rgba(10, 14, 31, 0.12);
-  --cs-card:  rgba(255, 255, 255, 0.62);
+  --cs-bg:    rgb(220, 223, 184);   /* light tint of the brand olive, #808808 */
+  --cs-ink:   rgb(39, 15, 5);
+  --cs-muted: rgb(92, 87, 44);
+  --cs-rule:  rgba(39, 15, 5, 0.14);
+  --cs-card:  rgba(255, 255, 255, 0.55);
 }
 
 /* Dark callout card — for emphasized quotes, IF/IMPACT/OBJECTIVE statements */
