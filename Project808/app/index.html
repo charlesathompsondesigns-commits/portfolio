@@ -778,7 +778,7 @@
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="ink" x="-8%" y="-20%" width="116%" height="140%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="3" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.5"/></filter></svg>
 
 <div class="climb" id="climb" aria-label="A few questions">
-  <video id="bgv" src="video/front.mp4" muted playsinline loop preload="auto"></video>
+  <video id="bgv" src="video/front.mp4" poster="video/front-poster.jpg" muted playsinline loop preload="auto"></video>
   <div class="shade"></div>
   <div class="climbui">
     <div class="spot" id="c-spot"></div>
@@ -2447,6 +2447,21 @@ setBar();
 new MutationObserver(arm).observe(app, { childList:true, subtree:true });
 arm();
 if (params.has('fast') && member.done){ $('#splash').style.display = 'none'; overlayDone(); } else load();
+</script>
+<script>
+/* Portfolio copy: iPhones in Low Power Mode block muted autoplay. The poster
+   keeps the building on screen, and the first touch starts the video. */
+(function () {
+  var v = document.getElementById('bgv');
+  if (!v) return;
+  function go() {
+    if (!v.paused) return;
+    var p = v.play();
+    if (p && p.catch) p.catch(function () {});
+  }
+  document.addEventListener('pointerdown', go, { once: true, capture: true });
+  document.addEventListener('touchstart', go, { once: true, capture: true, passive: true });
+})();
 </script>
 </body>
 </html>
