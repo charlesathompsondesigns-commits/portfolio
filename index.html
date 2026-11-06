@@ -13,9 +13,23 @@
   <style>
     /* Glass nav: it takes the colour of whatever section is behind it (set by the
        script at the end of the page), blurs what scrolls underneath, and switches
-       to dark ink over light sections. Safari on iOS paints the page's base colour
-       behind the status bar, so the script keeps that in step too: no heavy band. */
-    html { background-color: rgb(20, 12, 8); }
+       to dark ink over light sections. Safari on iOS colours the status bar from
+       a solid bar pinned to the top of the screen, or the page's base colour, so
+       the script keeps both in step too: no heavy band.
+       The base colour sits on body, not html, so the body gradient still paints
+       underneath everything and the Projects bands stay visible over it. */
+    body { background-color: rgb(20, 12, 8); }
+    .nav-tint {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      z-index: 101;
+      background-color: rgb(20, 12, 8);
+      transition: background-color 0.2s linear;
+    }
+    .nav.is-open ~ .nav-tint { background-color: rgb(28, 16, 10); }
     .nav {
       --nav-rgb: 20, 12, 8;
       background: linear-gradient(180deg, rgba(var(--nav-rgb), 0.62) 0%, rgba(var(--nav-rgb), 0.3) 100%);
@@ -579,6 +593,10 @@
       var root = document.documentElement;
       var meta = document.querySelector('meta[name="theme-color"]');
       var work = document.getElementById('work');
+      var tint = document.createElement('div');
+      tint.className = 'nav-tint';
+      tint.setAttribute('aria-hidden', 'true');
+      nav.parentNode.insertBefore(tint, nav.nextSibling);
       var stops = [];
       function readStops() {
         var bg = getComputedStyle(document.body).backgroundImage, re = /rgba?\(([^)]+)\)\s+([\d.]+)%/g, m;
@@ -624,7 +642,9 @@
         nav.style.setProperty('--nav-rgb', c.map(Math.round).join(', '));
         var lum = (0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]) / 255;
         nav.classList.toggle('is-light', lum > 0.55);
-        root.style.backgroundColor = 'rgb(' + top.map(Math.round).join(', ') + ')';
+        var topCss = 'rgb(' + top.map(Math.round).join(', ') + ')';
+        document.body.style.backgroundColor = topCss;
+        tint.style.backgroundColor = nav.classList.contains('is-open') ? '' : topCss;
         if (meta) meta.setAttribute('content', hex(top));
       }
       var queued = false;
@@ -633,6 +653,7 @@
       window.addEventListener('scroll', queue, { passive: true });
       window.addEventListener('resize', function () { readStops(); lastKey = ''; queue(); });
       window.addEventListener('load', function () { lastKey = ''; queue(); });
+      new MutationObserver(function () { lastKey = ''; queue(); }).observe(nav, { attributes: true, attributeFilter: ['class'] });
       update();
     })();
   </script>
