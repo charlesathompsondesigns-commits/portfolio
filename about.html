@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>About — Charlesa Thompson</title>
   <meta name="description" content="Charlesa Thompson is a designer rooted in research, community, and craft — designing for connection across digital and physical experiences." />
-  <meta name="theme-color" content="#fcf7e6" />
+  <meta name="theme-color" content="#f4ead3" />
   <link rel="icon" href="/favicon-32.png?v=3" type="image/png" sizes="32x32" />
   <link rel="icon" href="/favicon-16.png?v=3" type="image/png" sizes="16x16" />
   <link rel="icon" href="/icon-192.png?v=3" type="image/png" sizes="192x192" />
@@ -22,8 +22,11 @@
        Overrides the index gradient and reskins the contact
        form so it reads correctly on light ground.
        ======================================================== */
+    :root { --about-creme: rgb(244, 234, 211); }
+    html, body {
+      background: var(--about-creme);
+    }
     body {
-      background: var(--cream);
       color: var(--black);
     }
 
@@ -83,7 +86,7 @@
       margin: 0;
       border-radius: 6px;
       overflow: hidden;
-      background: #e9e2cc;
+      background: #e6d9bb;
       aspect-ratio: 2 / 3;
       box-shadow: 0 30px 60px -30px rgba(39, 15, 5, 0.35);
     }
@@ -99,38 +102,31 @@
       .about-hero__photo { justify-self: stretch; max-width: none; }
     }
 
-    /* Gallery: three tall frames on desktop, a swipeable strip on phones */
+    /* Photo marquee: drifts on its own, pauses on hover, still for reduced motion */
     .about-gallery {
-      padding: clamp(24px, 4vw, 56px) var(--gutter) clamp(48px, 7vw, 96px);
+      padding: clamp(24px, 4vw, 56px) 0 clamp(48px, 7vw, 96px);
+      overflow: hidden;
+      -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+      mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
     }
     .about-gallery__track {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: clamp(16px, 2vw, 28px);
+      display: flex;
+      width: max-content;
+      gap: clamp(14px, 2vw, 28px);
       list-style: none;
+      margin: 0;
       padding: 0;
+      animation: about-drift 48s linear infinite;
     }
-    .about-gallery__track li:nth-child(2) { transform: translateY(clamp(24px, 4vw, 56px)); }
-    @media (max-width: 720px) {
-      .about-gallery { padding-left: 0; padding-right: 0; }
-      .about-gallery__track {
-        display: flex;
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-        scroll-padding: 0 var(--gutter);
-        padding: 0 var(--gutter);
-        gap: 12px;
-        scrollbar-width: none;
-        -webkit-overflow-scrolling: touch;
-      }
-      .about-gallery__track::-webkit-scrollbar { display: none; }
-      .about-gallery__track li {
-        flex: 0 0 78%;
-        scroll-snap-align: start;
-      }
-      .about-gallery__track li:nth-child(2) { transform: none; }
+    .about-gallery:hover .about-gallery__track { animation-play-state: paused; }
+    .about-gallery__track li { flex: none; width: clamp(220px, 26vw, 360px); }
+    @keyframes about-drift {
+      from { transform: translate3d(0, 0, 0); }
+      to   { transform: translate3d(-50%, 0, 0); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .about-gallery { overflow-x: auto; }
+      .about-gallery__track { animation: none; }
     }
 
     /* Pull quote */
@@ -212,7 +208,7 @@
        Safari paints behind the status bar) and clears into frosted glass, with
        dark ink and a soft blurred fade instead of a hard edge. ── */
     .nav {
-      background: linear-gradient(180deg, rgb(252, 247, 230) 0%, rgba(252, 247, 230, 0.82) 35%, rgba(255, 252, 240, 0.5) 100%);
+      background: linear-gradient(180deg, rgb(244, 234, 211) 0%, rgba(244, 234, 211, 0.82) 35%, rgba(248, 240, 222, 0.5) 100%);
       -webkit-backdrop-filter: blur(22px) saturate(180%);
       backdrop-filter: blur(22px) saturate(180%);
       border-bottom: 0;
@@ -225,7 +221,7 @@
       right: 0;
       top: 100%;
       height: 22px;
-      background: linear-gradient(180deg, rgba(255, 252, 240, 0.5) 0%, rgba(255, 252, 240, 0) 100%);
+      background: linear-gradient(180deg, rgba(248, 240, 222, 0.5) 0%, rgba(248, 240, 222, 0) 100%);
       -webkit-backdrop-filter: blur(10px) saturate(160%);
       backdrop-filter: blur(10px) saturate(160%);
       -webkit-mask-image: linear-gradient(180deg, #000 0%, transparent 100%);
@@ -238,7 +234,7 @@
     .nav__toggle { color: var(--brown); }
     @media (max-width: 720px) {
       .nav__links {
-        background: linear-gradient(180deg, rgba(255, 252, 240, 0.97) 0%, rgba(252, 247, 230, 0.98) 100%);
+        background: linear-gradient(180deg, rgba(248, 240, 222, 0.97) 0%, rgba(244, 234, 211, 0.98) 100%);
         -webkit-backdrop-filter: blur(30px) saturate(160%);
         backdrop-filter: blur(30px) saturate(160%);
       }
@@ -270,7 +266,7 @@
           <p class="about-hero__sub reveal">My work extends beyond screens, supporting local creatives, students, and teams through accessible design, structure, and collaboration.</p>
         </div>
         <figure class="about-photo about-hero__photo reveal reveal-delay-1">
-          <img src="About/char-portrait.jpg" srcset="About/char-portrait-sm.jpg 700w, About/char-portrait.jpg 1200w" sizes="(max-width: 820px) 100vw, 460px" width="1200" height="1800" alt="Charlesa smiling in a black and silver lace corset gown, with warm lights behind her." fetchpriority="high" />
+          <img src="About/char-stairs-below.jpg" srcset="About/char-stairs-below-sm.jpg 700w, About/char-stairs-below.jpg 1200w" sizes="(max-width: 820px) 100vw, 460px" width="1200" height="1800" alt="Black and white photo of Charlesa on a curved staircase, her shadow cast on the patterned wall." fetchpriority="high" />
         </figure>
       </div>
     </section>
@@ -297,9 +293,18 @@
     <!-- ============ Gallery ============ -->
     <section class="about-gallery" aria-label="Photos of Charlesa">
       <ul class="about-gallery__track">
-        <li><figure class="about-photo reveal"><img src="About/char-stairs-above.jpg" srcset="About/char-stairs-above-sm.jpg 700w, About/char-stairs-above.jpg 1200w" sizes="(max-width: 720px) 78vw, 33vw" width="1200" height="1800" loading="lazy" alt="Black and white photo from above of Charlesa smiling up from a spiral staircase." /></figure></li>
-        <li><figure class="about-photo reveal reveal-delay-1"><img src="About/char-stairs-below.jpg" srcset="About/char-stairs-below-sm.jpg 700w, About/char-stairs-below.jpg 1200w" sizes="(max-width: 720px) 78vw, 33vw" width="1200" height="1800" loading="lazy" alt="Black and white photo of Charlesa on a curved staircase, her shadow cast on the patterned wall." /></figure></li>
-        <li><figure class="about-photo reveal reveal-delay-2"><img src="About/char-red-carpet.jpg" srcset="About/char-red-carpet-sm.jpg 700w, About/char-red-carpet.jpg 1200w" sizes="(max-width: 720px) 78vw, 33vw" width="1024" height="1536" loading="lazy" alt="Charlesa on a red carpet in the lace corset gown with a long sheer train." /></figure></li>
+        <li><figure class="about-photo"><img src="About/char-portrait-sm.jpg" srcset="About/char-portrait-sm.jpg 700w, About/char-portrait.jpg 1200w" sizes="(max-width: 720px) 60vw, 26vw" width="1200" height="1800" loading="lazy" alt="Charlesa smiling in a black and silver lace corset gown, with warm lights behind her." /></figure></li>
+        <li><figure class="about-photo"><img src="About/char-stairs-above-sm.jpg" srcset="About/char-stairs-above-sm.jpg 700w, About/char-stairs-above.jpg 1200w" sizes="(max-width: 720px) 60vw, 26vw" width="1200" height="1800" loading="lazy" alt="Black and white photo from above of Charlesa smiling up from a spiral staircase." /></figure></li>
+        <li><figure class="about-photo"><img src="About/char-red-carpet-sm.jpg" srcset="About/char-red-carpet-sm.jpg 700w, About/char-red-carpet.jpg 1200w" sizes="(max-width: 720px) 60vw, 26vw" width="1024" height="1536" loading="lazy" alt="Charlesa on a red carpet in the lace corset gown with a long sheer train." /></figure></li>
+        <li aria-hidden="true"><figure class="about-photo"><img src="About/char-portrait-sm.jpg" srcset="About/char-portrait-sm.jpg 700w, About/char-portrait.jpg 1200w" sizes="(max-width: 720px) 60vw, 26vw" width="1200" height="1800" loading="lazy" alt="" /></figure></li>
+        <li aria-hidden="true"><figure class="about-photo"><img src="About/char-stairs-above-sm.jpg" srcset="About/char-stairs-above-sm.jpg 700w, About/char-stairs-above.jpg 1200w" sizes="(max-width: 720px) 60vw, 26vw" width="1200" height="1800" loading="lazy" alt="" /></figure></li>
+        <li aria-hidden="true"><figure class="about-photo"><img src="About/char-red-carpet-sm.jpg" srcset="About/char-red-carpet-sm.jpg 700w, About/char-red-carpet.jpg 1200w" sizes="(max-width: 720px) 60vw, 26vw" width="1024" height="1536" loading="lazy" alt="" /></figure></li>
+        <li aria-hidden="true"><figure class="about-photo"><img src="About/char-portrait-sm.jpg" srcset="About/char-portrait-sm.jpg 700w, About/char-portrait.jpg 1200w" sizes="(max-width: 720px) 60vw, 26vw" width="1200" height="1800" loading="lazy" alt="" /></figure></li>
+        <li aria-hidden="true"><figure class="about-photo"><img src="About/char-stairs-above-sm.jpg" srcset="About/char-stairs-above-sm.jpg 700w, About/char-stairs-above.jpg 1200w" sizes="(max-width: 720px) 60vw, 26vw" width="1200" height="1800" loading="lazy" alt="" /></figure></li>
+        <li aria-hidden="true"><figure class="about-photo"><img src="About/char-red-carpet-sm.jpg" srcset="About/char-red-carpet-sm.jpg 700w, About/char-red-carpet.jpg 1200w" sizes="(max-width: 720px) 60vw, 26vw" width="1024" height="1536" loading="lazy" alt="" /></figure></li>
+        <li aria-hidden="true"><figure class="about-photo"><img src="About/char-portrait-sm.jpg" srcset="About/char-portrait-sm.jpg 700w, About/char-portrait.jpg 1200w" sizes="(max-width: 720px) 60vw, 26vw" width="1200" height="1800" loading="lazy" alt="" /></figure></li>
+        <li aria-hidden="true"><figure class="about-photo"><img src="About/char-stairs-above-sm.jpg" srcset="About/char-stairs-above-sm.jpg 700w, About/char-stairs-above.jpg 1200w" sizes="(max-width: 720px) 60vw, 26vw" width="1200" height="1800" loading="lazy" alt="" /></figure></li>
+        <li aria-hidden="true"><figure class="about-photo"><img src="About/char-red-carpet-sm.jpg" srcset="About/char-red-carpet-sm.jpg 700w, About/char-red-carpet.jpg 1200w" sizes="(max-width: 720px) 60vw, 26vw" width="1024" height="1536" loading="lazy" alt="" /></figure></li>
       </ul>
     </section>
 
