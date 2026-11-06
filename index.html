@@ -58,6 +58,29 @@
     .nav.is-light:not(.is-open) .nav__logo,
     .nav.is-light:not(.is-open) .nav__links a,
     .nav.is-light:not(.is-open) .nav__toggle { color: var(--brown); }
+    /* Quotes: a horizontal strip at every screen size. It drifts on its own,
+       pauses on hover, and can be dragged, swiped or trackpad-scrolled. */
+    .quotes-marquee {
+      margin-inline: calc(50% - 50vw);
+      overflow-x: auto;
+      overflow-y: hidden;
+      overscroll-behavior-x: contain;
+      scrollbar-width: none;
+      cursor: grab;
+      -webkit-user-select: none;
+      user-select: none;
+      -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+      mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+    }
+    .quotes-marquee::-webkit-scrollbar { display: none; }
+    .quotes-marquee.is-dragging { cursor: grabbing; }
+    .quotes-marquee__track {
+      display: flex;
+      gap: 16px;
+      width: max-content;
+      padding: 4px var(--gutter) 12px;
+    }
+    .quotes-marquee .quote-card { flex: none; width: clamp(272px, 30vw, 400px); }
   </style>
 </head>
 <body>
@@ -265,41 +288,36 @@
     <div class="container">
       <h2 class="section-heading reveal">Quotes</h2>
       <p class="section-subtext reveal">Here's what people are saying</p>
-      <div class="quotes-grid">
-
-        <div class="quote-card reveal">
-          <p class="quote-card__text">Throughout our three years working together, Charlesa distinguished herself through her curiosity, empathy, and strong creative intuition</p>
-          <div class="quote-card__author">
-            <div class="quote-card__avatar">&#9786;</div>
-            <div>
-              <p class="quote-card__name">Jo-Nell Sieren</p>
-              <p class="quote-card__role">UX UI Professor</p>
+      <div class="quotes-marquee reveal" data-copies="4" aria-label="Quotes">
+        <div class="quotes-marquee__track">
+          <div class="quote-card">
+            <p class="quote-card__text">Throughout our three years working together, Charlesa distinguished herself through her curiosity, empathy, and strong creative intuition</p>
+            <div class="quote-card__author">
+              <div>
+                <p class="quote-card__name">Jo-Nell Sieren</p>
+                <p class="quote-card__role">UX UI Professor</p>
+              </div>
+            </div>
+          </div>
+          <div class="quote-card">
+            <p class="quote-card__text">She took the initiative to troubleshoot, test, and reconfigure each device, all while guiding volunteers and communicating clearly with cross team leads.</p>
+            <div class="quote-card__author">
+              <div>
+                <p class="quote-card__name">Casscilina Credido</p>
+                <p class="quote-card__role">Founder of ANTIX</p>
+              </div>
+            </div>
+          </div>
+          <div class="quote-card">
+            <p class="quote-card__text">A calm and focused approach to challenges, and an impressive ability to quickly learn and apply new systems in high pressure environments.</p>
+            <div class="quote-card__author">
+              <div>
+                <p class="quote-card__name">Marquan Jones</p>
+                <p class="quote-card__role">President of CFC</p>
+              </div>
             </div>
           </div>
         </div>
-
-        <div class="quote-card reveal reveal-delay-1">
-          <p class="quote-card__text">She took the initiative to troubleshoot, test, and reconfigure each device, all while guiding volunteers and communicating clearly with cross team leads.</p>
-          <div class="quote-card__author">
-            <div class="quote-card__avatar">&#9786;</div>
-            <div>
-              <p class="quote-card__name">Casscilina Credido</p>
-              <p class="quote-card__role">Founder of ANTIX</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="quote-card reveal reveal-delay-2">
-          <p class="quote-card__text">A calm and focused approach to challenges, and an impressive ability to quickly learn and apply new systems in high pressure environments.</p>
-          <div class="quote-card__author">
-            <div class="quote-card__avatar">&#9786;</div>
-            <div>
-              <p class="quote-card__name">Marquan Jones</p>
-              <p class="quote-card__role">President of CFC</p>
-            </div>
-          </div>
-        </div>
-
       </div>
     </div>
   </section>
@@ -655,6 +673,87 @@
       window.addEventListener('load', function () { lastKey = ''; queue(); });
       new MutationObserver(function () { lastKey = ''; queue(); }).observe(nav, { attributes: true, attributeFilter: ['class'] });
       update();
+    })();
+  </script>
+
+  <script>
+    /* Quotes strip: repeat the set so it can loop, drift slowly, and let people
+       scroll, swipe or drag it. Hover pauses; after a manual move it waits a
+       moment, then carries on. Reduced motion: no drift, no copies. */
+    (function () {
+      var box = document.querySelector('.quotes-marquee');
+      if (!box) return;
+      var track = box.querySelector('.quotes-marquee__track');
+      var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var copies = parseInt(box.getAttribute('data-copies'), 10) || 4;
+      if (!still) {
+        var originals = [].slice.call(track.children);
+        for (var k = 1; k < copies; k++) {
+          originals.forEach(function (card) {
+            var c = card.cloneNode(true);
+            c.setAttribute('aria-hidden', 'true');
+            track.appendChild(c);
+          });
+        }
+      }
+      var SPEED = 26, set = 0, carry = 0, last = 0, hover = false, resumeAt = 0, running = false, drag = null;
+      function measure() {
+        if (still) return;
+        set = track.scrollWidth / copies;
+        if (box.scrollLeft < set * 0.5) box.scrollLeft = set;
+      }
+      function wrap() {
+        if (still || !set) return;
+        var d = 0;
+        if (box.scrollLeft >= set * (copies / 2 + 0.5)) d = -set;
+        else if (box.scrollLeft < set * 0.5) d = set;
+        if (d) { box.scrollLeft += d; if (drag) drag.start += d; }
+      }
+      function hold(ms) { resumeAt = performance.now() + (ms || 2500); }
+      function frame(t) {
+        if (!running) return;
+        var dt = last ? Math.min(t - last, 80) : 16;
+        last = t;
+        if (!still && !hover && !drag && t >= resumeAt) {
+          carry += SPEED * dt / 1000;
+          var px = Math.floor(carry);
+          if (px) { box.scrollLeft += px; carry -= px; }
+        }
+        wrap();
+        requestAnimationFrame(frame);
+      }
+      box.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') hover = true; });
+      box.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') hover = false; });
+      box.addEventListener('wheel', function () { hold(); }, { passive: true });
+      box.addEventListener('touchstart', function () { hold(3500); }, { passive: true });
+      box.addEventListener('scroll', wrap, { passive: true });
+      box.addEventListener('pointerdown', function (e) {
+        if (e.pointerType !== 'mouse' || e.button) return;
+        drag = { x: e.clientX, start: box.scrollLeft, moved: false };
+      });
+      window.addEventListener('pointermove', function (e) {
+        if (!drag) return;
+        var dx = e.clientX - drag.x;
+        if (!drag.moved && Math.abs(dx) > 5) { drag.moved = true; box.classList.add('is-dragging'); }
+        if (drag.moved) box.scrollLeft = drag.start - dx;
+      });
+      window.addEventListener('pointerup', function () {
+        if (!drag) return;
+        box.classList.remove('is-dragging');
+        drag = null;
+        hold();
+      });
+      window.addEventListener('resize', measure);
+      window.addEventListener('load', measure);
+      measure();
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting && !running) { running = true; last = 0; requestAnimationFrame(frame); }
+            else if (!e.isIntersecting) running = false;
+          });
+        }).observe(box);
+      } else { running = true; requestAnimationFrame(frame); }
     })();
   </script>
 
