@@ -873,9 +873,75 @@
     @media (prefers-reduced-motion: reduce) {
       .p808-glass__glow::before, .p808-glass__glow::after { animation: none; }
     }
+    /* ── Open buttons: Braid's raised frosted-glass pill, in 808 olive ── */
+    .p808-cta {
+      position: relative;
+      isolation: isolate;
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      min-height: 54px;
+      padding: 7px 8px 7px 26px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.72) 0%, rgba(255, 255, 255, 0.34) 100%);
+      -webkit-backdrop-filter: blur(16px) saturate(160%);
+      backdrop-filter: blur(16px) saturate(160%);
+      color: var(--cs-ink);
+      font-family: var(--font-instrument-italic);
+      font-style: italic;
+      font-size: clamp(19px, 1.6vw, 22px);
+      font-weight: 400;
+      text-decoration: none;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.95),
+        inset 0 0 16px rgba(196, 210, 40, 0.2),
+        0 0 0 1px rgba(196, 210, 60, 0.55),
+        0 0 14px rgba(150, 165, 20, 0.4),
+        0 0 36px rgba(140, 155, 15, 0.3),
+        0 0 72px rgba(140, 155, 15, 0.16),
+        0 12px 28px rgba(60, 66, 0, 0.14);
+      transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out), background 0.25s var(--ease-in-out);
+    }
+    .p808-cta:hover {
+      transform: translateY(-3px);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.46) 100%);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 1),
+        inset 0 0 18px rgba(196, 210, 40, 0.26),
+        0 0 0 1px rgba(196, 210, 60, 0.7),
+        0 0 18px rgba(150, 165, 20, 0.5),
+        0 0 44px rgba(140, 155, 15, 0.38),
+        0 0 88px rgba(140, 155, 15, 0.22),
+        0 18px 36px rgba(60, 66, 0, 0.18);
+    }
+    .p808-cta:active {
+      transform: translateY(0);
+      box-shadow: inset 0 2px 6px rgba(60, 66, 0, 0.18), 0 4px 12px rgba(60, 66, 0, 0.18);
+    }
+    .p808-cta:focus-visible { outline: 2px solid var(--cs-ink); outline-offset: 4px; }
+    /* arrow chip: deep olive with a bright glow-green arrow */
+    .p808-cta__arrow {
+      display: grid;
+      place-items: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #6a720c 0%, #2e3204 100%);
+      color: #e4ec7a;
+      font-family: var(--font-franklin-medium);
+      font-style: normal;
+      font-size: 15px;
+      box-shadow: 0 4px 12px rgba(46, 50, 4, 0.3);
+      transition: transform 0.25s var(--ease-out);
+    }
+    .p808-cta:hover .p808-cta__arrow { transform: translate(2px, -2px); }
+    @media (prefers-reduced-motion: reduce) {
+      .p808-cta, .p808-cta:hover, .p808-cta:hover .p808-cta__arrow { transform: none; }
+    }
   </style>
   <script defer src="../nav.js?v=20261012"></script>
-  <script defer src="../wall.js?v=20261106"></script>
+  <script defer src="../wall.js?v=20261107"></script>
 </head>
 <body class="cs-body-page cs-body-page--808">
 
@@ -893,7 +959,7 @@
   <header class="cs-hero">
     <div class="cs-container">
       <h1 class="cs-hero__title">Project 808</h1>
-      <p class="cs-hero__tagline">Creating Chicago's makerspace.</p>
+      <p class="cs-hero__tagline">Creating Chicago's Makerspace.</p>
       <div class="cs-hero__pills cs-hero__pills--justified">
         <span class="cs-pill">Strategy</span>
         <span class="cs-pill">Visual Design</span>
@@ -929,10 +995,10 @@
         </div>
         <div class="cs-wall__row cs-wall__row--main" data-speed="-0.8">
           <div class="cs-wall__track">
-            <img class="cs-wall__tile p808-feature" src="../Project808/wall/mayor-columbia.webp" data-full="../Project808/wall/full/mayor-columbia.webp" width="1350" height="900" style="aspect-ratio: 1350 / 900" decoding="async" alt="Charlesa with Mayor Brandon Johnson at a Columbia College Chicago event." draggable="false" />
-            <img class="cs-wall__tile" src="../Project808/wall/exterior-gouache.webp" data-full="../Project808/wall/full/exterior-gouache.webp" width="1409" height="900" style="aspect-ratio: 1409 / 900" decoding="async" alt="Olive gouache-style view of the building exterior." draggable="false" />
+            <img class="cs-wall__tile p808-feature" data-wall-anchor="0.55" src="../Project808/wall/mayor-columbia.webp" data-full="../Project808/wall/full/mayor-columbia.webp" width="1350" height="900" style="aspect-ratio: 1350 / 900" decoding="async" alt="Charlesa with Mayor Brandon Johnson at a Columbia College Chicago event." draggable="false" />
             <img class="cs-wall__tile" src="../Project808/wall/study-render.webp" data-full="../Project808/wall/full/study-render.webp" width="506" height="900" style="aspect-ratio: 506 / 900" decoding="async" alt="Rendered still of the study: a tree growing through a planted room at golden hour." draggable="false" />
             <div class="cs-wall__tile p808-swatch" style="aspect-ratio: 3 / 4; background: #D6DC55; color: #270F05"><span>Olive glow</span><span>#D6DC55</span></div>
+            <img class="cs-wall__tile" data-wall-anchor="0.45" src="../Project808/wall/front-render.webp" data-full="../Project808/wall/full/front-render.webp" width="1409" height="900" style="aspect-ratio: 1409 / 900" decoding="async" alt="Rendered photo of the front of the building at golden hour: two rounded glass towers around a timber-framed entrance." draggable="false" />
             <img class="cs-wall__tile p808-feature" src="../Project808/wall/mayor-meeting.webp" data-full="../Project808/wall/full/mayor-meeting.webp" width="1280" height="895" style="aspect-ratio: 1280 / 895" decoding="async" alt="Mayor Brandon Johnson at a community manufacturing event." draggable="false" />
             <img class="cs-wall__tile" src="../Project808/wall/vine-stair-pencil.webp" data-full="../Project808/wall/full/vine-stair-pencil.webp" width="1409" height="900" style="aspect-ratio: 1409 / 900" decoding="async" alt="My sketch of the vine stairs." draggable="false" />
             <img class="cs-wall__tile" src="../Project808/wall/stair-render.webp" data-full="../Project808/wall/full/stair-render.webp" width="506" height="900" style="aspect-ratio: 506 / 900" decoding="async" alt="Rendered still of the vine stairs spiraling up through the building at golden hour." draggable="false" />
@@ -974,7 +1040,7 @@
       <div>
         <h2 class="cs-section__title p808-live__title">Walk the building yourself.</h2>
         <p class="p808-live__try">This phone is live. Switch floors, tap a room to go there, or press Start walking.</p>
-        <a class="cs-pill cs-pill--solid p808-live__open" href="https://makerspace-chicago.vercel.app/" target="_blank" rel="noopener">Open the full site ↗</a>
+        <a class="p808-cta p808-live__open" href="https://makerspace-chicago.vercel.app/" target="_blank" rel="noopener">Open the full site <span class="p808-cta__arrow" aria-hidden="true">↗</span></a>
       </div>
         <div class="p808-live__phone">
           <div class="iphone">
@@ -1037,7 +1103,7 @@
       <div>
         <h2 class="cs-section__title p808-live__title">Book time on a machine.</h2>
         <p class="p808-live__try">This is the member app I built for the makerspace. Tell it what you make, book a machine, and keep your bookings and member card in one place, with member spotlights, project plans, a materials shop and the week's events alongside.</p>
-        <a class="cs-pill cs-pill--solid p808-live__open" href="../Project808/app/" target="_blank" rel="noopener">Open the app ↗</a>
+        <a class="p808-cta p808-live__open" href="../Project808/app/" target="_blank" rel="noopener">Open the app <span class="p808-cta__arrow" aria-hidden="true">↗</span></a>
       </div>
     </div>
   </section>
@@ -1368,7 +1434,7 @@
       <div>
         <h2 class="cs-section__title p808-live__title">Where it started.</h2>
         <p class="p808-live__try">This is the first version of the site, from when I first announced the idea publicly on July 4, 2026. It's still live, so you can scroll the original pitch on the phone.</p>
-        <a class="cs-pill cs-pill--solid p808-live__open" href="https://project-808.vercel.app" target="_blank" rel="noopener">Open the first site ↗</a>
+        <a class="p808-cta p808-live__open" href="https://project-808.vercel.app" target="_blank" rel="noopener">Open the first site <span class="p808-cta__arrow" aria-hidden="true">↗</span></a>
       </div>
       <div class="p808-live__phone p808-first__phone">
           <div class="iphone">
