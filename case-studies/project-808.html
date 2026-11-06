@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Project 808 — Charlesa Thompson</title>
   <meta name="description" content="A self-initiated campaign and 3D concept for a creative manufacturing studio in Chicago. Strategy, visual design, and development case study by Charlesa Thompson." />
   <meta name="theme-color" content="#dcdfb8" />
@@ -938,6 +938,30 @@
     .p808-cta:hover .p808-cta__arrow { transform: translate(2px, -2px); }
     @media (prefers-reduced-motion: reduce) {
       .p808-cta, .p808-cta:hover, .p808-cta:hover .p808-cta__arrow { transform: none; }
+    }
+    /* ── Bottom glass edge (touch screens), same as Braid's: Safari on iOS tints its
+       bottom toolbar from fixed elements touching the screen edge, so this keeps it
+       the page's light olive instead of whatever colour is scrolling underneath. ── */
+    .glass-edge { display: none; }
+    @media (max-width: 900px) {
+      .glass-edge {
+        display: block;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 90;
+        height: calc(40px + env(safe-area-inset-bottom, 0px));
+        background: linear-gradient(0deg,
+          rgb(220, 223, 184) 0%,
+          rgba(220, 223, 184, 0.7) 35%,
+          rgba(228, 231, 200, 0) 100%);
+        -webkit-backdrop-filter: blur(14px) saturate(170%);
+        backdrop-filter: blur(14px) saturate(170%);
+        -webkit-mask-image: linear-gradient(0deg, #000 45%, transparent 100%);
+        mask-image: linear-gradient(0deg, #000 45%, transparent 100%);
+        pointer-events: none;
+      }
     }
   </style>
   <script defer src="../nav.js?v=20261012"></script>
@@ -2087,5 +2111,6 @@
     })();
   </script>
 
+  <div class="glass-edge" aria-hidden="true"></div>
 </body>
 </html>
