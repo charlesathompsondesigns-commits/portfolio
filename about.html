@@ -72,6 +72,67 @@
       max-width: 58ch;
     }
 
+    /* Hero with portrait: text left, photo right; photo drops below on phones */
+    .about-hero__grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+      gap: clamp(32px, 6vw, 96px);
+      align-items: end;
+    }
+    .about-photo {
+      margin: 0;
+      border-radius: 6px;
+      overflow: hidden;
+      background: #e9e2cc;
+      aspect-ratio: 2 / 3;
+      box-shadow: 0 30px 60px -30px rgba(39, 15, 5, 0.35);
+    }
+    .about-photo img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .about-hero__photo { max-width: 460px; justify-self: end; width: 100%; }
+    @media (max-width: 820px) {
+      .about-hero__grid { grid-template-columns: 1fr; align-items: start; }
+      .about-hero__photo { justify-self: stretch; max-width: none; }
+    }
+
+    /* Gallery: three tall frames on desktop, a swipeable strip on phones */
+    .about-gallery {
+      padding: clamp(24px, 4vw, 56px) var(--gutter) clamp(48px, 7vw, 96px);
+    }
+    .about-gallery__track {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(16px, 2vw, 28px);
+      list-style: none;
+      padding: 0;
+    }
+    .about-gallery__track li:nth-child(2) { transform: translateY(clamp(24px, 4vw, 56px)); }
+    @media (max-width: 720px) {
+      .about-gallery { padding-left: 0; padding-right: 0; }
+      .about-gallery__track {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scroll-padding: 0 var(--gutter);
+        padding: 0 var(--gutter);
+        gap: 12px;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+      }
+      .about-gallery__track::-webkit-scrollbar { display: none; }
+      .about-gallery__track li {
+        flex: 0 0 78%;
+        scroll-snap-align: start;
+      }
+      .about-gallery__track li:nth-child(2) { transform: none; }
+    }
+
     /* Pull quote */
     .about-quote {
       padding: clamp(40px, 6vw, 80px) var(--gutter);
@@ -202,10 +263,15 @@
 
     <!-- ============ Hero ============ -->
     <section class="about-hero">
-      <div class="about-section__inner">
-        <p class="about-hero__label reveal">About</p>
-        <h1 class="about-hero__title reveal">Designing for Community</h1>
-        <p class="about-hero__sub reveal">My work extends beyond screens, supporting local creatives, students, and teams through accessible design, structure, and collaboration.</p>
+      <div class="about-section__inner about-hero__grid">
+        <div>
+          <p class="about-hero__label reveal">About</p>
+          <h1 class="about-hero__title reveal">Designing for Community</h1>
+          <p class="about-hero__sub reveal">My work extends beyond screens, supporting local creatives, students, and teams through accessible design, structure, and collaboration.</p>
+        </div>
+        <figure class="about-photo about-hero__photo reveal reveal-delay-1">
+          <img src="About/char-portrait.jpg" srcset="About/char-portrait-sm.jpg 700w, About/char-portrait.jpg 1200w" sizes="(max-width: 820px) 100vw, 460px" width="1200" height="1800" alt="Charlesa smiling in a black and silver lace corset gown, with warm lights behind her." fetchpriority="high" />
+        </figure>
       </div>
     </section>
 
@@ -226,6 +292,15 @@
         <p class="reveal">That early curiosity shaped the way I design today: I start with research, listen closely, and build from real community needs.</p>
         <p class="reveal reveal-delay-1">I love collaborating with engineers, creatives, and founders to turn loose ideas into polished, dependable experiences that people actually enjoy using.</p>
       </div>
+    </section>
+
+    <!-- ============ Gallery ============ -->
+    <section class="about-gallery" aria-label="Photos of Charlesa">
+      <ul class="about-gallery__track">
+        <li><figure class="about-photo reveal"><img src="About/char-stairs-above.jpg" srcset="About/char-stairs-above-sm.jpg 700w, About/char-stairs-above.jpg 1200w" sizes="(max-width: 720px) 78vw, 33vw" width="1200" height="1800" loading="lazy" alt="Black and white photo from above of Charlesa smiling up from a spiral staircase." /></figure></li>
+        <li><figure class="about-photo reveal reveal-delay-1"><img src="About/char-stairs-below.jpg" srcset="About/char-stairs-below-sm.jpg 700w, About/char-stairs-below.jpg 1200w" sizes="(max-width: 720px) 78vw, 33vw" width="1200" height="1800" loading="lazy" alt="Black and white photo of Charlesa on a curved staircase, her shadow cast on the patterned wall." /></figure></li>
+        <li><figure class="about-photo reveal reveal-delay-2"><img src="About/char-red-carpet.jpg" srcset="About/char-red-carpet-sm.jpg 700w, About/char-red-carpet.jpg 1200w" sizes="(max-width: 720px) 78vw, 33vw" width="1024" height="1536" loading="lazy" alt="Charlesa on a red carpet in the lace corset gown with a long sheer train." /></figure></li>
+      </ul>
     </section>
 
     <!-- ============ Body 2 — Why ============ -->
