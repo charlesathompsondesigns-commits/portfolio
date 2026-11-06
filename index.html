@@ -11,13 +11,16 @@
   <script defer src="nav.js?v=20261012"></script>
   <script defer src="contact.js"></script>
   <style>
-    /* Safari on iOS paints the page's base colour behind the status bar and in the
-       overscroll. The body is a gradient with no base colour, so that showed white.
-       Give the page its darkest top/bottom tone, and start the nav at exactly that
-       colour so the status bar and nav read as one surface, no hard line. */
+    /* Glass nav: it takes the colour of whatever section is behind it (set by the
+       script at the end of the page), blurs what scrolls underneath, and switches
+       to dark ink over light sections. Safari on iOS paints the page's base colour
+       behind the status bar, so the script keeps that in step too: no heavy band. */
     html { background-color: rgb(20, 12, 8); }
     .nav {
-      background: linear-gradient(180deg, rgb(20, 12, 8) 0%, rgba(39, 15, 5, 0.78) 40%, rgba(39, 15, 5, 0.5) 100%);
+      --nav-rgb: 20, 12, 8;
+      background: linear-gradient(180deg, rgba(var(--nav-rgb), 0.62) 0%, rgba(var(--nav-rgb), 0.3) 100%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      backdrop-filter: blur(20px) saturate(180%);
     }
     /* soft blurred fade below the nav instead of a hard edge, like 808 and Braid */
     .nav::after {
@@ -27,14 +30,20 @@
       right: 0;
       top: 100%;
       height: 24px;
-      background: linear-gradient(180deg, rgba(39, 15, 5, 0.5) 0%, rgba(39, 15, 5, 0) 100%);
-      -webkit-backdrop-filter: blur(12px);
-      backdrop-filter: blur(12px);
+      background: linear-gradient(180deg, rgba(var(--nav-rgb), 0.3) 0%, rgba(var(--nav-rgb), 0) 100%);
+      -webkit-backdrop-filter: blur(12px) saturate(160%);
+      backdrop-filter: blur(12px) saturate(160%);
       -webkit-mask-image: linear-gradient(180deg, #000 0%, transparent 100%);
       mask-image: linear-gradient(180deg, #000 0%, transparent 100%);
       pointer-events: none;
     }
     .nav.is-open::after { opacity: 0; }
+    .nav__logo, .nav__links a, .nav__toggle {
+      transition: color 0.35s ease, opacity var(--dur-short) var(--ease-in-out);
+    }
+    .nav.is-light:not(.is-open) .nav__logo,
+    .nav.is-light:not(.is-open) .nav__links a,
+    .nav.is-light:not(.is-open) .nav__toggle { color: var(--brown); }
   </style>
 </head>
 <body>
@@ -517,6 +526,8 @@
           }
         }
         work.style.setProperty('--work-lead', lead + 'px');
+        /* the same bands in page coordinates, for the glass nav to sample */
+        work.__bands = pts.map(function (q) { return { y: base - lead + q.p, c: q.c, a: q.a }; });
         work.style.setProperty('--work-bands', 'linear-gradient(to bottom,' + stops.join(',') + ')');
       }
       var queued = false;
@@ -554,6 +565,75 @@
       if (card && window.matchMedia('(hover: hover)').matches) {
         card.addEventListener('mouseenter', function () { if (v.ended) play(); });
       }
+    })();
+  </script>
+
+  <script>
+    /* Glass nav: sample the colour behind the nav from the page's own layers
+       (the body gradient, plus the Projects bands over it) and tint the nav,
+       the status bar and the browser theme colour with it. Ink switches to dark
+       over light sections. */
+    (function () {
+      var nav = document.querySelector('.nav');
+      if (!nav) return;
+      var root = document.documentElement;
+      var meta = document.querySelector('meta[name="theme-color"]');
+      var work = document.getElementById('work');
+      var stops = [];
+      function readStops() {
+        var bg = getComputedStyle(document.body).backgroundImage, re = /rgba?\(([^)]+)\)\s+([\d.]+)%/g, m;
+        stops = [];
+        while ((m = re.exec(bg))) stops.push({ p: parseFloat(m[2]), c: m[1].split(',').slice(0, 3).map(parseFloat) });
+      }
+      function lerp(a, b, t) { return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t]; }
+      function bodyAt(y) {
+        if (!stops.length) return [20, 12, 8];
+        var p = y / Math.max(1, document.body.scrollHeight) * 100;
+        if (p <= stops[0].p) return stops[0].c;
+        for (var i = 1; i < stops.length; i++) {
+          if (p <= stops[i].p) {
+            var A = stops[i - 1], B = stops[i], t = (p - A.p) / Math.max(0.0001, B.p - A.p);
+            return lerp(A.c, B.c, t);
+          }
+        }
+        return stops[stops.length - 1].c;
+      }
+      function bandAt(y) {
+        var b = work && work.__bands;
+        if (!b || !b.length || y < b[0].y || y > b[b.length - 1].y) return null;
+        for (var i = 1; i < b.length; i++) {
+          if (y <= b[i].y) {
+            var A = b[i - 1], B = b[i], t = (y - A.y) / Math.max(0.0001, B.y - A.y);
+            return { c: lerp(A.c, B.c, t), a: A.a + (B.a - A.a) * t };
+          }
+        }
+        return null;
+      }
+      function colourAt(y) {
+        var c = bodyAt(y), o = bandAt(y);
+        return o ? lerp(c, o.c, o.a) : c;
+      }
+      function hex(c) { return '#' + c.map(function (v) { return ('0' + Math.round(v).toString(16)).slice(-2); }).join(''); }
+      var lastKey = '';
+      function update() {
+        var y = window.scrollY || window.pageYOffset;
+        var c = colourAt(y + nav.offsetHeight / 2), top = colourAt(y + 1);
+        var key = c.map(Math.round).join() + '|' + top.map(Math.round).join();
+        if (key === lastKey) return;
+        lastKey = key;
+        nav.style.setProperty('--nav-rgb', c.map(Math.round).join(', '));
+        var lum = (0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]) / 255;
+        nav.classList.toggle('is-light', lum > 0.55);
+        root.style.backgroundColor = 'rgb(' + top.map(Math.round).join(', ') + ')';
+        if (meta) meta.setAttribute('content', hex(top));
+      }
+      var queued = false;
+      function queue() { if (queued) return; queued = true; requestAnimationFrame(function () { queued = false; update(); }); }
+      readStops();
+      window.addEventListener('scroll', queue, { passive: true });
+      window.addEventListener('resize', function () { readStops(); lastKey = ''; queue(); });
+      window.addEventListener('load', function () { lastKey = ''; queue(); });
+      update();
     })();
   </script>
 
