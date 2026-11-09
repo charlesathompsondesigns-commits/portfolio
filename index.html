@@ -173,7 +173,7 @@
             </div>
           </div>
           <div class="case-card__img">
-            <video class="case-card__video" src="Project808/card/808-card-v2.mp4" poster="Project808/card/808-card-v2-poster.jpg" width="1440" height="810" muted playsinline preload="none" aria-hidden="true"></video>
+            <video class="case-card__video" src="Project808/card/808-card-v2.mp4" poster="Project808/card/808-card-v2-poster.jpg" width="1440" height="810" muted loop playsinline preload="none" aria-hidden="true"></video>
           </div>
         </a>
 
@@ -576,32 +576,27 @@
   </script>
 
   <script>
-    /* Project 808 card: the app reel (phones, the building, the 808 mark) plays once when the card
-       comes into view, holds on the 808 mark, and replays on hover. If autoplay is
-       blocked (Low Power Mode) or motion is reduced, the last frame shows as a still. */
+    /* Project 808 card: the app reel (phones, the building, the 808 mark) loops while
+       the card is on screen and pauses when it scrolls away. If autoplay is blocked
+       (Low Power Mode) or motion is reduced, the 808 mark shows as a still. */
     (function () {
       var v = document.querySelector('.case-card__video');
       if (!v) return;
       var still = v.getAttribute('poster');
       var calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (calm || !('IntersectionObserver' in window)) return;
+      if (calm || !('IntersectionObserver' in window)) { v.removeAttribute('loop'); return; }
       v.removeAttribute('poster');            /* the paper shows until the first frame lands */
       v.parentNode.classList.add('is-paper');
       function play() {
-        try { v.currentTime = 0; } catch (e) {}
         var pr = v.play();
         if (pr && pr.catch) pr.catch(function () { v.setAttribute('poster', still); });
       }
       var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (e) {
-          if (e.isIntersecting) { play(); io.disconnect(); }
+          if (e.isIntersecting) play(); else v.pause();
         });
-      }, { threshold: 0.5 });
+      }, { threshold: 0.35 });
       io.observe(v);
-      var card = v.closest('.case-card');
-      if (card && window.matchMedia('(hover: hover)').matches) {
-        card.addEventListener('mouseenter', function () { if (v.ended) play(); });
-      }
     })();
   </script>
 
