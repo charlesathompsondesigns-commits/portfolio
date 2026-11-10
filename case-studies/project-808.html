@@ -43,6 +43,25 @@
       background: #1d1f02;
       box-shadow: 0 30px 70px -20px rgba(39, 15, 5, 0.45), 0 10px 24px rgba(39, 15, 5, 0.14);
     }
+    /* the video with a quiet disclosure underneath, same width as the video */
+    .p808-reel__col { width: clamp(250px, 26vw, 340px); }
+    .p808-reel__col .p808-reel__media { width: 100%; }
+    .p808-disclosure {
+      margin: 16px 2px 0;
+      font-family: var(--font-source, inherit);
+      font-size: 13px;
+      line-height: 1.55;
+      color: rgba(39, 15, 5, 0.62);
+    }
+    .p808-disclosure__label {
+      display: block;
+      margin-bottom: 4px;
+      font-family: var(--font-franklin-medium, inherit);
+      font-size: 10.5px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(39, 15, 5, 0.5);
+    }
     .p808-reel__media video {
       display: block;
       width: 100%;
@@ -163,6 +182,7 @@
     @media (max-width: 900px) {
       .p808-reel__grid { grid-template-columns: minmax(0, 1fr); row-gap: 36px; }
       .p808-reel__media { width: min(78vw, 320px); justify-self: center; }
+      .p808-reel__col { width: min(78vw, 320px); justify-self: center; }
     }
     @media (max-width: 600px) {
       .cs-sound { width: 44px; padding: 0; justify-content: center; right: 10px; bottom: 10px; }
@@ -853,7 +873,7 @@
       text-wrap: balance;
     }
     .p808-notes h3:first-child { margin-top: 0; }
-    /* ── Hypothesis and Disclosure: frosted glass over a soft olive glow ── */
+    /* ── Frosted glass over a soft olive glow (no longer used on the page) ── */
     .p808-glass {
       position: relative;
       isolation: isolate;
@@ -1184,6 +1204,7 @@
         <p class="p808-reel__line">Part one of my video series, posted on Instagram on October 22, 2026: a rough 3D model of the makerspace and a walkable site anyone can explore.</p>
         <a class="p808-reel__ig" href="https://www.instagram.com/p/DezeN5-xJhV/" target="_blank" rel="noopener">Watch it on Instagram ↗</a>
       </div>
+      <div class="p808-reel__col">
       <div class="p808-reel__media">
         <video autoplay muted loop playsinline preload="metadata" poster="../Project808/video/part01-poster.jpg" data-reel-video aria-label="Part one of the video series: the makerspace idea, a rough 3D model and a walkable site">
           <source src="../Project808/video/part01.mp4" type="video/mp4" />
@@ -1193,6 +1214,8 @@
           <svg class="cs-sound__icon cs-sound__icon--on" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></svg>
           <span class="cs-sound__label">Sound on</span>
         </button>
+      </div>
+      <p class="p808-disclosure"><span class="p808-disclosure__label">Disclosure</span> This video series is sponsored by Anthropic, the team behind Claude. I started Project 808 before the series, and the opinions here are my own.</p>
       </div>
     </div>
   </section>
@@ -1450,15 +1473,6 @@
           <div class="cs-figure__img"><img src="../Project808/vine-stair-model.jpg" width="1600" height="1022" loading="lazy" decoding="async" alt="Concept model view of a spiral stair climbing around a column of vines." /></div>
           <figcaption class="cs-figure__caption">The vine stairs, one stop on the walk. Concept model, not a built space.</figcaption>
         </figure>
-        <div class="cs-section__copy">
-          <div class="p808-glass">
-            <span class="p808-glass__glow" aria-hidden="true"></span>
-            <div class="cs-callout p808-glass__card">
-              <span class="cs-callout__label">Disclosure</span>
-              <div class="cs-callout__body">This video series is sponsored by Anthropic, the team behind Claude. I started Project 808 before the series, and the opinions here are my own.</div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </section>
