@@ -256,6 +256,38 @@
     @media (prefers-reduced-motion: reduce) {
       .p808-hmw__q.is-floating .w, .p808-caret { animation: none; }
     }
+    /* Hypothesis: the same stage, over her exterior sketch under the green wash */
+    .p808-hmw--hyp {
+      background: #c4ca86 url("../Project808/exterior-pencil.jpg") center / cover no-repeat;
+      background-blend-mode: multiply;
+    }
+    .p808-hmw--hyp::before {
+      background:
+        radial-gradient(ellipse 72% 62% at 50% 50%, rgba(248, 244, 226, 0.9) 0%, rgba(248, 244, 226, 0.62) 50%, rgba(248, 244, 226, 0.12) 85%),
+        rgba(248, 244, 226, 0.18);
+    }
+    .p808-hmw__label {
+      display: block;
+      margin-bottom: clamp(18px, 3vh, 28px);
+      font-family: var(--font-franklin-medium, inherit);
+      font-size: 12px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: rgba(39, 15, 5, 0.62);
+    }
+    .p808-hmw--hyp .p808-hmw__q {
+      max-width: 21ch;
+      font-size: clamp(34px, 4.8vw, 68px);
+    }
+    .p808-hmw__sub {
+      max-width: 46ch;
+      margin: clamp(26px, 4vh, 40px) auto 0;
+      font-family: var(--font-source, inherit);
+      font-size: clamp(16px, 1.3vw, 19px);
+      line-height: 1.6;
+      color: rgba(39, 15, 5, 0.78);
+      text-wrap: pretty;
+    }
 
     /* Live phone, directly below the photo wall */
     .p808-live__grid {
@@ -1232,14 +1264,6 @@
           <p class="cs-lead">Project 808 is a shared, professionally equipped makerspace for Chicago creatives, built to carry makers from one prototype to a production run.</p>
           <p>There are two ways in: prototype with in-house artisans, or get certified and book the machines yourself.</p>
           <p>You never pay to be in the building, only for machine time, so the community comes without a day rate.</p>
-          <div class="p808-glass p808-glass--statement">
-            <span class="p808-glass__glow" aria-hidden="true"></span>
-            <div class="cs-callout p808-glass__card">
-              <span class="cs-callout__label">Hypothesis</span>
-              <div class="cs-callout__body">If Chicago creatives have production-grade tools and a community to build with, more of them will launch a creative business within a year.</div>
-            </div>
-          </div>
-          <p>I'll measure it by members who launch a business in their first year. My biggest open question is funding: public money can bring pressure on the work, and private money makes the numbers hard.</p>
         </div>
         <figure class="cs-figure p808-marquee-wrap">
           <div class="p808-marquee" data-copies="4" aria-label="Photos with Mayor Brandon Johnson">
@@ -1261,6 +1285,16 @@
           <figcaption class="cs-figure__caption">With Chicago Mayor Brandon Johnson. I've raised the idea for 808 with him twice, in one-on-one conversations.</figcaption>
         </figure>
       </div>
+    </div>
+  </section>
+
+  <!-- ============ HYPOTHESIS: same stage as How Might We ============ -->
+  <section class="cs-section p808-hmw p808-hmw--hyp" aria-labelledby="p808HypQ">
+    <canvas class="p808-hmw__gl" aria-hidden="true"></canvas>
+    <div class="cs-container p808-hmw__inner">
+      <span class="p808-hmw__label">Hypothesis</span>
+      <h2 class="p808-hmw__q" id="p808HypQ">If Chicago creatives have production-grade tools and a community to build with, more of them will launch a creative business within a year.</h2>
+      <p class="p808-hmw__sub">I'll measure it by members who launch a business in their first year. My biggest open question is funding: public money can bring pressure on the work, and private money makes the numbers hard.</p>
     </div>
   </section>
 
@@ -1815,10 +1849,8 @@
 
     /* 01 · How Might We: type the question out, then let the words float,
        over a WebGL layer of dust drifting up through a spotlight. */
-    (function () {
-      var sec = document.querySelector('.p808-hmw');
-      if (!sec) return;
-      var q = document.getElementById('p808HmwQ');
+    Array.prototype.forEach.call(document.querySelectorAll('.p808-hmw'), function (sec) {
+      var q = sec.querySelector('.p808-hmw__q');
       var canvas = sec.querySelector('.p808-hmw__gl');
       var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -1860,16 +1892,24 @@
         var typeIt = function () {
           if (typed) return;
           typed = true;
-          var i = 0;
-          (function next() {
-            var c = chars[i];
-            c.classList.add('on');
-            c.appendChild(caret);
-            i++;
+          // a human rhythm: quick letters, a beat after each word; longer lines type faster.
+          // Times are planned up front and each tick catches up, so a busy page never slows it down.
+          var pace = Math.min(1, 56 / chars.length), at = [], tsum = 0;
+          for (var k = 0; k < chars.length; k++) {
+            at.push(tsum);
+            var nxt = chars[k + 1];
+            tsum += (38 + Math.random() * 34) * pace + (nxt && !nxt.previousSibling ? 90 * pace : 0);
+          }
+          var i = 0, t0 = performance.now();
+          (function tick() {
+            var now = performance.now() - t0;
+            while (i < chars.length && at[i] <= now) {
+              chars[i].classList.add('on');
+              chars[i].appendChild(caret);
+              i++;
+            }
             if (i >= chars.length) return settle(caret);
-            // a human rhythm: quick letters, a beat after each word
-            var gap = 38 + Math.random() * 34 + (chars[i].previousSibling ? 0 : 90);
-            setTimeout(next, gap);
+            setTimeout(tick, 16);
           })();
         };
         if ('IntersectionObserver' in window) {
@@ -1991,7 +2031,7 @@
       } else {
         start();
       }
-    })();
+    });
 
     /* Give the embedded member app the same safe areas a real iPhone would,
        so its own background fills the space behind the status bar. */
