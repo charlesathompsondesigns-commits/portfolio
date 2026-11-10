@@ -11,6 +11,9 @@
   <link rel="icon" href="/icon-192.png?v=3" type="image/png" sizes="192x192" />
   <link rel="shortcut icon" href="/favicon.ico?v=3" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../styles.css?v=20261103" />
   <style>
     /* ── Part one video + gold sponsor badge (badge styled after Braid's award pill) ── */
@@ -191,6 +194,138 @@
     @media (prefers-reduced-motion: reduce) {
       .cs-award, .cs-award::after { animation: none; }
       .cs-award__glow { animation: none; opacity: 0.9; }
+    }
+
+    /* ── Branding spotlight: the member app's own system on its parchment ── */
+    .p808-sg {
+      --sg-page: #F3ECD4; --sg-sheet: #FCF7E6; --sg-light: #E6E7CE; --sg-deep: #404404;
+      --sg-olive: #808808; --sg-glow: #D6DC55; --sg-ink: #270F05; --sg-line: rgba(64, 68, 4, 0.14);
+      --sg-engraved: "Academy Engraved LET", "AcademyEngravedLetPlain", "Instrument Serif", serif;
+      --sg-typed: "Special Elite", "Courier New", monospace;
+      --sg-sans: "Helvetica Neue LT Std", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      position: relative;
+      isolation: isolate;
+      margin-top: clamp(28px, 4vh, 44px);
+      padding: clamp(20px, 3vw, 36px);
+      border-radius: 28px;
+      background: var(--sg-page);
+      color: var(--sg-deep);
+      font-family: var(--sg-sans);
+      box-shadow: 0 40px 80px -40px rgba(64, 68, 4, 0.35);
+      overflow: hidden;
+    }
+    .p808-sg::before {             /* her pencil floor plan, barely there, like the app's paper */
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: url("../Project808/hmw-sketch.jpg") center / cover no-repeat;
+      opacity: 0.1;
+      mix-blend-mode: multiply;
+    }
+    .p808-sg__head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 2px 4px 18px;
+      margin-bottom: clamp(16px, 2vw, 22px);
+      border-bottom: 1px solid var(--sg-line);
+    }
+    .p808-sg__lockup {
+      display: block;
+      height: 34px;
+      aspect-ratio: 1149 / 441;
+      background: var(--sg-olive);
+      -webkit-mask: url("../Project808/app/mark/lockup.svg") left center / contain no-repeat;
+      mask: url("../Project808/app/mark/lockup.svg") left center / contain no-repeat;
+    }
+    .p808-sg__lockup--lg { height: auto; width: min(100%, 250px); margin: 4px 0 20px; }
+    .p808-sg__head span, .p808-sg__label {
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(64, 68, 4, 0.62);
+    }
+    .p808-sg__grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: clamp(12px, 1.4vw, 18px);
+    }
+    .p808-sg__cell {
+      grid-column: span 4;
+      padding: clamp(18px, 2vw, 26px);
+      border-radius: 20px;
+      background: var(--sg-sheet);
+      box-shadow: inset 0 0 0 1px var(--sg-line);
+    }
+    .p808-sg__cell--type { grid-column: span 6; }
+    .p808-sg__cell--color, .p808-sg__cell--art { grid-column: span 3; }
+    .p808-sg__label { display: block; margin-bottom: 18px; }
+    /* typography */
+    .p808-sg__type { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: clamp(16px, 2.4vw, 32px); align-items: center; }
+    .p808-sg__aa { font-family: var(--sg-engraved); font-size: clamp(72px, 7vw, 104px); line-height: 0.9; -webkit-text-stroke: 0.4px var(--sg-deep); }
+    .p808-sg__fam { margin: 10px 0 0; font-size: 13px; line-height: 1.6; color: var(--sg-deep); }
+    .p808-sg__fam em { font-style: normal; color: rgba(64, 68, 4, 0.55); margin-left: 4px; }
+    .p808-sg__scale { list-style: none; margin: 0; padding: 0; }
+    .p808-sg__scale li { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--sg-line); }
+    .p808-sg__scale li:last-child { border-bottom: 0; }
+    .p808-sg__scale code, .p808-sg code { font-family: var(--sg-sans); font-size: 11.5px; color: rgba(64, 68, 4, 0.55); white-space: nowrap; }
+    .p808-sg .f-eng { font-family: var(--sg-engraved); -webkit-text-stroke: 0.3px var(--sg-deep); line-height: 1.05; }
+    .p808-sg .f-typed { font-family: var(--sg-typed); color: var(--sg-olive); }
+    /* color */
+    .p808-sg__sw { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .p808-sg__sw button {
+      display: flex; flex-direction: column; justify-content: flex-end; gap: 2px;
+      min-height: 64px; padding: 10px; border: 0; border-radius: 14px; text-align: left;
+      font: 600 12.5px/1.2 var(--sg-sans); cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .p808-sg__sw button:hover { transform: translateY(-2px); box-shadow: 0 10px 20px -12px rgba(64, 68, 4, 0.6); }
+    .p808-sg__sw button code { font-size: 11px; color: inherit; opacity: 0.75; }
+    .p808-sg__sw button.is-copied code::after { content: " copied"; }
+    .p808-sg__strip { display: flex; height: 26px; margin-top: 10px; border-radius: 999px; overflow: hidden; box-shadow: inset 0 0 0 1px var(--sg-line); }
+    .p808-sg__strip span { flex: 1; }
+    .p808-sg__foot { display: block; margin-top: 10px; }
+    /* art style */
+    .p808-sg__art { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .p808-sg__art figure { margin: 0; }
+    .p808-sg__art img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 12px; }
+    .p808-sg__art figcaption { margin-top: 5px; font-size: 11.5px; color: rgba(64, 68, 4, 0.6); }
+    /* shape */
+    .p808-sg__radii { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; align-items: end; }
+    .p808-sg__radii span { display: block; height: 58px; background: linear-gradient(160deg, var(--sg-light), #d4d7a8); box-shadow: inset 0 0 0 1px var(--sg-line); }
+    .p808-sg__radii code { display: block; margin-top: 7px; }
+    .p808-sg__note { margin: 16px 0 0; font-size: 13px; line-height: 1.55; color: rgba(64, 68, 4, 0.7); }
+    /* mark */
+    .p808-sg__hlline { margin: 0; font-family: var(--sg-engraved); font-size: clamp(26px, 2.4vw, 32px); line-height: 1.1; -webkit-text-stroke: 0.3px var(--sg-deep); }
+    .p808-sg .hl {
+      background: linear-gradient(100deg, rgba(214, 220, 85, 0) 0.6%, var(--sg-glow) 2.4%, var(--sg-glow) 97%, rgba(214, 220, 85, 0) 99%) 0 55% / 100% 78% no-repeat;
+      padding: 0 0.3em; margin: 0 -0.1em;
+      -webkit-box-decoration-break: clone; box-decoration-break: clone;
+    }
+    /* components */
+    .p808-sg__comp { display: flex; flex-direction: column; gap: 12px; }
+    .p808-sg__row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .p808-sg__btn { height: 44px; padding: 0 18px; border: 0; border-radius: 14px; background: var(--sg-deep); color: var(--sg-sheet); font: 17px/1 var(--sg-typed); cursor: pointer; }
+    .p808-sg__btn--ghost { background: transparent; color: var(--sg-deep); box-shadow: inset 0 0 0 1.5px var(--sg-deep); }
+    .p808-sg__chip { height: 36px; padding: 0 14px; border: 0; border-radius: 12px; background: var(--sg-light); color: var(--sg-deep); font: 14px/1 var(--sg-typed); cursor: pointer; transition: background 0.2s ease, color 0.2s ease; }
+    .p808-sg__chip[aria-pressed="true"] { background: var(--sg-olive); color: var(--sg-sheet); }
+    .p808-sg__opt { min-width: 84px; height: 46px; padding: 6px 14px 0; border: 0; border-radius: 12px; background: var(--sg-light); color: var(--sg-deep); font: 21px/1 var(--sg-engraved); -webkit-text-stroke: 0.3px currentColor; cursor: pointer; transition: background 0.2s ease, color 0.2s ease; }
+    .p808-sg__opt[aria-pressed="true"] { background: var(--sg-deep); color: var(--sg-sheet); }
+    .p808-sg__card { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-radius: 20px; background: var(--sg-olive); color: var(--sg-sheet); }
+    .p808-sg__card small { display: block; font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.8; }
+    .p808-sg__card strong { font: 400 30px/1 var(--sg-engraved); -webkit-text-stroke: 0.3px currentColor; }
+    .p808-sg__crest { width: 30px; height: 30px; background: var(--sg-sheet); -webkit-mask: url("../Project808/app/mark/crest.svg") center / contain no-repeat; mask: url("../Project808/app/mark/crest.svg") center / contain no-repeat; }
+    @media (max-width: 1000px) {
+      .p808-sg__cell, .p808-sg__cell--type { grid-column: span 6; }
+      .p808-sg__cell--color, .p808-sg__cell--art { grid-column: span 6; }
+    }
+    @media (max-width: 680px) {
+      .p808-sg__grid { grid-template-columns: minmax(0, 1fr); }
+      .p808-sg__cell, .p808-sg__cell--type, .p808-sg__cell--color, .p808-sg__cell--art { grid-column: auto; }
+      .p808-sg__type { grid-template-columns: minmax(0, 1fr); }
+      .p808-sg__head .p808-sg__lockup { height: 28px; }
     }
 
     /* ── 01 · How Might We: deep olive stage, typed question, WebGL dust ── */
@@ -1477,6 +1612,113 @@
     </div>
   </section>
 
+  <!-- ============ BRANDING: the member app's system, then why ============ -->
+  <section class="cs-section">
+    <div class="cs-container">
+      <header class="cs-section__head">
+        <span class="cs-section__num">Branding</span>
+        <h2 class="cs-section__title">A brand that keeps the pencil.</h2>
+      </header>
+      <div class="cs-section__body">
+        <div class="p808-sg">
+          <div class="p808-sg__head">
+            <span class="p808-sg__lockup" role="img" aria-label="808 Maker Space"></span>
+            <span>Style guide</span>
+          </div>
+          <div class="p808-sg__grid">
+            <section class="p808-sg__cell p808-sg__cell--type" aria-label="Typography">
+              <span class="p808-sg__label">Typography</span>
+              <div class="p808-sg__type">
+                <div>
+                  <span class="p808-sg__aa" aria-hidden="true">Aa</span>
+                  <p class="p808-sg__fam">Academy Engraved <em>Names</em><br />Special Elite <em>Filled in</em><br />Helvetica Neue <em>The form</em></p>
+                </div>
+                <ul class="p808-sg__scale">
+                  <li><span class="f-eng" style="font-size:clamp(24px,2vw,30px)">What are you making?</span><code>Title · 44</code></li>
+                  <li><span class="f-eng" style="font-size:22px">Table saw</span><code>Name · 24</code></li>
+                  <li><span class="f-typed" style="font-size:17px">Free at 10:30 am</span><code>Filled in · 18</code></li>
+                  <li><span style="font-size:15px">Kiln firing overnight</span><code>Body · 15</code></li>
+                  <li><span style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(64,68,4,.6)">Today · West wing</span><code>Meta · 11</code></li>
+                </ul>
+              </div>
+            </section>
+
+            <section class="p808-sg__cell p808-sg__cell--color" aria-label="Color">
+              <span class="p808-sg__label">Color</span>
+              <div class="p808-sg__sw">
+                <button type="button" data-copy="#808808" style="background:#808808;color:#FCF7E6">Olive<code>#808808</code></button>
+                <button type="button" data-copy="#404404" style="background:#404404;color:#FCF7E6">Deep olive<code>#404404</code></button>
+                <button type="button" data-copy="#D6DC55" style="background:#D6DC55;color:#404404">Glow<code>#D6DC55</code></button>
+                <button type="button" data-copy="#270F05" style="background:#270F05;color:#FCF7E6">Ink<code>#270F05</code></button>
+              </div>
+              <div class="p808-sg__strip" aria-label="Paper colors: Cream, Parchment, Sage, Warm gray">
+                <span style="background:#FCF7E6"></span><span style="background:#F3ECD4"></span><span style="background:#E6E7CE"></span><span style="background:#786E64"></span>
+              </div>
+              <code class="p808-sg__foot">Paper · Cream → Sage</code>
+            </section>
+
+            <section class="p808-sg__cell p808-sg__cell--art" aria-label="Art style">
+              <span class="p808-sg__label">Art style</span>
+              <div class="p808-sg__art">
+                <figure><img src="../Project808/app/art/cnc-photo.jpg" alt="A photo of a CNC machine." loading="lazy" decoding="async" /><figcaption>Photo</figcaption></figure>
+                <figure><img src="../Project808/app/art/cnc-photo-green.jpg" alt="The same CNC photo under the olive wash." loading="lazy" decoding="async" /><figcaption>Green wash</figcaption></figure>
+                <figure><img src="../Project808/app/art/crib-sketch.jpg" alt="My sketch of the crib, in pencil." loading="lazy" decoding="async" /><figcaption>Sketch</figcaption></figure>
+                <figure><img src="../Project808/app/art/field.webp" alt="The olive field texture behind the app." loading="lazy" decoding="async" /><figcaption>Field</figcaption></figure>
+              </div>
+            </section>
+
+            <section class="p808-sg__cell" aria-label="Shape">
+              <span class="p808-sg__label">Shape</span>
+              <div class="p808-sg__radii">
+                <div><span style="border-radius:12px"></span><code>12 Chip</code></div>
+                <div><span style="border-radius:14px"></span><code>14 Button</code></div>
+                <div><span style="border-radius:20px"></span><code>20 Card</code></div>
+                <div><span style="border-radius:28px"></span><code>28 Sheet</code></div>
+              </div>
+              <p class="p808-sg__note">Soft corners everywhere, and a 20px margin around every screen.</p>
+            </section>
+
+            <section class="p808-sg__cell p808-sg__mark" aria-label="Mark and highlighter">
+              <span class="p808-sg__label">Mark &amp; highlighter</span>
+              <span class="p808-sg__lockup p808-sg__lockup--lg" aria-hidden="true"></span>
+              <p class="p808-sg__hlline">Where ideas <span class="hl">start.</span></p>
+            </section>
+
+            <section class="p808-sg__cell" aria-label="Components">
+              <span class="p808-sg__label">Components</span>
+              <div class="p808-sg__comp">
+                <div class="p808-sg__row">
+                  <button type="button" class="p808-sg__btn">Book again</button>
+                  <button type="button" class="p808-sg__btn p808-sg__btn--ghost">Add money</button>
+                </div>
+                <div class="p808-sg__row" data-sg-group>
+                  <button type="button" class="p808-sg__chip" aria-pressed="false">1 hr</button>
+                  <button type="button" class="p808-sg__chip" aria-pressed="true">1.5 hr</button>
+                  <button type="button" class="p808-sg__chip" aria-pressed="false">3 hrs</button>
+                </div>
+                <div class="p808-sg__row" data-sg-group>
+                  <button type="button" class="p808-sg__opt" aria-pressed="true">Wood</button>
+                  <button type="button" class="p808-sg__opt" aria-pressed="false">Print</button>
+                  <button type="button" class="p808-sg__opt" aria-pressed="false">Sewing</button>
+                </div>
+                <div class="p808-sg__card"><div><small>Balance</small><strong>$7.00</strong></div><span class="p808-sg__crest" aria-hidden="true"></span></div>
+              </div>
+            </section>
+          </div>
+        </div>
+        <div class="cs-section__copy p808-notes">
+          <p class="cs-lead">The brand keeps the pencil in view, because that's where most creative ideas are born.</p>
+          <h3>Sketch, then wash.</h3>
+          <p>Every image starts as a sketch or a photo and gets the same olive wash, so a machine, a floor plan and a room all feel drawn by one hand. It also says 808 is still being imagined.</p>
+          <h3>Green for growth.</h3>
+          <p>Olive reads as growth and inspiration. The hex code, #808808, even spells the name twice.</p>
+          <h3>Three typefaces, three jobs.</h3>
+          <p>An engraved serif names things, like a plate on a machine. A typewriter face holds whatever you fill in, like a shop ticket. Helvetica carries the form so it stays easy to read.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ 08 · LEARNINGS ============ -->
   <section class="cs-section">
     <div class="cs-container">
@@ -2046,6 +2288,26 @@
         start();
       }
     });
+
+    /* Branding spotlight: copy a swatch's hex, and the app's chips toggle like the real thing */
+    (function () {
+      var sg = document.querySelector('.p808-sg');
+      if (!sg) return;
+      Array.prototype.forEach.call(sg.querySelectorAll('[data-copy]'), function (b) {
+        b.addEventListener('click', function () {
+          var hex = b.getAttribute('data-copy');
+          var done = function () { b.classList.add('is-copied'); setTimeout(function () { b.classList.remove('is-copied'); }, 1400); };
+          if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(hex).then(done, done); else done();
+        });
+      });
+      Array.prototype.forEach.call(sg.querySelectorAll('[data-sg-group]'), function (g) {
+        g.addEventListener('click', function (e) {
+          var t = e.target.closest('button');
+          if (!t) return;
+          Array.prototype.forEach.call(g.querySelectorAll('button'), function (x) { x.setAttribute('aria-pressed', x === t ? 'true' : 'false'); });
+        });
+      });
+    })();
 
     /* Give the embedded member app the same safe areas a real iPhone would,
        so its own background fills the space behind the status bar. */
