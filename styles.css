@@ -211,6 +211,28 @@ ul  { list-style: none; }
   align-items: center;
   justify-content: space-between;
   padding: 0 var(--gutter);
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Mac browser fullscreen: when the browser's tabs and address bar slide down
+   over the page, nav.js adds .nav--below-bar and the nav drops just below
+   them. The ::before strip mirrors the nav's own background upward, so if the
+   bar turns out a little shorter than estimated, the sliver between them still
+   reads as nav, not page. It sits off screen the rest of the time. */
+.nav--below-bar { transform: translateY(var(--browser-bar, 0px)); }
+.nav::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: var(--browser-bar, 0px);
+  background: inherit;
+  transform: scaleY(-1);
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .nav { transition: none; }
 }
 
 /* Logo is masked so it takes the nav's text color on every page.

@@ -1,7 +1,99 @@
 (function () {
+  /* Browser fullscreen on a Mac. With "Always Show Toolbar in Full Screen"
+     turned off, Chrome and Safari slide their tabs and address bar down OVER
+     the top of the page when the pointer reaches the top of the screen, or
+     when you click back into a tab. The page isn't resized, so a nav pinned
+     to the top ends up hidden underneath. No browser API reports that bar,
+     so this infers when it's showing and drops the nav just below it
+     (.nav--below-bar, offset by --browser-bar, in styles.css). */
+  function keepBelowBrowserBar(nav) {
+    var mac = /Mac/i.test(navigator.platform || navigator.userAgent);
+    if (!mac || !window.matchMedia || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+    var root = document.documentElement;
+    var KEY = 'char:browser-bar';
+    var DEFAULT_BAR = 88; // Chrome's tabs + address bar on macOS, in screen px
+    var MENU_BAR = 24;    // the macOS menu bar drops in above it on Macs without a notch
+    var shown = false;
+    var barPx = 0;
+
+    // Page zoom, so screen px and CSS px can be compared.
+    function zoom() { return window.outerWidth / Math.max(1, window.innerWidth); }
+    // Browser UI permanently above the page, in screen px. In a normal window
+    // that's the tabs and address bar; in fullscreen with the toolbar hidden, 0.
+    function uiAbove() { return window.outerHeight - window.innerHeight * zoom(); }
+    function fillsScreen() {
+      return Math.abs(uiAbove()) < 3 &&
+        window.outerWidth >= screen.width - 2 &&
+        window.outerHeight >= screen.height - 48; // notched Macs keep fullscreen below the notch
+    }
+    function stored() {
+      try { return parseFloat(localStorage.getItem(KEY)) || 0; } catch (e) { return 0; }
+    }
+    // In a normal window, the UI above the page is exactly what slides down in
+    // fullscreen, so remember this browser's real height for later.
+    function measure() {
+      var h = Math.round(uiAbove());
+      if (h > 40 && h < 160 && h !== stored()) {
+        try { localStorage.setItem(KEY, String(h)); } catch (e) {}
+      }
+    }
+    function barHeight() {
+      var h = stored() || DEFAULT_BAR;
+      if (screen.height - window.outerHeight < 3) h += MENU_BAR;
+      return Math.round(h / zoom());
+    }
+
+    function show() {
+      if (shown || !fillsScreen()) return;
+      shown = true;
+      barPx = barHeight();
+      root.style.setProperty('--browser-bar', barPx + 'px');
+      nav.classList.add('nav--below-bar');
+    }
+    function hide() {
+      if (!shown) return;
+      shown = false;
+      nav.classList.remove('nav--below-bar');
+    }
+
+    // Pointer hits the top edge of the screen (or leaves the page through it):
+    // the bar is coming down. Pointer back in the page below it: the bar has
+    // gone, so the nav slides back up with it.
+    document.addEventListener('mousemove', function (e) {
+      if (e.clientY <= 1) show();
+      else if (shown && e.clientY > barPx) hide();
+    }, { passive: true });
+    document.addEventListener('mouseout', function (e) {
+      if (!e.relatedTarget && e.clientY < 12) show();
+    });
+
+    // Clicking back into this tab, or into the address bar, happens up in the
+    // bar, so the bar is showing whenever the pointer isn't over the page.
+    function pointerOnPage() { return root.matches(':hover'); }
+    document.addEventListener('visibilitychange', function () {
+      if (document.visibilityState !== 'visible') return;
+      if (pointerOnPage()) hide(); else show();
+    });
+    window.addEventListener('focus', function () { if (pointerOnPage()) hide(); });
+    window.addEventListener('blur', function () { if (!pointerOnPage()) show(); });
+
+    var queued = false;
+    window.addEventListener('resize', function () {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(function () {
+        queued = false;
+        if (!fillsScreen()) { hide(); measure(); }
+      });
+    });
+    if (!fillsScreen()) measure();
+  }
+
   function init() {
     var nav = document.querySelector('.nav');
     if (!nav) return;
+    keepBelowBrowserBar(nav);
     var links = nav.querySelector('.nav__links');
     if (!links) return;
 
