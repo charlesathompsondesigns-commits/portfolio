@@ -134,16 +134,8 @@
       line-height: 1.6;
       color: var(--cs-ink);
     }
-    .sd-feature__text + .sd-reel__ig { margin-top: 18px; }
-    .sd-reel__ig {
-      display: inline-block;
-      font-family: var(--font-franklin-medium);
-      font-size: 13px;
-      letter-spacing: 0.04em;
-      color: #e7cc9a;
-      text-decoration: none;
-    }
-    .sd-reel__ig:hover { text-decoration: underline; text-underline-offset: 3px; }
+    /* the gold badge sits under the copy, beside the reel (as 808 does with its video) */
+    .sd-reel__badge { margin-top: clamp(24px, 3.5vh, 34px); }
 
     /* The Instagram reel, playing, where 808 shows its Part one video */
     .sd-reel__media {
@@ -622,7 +614,7 @@
   <header class="cs-hero">
     <div class="cs-container">
       <h1 class="cs-hero__title">Sun-Drop Flower</h1>
-      <p class="cs-hero__tagline">Assistive lighting that looks like art.</p>
+      <p class="cs-hero__tagline">Assistive lighting that is also art.</p>
       <div class="cs-hero__pills cs-hero__pills--justified">
         <span class="cs-pill">Assistive Technology</span>
         <span class="cs-pill">Lead Designer &amp; Co-Fabricator</span>
@@ -692,7 +684,17 @@
       <div>
         <h2 class="cs-section__title sd-feature__title">Meet the Sun-Drop Flower.</h2>
         <p class="sd-feature__text">My mom has arthritis, and some days the pain in her hands makes turning on a lamp hard. So I built her a robotic lamp with a motion sensor. A small wave of the hand turns it on, no switch needed.</p>
-        <a class="sd-reel__ig" href="https://www.instagram.com/p/Dabn-nlMUP-/" target="_blank" rel="noopener">Watch it on Instagram ↗</a>
+        <div class="sd-reel__badge">
+          <a class="cs-award" href="https://www.instagram.com/p/Dabn-nlMUP-/" target="_blank" rel="noopener" aria-label="Viral on Instagram: 1 million views and 100 thousand likes. Watch the reel on Instagram">
+            <span class="cs-award__glow" aria-hidden="true"></span>
+            <span class="cs-award__medal" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="15 7 21 7 21 13"/></svg>
+            </span>
+            <span class="cs-award__year">Viral on Instagram</span>
+            <span class="cs-award__title">1M views · 100K likes</span>
+            <span class="cs-award__arrow" aria-hidden="true">↗</span>
+          </a>
+        </div>
       </div>
       <div class="sd-reel__media">
         <div class="sd-reel__frame">
