@@ -12,7 +12,7 @@
   <link rel="shortcut icon" href="/favicon.ico?v=3" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3" />
   <link rel="preconnect" href="https://www.thecharlesathompson.com" crossorigin>
-  <link rel="stylesheet" href="styles.css?v=20261119-2" />
+  <link rel="stylesheet" href="styles.css?v=20261120-2" />
   <script defer src="nav.js?v=20261119-2"></script>
   <script defer src="contact.js"></script>
   <style>
@@ -177,6 +177,23 @@
           </div>
         </a>
 
+        <!-- Sun-Drop Flower: soft rose card, text left / the finished lamp right -->
+        <a href="case-studies/sundrop-flower.html" class="case-card case-card--sundrop reveal">
+          <div class="case-card__text">
+            <h2 class="case-card__title">Sun-Drop Flower</h2>
+            <p class="case-card__desc">Assistive lighting that looks like art. A robotic lamp I built for my mom's arthritis that turns on with a wave of the hand, no switch needed.</p>
+            <div class="case-card__btns">
+              <span class="case-pill case-pill--filled">See Project</span>
+              <span class="case-pill case-pill--outline">Assistive Tech</span>
+              <span class="case-pill case-pill--outline">Equitable Design</span>
+              <span class="case-pill case-pill--outline">Virality</span>
+            </div>
+          </div>
+          <div class="case-card__img">
+            <img src="Sundrop/lamp-window-wide.webp" width="1170" height="878" alt="The Sun-Drop Flower: red fabric petals under a copper hood, the copper stem arcing toward a city window." loading="lazy" />
+          </div>
+        </a>
+
         <!-- Braid — lavender card, text left / phone mockups right -->
         <a href="case-studies/braid.html" class="case-card case-card--braid reveal">
           <div class="case-card__text">
@@ -192,6 +209,14 @@
             <img src="screens-hero.jpg" alt="Braid app mockups" loading="lazy" />
           </div>
         </a>
+
+      </div>
+
+      <!-- More work: hidden until "Explore the rest of my work" is pressed, then it
+           opens above the button, and the button becomes "Show less". -->
+      <div class="more-work" id="moreWork" inert aria-hidden="true">
+        <div class="more-work__inner">
+          <div class="case-stack case-stack--more">
 
         <!-- Columbia Chronicle — light cream card, text left / app mockups right -->
         <a href="case-studies/columbia-chronicle.html" class="case-card case-card--chronicle reveal">
@@ -209,6 +234,17 @@
           </div>
         </a>
 
+          </div>
+        </div>
+      </div>
+
+      <div class="explore-more">
+        <button class="explore-btn" type="button" aria-expanded="false" aria-controls="moreWork">
+          <span class="explore-btn__label">Explore the rest of my work</span>
+          <span class="explore-btn__chip" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </button>
       </div>
     </div>
   </section>
@@ -527,12 +563,14 @@
     (function () {
       var work = document.getElementById('work');
       if (!work || !window.ResizeObserver) return;
-      var cards = [
+      var all = [
         { el: work.querySelector('.case-card--nascar'),    c: '220,223,184' },
+        { el: work.querySelector('.case-card--sundrop'),   c: '238,220,226' },
         { el: work.querySelector('.case-card--braid'),     c: '223,213,237' },
         { el: work.querySelector('.case-card--chronicle'), c: '220,232,244' }
       ].filter(function (x) { return x.el; });
-      if (cards.length !== 3) return;
+      if (!all.length) return;
+      var cards = all;
       /* a whisper of the brand olive #808808, only a little deeper than the light olive behind the card */
       var OLIVE = [207, 211, 162];
       function rgb(s) { return s.split(',').map(Number); }
@@ -541,6 +579,8 @@
       function ease(t) { return t * t * (3 - 2 * t); }
       function css(c, a) { return 'rgba(' + Math.round(c[0]) + ',' + Math.round(c[1]) + ',' + Math.round(c[2]) + ',' + (+a.toFixed(3)) + ')'; }
       function paint() {
+        /* cards tucked under "Explore the rest of my work" only get a band once it's open */
+        cards = all.filter(function (x) { return !x.el.closest('.more-work:not(.is-open)'); });
         var base = top(work), h = work.offsetHeight;
         var lead = Math.round(Math.min(420, window.innerHeight * 0.5));
         var pts = [
@@ -572,6 +612,43 @@
       new ResizeObserver(queue).observe(work);
       window.addEventListener('resize', queue);
       paint();
+    })();
+  </script>
+
+  <script>
+    /* "Explore the rest of my work": opens the hidden project cards above the button,
+       then the button reads "Show less". Closed cards are inert, so keyboards skip them. */
+    (function () {
+      var btn = document.querySelector('.explore-btn');
+      var more = document.getElementById('moreWork');
+      if (!btn || !more) return;
+      var label = btn.querySelector('.explore-btn__label');
+      function setOpen(open) {
+        more.classList.toggle('is-open', open);
+        more.classList.remove('is-settled');
+        if (open) { more.removeAttribute('inert'); more.removeAttribute('aria-hidden'); }
+        else { more.setAttribute('inert', ''); more.setAttribute('aria-hidden', 'true'); }
+        btn.setAttribute('aria-expanded', String(open));
+        label.textContent = open ? 'Show less' : 'Explore the rest of my work';
+        /* with reduced motion there is no transition to wait for */
+        if (open && calm) more.classList.add('is-settled');
+        window.dispatchEvent(new Event('resize'));   /* repaint the Projects bands */
+      }
+      var calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      more.addEventListener('transitionend', function (e) {
+        if (e.target !== more || e.propertyName !== 'grid-template-rows') return;
+        if (more.classList.contains('is-open')) more.classList.add('is-settled');
+        window.dispatchEvent(new Event('resize'));
+      });
+      btn.addEventListener('click', function () {
+        var open = btn.getAttribute('aria-expanded') !== 'true';
+        setOpen(open);
+        if (!open) {
+          /* closing: keep the button in view instead of leaving the reader in Featured Media */
+          var r = btn.getBoundingClientRect();
+          if (r.top < 0 || r.top > window.innerHeight) btn.scrollIntoView({ block: 'center' });
+        }
+      });
     })();
   </script>
 

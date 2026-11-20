@@ -1356,6 +1356,100 @@ ul  { list-style: none; }
   background: rgba(228, 231, 198, 0.5);
 }
 
+/* Sun-Drop Flower: soft rose glass, a light tint of the project's plum */
+.case-card--sundrop {
+  background: rgba(242, 222, 228, 0.5);
+}
+.case-card--sundrop .case-card__img img { object-position: 30% 50%; }
+/* four pills on this card: a little less padding keeps them on one row on desktop */
+@media (min-width: 901px) {
+  .case-card--sundrop .case-pill { padding: 0 13px; }
+}
+
+/* More work: hidden under "Explore the rest of my work". The rows trick animates
+   the height; overflow is released once it has opened so card shadows aren't clipped. */
+.more-work {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 0.7s var(--ease-out), opacity 0.5s ease;
+}
+.more-work.is-open { grid-template-rows: 1fr; opacity: 1; }
+.more-work__inner { min-height: 0; overflow: hidden; }
+.more-work.is-settled .more-work__inner { overflow: visible; }
+/* the first stack's bottom margin plus this matches the gap between cards */
+.case-stack--more { margin-bottom: 0; padding-top: clamp(24px, 4vh, 104px); }
+
+.explore-more {
+  display: flex;
+  justify-content: center;
+  padding: 0 0 clamp(24px, 4vh, 48px);
+}
+.more-work.is-open + .explore-more { padding-top: clamp(56px, 8vh, 96px); }
+
+/* Same raised frosted-glass pill as the case-study buttons, in the cards' ink */
+.explore-btn {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
+  min-height: 76px;
+  padding: 10px 11px 10px 38px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.74) 0%, rgba(255, 255, 255, 0.36) 100%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  backdrop-filter: blur(16px) saturate(160%);
+  color: #0B0820;
+  font-family: var(--font-instrument-italic);
+  font-style: italic;
+  font-size: clamp(24px, 2.3vw, 32px);
+  font-weight: 400;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 0 0 1px rgba(11, 8, 32, 0.08),
+    0 2px 6px rgba(11, 8, 32, 0.06),
+    0 14px 32px rgba(11, 8, 32, 0.12);
+  transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out), background 0.25s var(--ease-in-out);
+}
+.explore-btn:hover {
+  transform: translateY(-3px);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.88) 0%, rgba(255, 255, 255, 0.5) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    0 0 0 1px rgba(11, 8, 32, 0.1),
+    0 4px 10px rgba(11, 8, 32, 0.08),
+    0 20px 40px rgba(11, 8, 32, 0.16);
+}
+.explore-btn:active { transform: translateY(0); box-shadow: inset 0 2px 6px rgba(11, 8, 32, 0.14), 0 4px 12px rgba(11, 8, 32, 0.12); }
+.explore-btn:focus-visible { outline: 2px solid #0B0820; outline-offset: 4px; }
+.explore-btn__chip {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: #0B0820;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(11, 8, 32, 0.25);
+  transition: transform 0.35s var(--ease-out);
+}
+.explore-btn:hover .explore-btn__chip { transform: translateY(2px); }
+.explore-btn[aria-expanded="true"] .explore-btn__chip { transform: rotate(180deg); }
+.explore-btn[aria-expanded="true"]:hover .explore-btn__chip { transform: rotate(180deg) translateY(2px); }
+.explore-btn__chip svg { width: 22px; height: 22px; }
+/* phones: still large, but it fits the screen with room to spare */
+.explore-btn__label { white-space: nowrap; }
+@media (max-width: 600px) {
+  .explore-btn { gap: 12px; min-height: 64px; max-width: 100%; padding: 8px 8px 8px 22px; font-size: clamp(18px, 5.4vw, 22px); }
+  .explore-btn__chip { flex: none; width: 46px; height: 46px; }
+  .explore-btn__chip svg { width: 19px; height: 19px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .more-work, .explore-btn, .explore-btn__chip { transition: none; }
+}
+
 /* Tablet — tighten internal padding so 50/50 cards breathe at 768–1024 */
 @media (max-width: 1024px) {
   .case-stack { gap: clamp(72px, 10vh, 140px); }
