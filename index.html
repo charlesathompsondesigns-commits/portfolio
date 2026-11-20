@@ -12,8 +12,8 @@
   <link rel="shortcut icon" href="/favicon.ico?v=3" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3" />
   <link rel="preconnect" href="https://www.thecharlesathompson.com" crossorigin>
-  <link rel="stylesheet" href="styles.css?v=20261119" />
-  <script defer src="nav.js?v=20261119"></script>
+  <link rel="stylesheet" href="styles.css?v=20261119-2" />
+  <script defer src="nav.js?v=20261119-2"></script>
   <script defer src="contact.js"></script>
   <style>
     /* Glass nav: it takes the colour of whatever section is behind it (set by the
@@ -653,7 +653,8 @@
       var lastKey = '';
       function update() {
         var y = window.scrollY || window.pageYOffset;
-        var c = colourAt(y + nav.offsetHeight / 2), top = colourAt(y + 1);
+        var push = parseFloat(getComputedStyle(root).getPropertyValue('--bar-push')) || 0;  /* nav sits lower in Mac fullscreen */
+        var c = colourAt(y + push + nav.offsetHeight / 2), top = colourAt(y + 1);
         var key = c.map(Math.round).join() + '|' + top.map(Math.round).join();
         if (key === lastKey) return;
         lastKey = key;

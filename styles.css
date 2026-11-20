@@ -127,6 +127,12 @@
 
   /* Layout */
   --nav-height: 64px;
+  /* Mac fullscreen: --bar-push is 0 until the browser's tabs and address bar
+     slide down over the page, then their height (set by nav.js). The nav and
+     each page's top content move down by it together, so the spacing under
+     the nav stays the same. */
+  --bar-push: 0px;
+  --bar-slide: 0.3s cubic-bezier(0.22, 1, 0.36, 1);
   --max-w: 1280px;
   --gutter: clamp(24px, 5vw, 80px);
 
@@ -211,7 +217,7 @@ ul  { list-style: none; }
   align-items: center;
   justify-content: space-between;
   padding: 0 var(--gutter);
-  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform var(--bar-slide);
 }
 
 /* Mac browser fullscreen: when the browser's tabs and address bar slide down
@@ -232,7 +238,9 @@ ul  { list-style: none; }
   pointer-events: none;
 }
 @media (prefers-reduced-motion: reduce) {
-  .nav { transition: none; }
+  .nav,
+  .hero__text,
+  .cs-hero { transition: none; }
 }
 
 /* Logo is masked so it takes the nav's text color on every page.
@@ -438,6 +446,9 @@ ul  { list-style: none; }
   .hero__text {
     top: calc(var(--nav-height) + 10vh);
     transform: translateY(var(--hero-drift, 0%));
+    /* moves down with the nav when the browser bar shows (see --bar-push) */
+    translate: 0 var(--bar-push);
+    transition: translate var(--bar-slide);
     max-width: none;
   }
 }
@@ -1854,7 +1865,8 @@ ul  { list-style: none; }
 
 /* ---------- HERO ---------- */
 .cs-hero {
-  padding: calc(var(--nav-height) + clamp(48px, 8vh, 96px)) 0 clamp(48px, 8vh, 96px);
+  padding: calc(var(--nav-height) + clamp(48px, 8vh, 96px) + var(--bar-push)) 0 clamp(48px, 8vh, 96px);
+  transition: padding-top var(--bar-slide);
 }
 
 .cs-hero__eyebrow {

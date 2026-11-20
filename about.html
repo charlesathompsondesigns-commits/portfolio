@@ -12,8 +12,8 @@
   <link rel="shortcut icon" href="/favicon.ico?v=3" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3" />
   <link rel="preconnect" href="https://www.thecharlesathompson.com" crossorigin>
-  <link rel="stylesheet" href="styles.css?v=20261119" />
-  <script defer src="nav.js?v=20261119"></script>
+  <link rel="stylesheet" href="styles.css?v=20261119-2" />
+  <script defer src="nav.js?v=20261119-2"></script>
   <script defer src="contact.js"></script>
 
   <style>
@@ -45,8 +45,10 @@
 
     /* Hero */
     .about-hero {
-      padding: clamp(80px, 12vw, 160px) var(--gutter) clamp(40px, 6vw, 80px);
+      padding: calc(clamp(80px, 12vw, 160px) + var(--bar-push)) var(--gutter) clamp(40px, 6vw, 80px);
+      transition: padding-top var(--bar-slide);
     }
+    @media (prefers-reduced-motion: reduce) { .about-hero { transition: none; } }
     .about-hero__label {
       font-family: var(--font-franklin-medium);
       font-size: 11px;

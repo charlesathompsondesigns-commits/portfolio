@@ -5,7 +5,9 @@
      when you click back into a tab. The page isn't resized, so a nav pinned
      to the top ends up hidden underneath. No browser API reports that bar,
      so this infers when it's showing and drops the nav just below it
-     (.nav--below-bar, offset by --browser-bar, in styles.css). */
+     (.nav--below-bar, offset by --browser-bar, in styles.css). --bar-push
+     moves each page's top content down by the same amount, so the space
+     between the nav and the hero stays as designed. */
   function keepBelowBrowserBar(nav) {
     var mac = /Mac/i.test(navigator.platform || navigator.userAgent);
     if (!mac || !window.matchMedia || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
@@ -49,11 +51,13 @@
       shown = true;
       barPx = barHeight();
       root.style.setProperty('--browser-bar', barPx + 'px');
+      root.style.setProperty('--bar-push', barPx + 'px');
       nav.classList.add('nav--below-bar');
     }
     function hide() {
       if (!shown) return;
       shown = false;
+      root.style.setProperty('--bar-push', '0px');
       nav.classList.remove('nav--below-bar');
     }
 
