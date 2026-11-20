@@ -1762,6 +1762,15 @@ ul  { list-style: none; }
   --cs-card:  rgba(255, 255, 255, 0.55);
 }
 
+/* Sun-Drop Flower: deep plum and cream, from the project's original site */
+.cs-body-page--sundrop {
+  --cs-bg:    rgb(85, 36, 53);      /* #552435 */
+  --cs-ink:   rgb(245, 237, 210);   /* #F5EDD2 */
+  --cs-muted: rgb(203, 178, 165);   /* 6.2:1 on the plum */
+  --cs-rule:  rgba(245, 237, 210, 0.16);
+  --cs-card:  rgba(245, 237, 210, 0.06);
+}
+
 /* Dark callout card — for emphasized quotes, IF/IMPACT/OBJECTIVE statements */
 .cs-callout {
   background: rgb(28, 30, 38);

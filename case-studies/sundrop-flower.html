@@ -2,20 +2,613 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sundrop Flower — Charlesa Thompson</title>
-  <meta name="description" content="Case study by Charlesa Thompson." />
-  <meta name="theme-color" content="#fbf6e8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Sun-Drop Flower · Charlesa Thompson</title>
+  <meta name="description" content="Sun-Drop Flower: an assistive lamp for people with mobility challenges that brings art and function together. Built with fabric, copper and an Arduino. Case study by Charlesa Thompson." />
+  <meta name="theme-color" content="#552435" />
   <link rel="icon" href="/favicon-32.png?v=3" type="image/png" sizes="32x32" />
   <link rel="icon" href="/favicon-16.png?v=3" type="image/png" sizes="16x16" />
   <link rel="icon" href="/icon-192.png?v=3" type="image/png" sizes="192x192" />
   <link rel="shortcut icon" href="/favicon.ico?v=3" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3" />
-  <link rel="stylesheet" href="../styles.css?v=20261119-2" />
-  <script defer src="../nav.js?v=20261119-2"></script>
-</head>
-<body class="cs-body-page">
+  <link rel="stylesheet" href="../styles.css?v=20261120" />
+  <style>
+    html { background: #552435; }
 
+    /* ── Plum glass nav with cream ink, the same treatment as 808's green one ── */
+    .cs-body-page--sundrop .nav {
+      background: linear-gradient(180deg, rgb(85, 36, 53) 0%, rgba(85, 36, 53, 0.82) 35%, rgba(98, 44, 62, 0.5) 100%);
+      -webkit-backdrop-filter: blur(22px) saturate(160%);
+      backdrop-filter: blur(22px) saturate(160%);
+      border-bottom: 0;
+      box-shadow: none;
+    }
+    .cs-body-page--sundrop .nav::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 100%;
+      height: 22px;
+      background: linear-gradient(180deg, rgba(98, 44, 62, 0.5) 0%, rgba(98, 44, 62, 0) 100%);
+      -webkit-backdrop-filter: blur(10px) saturate(150%);
+      backdrop-filter: blur(10px) saturate(150%);
+      -webkit-mask-image: linear-gradient(180deg, #000 0%, transparent 100%);
+      mask-image: linear-gradient(180deg, #000 0%, transparent 100%);
+      pointer-events: none;
+    }
+    .cs-body-page--sundrop .nav.is-open::after { opacity: 0; }
+    .cs-body-page--sundrop .nav__logo,
+    .cs-body-page--sundrop .nav__links a,
+    .cs-body-page--sundrop .nav__toggle { color: var(--cs-ink); }
+    @media (max-width: 720px) {
+      .cs-body-page--sundrop .nav__links {
+        background: linear-gradient(180deg, rgba(98, 44, 62, 0.97) 0%, rgba(85, 36, 53, 0.98) 100%);
+        -webkit-backdrop-filter: blur(30px) saturate(150%);
+        backdrop-filter: blur(30px) saturate(150%);
+      }
+      .cs-body-page--sundrop .nav__links li { border-bottom-color: var(--cs-rule); }
+      .cs-body-page--sundrop .nav.is-open { background: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; }
+    }
+
+    /* ── Rhythm: the same tighter spacing as the 808 page ── */
+    .cs-body-page--sundrop .cs-section { padding: clamp(40px, 6vh, 72px) 0; }
+    .cs-body-page--sundrop .cs-section__head { margin-bottom: clamp(24px, 3.5vh, 36px); }
+    .cs-body-page--sundrop .cs-figure,
+    .cs-body-page--sundrop .cs-grid-2,
+    .cs-body-page--sundrop .cs-grid-3 { margin: clamp(24px, 3.5vh, 40px) 0; }
+    .cs-body-page--sundrop .cs-grid-2 .cs-figure,
+    .cs-body-page--sundrop .cs-grid-3 .cs-figure { margin: 0; }
+    .cs-body-page--sundrop .cs-quote { margin: clamp(28px, 4vh, 48px) 0; }
+    .cs-body-page--sundrop .cs-section__body > :last-child { margin-bottom: 0; }
+    .cs-body-page--sundrop .cs-figure__img { background: rgba(245, 237, 210, 0.05); }
+    .cs-body-page--sundrop .cs-quote__body { color: #e7cc9a; }
+
+    /* The wall closes the hero, so the hero drops its bottom padding */
+    .cs-body-page--sundrop .cs-hero { padding-bottom: 0; }
+    .cs-body-page--sundrop .cs-hero__pills { margin-bottom: 48px; row-gap: 16px; }
+
+    /* ── Brand wall: centre tile is the wordmark in plum on a gold card. Like 808's olive card
+       and Braid's dark one, it contrasts with the page so the name sits on top of the photos. ── */
+    .sd-wall-hero {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(ellipse 75% 65% at 38% 30%, rgba(255, 246, 222, 0.55) 0%, rgba(255, 246, 222, 0) 70%),
+        linear-gradient(135deg, #f1dcae 0%, #e4c690 48%, #d2ad6f 100%);
+    }
+    .sd-wall-hero__mark {
+      display: block;
+      width: 60%;
+      aspect-ratio: 606 / 297;
+      background-color: #552435;
+      -webkit-mask: url("../Sundrop/wordmark.png") center / contain no-repeat;
+      mask: url("../Sundrop/wordmark.png") center / contain no-repeat;
+    }
+    @media (max-width: 700px) {
+      .sd-wall-hero__mark { width: 66%; }
+    }
+    /* Colour tiles sit in the wall like any other tile */
+    .sd-swatch {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      gap: 2px;
+      padding: clamp(10px, 1.2vw, 18px);
+      box-sizing: border-box;
+      font-family: var(--font-franklin-medium);
+      font-size: clamp(11px, 1vw, 14px);
+      line-height: 1.25;
+      letter-spacing: 0.02em;
+    }
+    .sd-swatch span:last-child { opacity: 0.72; }
+    /* While a photo loads its tile shows a soft frame, then the photo fades in (script below),
+       so a slow connection never looks like a missing picture */
+    .cs-body-page--sundrop .cs-wall__tile { background: rgba(245, 237, 210, 0.1); }
+    img.cs-wall__tile, .sd-strip__track img { transition: opacity 0.5s ease; }
+    img.sd-fade:not(.is-loaded) { opacity: 0; }
+    @media (prefers-reduced-motion: reduce) {
+      img.cs-wall__tile, .sd-strip__track img { transition: none; }
+    }
+    .sd-swatch--edge { box-shadow: inset 0 0 0 1px var(--cs-rule); }
+    .cs-wall[data-wall-drag] .cs-wall__row { touch-action: pan-y; }
+    .cs-wall[data-wall-drag] img.cs-wall__tile { cursor: zoom-in; }
+    .cs-wall.is-dragging, .cs-wall.is-dragging img.cs-wall__tile { cursor: grabbing; }
+    img[data-zoom] { cursor: zoom-in; }
+    .sd-wall-note { margin: 0; padding: 16px 0 clamp(48px, 8vh, 96px); }
+
+    /* ── Featured: the finished lamp, where 808 shows its live phone ── */
+    .sd-feature__grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      column-gap: clamp(32px, 6vw, 96px);
+    }
+    .sd-feature__title { margin-bottom: 20px; }
+    .sd-feature__text {
+      max-width: 44ch;
+      margin: 0;
+      font-family: var(--font-source);
+      font-size: clamp(17px, 1.3vw, 19px);
+      line-height: 1.6;
+      color: var(--cs-ink);
+    }
+    .sd-feature__text + .sd-reel__ig { margin-top: 18px; }
+    .sd-reel__ig {
+      display: inline-block;
+      font-family: var(--font-franklin-medium);
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      color: #e7cc9a;
+      text-decoration: none;
+    }
+    .sd-reel__ig:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+    /* The Instagram reel, playing, where 808 shows its Part one video */
+    .sd-reel__media {
+      position: relative;
+      isolation: isolate;
+      width: clamp(250px, 26vw, 340px);
+      aspect-ratio: 9 / 16;
+    }
+    /* a warm glow behind the video, the colour of the petals */
+    .sd-reel__media::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      inset: -14% -32%;
+      border-radius: 50%;
+      background: radial-gradient(closest-side, rgba(196, 58, 74, 0.45), rgba(196, 58, 74, 0.12) 55%, rgba(196, 58, 74, 0));
+      filter: blur(24px);
+      pointer-events: none;
+    }
+    .sd-reel__frame {
+      position: absolute;
+      inset: 0;
+      border-radius: 24px;
+      overflow: hidden;
+      background: #2a0c17;
+      box-shadow: 0 50px 100px -30px rgba(20, 4, 10, 0.75), 0 18px 40px -12px rgba(20, 4, 10, 0.5);
+    }
+    .sd-reel__frame video {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    @media (max-width: 900px) {
+      .sd-feature__grid { grid-template-columns: 1fr; row-gap: 36px; }
+      .sd-reel__media { justify-self: center; width: min(78vw, 320px); }
+    }
+
+    /* Sound toggle: the video autoplays muted, visitors can opt in to sound (as on 808) */
+    .cs-sound {
+      position: absolute;
+      right: 12px;
+      bottom: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 44px;
+      padding: 0 16px 0 13px;
+      border: 1px solid rgba(245, 237, 210, 0.3);
+      border-radius: 999px;
+      background: rgba(42, 12, 23, 0.55);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      color: #f5edd2;
+      font-family: var(--font-franklin-medium);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s var(--ease-in-out), transform 0.2s var(--ease-out);
+    }
+    .cs-sound:hover { background: rgba(42, 12, 23, 0.8); transform: translateY(-1px); }
+    .cs-sound:focus-visible { outline: 2px solid #e7cc9a; outline-offset: 3px; }
+    .cs-sound__icon--on { display: none; }
+    .cs-sound[aria-pressed="true"] .cs-sound__icon--on { display: block; }
+    .cs-sound[aria-pressed="true"] .cs-sound__icon--off { display: none; }
+    @media (max-width: 600px) {
+      .cs-sound { width: 44px; padding: 0; justify-content: center; right: 10px; bottom: 10px; }
+      .cs-sound__label { display: none; }
+    }
+
+    /* ── Gold badge in the hero, the same glowing pill as 808 and Braid, tuned for the plum page ── */
+    .cs-award {
+      position: relative;
+      isolation: isolate;
+      display: inline-grid;
+      grid-template-columns: auto auto auto;
+      grid-template-rows: auto auto;
+      column-gap: clamp(10px, 1.2vw, 14px);
+      row-gap: 1px;
+      align-items: center;
+      padding: clamp(8px, 0.9vw, 10px) clamp(18px, 2vw, 24px) clamp(8px, 0.9vw, 10px) clamp(8px, 0.9vw, 10px);
+      border-radius: 999px;
+      background: linear-gradient(160deg, rgba(255, 236, 190, 0.26) 0%, rgba(231, 204, 154, 0.08) 100%);
+      -webkit-backdrop-filter: blur(18px) saturate(140%);
+      backdrop-filter: blur(18px) saturate(140%);
+      border: 1px solid rgba(255, 214, 120, 0.75);
+      box-shadow: inset 0 1px 0 rgba(255, 246, 222, 0.45), 0 0 0 1px rgba(255, 199, 77, 0.4), 0 0 26px rgba(255, 186, 40, 0.5), 0 0 64px rgba(255, 186, 40, 0.22), 0 8px 24px rgba(20, 4, 10, 0.3);
+      color: var(--cs-ink);
+      text-decoration: none;
+      animation: cs-award-pulse 2.4s ease-in-out infinite alternate;
+    }
+    /* a soft light sweeps across the pill every few seconds */
+    .cs-award::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(105deg, rgba(255, 255, 255, 0) 38%, rgba(255, 246, 222, 0.7) 50%, rgba(255, 255, 255, 0) 62%) no-repeat;
+      background-size: 260% 100%;
+      background-position: 160% 0;
+      mix-blend-mode: soft-light;
+      pointer-events: none;
+      animation: cs-award-sheen 4.2s ease-in-out infinite;
+    }
+    .cs-award__glow {
+      position: absolute;
+      inset: -20px;
+      z-index: -1;
+      border-radius: 999px;
+      background: radial-gradient(closest-side, rgba(255, 196, 48, 0.75) 0%, rgba(255, 190, 40, 0.35) 55%, rgba(255, 176, 32, 0) 100%);
+      filter: blur(18px);
+      animation: cs-award-glow 2.4s ease-in-out infinite alternate;
+    }
+    .cs-award__medal {
+      grid-row: 1 / 3;
+      display: grid;
+      place-items: center;
+      width: clamp(34px, 3.4vw, 42px);
+      height: clamp(34px, 3.4vw, 42px);
+      border-radius: 50%;
+      background: linear-gradient(135deg, #6a2d44 0%, #3b1724 100%);
+      color: #ffcf5a;
+      box-shadow: 0 0 0 1.5px rgba(255, 199, 77, 0.85), 0 0 14px rgba(255, 186, 40, 0.6);
+    }
+    .cs-award__medal svg { width: 18px; height: 18px; }
+    .cs-award__year {
+      grid-column: 2;
+      font-family: var(--font-franklin-medium);
+      font-size: clamp(9.5px, 0.85vw, 11px);
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #e7cc9a;
+      white-space: nowrap;
+    }
+    .cs-award__title {
+      grid-column: 2;
+      font-family: var(--font-instrument);
+      font-size: clamp(20px, 2vw, 26px);
+      line-height: 1;
+      color: var(--cs-ink);
+      white-space: nowrap;
+    }
+    .cs-award__arrow {
+      grid-column: 3;
+      grid-row: 1 / 3;
+      margin-left: 2px;
+      font-size: 16px;
+      color: #e7cc9a;
+      transition: transform 0.25s var(--ease-out);
+    }
+    .cs-award:hover .cs-award__arrow { transform: translate(2px, -2px); }
+    .cs-award:focus-visible { outline: 2px solid #e7cc9a; outline-offset: 4px; }
+    .cs-hero__pills .cs-award { margin-left: 8px; }
+    @media (max-width: 600px) { .cs-hero__pills .cs-award { margin-left: 0; } }
+    @keyframes cs-award-glow {
+      from { opacity: 0.55; transform: scale(0.94); }
+      to   { opacity: 1;    transform: scale(1.08); }
+    }
+    @keyframes cs-award-pulse {
+      from { border-color: rgba(255, 214, 120, 0.65); }
+      to   { border-color: rgba(255, 226, 150, 1); }
+    }
+    @keyframes cs-award-sheen {
+      0%, 35% { background-position: 160% 0; }
+      75%, 100% { background-position: -60% 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .cs-award, .cs-award::after { animation: none; }
+      .cs-award__glow { animation: none; opacity: 0.9; }
+    }
+
+    /* ── How Might We: her pencil sketches under a plum wash, typed question, WebGL dust ── */
+    .sd-hmw {
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      min-height: min(78vh, 760px);
+      padding: clamp(96px, 16vh, 180px) 0;
+      border-bottom: 0;
+      color: var(--cs-ink);
+      background: #8c4a60 url("../Sundrop/hmw-sketch.jpg") center / cover no-repeat;
+      background-blend-mode: multiply;
+      -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 16%, #000 84%, transparent 100%);
+      mask-image: linear-gradient(180deg, transparent 0, #000 16%, #000 84%, transparent 100%);
+    }
+    /* no divider under the featured block, and its glow is clipped sideways so phones never scroll sideways */
+    .sd-feature { border-bottom: 0; overflow-x: clip; }
+    /* a deep plum glow behind the question keeps it readable over the sketch */
+    .sd-hmw::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 62% 56% at 50% 52%, rgba(58, 20, 33, 0.85) 0%, rgba(58, 20, 33, 0.5) 45%, rgba(58, 20, 33, 0) 78%);
+      pointer-events: none;
+    }
+    .sd-hmw__gl {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .sd-hmw__inner {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      text-align: center;
+    }
+    .sd-hmw__q {
+      max-width: 17ch;
+      margin: 0 auto;
+      font-family: var(--font-instrument);
+      font-weight: 400;
+      font-size: clamp(38px, 5.6vw, 80px);
+      line-height: 1.08;
+      letter-spacing: -0.01em;
+      color: var(--cs-ink);
+      text-wrap: balance;
+    }
+    .sd-sr {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+    .sd-hmw__q .w { display: inline-block; white-space: nowrap; }
+    .sd-hmw__q .c { position: relative; }
+    .sd-hmw__q.is-ready .c { opacity: 0; }
+    .sd-hmw__q.is-ready .c.on { opacity: 1; transition: opacity 90ms linear; }
+    .sd-hmw__q.is-floating .w { animation: sd-bob 6.5s ease-in-out infinite; animation-delay: calc(var(--i) * -0.8s); }
+    @keyframes sd-bob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-0.06em); }
+    }
+    .sd-caret {
+      position: absolute;
+      right: -0.08em;
+      top: 0.14em;
+      bottom: 0.1em;
+      width: 0.055em;
+      border-radius: 1px;
+      background: #e7cc9a;
+      box-shadow: 0 0 10px rgba(231, 204, 154, 0.6);
+      animation: sd-blink 1s steps(1) infinite;
+    }
+    .sd-caret.is-out { opacity: 0; transition: opacity 0.6s ease; animation: none; }
+    @keyframes sd-blink { 50% { opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) {
+      .sd-hmw__q.is-floating .w, .sd-caret { animation: none; }
+    }
+
+    /* ── Old and new: the Clapper beside the lamp ── */
+    .sd-versus {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(20px, 3vw, 40px);
+      margin-top: clamp(28px, 4vh, 48px);
+    }
+    .sd-versus figure { margin: 0; }
+    .sd-versus__tag {
+      display: block;
+      font-family: var(--font-franklin-medium);
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cs-muted);
+      margin-bottom: 14px;
+    }
+    .sd-versus__img {
+      aspect-ratio: 4 / 5;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #fff;
+    }
+    .sd-versus__img img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .sd-versus__img--product { display: grid; place-items: center; }
+    .sd-versus__img--product img { width: 86%; height: auto; object-fit: contain; }
+    .sd-versus figcaption {
+      margin-top: 16px;
+      font-family: var(--font-source);
+      font-size: clamp(16px, 1.2vw, 18px);
+      line-height: 1.55;
+      color: var(--cs-ink);
+      max-width: 40ch;
+    }
+    @media (max-width: 600px) {
+      .sd-versus { grid-template-columns: 1fr; }
+      .sd-versus__img--product { aspect-ratio: 1 / 1; }
+    }
+
+    /* ── Prose with serif subheads instead of cards ── */
+    .sd-notes h3 {
+      font-family: var(--font-instrument);
+      font-weight: 400;
+      font-size: clamp(26px, 2.3vw, 32px);
+      line-height: 1.15;
+      color: var(--cs-ink);
+      margin: clamp(36px, 5vh, 52px) 0 12px;
+      text-wrap: balance;
+    }
+    .sd-notes h3:first-child { margin-top: 0; }
+
+    /* ── Photo galleries: the same self-scrolling strip as 808's sketches and mayor photos.
+       Visitors can scroll, swipe or drag; tapping a photo opens it in the viewer. ── */
+    .sd-strip-wrap { min-width: 0; }   /* keeps the long track from widening the grid */
+    .sd-strip {
+      max-width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      overscroll-behavior-x: contain;
+      scrollbar-width: none;
+      cursor: grab;
+      -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 5%, #000 95%, transparent 100%);
+      mask-image: linear-gradient(90deg, transparent 0, #000 5%, #000 95%, transparent 100%);
+    }
+    .sd-strip::-webkit-scrollbar { display: none; }
+    .sd-strip.is-dragging { cursor: grabbing; }
+    .sd-strip__track {
+      display: flex;
+      gap: clamp(12px, 1.4vw, 20px);
+      width: max-content;
+    }
+    .sd-strip__track img {
+      flex: none;
+      height: clamp(220px, 28vw, 400px);
+      width: auto;
+      border-radius: 18px;
+      background: rgba(245, 237, 210, 0.06);
+      cursor: zoom-in;
+      -webkit-user-drag: none;
+      user-select: none;
+    }
+    .sd-strip.is-dragging img { cursor: grabbing; }
+    .sd-strip__track img:focus-visible { outline: 3px solid #e7cc9a; outline-offset: -3px; }
+    @media (prefers-reduced-motion: reduce) {
+      .sd-strip { -webkit-mask-image: none; mask-image: none; }
+      .sd-strip__track img[aria-hidden] { display: none; }
+    }
+
+    /* Old and new sit under the copy at a modest size, not as two full-width panels */
+    .cs-body-page--sundrop .sd-versus { grid-column: 2; max-width: 680px; }
+    @media (max-width: 900px) {
+      .cs-body-page--sundrop .sd-versus { grid-column: 1; }
+    }
+
+    /* ── Footer: a deeper plum, since the page ink is cream ── */
+    .cs-body-page--sundrop .cs-footer { background: #3b1724; color: var(--cs-ink); }
+    .cs-body-page--sundrop .cs-footer__back,
+    .cs-body-page--sundrop .cs-footer__contact { color: var(--cs-ink); }
+
+    /* ── Photo viewer, same as the 808 page, in plum ── */
+    .sd-lb {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: grid;
+      place-items: center;
+      padding: clamp(56px, 8vh, 80px) clamp(12px, 6vw, 96px);
+      background: rgba(34, 10, 19, 0.88);
+      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+    .sd-lb[hidden] { display: none; }
+    .sd-lb.is-open { opacity: 1; }
+    .sd-lb figure {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      max-width: 100%;
+    }
+    .sd-lb img {
+      display: block;
+      max-width: 100%;
+      max-height: calc(100vh - 2 * clamp(56px, 8vh, 80px) - 40px);
+      width: auto;
+      height: auto;
+      border-radius: 14px;
+      box-shadow: 0 40px 90px -20px rgba(0, 0, 0, 0.7), 0 12px 30px rgba(0, 0, 0, 0.35);
+      transform: scale(0.97);
+      transition: transform 0.25s ease;
+    }
+    .sd-lb.is-open img { transform: none; }
+    .sd-lb figcaption {
+      max-width: 60ch;
+      text-align: center;
+      font-family: var(--font-source-italic);
+      font-style: italic;
+      font-size: 15px;
+      color: rgba(245, 237, 210, 0.86);
+    }
+    .sd-lb__count {
+      font-family: var(--font-franklin-medium);
+      font-style: normal;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      color: rgba(245, 237, 210, 0.55);
+      margin-left: 8px;
+    }
+    .sd-lb button {
+      position: absolute;
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      border: 1px solid rgba(245, 237, 210, 0.3);
+      border-radius: 50%;
+      background: rgba(245, 237, 210, 0.12);
+      color: #f5edd2;
+      font-size: 22px;
+      line-height: 1;
+      cursor: pointer;
+    }
+    .sd-lb button:hover { background: rgba(245, 237, 210, 0.24); }
+    .sd-lb button:focus-visible { outline: 2px solid #e7cc9a; outline-offset: 3px; }
+    .sd-lb__close { top: 16px; right: 16px; }
+    .sd-lb__prev { left: 16px; top: 50%; margin-top: -24px; }
+    .sd-lb__next { right: 16px; top: 50%; margin-top: -24px; }
+    @media (max-width: 700px) {
+      .sd-lb__prev, .sd-lb__next { top: auto; bottom: 16px; margin-top: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .sd-lb, .sd-lb img { transition: none; }
+    }
+
+    /* ── Bottom glass edge (touch screens), same as Braid and 808: Safari on iOS tints
+       its bottom toolbar from fixed elements touching the screen edge, so this keeps it plum. ── */
+    .glass-edge { display: none; }
+    @media (max-width: 900px) {
+      .glass-edge {
+        display: block;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 90;
+        height: calc(40px + env(safe-area-inset-bottom, 0px));
+        background: linear-gradient(0deg,
+          rgb(85, 36, 53) 0%,
+          rgba(85, 36, 53, 0.7) 35%,
+          rgba(98, 44, 62, 0) 100%);
+        -webkit-backdrop-filter: blur(14px) saturate(150%);
+        backdrop-filter: blur(14px) saturate(150%);
+        -webkit-mask-image: linear-gradient(0deg, #000 45%, transparent 100%);
+        mask-image: linear-gradient(0deg, #000 45%, transparent 100%);
+        pointer-events: none;
+      }
+    }
+  </style>
+  <script defer src="../nav.js?v=20261119-2"></script>
+  <script defer src="../wall.js?v=20261107"></script>
+</head>
+<body class="cs-body-page cs-body-page--sundrop">
+
+  <!-- ============ Fixed Nav ============ -->
   <nav class="nav" aria-label="Primary">
     <a href="../index.html" class="nav__logo">CHAR</a>
     <ul class="nav__links">
@@ -25,25 +618,258 @@
     </ul>
   </nav>
 
+  <!-- ============ HERO ============ -->
   <header class="cs-hero">
     <div class="cs-container">
-      <p class="cs-hero__eyebrow">Project</p>
-      <h1 class="cs-hero__title">Sundrop Flower</h1>
-      <p class="cs-hero__tagline">Case study coming soon.</p>
+      <h1 class="cs-hero__title">Sun-Drop Flower</h1>
+      <p class="cs-hero__tagline">Assistive lighting that looks like art.</p>
+      <div class="cs-hero__pills cs-hero__pills--justified">
+        <span class="cs-pill">Assistive Technology</span>
+        <span class="cs-pill">Lead Designer &amp; Co-Fabricator</span>
+        <span class="cs-pill">20 Weeks</span>
+        <a class="cs-award" href="https://www.instagram.com/p/Dabn-nlMUP-/" target="_blank" rel="noopener" aria-label="Viral on Instagram: 1 million views and 100 thousand likes. Open the post on Instagram">
+          <span class="cs-award__glow" aria-hidden="true"></span>
+          <span class="cs-award__medal" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="15 7 21 7 21 13"/></svg>
+          </span>
+          <span class="cs-award__year">Viral on Instagram</span>
+          <span class="cs-award__title">1M views · 100K likes</span>
+          <span class="cs-award__arrow" aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- ============ BRAND WALL ============
+         Three rows drift and travel with the scroll; the wordmark tile stays in the middle. -->
+    <div class="cs-wall" data-wall data-wall-drag>
+      <div class="cs-wall__stage">
+        <div class="cs-wall__row" data-speed="1">
+          <div class="cs-wall__track">
+            <img class="cs-wall__tile" src="../Sundrop/wall/sketch-paint.webp" data-full="../Sundrop/sketch-paint.webp" width="436" height="580" style="aspect-ratio: 436 / 580" decoding="async" alt="My painted sketch of the flower: red petals hanging from a long, curving stem." draggable="false" />
+            <div class="cs-wall__tile sd-swatch sd-swatch--edge" style="aspect-ratio: 1 / 1; background: #552435; color: #F5EDD2"><span>Plum</span><span>#552435</span></div>
+            <img class="cs-wall__tile" src="../Sundrop/wall/lamp-studio.webp" data-full="../Sundrop/lamp-studio.webp" width="386" height="580" style="aspect-ratio: 386 / 580" decoding="async" alt="The Sun-Drop Flower on a wooden table by a window, with pliers and wire beside it." draggable="false" />
+            <img class="cs-wall__tile" src="../Sundrop/wall/hood-detail.webp" data-full="../Sundrop/wall/full/hood-detail.webp" width="580" height="580" style="aspect-ratio: 1 / 1" decoding="async" alt="Close up of the final copper hood: hammered copper petals around a centre bolt." draggable="false" />
+            <div class="cs-wall__tile sd-swatch" style="aspect-ratio: 1 / 1; background: #D3263F; color: #F5EDD2"><span>Petal</span><span>#D3263F</span></div>
+            <img class="cs-wall__tile" src="../Sundrop/wall/electronics.webp" data-full="../Sundrop/wall/full/electronics.webp" width="436" height="580" style="aspect-ratio: 436 / 580" decoding="async" alt="The copper stem with beaded wiring and the lamp's circuit board, during testing." draggable="false" />
+            <img class="cs-wall__tile" src="../Sundrop/wall/lamp-wide-s.webp" data-full="../Sundrop/lamp-window-wide.webp" width="772" height="580" style="aspect-ratio: 772 / 580" decoding="async" alt="Close up of the finished lamp: red fabric petals under the copper hood, the copper stem arcing toward a city window." draggable="false" />
+            <img class="cs-wall__tile" src="../Sundrop/wall/hood-frame-s.webp" data-full="../Sundrop/hood-frame.webp" width="436" height="580" style="aspect-ratio: 436 / 580" decoding="async" alt="The wire cage and electronics at the top of the copper stem, with Willis Tower behind." draggable="false" />
+          </div>
+        </div>
+        <div class="cs-wall__row cs-wall__row--main" data-speed="-0.8">
+          <div class="cs-wall__track">
+            <img class="cs-wall__tile" data-wall-anchor="0.4" src="../Sundrop/wall/lamp-window.webp" data-full="../Sundrop/lamp-window.webp" width="600" height="900" style="aspect-ratio: 600 / 900" decoding="async" alt="The finished Sun-Drop Flower: red fabric petals under a copper hood on a spiral copper stem, by a window looking out at Willis Tower." draggable="false" />
+            <img class="cs-wall__tile" src="../Sundrop/wall/skeleton.webp" data-full="../Sundrop/skeleton.webp" width="676" height="900" style="aspect-ratio: 676 / 900" decoding="async" alt="The copper tube skeleton of the lamp, curving up from a spiral base on a workbench." draggable="false" />
+            <div class="cs-wall__tile sd-swatch" style="aspect-ratio: 1 / 1; background: #E7CC9A; color: #552435"><span>Gold</span><span>#E7CC9A</span></div>
+            <img class="cs-wall__tile" data-wall-anchor="0.6" src="../Sundrop/wall/sketch-pencil.webp" data-full="../Sundrop/sketch-pencil.webp" width="1350" height="900" style="aspect-ratio: 1350 / 900" decoding="async" alt="My pencil sketches of three lamp ideas, each a flower on a bending stem." draggable="false" />
+            <img class="cs-wall__tile" src="../Sundrop/wall/lamp-wide.webp" data-full="../Sundrop/lamp-window-wide.webp" width="1170" height="878" style="aspect-ratio: 1170 / 878" decoding="async" alt="Close up of the finished lamp: red fabric petals under the copper hood, the copper stem arcing toward a city window." draggable="false" />
+            <img class="cs-wall__tile" src="../Sundrop/wall/hood-frame-lg.webp" data-full="../Sundrop/hood-frame.webp" width="676" height="900" style="aspect-ratio: 676 / 900" decoding="async" alt="The wire cage and electronics at the top of the copper stem, with Willis Tower behind." draggable="false" />
+          </div>
+        </div>
+        <div class="cs-wall__row" data-speed="1.25">
+          <div class="cs-wall__track">
+            <img class="cs-wall__tile" src="../Sundrop/wall/petals.webp" data-full="../Sundrop/wall/full/petals.webp" width="580" height="580" style="aspect-ratio: 1 / 1" decoding="async" alt="Close up of the red fabric petals under the copper hood." draggable="false" />
+            <div class="cs-wall__tile sd-swatch" style="aspect-ratio: 1 / 1; background: #B86A3E; color: #F5EDD2"><span>Copper</span><span>#B86A3E</span></div>
+            <img class="cs-wall__tile" src="../Sundrop/wall/paint-flower.webp" data-full="../Sundrop/wall/full/paint-flower.webp" width="434" height="580" style="aspect-ratio: 434 / 580" decoding="async" alt="Detail of my painted sketch: the red flower head at the end of the stem." draggable="false" />
+            <div class="cs-wall__tile sd-swatch" style="aspect-ratio: 1 / 1; background: #F5EDD2; color: #552435"><span>Cream</span><span>#F5EDD2</span></div>
+            <img class="cs-wall__tile" src="../Sundrop/wall/sketch-pencil-s.webp" data-full="../Sundrop/sketch-pencil.webp" width="870" height="580" style="aspect-ratio: 870 / 580" decoding="async" alt="My pencil sketches of three lamp ideas." draggable="false" />
+            <img class="cs-wall__tile" src="../Sundrop/wall/skeleton-s.webp" data-full="../Sundrop/skeleton.webp" width="436" height="580" style="aspect-ratio: 436 / 580" decoding="async" alt="The copper tube skeleton of the lamp, curving up from a spiral base on a workbench." draggable="false" />
+            <img class="cs-wall__tile" src="../Sundrop/wall/lamp-window-s.webp" data-full="../Sundrop/lamp-window.webp" width="386" height="580" style="aspect-ratio: 386 / 580" decoding="async" alt="The finished Sun-Drop Flower by a window looking out at Willis Tower." draggable="false" />
+          </div>
+        </div>
+        <figure class="cs-wall__hero sd-wall-hero">
+          <span class="sd-wall-hero__mark" role="img" aria-label="The Sun-Drop Flower wordmark"></span>
+        </figure>
+      </div>
+    </div>
+    <div class="cs-container">
+      <p class="cs-figure__caption sd-wall-note">The world of the Sun-Drop Flower: my sketches, the build, the finished lamp and its palette.</p>
     </div>
   </header>
 
+  <!-- ============ FEATURED: THE INSTAGRAM REEL ============ -->
+  <section class="cs-section sd-feature" aria-label="The Sun-Drop Flower on Instagram">
+    <div class="cs-container sd-feature__grid">
+      <div>
+        <h2 class="cs-section__title sd-feature__title">Meet the Sun-Drop Flower.</h2>
+        <p class="sd-feature__text">My mom has arthritis, and some days the pain in her hands makes turning on a lamp hard. So I built her a robotic lamp with a motion sensor. A small wave of the hand turns it on, no switch needed.</p>
+        <a class="sd-reel__ig" href="https://www.instagram.com/p/Dabn-nlMUP-/" target="_blank" rel="noopener">Watch it on Instagram ↗</a>
+      </div>
+      <div class="sd-reel__media">
+        <div class="sd-reel__frame">
+          <video muted loop playsinline preload="none" poster="../Sundrop/reel/sundrop-reel-poster.jpg" data-reel-video aria-label="My Instagram reel: the Sun-Drop Flower by a window, then the sketches, the build and the copper hood">
+            <source src="../Sundrop/reel/sundrop-reel.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <button class="cs-sound" type="button" data-reel-sound aria-pressed="false" aria-label="Turn sound on">
+          <svg class="cs-sound__icon cs-sound__icon--off" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+          <svg class="cs-sound__icon cs-sound__icon--on" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></svg>
+          <span class="cs-sound__label">Sound on</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HOW MIGHT WE ============ -->
+  <section class="cs-section sd-hmw" aria-labelledby="sdHmwQ">
+    <canvas class="sd-hmw__gl" aria-hidden="true"></canvas>
+    <div class="cs-container sd-hmw__inner">
+      <h2 class="sd-hmw__q" id="sdHmwQ">How might we make accessible lighting as beautiful as it is easy to use?</h2>
+    </div>
+  </section>
+
+  <!-- ============ PROBLEM ============ -->
   <section class="cs-section">
     <div class="cs-container">
       <header class="cs-section__head">
-        <span class="cs-section__num">— Coming Soon</span>
-        <h2 class="cs-section__title">Full case study in progress.</h2>
+        <span class="cs-section__num">Problem</span>
+        <h2 class="cs-section__title">Easy to use, hard to love.</h2>
       </header>
       <div class="cs-section__body">
         <div class="cs-section__copy">
-          <p class="cs-lead">The complete story — discovery, research, principles, and final design — will be published here shortly.</p>
-          <p>In the meantime, feel free to <a href="../index.html#contact" style="text-decoration: underline;">get in touch</a> for a walkthrough.</p>
+          <p class="cs-lead">Good lighting helps people with mobility challenges stay safe and independent at home.</p>
+          <p>It should be easy to use, with features like motion sensors and voice control. It should also look good enough to make a room feel welcoming. Most assistive lighting only does the first part.</p>
         </div>
+        <div class="sd-versus">
+          <figure>
+            <span class="sd-versus__tag">Old</span>
+            <div class="sd-versus__img sd-versus__img--product">
+              <img src="../Sundrop/clapper.webp" width="603" height="604" loading="lazy" alt="The Clapper, a sound-activated on and off switch, in its retail box." />
+            </div>
+            <figcaption>Hands-free lights have been around for decades. They work, but they put function before looks.</figcaption>
+          </figure>
+          <figure>
+            <span class="sd-versus__tag">New</span>
+            <div class="sd-versus__img">
+              <img src="../Sundrop/lamp-studio.webp" width="1170" height="1756" loading="lazy" data-zoom alt="The Sun-Drop Flower on a wooden table by a window, with pliers and wire beside it." />
+            </div>
+            <figcaption>That gap between utility and design is what I set out to close: assistive tech that works and belongs in a beautiful home.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RESEARCH ============ -->
+  <section class="cs-section">
+    <div class="cs-container">
+      <header class="cs-section__head">
+        <span class="cs-section__num">Research</span>
+        <h2 class="cs-section__title">It started with an interview.</h2>
+      </header>
+      <div class="cs-section__body">
+        <div class="cs-section__copy sd-notes">
+          <p class="cs-lead">I interviewed a senior client with mobility challenges about their needs, their tastes, and where everyday tasks and assistive tech let them down.</p>
+          <h3>Meet Eleanor.</h3>
+          <p>Eleanor Hayes is my persona. She's 68, a retired interior designer in a downtown apartment. She hosts small gatherings, loves decorating and puts style first in everything she owns. She's fine with technology but wants it simple. Arthritis makes twisting a lamp knob or pulling a light string hard.</p>
+          <h3>What she wants.</h3>
+          <p>A beautiful home that still works for her. Products that add comfort without giving up design, and tech that's easy to use and fits her style.</p>
+          <h3>What gets in her way.</h3>
+          <p>Most assistive devices are clunky. Practical lighting tends to look industrial or plain. Finding something both useful and beautiful is hard.</p>
+        </div>
+        <blockquote class="cs-quote">
+          <p class="cs-quote__body">"It's important for me to find solutions that blend functionality with elegance."</p>
+          <cite class="cs-quote__cite">Eleanor Hayes, my persona</cite>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ INSIGHT ============ -->
+  <section class="cs-section">
+    <div class="cs-container">
+      <header class="cs-section__head">
+        <span class="cs-section__num">Insight</span>
+        <h2 class="cs-section__title">Nobody made it beautiful.</h2>
+      </header>
+      <div class="cs-section__body">
+        <div class="cs-section__copy">
+          <p class="cs-lead">Joseph Enterprises, the maker of the Clapper, Lutron and iHome all offer similar features. None of them offered a choice that's nice to look at.</p>
+          <p>That's where the Sun-Drop Flower stands apart. It puts artistic design and assistive features in the same object.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROCESS ============ -->
+  <section class="cs-section">
+    <div class="cs-container">
+      <header class="cs-section__head">
+        <span class="cs-section__num">Process</span>
+        <h2 class="cs-section__title">Petals, copper and code.</h2>
+      </header>
+      <div class="cs-section__body">
+        <div class="cs-section__copy">
+          <p class="cs-lead">I took my cues from nature: fabric petals on a copper stem. I followed the Double Diamond process from the first sketch to the finished lamp.</p>
+        </div>
+        <div class="cs-section__copy sd-notes" style="margin-top: clamp(8px, 2vh, 20px)">
+          <h3>How I made it.</h3>
+          <p>I sewed the petals on a sewing machine and 3D printed a housing for the electronics. Copper sheet and wire became the stem and the motor cover. I soldered the circuit and programmed the light and the movement on an Arduino, and kept my mood boards and notes in design software.</p>
+          <h3>Who I made it with.</h3>
+          <p>Julian Grubb helped me build it. Together we worked out how to hide the electronics and balance the weight. After a few rounds, the lamp matched what I'd pictured.</p>
+        </div>
+        <figure class="cs-figure sd-strip-wrap">
+          <div class="sd-strip" data-copies="3" aria-label="My sketches and the build">
+            <div class="sd-strip__track">
+              <img tabindex="0" role="button" src="../Sundrop/strip/sketch-paint.webp" data-full="../Sundrop/sketch-paint.webp" width="616" height="820" loading="lazy" decoding="async" alt="My painted sketch of the flower: red petals hanging from a long, curving stem." draggable="false" />
+              <img tabindex="0" role="button" src="../Sundrop/strip/sketch-pencil.webp" data-full="../Sundrop/sketch-pencil.webp" width="1230" height="820" loading="lazy" decoding="async" alt="My pencil sketches of three lamp ideas, each a flower on a bending stem." draggable="false" />
+              <img tabindex="0" role="button" src="../Sundrop/strip/skeleton.webp" data-full="../Sundrop/skeleton.webp" width="616" height="820" loading="lazy" decoding="async" alt="The copper skeleton: copper tube curving up from a spiral base on a workbench." draggable="false" />
+              <img tabindex="0" role="button" src="../Sundrop/strip/electronics.webp" data-full="../Sundrop/wall/full/electronics.webp" width="616" height="820" loading="lazy" decoding="async" alt="Testing the electronics: beaded wiring and the circuit board on the copper stem." draggable="false" />
+            </div>
+          </div>
+          <figcaption class="cs-figure__caption">My sketches, the copper skeleton and testing the electronics. Drag or tap to look closer.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CHALLENGE ============ -->
+  <section class="cs-section">
+    <div class="cs-container">
+      <header class="cs-section__head">
+        <span class="cs-section__num">Challenge</span>
+        <h2 class="cs-section__title">Balancing the copper hood.</h2>
+      </header>
+      <div class="cs-section__body">
+        <div class="cs-section__copy">
+          <p class="cs-lead">The hardest part was the weight of the copper hood. It had to sit steady and balanced without losing the lamp's elegant line.</p>
+          <p>It took several rounds. After testing different approaches, we found a way to support the hood that kept the lamp working and looking the way it should.</p>
+        </div>
+        <figure class="cs-figure sd-strip-wrap">
+          <div class="sd-strip" data-copies="4" aria-label="Testing the copper hood">
+            <div class="sd-strip__track">
+              <img tabindex="0" role="button" src="../Sundrop/strip/hood-test.webp" data-full="../Sundrop/hood-test.webp" width="616" height="820" loading="lazy" decoding="async" alt="The copper stem on the workbench during testing, with a white form at its base." draggable="false" />
+              <img tabindex="0" role="button" src="../Sundrop/strip/hood-frame.webp" data-full="../Sundrop/hood-frame.webp" width="616" height="820" loading="lazy" decoding="async" alt="A wire cage around the lamp's electronics at the end of the copper stem, against the sky and Willis Tower." draggable="false" />
+              <img tabindex="0" role="button" src="../Sundrop/strip/hood-final.webp" data-full="../Sundrop/hood-final.webp" width="614" height="820" loading="lazy" decoding="async" alt="The final copper hood: four hammered copper petals, held up to the camera." draggable="false" />
+              <img tabindex="0" role="button" src="../Sundrop/strip/hood-detail.webp" data-full="../Sundrop/wall/full/hood-detail.webp" width="660" height="660" loading="lazy" decoding="async" alt="Close up of the final copper hood: hammered copper petals around a centre bolt." draggable="false" />
+            </div>
+          </div>
+          <figcaption class="cs-figure__caption">Testing, then the final copper hood design.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SOLUTION ============ -->
+  <section class="cs-section">
+    <div class="cs-container">
+      <header class="cs-section__head">
+        <span class="cs-section__num">Solution</span>
+        <h2 class="cs-section__title">Art you can use.</h2>
+      </header>
+      <div class="cs-section__body">
+        <div class="cs-section__copy">
+          <p class="cs-lead">The Sun-Drop Flower merges art and function. It's dynamic, accessible lighting for people with mobility challenges that makes a living space easier to use and lovelier to look at.</p>
+        </div>
+        <figure class="cs-figure sd-strip-wrap">
+          <div class="sd-strip" data-copies="4" aria-label="The finished lamp">
+            <div class="sd-strip__track">
+              <img tabindex="0" role="button" src="../Sundrop/strip/lamp-window.webp" data-full="../Sundrop/lamp-window.webp" width="546" height="820" loading="lazy" decoding="async" alt="The finished Sun-Drop Flower: red fabric petals under a copper hood on a spiral copper stem, by a window looking out at Willis Tower." draggable="false" />
+              <img tabindex="0" role="button" src="../Sundrop/strip/lamp-wide.webp" data-full="../Sundrop/lamp-window-wide.webp" width="1092" height="820" loading="lazy" decoding="async" alt="Close up of the finished lamp: red fabric petals under the copper hood, the copper stem arcing toward a city window." draggable="false" />
+              <img tabindex="0" role="button" src="../Sundrop/strip/petals.webp" data-full="../Sundrop/wall/full/petals.webp" width="600" height="600" loading="lazy" decoding="async" alt="Close up of the red fabric petals under the copper hood." draggable="false" />
+            </div>
+          </div>
+          <figcaption class="cs-figure__caption">The finished lamp.</figcaption>
+        </figure>
       </div>
     </div>
   </section>
@@ -52,12 +878,13 @@
   <section class="cs-next">
     <div class="cs-container">
       <p class="cs-next__eyebrow">Next Project</p>
-      <a href="wearable-tech.html" class="cs-next__title">
-        Wearable Tech <span class="cs-next__arrow">→</span>
+      <a href="project-808.html" class="cs-next__title">
+        Project 808 <span class="cs-next__arrow">→</span>
       </a>
     </div>
   </section>
 
+  <!-- ============ FOOTER ============ -->
   <footer class="cs-footer">
     <div class="cs-container">
       <div class="cs-footer__row">
@@ -67,5 +894,420 @@
     </div>
   </footer>
 
+  <script>
+    /* Wall and gallery photos fade in once loaded. One capturing listener on the page covers
+       the copies that wall.js and the galleries add later; a copy made after its photo
+       loaded carries the loaded class with it. */
+    (function () {
+      var sel = 'img.cs-wall__tile, .sd-strip__track img';
+      document.addEventListener('load', function (e) {
+        var t = e.target;
+        if (t.tagName === 'IMG' && t.matches(sel)) t.classList.add('is-loaded');
+      }, true);
+      Array.prototype.forEach.call(document.querySelectorAll(sel), function (img) {
+        if (img.complete && img.naturalWidth) img.classList.add('is-loaded');
+        else img.classList.add('sd-fade');
+      });
+    })();
+
+    /* Photo viewer shared by the wall and the page photos. */
+    var sdViewer = (function () {
+      var lb = document.createElement('div');
+      lb.className = 'sd-lb';
+      lb.hidden = true;
+      lb.setAttribute('role', 'dialog');
+      lb.setAttribute('aria-modal', 'true');
+      lb.setAttribute('aria-label', 'Photo viewer');
+      lb.innerHTML = '<button class="sd-lb__close" type="button" aria-label="Close">×</button>' +
+        '<button class="sd-lb__prev" type="button" aria-label="Previous photo">‹</button>' +
+        '<figure><img alt="" /><figcaption></figcaption></figure>' +
+        '<button class="sd-lb__next" type="button" aria-label="Next photo">›</button>';
+      document.body.appendChild(lb);
+      var img = lb.querySelector('img'), cap = lb.querySelector('figcaption');
+      var list = [], index = 0, back = null;
+
+      function show() {
+        var el = list[index];
+        img.src = el.getAttribute('data-full') || el.getAttribute('src');
+        img.alt = el.getAttribute('alt') || '';
+        cap.textContent = img.alt;
+        if (list.length > 1) {
+          var n = document.createElement('span');
+          n.className = 'sd-lb__count';
+          n.textContent = (index + 1) + ' / ' + list.length;
+          cap.appendChild(n);
+        }
+      }
+      function open(items, i) {
+        list = items;
+        index = i;
+        back = document.activeElement;
+        lb.querySelector('.sd-lb__prev').hidden = lb.querySelector('.sd-lb__next').hidden = items.length < 2;
+        show();
+        lb.hidden = false;
+        document.documentElement.style.overflow = 'hidden';
+        requestAnimationFrame(function () { lb.classList.add('is-open'); });
+        lb.querySelector('.sd-lb__close').focus();
+      }
+      function close() {
+        lb.classList.remove('is-open');
+        document.documentElement.style.overflow = '';
+        setTimeout(function () { lb.hidden = true; img.removeAttribute('src'); }, 250);
+        if (back && back.focus) back.focus();
+      }
+      function step(d) { index = (index + d + list.length) % list.length; show(); }
+
+      lb.addEventListener('click', function (e) {
+        if (e.target.closest('.sd-lb__close')) return close();
+        if (e.target.closest('.sd-lb__prev')) return step(-1);
+        if (e.target.closest('.sd-lb__next')) return step(1);
+        if (e.target === lb || e.target.tagName === 'FIGURE') close();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (lb.hidden) return;
+        if (e.key === 'Escape') close();
+        else if (e.key === 'ArrowLeft' && list.length > 1) step(-1);
+        else if (e.key === 'ArrowRight' && list.length > 1) step(1);
+      });
+      return { open: open };
+    })();
+
+    /* Page photos marked data-zoom open in the viewer, with arrows through the rest */
+    (function () {
+      var photos = [].slice.call(document.querySelectorAll('img[data-zoom]'));
+      photos.forEach(function (el, i) {
+        el.setAttribute('tabindex', '0');
+        el.setAttribute('role', 'button');
+        el.addEventListener('click', function () { sdViewer.open(photos, i); });
+        el.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); sdViewer.open(photos, i); }
+        });
+      });
+    })();
+
+    /* Instagram reel: starts muted (autoplay rules), visitors can turn sound on.
+       It pauses while off screen. Same as 808's Part one video. */
+    (function () {
+      var video = document.querySelector('[data-reel-video]');
+      var btn = document.querySelector('[data-reel-sound]');
+      if (!video || !btn) return;
+      var label = btn.querySelector('.cs-sound__label');
+      btn.addEventListener('click', function () {
+        var turnOn = video.muted;
+        video.muted = !turnOn;
+        if (turnOn) video.play().catch(function () {});
+        btn.setAttribute('aria-pressed', String(turnOn));
+        btn.setAttribute('aria-label', turnOn ? 'Turn sound off' : 'Turn sound on');
+        label.textContent = turnOn ? 'Sound off' : 'Sound on';
+      });
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (e) {
+          if (e[e.length - 1].isIntersecting) video.play().catch(function () {});
+          else video.pause();
+        }, { threshold: 0.25 }).observe(video);
+      }
+    })();
+
+    /* Photo galleries: drift on their own, but visitors can scroll, swipe or drag them.
+       Hovering pauses; after a manual move each strip waits a moment, then carries on.
+       The script adds copies of the set (data-copies in all) so the loop never shows a gap.
+       Same behaviour as 808's photo strips. */
+    Array.prototype.forEach.call(document.querySelectorAll('.sd-strip'), function (box) {
+      var track = box.querySelector('.sd-strip__track');
+      var originals = [].slice.call(track.querySelectorAll('img'));
+      var copies = parseInt(box.getAttribute('data-copies'), 10) || 4;
+      for (var c = 1; c < copies; c++) {
+        originals.forEach(function (img) {
+          var k = img.cloneNode(true);
+          k.setAttribute('aria-hidden', 'true');
+          k.removeAttribute('tabindex');
+          k.removeAttribute('role');
+          k.alt = '';
+          track.appendChild(k);
+        });
+      }
+      var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var SPEED = 30, set = 0, carry = 0, last = 0, hover = false, resumeAt = 0, running = false, drag = null;
+
+      function measure() {
+        if (still) return;
+        set = track.scrollWidth / copies;
+        if (box.scrollLeft < set * 0.5) box.scrollLeft = set;
+      }
+      function wrap() {
+        if (still || !set) return;
+        var d = 0;
+        if (box.scrollLeft >= set * (copies / 2 + 0.5)) d = -set;
+        else if (box.scrollLeft < set * 0.5) d = set;
+        if (d) { box.scrollLeft += d; if (drag) drag.start += d; }
+      }
+      function hold(ms) { resumeAt = performance.now() + (ms || 2500); }
+      function frame(t) {
+        if (!running) return;
+        var dt = last ? Math.min(t - last, 80) : 16;
+        last = t;
+        if (!still && !hover && !drag && t >= resumeAt) {
+          carry += SPEED * dt / 1000;
+          var px = Math.floor(carry);
+          if (px) { box.scrollLeft += px; carry -= px; }
+        }
+        wrap();
+        requestAnimationFrame(frame);
+      }
+
+      box.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') hover = true; });
+      box.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') hover = false; });
+      box.addEventListener('wheel', function () { hold(); }, { passive: true });
+      box.addEventListener('touchstart', function () { hold(3500); }, { passive: true });
+      box.addEventListener('scroll', wrap, { passive: true });
+
+      // mouse drag (touch and trackpads scroll natively)
+      box.addEventListener('pointerdown', function (e) {
+        if (e.pointerType !== 'mouse' || e.button) return;
+        drag = { x: e.clientX, start: box.scrollLeft, moved: false };
+      });
+      window.addEventListener('pointermove', function (e) {
+        if (!drag) return;
+        var dx = e.clientX - drag.x;
+        if (!drag.moved && Math.abs(dx) > 5) { drag.moved = true; box.classList.add('is-dragging'); }
+        if (drag.moved) box.scrollLeft = drag.start - dx;
+      });
+      window.addEventListener('pointerup', function () {
+        if (!drag) return;
+        if (drag.moved) {
+          var swallow = function (ev) { ev.stopPropagation(); ev.preventDefault(); };
+          box.addEventListener('click', swallow, true);
+          setTimeout(function () { box.removeEventListener('click', swallow, true); }, 60);
+        }
+        box.classList.remove('is-dragging');
+        drag = null;
+        hold();
+      });
+
+      // open a photo
+      function openFrom(el) {
+        var src = el.getAttribute('src');
+        var i = originals.findIndex(function (o) { return o.getAttribute('src') === src; });
+        sdViewer.open(originals, Math.max(0, i));
+      }
+      box.addEventListener('click', function (e) {
+        var el = e.target.closest('img');
+        if (el) openFrom(el);
+      });
+      box.addEventListener('keydown', function (e) {
+        if ((e.key === 'Enter' || e.key === ' ') && e.target.tagName === 'IMG') { e.preventDefault(); openFrom(e.target); }
+      });
+
+      measure();
+      window.addEventListener('load', measure);
+      window.addEventListener('resize', function () { set = track.scrollWidth / copies; });
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (en) {
+          if (en[en.length - 1].isIntersecting) { if (!running) { running = true; last = 0; measure(); requestAnimationFrame(frame); } }
+          else running = false;
+        }).observe(box);
+      } else {
+        running = true;
+        requestAnimationFrame(frame);
+      }
+    });
+
+    /* Wall: tap or click any photo (clones included) to open it */
+    (function () {
+      var wall = document.querySelector('.cs-wall[data-wall-drag]');
+      if (!wall) return;
+      wall.addEventListener('click', function (e) {
+        var tile = e.target.closest('img.cs-wall__tile');
+        if (!tile) return;
+        var originals = [].slice.call(wall.querySelectorAll('img.cs-wall__tile:not([aria-hidden])'));
+        var src = tile.getAttribute('src');
+        var i = originals.findIndex(function (o) { return o.getAttribute('src') === src; });
+        sdViewer.open(originals, Math.max(0, i));
+      });
+    })();
+
+    /* How Might We: type the question out, then let the words float,
+       over a WebGL layer of dust drifting up through a spotlight. Same as the 808 stage. */
+    Array.prototype.forEach.call(document.querySelectorAll('.sd-hmw'), function (sec) {
+      var q = sec.querySelector('.sd-hmw__q');
+      var canvas = sec.querySelector('.sd-hmw__gl');
+      var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      /* ---- Typed question ---- */
+      var text = q.textContent.trim();
+      var chars = [];
+      var vis = document.createElement('span');
+      vis.setAttribute('aria-hidden', 'true');
+      text.split(' ').forEach(function (word, i) {
+        if (i) vis.appendChild(document.createTextNode(' '));
+        var w = document.createElement('span');
+        w.className = 'w';
+        w.style.setProperty('--i', i);
+        word.split('').forEach(function (ch) {
+          var c = document.createElement('span');
+          c.className = 'c';
+          c.textContent = ch;
+          w.appendChild(c);
+          chars.push(c);
+        });
+        vis.appendChild(w);
+      });
+      q.innerHTML = '<span class="sd-sr">' + text + '</span>';
+      q.appendChild(vis);
+
+      function settle(caret) {
+        q.classList.add('is-floating');
+        if (caret) setTimeout(function () { caret.classList.add('is-out'); }, 3200);
+      }
+
+      if (still) {
+        settle(null);
+      } else {
+        q.classList.add('is-ready');
+        var caret = document.createElement('span');
+        caret.className = 'sd-caret';
+        chars[0].appendChild(caret);
+        var typed = false;
+        var typeIt = function () {
+          if (typed) return;
+          typed = true;
+          var pace = Math.min(1, 56 / chars.length), at = [], tsum = 0;
+          for (var k = 0; k < chars.length; k++) {
+            at.push(tsum);
+            var nxt = chars[k + 1];
+            tsum += (38 + Math.random() * 34) * pace + (nxt && !nxt.previousSibling ? 90 * pace : 0);
+          }
+          var i = 0, t0 = performance.now();
+          (function tick() {
+            var now = performance.now() - t0;
+            while (i < chars.length && at[i] <= now) {
+              chars[i].classList.add('on');
+              chars[i].appendChild(caret);
+              i++;
+            }
+            if (i >= chars.length) return settle(caret);
+            setTimeout(tick, 16);
+          })();
+        };
+        if ('IntersectionObserver' in window) {
+          var tio = new IntersectionObserver(function (e) {
+            if (e[0].isIntersecting) { tio.disconnect(); setTimeout(typeIt, 250); }
+          }, { threshold: 0.45 });
+          tio.observe(sec);
+        } else {
+          typeIt();
+        }
+      }
+
+      /* ---- WebGL dust in a spotlight ---- */
+      var gl = canvas.getContext('webgl', { alpha: true, premultipliedAlpha: true, antialias: false });
+      if (!gl) return;   // the CSS stage still stands on its own
+
+      var vsrc = 'attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}';
+      var fsrc = [
+        'precision mediump float;',
+        'uniform vec2 uRes;uniform float uTime;uniform vec2 uLight;',
+        'float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}',
+        'float motes(vec2 uv,float sc,float sp,float sz,float t){',
+        '  vec2 p=uv*sc;p.y-=t*sp;',
+        '  vec2 id=floor(p);vec2 f=fract(p)-.5;',
+        '  float r=h(id);',
+        '  vec2 o=vec2(h(id+3.1),h(id+7.7))-.5;',
+        '  o.x+=.22*sin(t*.55+r*6.283);',
+        '  float d=length(f-o*.75);',
+        '  float s=sz*(.45+.55*h(id+1.3));',
+        '  float m=(1.-smoothstep(0.,s,d))*step(.42,r);',
+        '  return m*(.55+.45*sin(t*1.7+r*40.));',
+        '}',
+        'void main(){',
+        '  vec2 q=gl_FragCoord.xy/uRes;',
+        '  vec2 uv=gl_FragCoord.xy/uRes.y;',
+        '  float t=uTime;',
+        '  vec2 d=(q-uLight)*vec2(uRes.x/uRes.y*.55,1.);',
+        '  float beam=1.-smoothstep(0.,.62,length(d));',
+        '  float m=motes(uv,6.,.045,.11,t)*.55+motes(uv+11.,11.,.075,.1,t)*.38+motes(uv+23.,19.,.11,.09,t)*.26;',
+        '  float lit=.18+.95*beam;',
+        '  vec3 warm=vec3(1.,.86,.62);vec3 cream=vec3(1.,.95,.84);',
+        '  float a=clamp(beam*.16+m*lit*.8,0.,1.);',
+        '  vec3 col=warm*beam*.16+cream*m*lit*.8;',
+        '  gl_FragColor=vec4(col,a);',
+        '}'
+      ].join('\n');
+
+      function shader(type, src) {
+        var sh = gl.createShader(type);
+        gl.shaderSource(sh, src);
+        gl.compileShader(sh);
+        return gl.getShaderParameter(sh, gl.COMPILE_STATUS) ? sh : null;
+      }
+      var vs = shader(gl.VERTEX_SHADER, vsrc), fs = shader(gl.FRAGMENT_SHADER, fsrc);
+      if (!vs || !fs) return;
+      var prog = gl.createProgram();
+      gl.attachShader(prog, vs);
+      gl.attachShader(prog, fs);
+      gl.linkProgram(prog);
+      if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
+      gl.useProgram(prog);
+
+      var buf = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+      var loc = gl.getAttribLocation(prog, 'p');
+      gl.enableVertexAttribArray(loc);
+      gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+      gl.enable(gl.BLEND);
+      gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+
+      var uRes = gl.getUniformLocation(prog, 'uRes');
+      var uTime = gl.getUniformLocation(prog, 'uTime');
+      var uLight = gl.getUniformLocation(prog, 'uLight');
+
+      var light = { x: 0.5, y: 1.05 }, aim = { x: 0.5, y: 1.05 };
+      function resize() {
+        var dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+        var w = Math.round(sec.clientWidth * dpr), h = Math.round(sec.clientHeight * dpr);
+        if (canvas.width !== w || canvas.height !== h) {
+          canvas.width = w;
+          canvas.height = h;
+          gl.viewport(0, 0, w, h);
+        }
+        gl.uniform2f(uRes, w, h);
+      }
+      function draw(time) {
+        light.x += (aim.x - light.x) * 0.06;
+        light.y += (aim.y - light.y) * 0.06;
+        gl.uniform1f(uTime, time / 1000);
+        gl.uniform2f(uLight, light.x, light.y);
+        gl.clearColor(0, 0, 0, 0);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+        gl.drawArrays(gl.TRIANGLES, 0, 3);
+      }
+
+      sec.addEventListener('pointermove', function (e) {
+        var r = sec.getBoundingClientRect();
+        aim.x = 0.5 + ((e.clientX - r.left) / r.width - 0.5) * 0.7;
+        aim.y = 1.05 - ((e.clientY - r.top) / r.height) * 0.35;
+      });
+      sec.addEventListener('pointerleave', function () { aim.x = 0.5; aim.y = 1.05; });
+
+      var running = false, raf = 0;
+      function frame(t) { draw(t); raf = requestAnimationFrame(frame); }
+      function start() { if (running || still) return; running = true; raf = requestAnimationFrame(frame); }
+      function stop() { running = false; cancelAnimationFrame(raf); }
+
+      resize();
+      draw(4000);
+      window.addEventListener('resize', function () { resize(); if (!running) draw(4000); });
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (e) {
+          e[e.length - 1].isIntersecting ? start() : stop();
+        }, { rootMargin: '10% 0px' }).observe(sec);
+      } else {
+        start();
+      }
+    });
+  </script>
+
+  <div class="glass-edge" aria-hidden="true"></div>
 </body>
 </html>
