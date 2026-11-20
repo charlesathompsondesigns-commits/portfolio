@@ -1361,6 +1361,56 @@ ul  { list-style: none; }
   background: rgba(242, 222, 228, 0.5);
 }
 .case-card--sundrop .case-card__img img { object-position: 30% 50%; }
+
+/* Sun-Drop card stage: her pencil sketches under the plum wash from the case study,
+   the lamp video centred, and a gold vine drawn through the sketch (script on the homepage) */
+.case-card--sundrop .sd-stage {
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+  background: #8c4a60 url("Sundrop/hmw-sketch.jpg") center / cover no-repeat;
+  background-blend-mode: multiply;
+}
+.sd-stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(ellipse 58% 70% at 50% 50%, rgba(58, 20, 33, 0.5) 0%, rgba(58, 20, 33, 0.18) 65%, rgba(58, 20, 33, 0) 100%);
+  pointer-events: none;
+}
+.sd-vine {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 0 5px rgba(240, 208, 150, 0.55));
+  pointer-events: none;
+}
+/* positioned inside the stage so the card's own height decides the size, never the video */
+.case-card--sundrop .sd-stage__video {
+  position: absolute;
+  z-index: 2;
+  top: 7%;
+  bottom: 7%;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: auto;
+  height: 86%;
+  aspect-ratio: 9 / 16;
+  object-fit: cover;
+  border-radius: 14px;
+  box-shadow: 0 0 0 1px rgba(231, 204, 154, 0.35), 0 24px 50px -16px rgba(20, 4, 10, 0.75);
+}
+@media (max-width: 900px) {
+  .case-card--sundrop .case-card__img { aspect-ratio: 4 / 3; }
+}
+@media (max-width: 600px) {
+  .case-card--sundrop .case-card__img { aspect-ratio: 1 / 1; }
+}
 /* four pills on this card: a little less padding keeps them on one row on desktop */
 @media (min-width: 901px) {
   .case-card--sundrop .case-pill { padding: 0 13px; }
