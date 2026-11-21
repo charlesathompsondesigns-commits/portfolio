@@ -14,15 +14,11 @@
   <link rel="stylesheet" href="../styles.css?v=20261119-2" />
   <style>
     /* ── Part one video + gold sponsor badge (badge styled after Braid's award pill) ── */
-    .p808-reel__grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      align-items: center;
-      column-gap: clamp(32px, 6vw, 96px);
-    }
+    /* The video series: three parts side by side, each phone-shaped, with a short caption */
+    .p808-series__head { max-width: 60ch; }
     .p808-reel__line {
-      max-width: 40ch;
-      margin: 22px 0 18px;
+      max-width: 52ch;
+      margin: 22px 0 0;
       font-family: var(--font-source);
       font-size: clamp(17px, 1.3vw, 19px);
       line-height: 1.6;
@@ -34,18 +30,56 @@
       letter-spacing: 0.04em;
       color: var(--cs-ink);
     }
-    .p808-reel__media {
+    .p808-series {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(20px, 3vw, 44px);
+      margin-top: clamp(32px, 5vh, 52px);
+    }
+    .p808-part { margin: 0; min-width: 0; }
+    .p808-part__media {
       position: relative;
-      width: clamp(250px, 26vw, 340px);
       aspect-ratio: 9 / 16;
-      border-radius: 24px;
+      border-radius: 22px;
       overflow: hidden;
       background: #1d1f02;
       box-shadow: 0 30px 70px -20px rgba(39, 15, 5, 0.45), 0 10px 24px rgba(39, 15, 5, 0.14);
     }
-    /* the video with a quiet disclosure underneath, same width as the video */
-    .p808-reel__col { width: clamp(250px, 26vw, 340px); }
-    .p808-reel__col .p808-reel__media { width: 100%; }
+    .p808-part__media video { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .p808-part figcaption { display: flex; flex-direction: column; gap: 8px; margin-top: 18px; }
+    .p808-part__tag {
+      font-family: var(--font-franklin-medium);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--cs-muted);
+    }
+    .p808-part__line {
+      font-family: var(--font-source);
+      font-size: clamp(15px, 1.15vw, 17px);
+      line-height: 1.55;
+      color: var(--cs-ink);
+    }
+    .p808-part__line a { text-decoration: underline; text-underline-offset: 3px; }
+    .p808-series__disclosure { max-width: 70ch; margin-top: clamp(28px, 4vh, 40px); }
+    /* phones: the three parts become a row you swipe through, one at a time */
+    @media (max-width: 700px) {
+      .p808-series {
+        grid-template-columns: none;
+        grid-auto-flow: column;
+        grid-auto-columns: 78%;
+        gap: 16px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+        margin-left: -20px;
+        margin-right: -20px;
+        padding: 0 20px 6px;
+        scroll-padding: 0 20px;
+      }
+      .p808-series::-webkit-scrollbar { display: none; }
+      .p808-part { scroll-snap-align: center; }
+    }
     .p808-disclosure {
       margin: 16px 2px 0;
       font-family: var(--font-source, inherit);
@@ -61,12 +95,6 @@
       letter-spacing: 0.22em;
       text-transform: uppercase;
       color: rgba(39, 15, 5, 0.5);
-    }
-    .p808-reel__media video {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
     }
     .cs-award {
       position: relative;
@@ -180,9 +208,6 @@
     .cs-sound[aria-pressed="true"] .cs-sound__icon--on { display: block; }
     .cs-sound[aria-pressed="true"] .cs-sound__icon--off { display: none; }
     @media (max-width: 900px) {
-      .p808-reel__grid { grid-template-columns: minmax(0, 1fr); row-gap: 36px; }
-      .p808-reel__media { width: min(78vw, 320px); justify-self: center; }
-      .p808-reel__col { width: min(78vw, 320px); justify-self: center; }
     }
     @media (max-width: 600px) {
       .cs-sound { width: 44px; padding: 0; justify-content: center; right: 10px; bottom: 10px; }
@@ -1205,10 +1230,10 @@
     </div>
   </section>
 
-  <!-- ============ PART ONE VIDEO ============ -->
-  <section class="cs-section p808-reel-sec" aria-label="Part one of the video series">
-    <div class="cs-container p808-reel__grid">
-      <div>
+  <!-- ============ THE VIDEO SERIES: all three parts side by side ============ -->
+  <section class="cs-section p808-reel-sec" aria-label="The video series">
+    <div class="cs-container">
+      <div class="p808-series__head">
         <span class="cs-award">
           <span class="cs-award__glow" aria-hidden="true"></span>
           <span class="cs-award__medal" aria-hidden="true">
@@ -1217,22 +1242,62 @@
           <span class="cs-award__year">Sponsored by</span>
           <span class="cs-award__title">Anthropic</span>
         </span>
-        <p class="p808-reel__line">Part one of my video series, posted on Instagram on October 22, 2026: a rough 3D model of the makerspace and a walkable site anyone can explore.</p>
-        <a class="p808-reel__ig" href="https://www.instagram.com/p/DezeN5-xJhV/" target="_blank" rel="noopener">Watch it on Instagram ↗</a>
+        <p class="p808-reel__line">My three-part video series on Instagram follows 808 from a rough model, to an app for booking the machines, to why it matters to me.</p>
       </div>
-      <div class="p808-reel__col">
-      <div class="p808-reel__media">
-        <video autoplay muted loop playsinline preload="metadata" poster="../Project808/video/part01-poster.jpg" data-reel-video aria-label="Part one of the video series: the makerspace idea, a rough 3D model and a walkable site">
-          <source src="../Project808/video/part01.mp4" type="video/mp4" />
-        </video>
-        <button class="cs-sound" type="button" data-reel-sound aria-pressed="false" aria-label="Turn sound on">
-          <svg class="cs-sound__icon cs-sound__icon--off" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
-          <svg class="cs-sound__icon cs-sound__icon--on" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></svg>
-          <span class="cs-sound__label">Sound on</span>
-        </button>
+      <div class="p808-series">
+        <figure class="p808-part">
+          <div class="p808-part__media">
+            <video muted loop playsinline preload="none" poster="../Project808/video/part01-poster.jpg" data-reel-video aria-label="Part one of the video series: the makerspace idea, a rough 3D model and a walkable site">
+              <source src="../Project808/video/part01.mp4" type="video/mp4" />
+            </video>
+            <button class="cs-sound" type="button" data-reel-sound aria-pressed="false" aria-label="Turn sound on">
+              <svg class="cs-sound__icon cs-sound__icon--off" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+              <svg class="cs-sound__icon cs-sound__icon--on" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></svg>
+              <span class="cs-sound__label">Sound on</span>
+            </button>
+          </div>
+          <figcaption>
+            <span class="p808-part__tag">Part one · October 22, 2026</span>
+            <span class="p808-part__line">A rough 3D model of the makerspace and a walkable site anyone can explore.</span>
+            <a class="p808-reel__ig" href="https://www.instagram.com/p/DezeN5-xJhV/" target="_blank" rel="noopener">Watch on Instagram ↗</a>
+          </figcaption>
+        </figure>
+        <figure class="p808-part">
+          <div class="p808-part__media">
+            <video muted loop playsinline preload="none" poster="../Project808/video/part02-poster.jpg" data-reel-video aria-label="Part two of the video series: the member app for booking time on the machines">
+              <source src="../Project808/video/part02.mp4" type="video/mp4" />
+            </video>
+            <button class="cs-sound" type="button" data-reel-sound aria-pressed="false" aria-label="Turn sound on">
+              <svg class="cs-sound__icon cs-sound__icon--off" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+              <svg class="cs-sound__icon cs-sound__icon--on" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></svg>
+              <span class="cs-sound__label">Sound on</span>
+            </button>
+          </div>
+          <figcaption>
+            <span class="p808-part__tag">Part two · November 10, 2026</span>
+            <span class="p808-part__line">The member app for booking time on a machine, prototyped and tested until a design resonated.</span>
+            <a class="p808-reel__ig" href="https://www.instagram.com/p/DfkpKAsRmNI/" target="_blank" rel="noopener">Watch on Instagram ↗</a>
+          </figcaption>
+        </figure>
+        <figure class="p808-part">
+          <div class="p808-part__media">
+            <video muted loop playsinline preload="none" poster="../Project808/video/part03-poster.jpg" data-reel-video aria-label="Part three of the video series: why 808 began, from the Sun-Drop Flower lamp to the makerspace">
+              <source src="../Project808/video/part03.mp4" type="video/mp4" />
+            </video>
+            <button class="cs-sound" type="button" data-reel-sound aria-pressed="false" aria-label="Turn sound on">
+              <svg class="cs-sound__icon cs-sound__icon--off" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+              <svg class="cs-sound__icon cs-sound__icon--on" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></svg>
+              <span class="cs-sound__label">Sound on</span>
+            </button>
+          </div>
+          <figcaption>
+            <span class="p808-part__tag">Part three · November 20, 2026</span>
+            <span class="p808-part__line">Why it began: after I graduated, I had my <a href="sundrop-flower.html">Sun-Drop Flower</a> prototype and no makerspace to keep developing it. It wasn’t just me.</span>
+            <a class="p808-reel__ig" href="https://www.instagram.com/p/Df-SZAWRNI_/" target="_blank" rel="noopener">Watch on Instagram ↗</a>
+          </figcaption>
+        </figure>
       </div>
-      <p class="p808-disclosure"><span class="p808-disclosure__label">Disclosure</span> This video series is sponsored by Anthropic, the team behind Claude. I started Project 808 before the series, and the opinions here are my own.</p>
-      </div>
+      <p class="p808-disclosure p808-series__disclosure"><span class="p808-disclosure__label">Disclosure</span> This video series is sponsored by Anthropic, the team behind Claude. I started Project 808 before the series, and the opinions here are my own.</p>
     </div>
   </section>
 
@@ -1846,26 +1911,36 @@
       }
     });
 
-    /* Part one video: starts muted (autoplay rules), visitors can turn sound on.
-       It pauses while off screen. */
+    /* The video series: each part plays muted while it's on screen and pauses when it
+       leaves (only the parts in view download). Sound can be on for one part at a time. */
     (function () {
-      var video = document.querySelector('[data-reel-video]');
-      var btn = document.querySelector('[data-reel-sound]');
-      if (!video || !btn) return;
-      var label = btn.querySelector('.cs-sound__label');
-      btn.addEventListener('click', function () {
-        var turnOn = video.muted;
-        video.muted = !turnOn;
-        if (turnOn) video.play().catch(function () {});
-        btn.setAttribute('aria-pressed', String(turnOn));
-        btn.setAttribute('aria-label', turnOn ? 'Turn sound off' : 'Turn sound on');
-        label.textContent = turnOn ? 'Sound off' : 'Sound on';
+      var parts = [].slice.call(document.querySelectorAll('.p808-part__media')).map(function (m) {
+        return { video: m.querySelector('[data-reel-video]'), btn: m.querySelector('[data-reel-sound]') };
+      }).filter(function (p) { return p.video && p.btn; });
+      if (!parts.length) return;
+      function setSound(p, on) {
+        p.video.muted = !on;
+        p.btn.setAttribute('aria-pressed', String(on));
+        p.btn.setAttribute('aria-label', on ? 'Turn sound off' : 'Turn sound on');
+        p.btn.querySelector('.cs-sound__label').textContent = on ? 'Sound off' : 'Sound on';
+      }
+      parts.forEach(function (p) {
+        p.btn.addEventListener('click', function () {
+          var turnOn = p.video.muted;
+          parts.forEach(function (q) { if (q !== p) setSound(q, false); });
+          setSound(p, turnOn);
+          if (turnOn) p.video.play().catch(function () {});
+        });
       });
       if ('IntersectionObserver' in window) {
-        new IntersectionObserver(function (e) {
-          if (e[e.length - 1].isIntersecting) video.play().catch(function () {});
-          else video.pause();
-        }, { threshold: 0.25 }).observe(video);
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            var v = e.target;
+            if (e.isIntersecting) v.play().catch(function () {});
+            else v.pause();
+          });
+        }, { threshold: 0.5 });
+        parts.forEach(function (p) { io.observe(p.video); });
       }
     })();
 
