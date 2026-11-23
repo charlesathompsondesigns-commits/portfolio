@@ -157,6 +157,8 @@
       color: var(--cs-ink);
       white-space: nowrap;
     }
+    /* the name carries the badge: gold, like the pill's rim */
+    .cs-award__name { color: #f3d27e; text-shadow: 0 0 18px rgba(255, 196, 48, 0.45); }
     .cs-award__arrow {
       grid-column: 3;
       grid-row: 1 / 3;
@@ -760,13 +762,13 @@
       <div class="cs-hero__pills cs-hero__pills--justified">
         <span class="cs-pill">Campaign Design</span>
         <span class="cs-pill">Freelance Designer</span>
-        <a class="cs-award" href="https://www.instagram.com/p/DZXbPYmETCd/?img_index=1" target="_blank" rel="noopener" aria-label="Posted by Black Ambition, the organization founded by Pharrell. Open their June 2026 Instagram post of my designs">
+        <a class="cs-award" href="https://www.instagram.com/p/DZXbPYmETCd/?img_index=1" target="_blank" rel="noopener" aria-label="Posted by Black Ambition, founded by Pharrell. Open their June 2026 Instagram post of my designs">
           <span class="cs-award__glow" aria-hidden="true"></span>
           <span class="cs-award__medal" aria-hidden="true">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor"/></svg>
           </span>
-          <span class="cs-award__year">Founded by Pharrell</span>
-          <span class="cs-award__title">Posted by Black Ambition</span>
+          <span class="cs-award__year">Posted by Black Ambition</span>
+          <span class="cs-award__title">Founded by <span class="cs-award__name">Pharrell</span></span>
           <span class="cs-award__arrow" aria-hidden="true">↗</span>
         </a>
       </div>
