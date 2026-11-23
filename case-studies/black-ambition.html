@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Black Ambition · Charlesa Thompson</title>
-  <meta name="description" content="Black Ambition: turning a dense infographic about the prize program into The Deeper Bet, a set of cosmic campaign heroes. Freelance case study by Charlesa Thompson." />
+  <meta name="description" content="Black Ambition: retelling a dense infographic about the prize program as The Deeper Bet, a cosmic infographic and set of campaign heroes. Freelance case study by Charlesa Thompson." />
   <meta name="theme-color" content="#14163D" />
   <link rel="icon" href="/favicon-32.png?v=3" type="image/png" sizes="32x32" />
   <link rel="icon" href="/favicon-16.png?v=3" type="image/png" sizes="16x16" />
@@ -326,9 +326,9 @@
       .ba-hmw__q.is-floating .w, .ba-caret { animation: none; }
     }
 
-    /* ── Before and after: their infographic beside my hero ── */
+    /* ── Before and after: their infographic beside mine, full width of the section ── */
     .ba-versus {
-      grid-column: 2;
+      grid-column: 1 / -1;
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: clamp(20px, 3vw, 40px);
@@ -351,16 +351,39 @@
       background: rgba(242, 243, 233, 0.06);
     }
     .ba-versus__img img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    /* the After glows faintly in Halcyon Purple, so the eye lands on it */
+    .ba-versus__tag--after { color: #d9c8ff; }
+    .ba-versus__img--after { box-shadow: 0 0 0 1px rgba(217, 200, 255, 0.35), 0 24px 60px -18px rgba(126, 68, 209, 0.65); }
     .ba-versus figcaption {
       margin-top: 16px;
       font-family: var(--font-source);
       font-size: clamp(16px, 1.2vw, 18px);
       line-height: 1.55;
       color: var(--cs-ink);
-      max-width: 40ch;
+      max-width: 44ch;
     }
-    @media (max-width: 900px) { .ba-versus { grid-column: 1; } }
     @media (max-width: 600px) { .ba-versus { grid-template-columns: 1fr; } }
+
+    /* ── The final infographic, full width in the Solution ── */
+    .ba-star { position: relative; isolation: isolate; }
+    .ba-star::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      inset: 6% -4% 10%;
+      border-radius: 50%;
+      background: radial-gradient(closest-side, rgba(126, 68, 209, 0.45), rgba(184, 47, 160, 0.12) 60%, rgba(126, 68, 209, 0));
+      filter: blur(30px);
+      pointer-events: none;
+    }
+    .ba-star__frame {
+      border-radius: clamp(14px, 1.6vw, 22px);
+      overflow: hidden;
+      background: #0b0c26;
+      box-shadow: 0 40px 80px -30px rgba(4, 4, 18, 0.75);
+    }
+    .ba-star__frame img { display: block; width: 100%; height: auto; }
+    .ba-show__note { margin-top: 14px; }
     img[data-zoom] { cursor: zoom-in; }
 
     /* ── Prose with serif subheads instead of cards ── */
@@ -436,7 +459,7 @@
     .ba-layers__frame img.is-on { opacity: 1; }
     .ba-layers__steps {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: clamp(8px, 1.2vw, 16px);
       margin-top: clamp(14px, 2vh, 20px);
     }
@@ -509,6 +532,58 @@
       transition: transform 0.25s ease;
     }
     .ba-lb.is-open img { transform: none; }
+    /* Zoom: tap or click the image to see it larger, then drag or swipe to look around.
+       This is what makes the infographic's numbers readable on a phone. */
+    .ba-lb__pan { max-width: 100%; display: flex; justify-content: center; }
+    .ba-lb img { cursor: zoom-in; }
+    .ba-lb.is-zoomed {
+      padding-left: 0;
+      padding-right: 0;
+      grid-template-columns: minmax(0, 1fr);   /* keep the track to the screen so the big image scrolls inside it */
+      grid-template-rows: minmax(0, 1fr);
+    }
+    .ba-lb.is-zoomed figure { width: 100%; height: 100%; }
+    /* the track is at least the screen and grows with the image, so a small image centres
+       (auto margins) and a big one starts at the edge and can be scrolled all the way round */
+    .ba-lb.is-zoomed .ba-lb__pan {
+      display: grid;
+      justify-content: normal;
+      grid-template-columns: minmax(100%, auto);
+      grid-template-rows: minmax(100%, auto);
+      width: 100%;
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow: auto;
+      overscroll-behavior: contain;
+      scrollbar-width: none;
+      cursor: grab;
+    }
+    .ba-lb.is-zoomed .ba-lb__pan::-webkit-scrollbar { display: none; }
+    .ba-lb.is-zoomed .ba-lb__pan.is-dragging,
+    .ba-lb.is-zoomed .ba-lb__pan.is-dragging img { cursor: grabbing; }
+    .ba-lb.is-zoomed img {
+      width: var(--zw);
+      max-width: none;
+      max-height: none;
+      margin: auto;
+      border-radius: 0;
+      box-shadow: none;
+      transform: none;
+      cursor: zoom-out;
+      -webkit-user-drag: none;
+      user-select: none;
+    }
+    .ba-lb.is-zoomed .ba-lb__alt { display: none; }
+    .ba-lb__hint {
+      display: block;
+      margin-top: 6px;
+      font-family: var(--font-franklin-medium);
+      font-style: normal;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(217, 200, 255, 0.75);
+    }
     .ba-lb figcaption {
       max-width: 60ch;
       text-align: center;
@@ -619,13 +694,13 @@
         </div>
         <div class="cs-wall__row cs-wall__row--main" data-speed="-0.8">
           <div class="cs-wall__track">
-            <img class="cs-wall__tile" data-wall-anchor="0.4" src="../BlackAmbition/wall/hero-earth-lg.webp" data-full="../BlackAmbition/hero-earth.webp" width="1600" height="900" style="aspect-ratio: 16 / 9" decoding="async" alt="Final hero: an astronaut floating in front of the Earth, framed by pink and blue nebulas." draggable="false" />
+            <img class="cs-wall__tile" data-wall-anchor="0.4" src="../BlackAmbition/wall/infographic-lg.webp" data-full="../BlackAmbition/infographic-hd.webp" width="1600" height="900" style="aspect-ratio: 16 / 9" decoding="async" alt="The final infographic: Prior Impact on the left and Expanding Our Impact on the right, charted around the astronaut and the Earth." draggable="false" />
             <img class="cs-wall__tile" src="../BlackAmbition/wall/r4-04-lg.webp" data-full="../BlackAmbition/r4-04.webp" width="900" height="900" style="aspect-ratio: 1 / 1" decoding="async" alt="Round four layout, We Are the Constellation: a field of stars on deep indigo." draggable="false" />
             <div class="cs-wall__tile ba-swatch" style="aspect-ratio: 1 / 1; background: #5523AC; color: #F2F3E9"><span>Electric Purple</span><span>#5523AC</span></div>
             <img class="cs-wall__tile" data-wall-anchor="0.6" src="../BlackAmbition/wall/hero-sitting-type-lg.webp" data-full="../BlackAmbition/hero-sitting-type.webp" width="1600" height="900" style="aspect-ratio: 16 / 9" decoding="async" alt="Final hero with type: The Deeper Bet over an astronaut sitting at the edge of the Earth." draggable="false" />
             <img class="cs-wall__tile" src="../BlackAmbition/wall/hero-visor-lg.webp" data-full="../BlackAmbition/hero-visor.webp" width="1600" height="900" style="aspect-ratio: 16 / 9" decoding="async" alt="Final hero: the Earth reflected in an astronaut's visor, against a pink and violet nebula." draggable="false" />
             <img class="cs-wall__tile" src="../BlackAmbition/wall/poster-deeper-lg.webp" data-full="../BlackAmbition/poster-deeper.webp" width="720" height="900" style="aspect-ratio: 720 / 900" decoding="async" alt="Early poster: an astronaut walking toward the Earth, with The Deeper Bet in the corner." draggable="false" />
-            <img class="cs-wall__tile" src="../BlackAmbition/wall/infographic-lg.webp" data-full="../BlackAmbition/infographic.webp" width="1600" height="900" style="aspect-ratio: 16 / 9" decoding="async" alt="The hero as an infographic: Prior Impact on the left and Expanding Our Impact on the right, around the astronaut." draggable="false" />
+            <img class="cs-wall__tile" src="../BlackAmbition/wall/hero-earth-lg.webp" data-full="../BlackAmbition/hero-earth.webp" width="1600" height="900" style="aspect-ratio: 16 / 9" decoding="async" alt="Campaign hero: an astronaut floating in front of the Earth, framed by pink and blue nebulas." draggable="false" />
             <div class="cs-wall__tile ba-swatch" style="aspect-ratio: 1 / 1; background: #F2F3E9; color: #14163D"><span>Off-White</span><span>#F2F3E9</span></div>
             <img class="cs-wall__tile" src="../BlackAmbition/wall/nebula-blue-lg.webp" data-full="../BlackAmbition/nebula-blue.webp" width="901" height="900" style="aspect-ratio: 1 / 1" decoding="async" alt="Detail of the final art: a blue and violet nebula scattered with stars." draggable="false" />
           </div>
@@ -654,24 +729,27 @@
     </div>
   </header>
 
-  <!-- ============ FEATURED: THE FINAL HEROES ============ -->
-  <section class="cs-section ba-feature" aria-label="The final heroes">
+  <!-- ============ FEATURED: THE FINAL INFOGRAPHIC, THEN THE HEROES ============ -->
+  <section class="cs-section ba-feature" aria-label="The final infographic and campaign heroes">
     <div class="cs-container">
       <div class="ba-feature__intro">
         <h2 class="cs-section__title ba-feature__title">Meet The Deeper Bet.</h2>
-        <p class="ba-feature__text">Black Ambition asked me to turn a dense infographic about their prize program into a standout campaign piece for its next chapter. Four rounds in four days later, the numbers became an astronaut, the Earth and a sky full of purple.</p>
+        <p class="ba-feature__text">Black Ambition asked me to rethink a dense infographic about their prize program for its next chapter. After four rounds of concepts, the same numbers now orbit an astronaut and the Earth: five years of proof on one side, what comes next on the other.</p>
       </div>
       <figure class="ba-show" data-show>
         <div class="ba-show__frame">
-          <img class="ba-show__img is-on" src="../BlackAmbition/hero-earth-type.webp" width="1920" height="1080" decoding="async" alt="Final hero: The Deeper Bet over an astronaut floating in front of the Earth, framed by pink and blue nebulas." />
-          <img class="ba-show__img" src="../BlackAmbition/hero-sitting-type.webp" width="1920" height="1080" loading="lazy" decoding="async" alt="Final hero: The Deeper Bet over an astronaut sitting at the edge of the Earth, under a swirl of light." />
-          <img class="ba-show__img" src="../BlackAmbition/hero-visor-type.webp" width="1920" height="1080" loading="lazy" decoding="async" alt="Final hero: The Deeper Bet across an astronaut's visor, with the Earth reflected in it." />
+          <img class="ba-show__img is-on" src="../BlackAmbition/infographic.webp" data-full="../BlackAmbition/infographic-hd.webp" data-dwell="16000" width="2880" height="1620" decoding="async" alt="The final infographic: Prior Impact, 2021 to 2025, on the left and Expanding Our Impact, 2026, on the right, each a constellation of numbers joined by dotted lines around the astronaut and the Earth." />
+          <img class="ba-show__img" src="../BlackAmbition/hero-earth-type.webp" width="1920" height="1080" loading="lazy" decoding="async" alt="Campaign hero: The Deeper Bet over an astronaut floating in front of the Earth, framed by pink and blue nebulas." />
+          <img class="ba-show__img" src="../BlackAmbition/hero-sitting-type.webp" width="1920" height="1080" loading="lazy" decoding="async" alt="Campaign hero: The Deeper Bet over an astronaut sitting at the edge of the Earth, under a swirl of light." />
+          <img class="ba-show__img" src="../BlackAmbition/hero-visor-type.webp" width="1920" height="1080" loading="lazy" decoding="async" alt="Campaign hero: The Deeper Bet across an astronaut's visor, with the Earth reflected in it." />
         </div>
-        <div class="ba-show__tabs" role="tablist" aria-label="Choose a hero">
-          <button class="ba-tab" type="button" role="tab" aria-selected="true">In front of Earth<span class="ba-tab__bar" aria-hidden="true"></span></button>
+        <div class="ba-show__tabs" role="tablist" aria-label="Choose an image">
+          <button class="ba-tab" type="button" role="tab" aria-selected="true">The infographic<span class="ba-tab__bar" aria-hidden="true"></span></button>
+          <button class="ba-tab" type="button" role="tab" aria-selected="false">In front of Earth<span class="ba-tab__bar" aria-hidden="true"></span></button>
           <button class="ba-tab" type="button" role="tab" aria-selected="false">At the edge<span class="ba-tab__bar" aria-hidden="true"></span></button>
           <button class="ba-tab" type="button" role="tab" aria-selected="false">Earth in the visor<span class="ba-tab__bar" aria-hidden="true"></span></button>
         </div>
+        <figcaption class="cs-figure__caption ba-show__note">The final infographic, then the three campaign heroes. Tap any image to zoom in.</figcaption>
       </figure>
     </div>
   </section>
@@ -708,11 +786,11 @@
             <figcaption>Black Ambition's original infographic. Every number asks for attention at once.</figcaption>
           </figure>
           <figure>
-            <span class="ba-versus__tag">After</span>
-            <div class="ba-versus__img">
-              <img src="../BlackAmbition/hero-earth-type.webp" width="1920" height="1080" loading="lazy" data-zoom alt="My final hero: The Deeper Bet over an astronaut floating in front of the Earth." />
+            <span class="ba-versus__tag ba-versus__tag--after">After</span>
+            <div class="ba-versus__img ba-versus__img--after">
+              <img src="../BlackAmbition/infographic.webp" data-full="../BlackAmbition/infographic-hd.webp" width="2880" height="1620" loading="lazy" data-zoom alt="My final infographic: the same data retold, with Prior Impact on the left and Expanding Our Impact on the right, each charted as a constellation around the astronaut and the Earth." />
             </div>
-            <figcaption>My final hero. One image and one place to look.</figcaption>
+            <figcaption>My final infographic. The same data, retold: two constellations of numbers around one image, with one place to start.</figcaption>
           </figure>
         </div>
       </div>
@@ -839,7 +917,7 @@
       <div class="cs-section__body">
         <div class="cs-section__copy">
           <p class="cs-lead">The final images are composites. I worked from a mix of stock and generated imagery, then built each scene up in layers.</p>
-          <p>First a clean base: the astronaut, the Earth and the light. Then the nebula. Then a colour grade that pulls everything into Halcyon Purple and magenta. The type goes on last. Step through one of them below.</p>
+          <p>First a clean base: the astronaut, the Earth and the light. Then the nebula. Then a colour grade that pulls everything into Halcyon Purple and magenta. Then the type, and for the infographic, the numbers. Step through it below.</p>
         </div>
         <figure class="ba-layers" data-layers>
           <div class="ba-layers__frame">
@@ -847,14 +925,16 @@
             <img src="../BlackAmbition/layer-nebula.webp" width="1920" height="1080" loading="lazy" decoding="async" alt="Layer two: pink and blue nebulas added around the Earth." />
             <img src="../BlackAmbition/hero-earth.webp" width="1920" height="1080" loading="lazy" decoding="async" alt="Layer three: the colour grade, pulling the whole scene into purple and magenta." />
             <img src="../BlackAmbition/hero-earth-type.webp" width="1920" height="1080" loading="lazy" decoding="async" alt="Layer four: the wordmark and The Deeper Bet set over the astronaut." />
+            <img src="../BlackAmbition/infographic.webp" data-full="../BlackAmbition/infographic-hd.webp" width="2880" height="1620" loading="lazy" decoding="async" alt="Layer five, the final infographic: the title moves to the top and the numbers are charted as two constellations around the scene." />
           </div>
           <div class="ba-layers__steps" role="tablist" aria-label="Layers">
             <button class="ba-step" type="button" role="tab" aria-selected="true"><span class="ba-step__n">01</span>Base</button>
             <button class="ba-step" type="button" role="tab" aria-selected="false"><span class="ba-step__n">02</span>Nebula</button>
             <button class="ba-step" type="button" role="tab" aria-selected="false"><span class="ba-step__n">03</span>Colour</button>
             <button class="ba-step" type="button" role="tab" aria-selected="false"><span class="ba-step__n">04</span>Type</button>
+            <button class="ba-step" type="button" role="tab" aria-selected="false"><span class="ba-step__n">05</span>Data</button>
           </div>
-          <figcaption class="cs-figure__caption">One hero, layer by layer.</figcaption>
+          <figcaption class="cs-figure__caption">One scene, layer by layer, from the base to the final infographic.</figcaption>
         </figure>
         <div class="cs-section__copy ba-after">
           <p>Before the finals, I tried the idea in portrait posters and wide banners: the Pharrell line, The Foundation, The Deeper Bet and a newsletter post.</p>
@@ -883,12 +963,38 @@
     <div class="cs-container">
       <header class="cs-section__head">
         <span class="cs-section__num">Solution</span>
-        <h2 class="cs-section__title">The Deeper Bet.</h2>
+        <h2 class="cs-section__title">The same data, retold.</h2>
       </header>
       <div class="cs-section__body">
         <div class="cs-section__copy">
-          <p class="cs-lead">Three 1920 × 1080 heroes, each with and without the campaign line: an astronaut in front of the Earth, one sitting at its edge, and the Earth reflected in a visor.</p>
-          <p>There are no numbers in them. Five years of founders, revenue and capital became one feeling: the scale of what comes next.</p>
+          <p class="cs-lead">Once the image was right, I brought the numbers back to it.</p>
+          <p>Prior Impact, 2021 to 2025, became one constellation, with $348M+ in founder revenue at its centre. Expanding Our Impact, 2026, became another, with The Deeper Bet at its centre and its five moves around it. A dotted line runs between the two, straight through the astronaut and the Earth.</p>
+          <p>It's the story their original sheet told, now with one place to start and a clear way through.</p>
+        </div>
+        <figure class="cs-figure ba-star">
+          <div class="ba-star__frame">
+            <img src="../BlackAmbition/infographic.webp" data-full="../BlackAmbition/infographic-hd.webp" width="2880" height="1620" loading="lazy" decoding="async" data-zoom alt="The final infographic: Prior Impact, 2021 to 2025, charted around $348M+ in founder revenue, and Expanding Our Impact, 2026, charted around The Deeper Bet, joined by a dotted line through the astronaut and the Earth." />
+          </div>
+          <figcaption class="cs-figure__caption">The final infographic. Tap to zoom in and read the numbers.</figcaption>
+        </figure>
+        <div class="cs-section__copy ba-notes ba-after">
+          <h3>Made for Instagram.</h3>
+          <p>I cut the same constellations down into a four post set: a title card, Prior Impact, Expanding Our Impact and a newsletter call.</p>
+        </div>
+        <figure class="cs-figure ba-strip-wrap">
+          <div class="ba-strip" data-copies="4" aria-label="The Instagram set">
+            <div class="ba-strip__track">
+              <img tabindex="0" role="button" src="../BlackAmbition/strip/ig-1.webp" data-full="../BlackAmbition/ig-1.webp" width="640" height="800" loading="lazy" decoding="async" alt="Instagram post one: The Deeper Bet over the astronaut in front of the Earth." draggable="false" />
+              <img tabindex="0" role="button" src="../BlackAmbition/strip/ig-2.webp" data-full="../BlackAmbition/ig-2.webp" width="640" height="800" loading="lazy" decoding="async" alt="Instagram post two: Prior Impact, the program's numbers as a constellation." draggable="false" />
+              <img tabindex="0" role="button" src="../BlackAmbition/strip/ig-3.webp" data-full="../BlackAmbition/ig-3.webp" width="640" height="800" loading="lazy" decoding="async" alt="Instagram post three: Expanding Our Impact, the program's next moves." draggable="false" />
+              <img tabindex="0" role="button" src="../BlackAmbition/strip/ig-4.webp" data-full="../BlackAmbition/ig-4.webp" width="640" height="800" loading="lazy" decoding="async" alt="Instagram post four: Subscribe to Our Newsletter, with the brand's dot and star over the Earth." draggable="false" />
+            </div>
+          </div>
+          <figcaption class="cs-figure__caption">The infographic as a four post Instagram set.</figcaption>
+        </figure>
+        <div class="cs-section__copy ba-notes ba-after">
+          <h3>The heroes.</h3>
+          <p>Three 1920 × 1080 heroes carry the campaign where no numbers are needed: an astronaut in front of the Earth, one sitting at its edge, and the Earth reflected in a visor, each with and without the campaign line.</p>
         </div>
         <figure class="cs-figure ba-strip-wrap">
           <div class="ba-strip" data-copies="3" aria-label="The final heroes">
@@ -901,23 +1007,7 @@
               <img tabindex="0" role="button" src="../BlackAmbition/strip/hero-visor.webp" data-full="../BlackAmbition/hero-visor.webp" width="1422" height="800" loading="lazy" decoding="async" alt="The Earth in the visor, without type." draggable="false" />
             </div>
           </div>
-          <figcaption class="cs-figure__caption">The final heroes, with and without type.</figcaption>
-        </figure>
-        <div class="cs-section__copy ba-notes ba-after">
-          <h3>Carrying it further.</h3>
-          <p>I also explored how the hero could bring the numbers back without crowding them: Prior Impact on one side, Expanding Our Impact on the other, and a four post Instagram set that walks through the story.</p>
-        </div>
-        <figure class="cs-figure ba-strip-wrap">
-          <div class="ba-strip" data-copies="3" aria-label="The infographic and Instagram set">
-            <div class="ba-strip__track">
-              <img tabindex="0" role="button" src="../BlackAmbition/strip/infographic.webp" data-full="../BlackAmbition/infographic.webp" width="1422" height="800" loading="lazy" decoding="async" alt="Infographic: Prior Impact on the left and Expanding Our Impact on the right, charted around the astronaut and Earth." draggable="false" />
-              <img tabindex="0" role="button" src="../BlackAmbition/strip/ig-1.webp" data-full="../BlackAmbition/ig-1.webp" width="640" height="800" loading="lazy" decoding="async" alt="Instagram post one: The Deeper Bet over the astronaut in front of the Earth." draggable="false" />
-              <img tabindex="0" role="button" src="../BlackAmbition/strip/ig-2.webp" data-full="../BlackAmbition/ig-2.webp" width="640" height="800" loading="lazy" decoding="async" alt="Instagram post two: Prior Impact, the program's numbers as a constellation." draggable="false" />
-              <img tabindex="0" role="button" src="../BlackAmbition/strip/ig-3.webp" data-full="../BlackAmbition/ig-3.webp" width="640" height="800" loading="lazy" decoding="async" alt="Instagram post three: Expanding Our Impact, the program's next moves." draggable="false" />
-              <img tabindex="0" role="button" src="../BlackAmbition/strip/ig-4.webp" data-full="../BlackAmbition/ig-4.webp" width="640" height="800" loading="lazy" decoding="async" alt="Instagram post four: Subscribe to Our Newsletter, with the brand's dot and star over the Earth." draggable="false" />
-            </div>
-          </div>
-          <figcaption class="cs-figure__caption">The hero as an infographic and an Instagram set.</figcaption>
+          <figcaption class="cs-figure__caption">The campaign heroes, with and without type.</figcaption>
         </figure>
       </div>
     </div>
@@ -932,7 +1022,7 @@
       </header>
       <div class="cs-section__body">
         <div class="cs-section__copy">
-          <p class="cs-lead">The brand rules gave me a fast, confident start. The breakthrough came when I stopped redesigning the data and started picturing it.</p>
+          <p class="cs-lead">The brand rules gave me a fast, confident start. The breakthrough came when I stopped redesigning the data and started picturing it. Once the picture was right, the numbers had somewhere to live.</p>
           <p>Four rounds in four days taught me to ask early what a team needs its audience to feel, not just what it needs to say.</p>
         </div>
       </div>
@@ -984,24 +1074,77 @@
       lb.setAttribute('aria-label', 'Image viewer');
       lb.innerHTML = '<button class="ba-lb__close" type="button" aria-label="Close">×</button>' +
         '<button class="ba-lb__prev" type="button" aria-label="Previous image">‹</button>' +
-        '<figure><img alt="" /><figcaption></figcaption></figure>' +
+        '<figure><div class="ba-lb__pan"><img alt="" draggable="false" /></div><figcaption></figcaption></figure>' +
         '<button class="ba-lb__next" type="button" aria-label="Next image">›</button>';
       document.body.appendChild(lb);
-      var img = lb.querySelector('img'), cap = lb.querySelector('figcaption');
-      var list = [], index = 0, back = null;
+      var img = lb.querySelector('img'), cap = lb.querySelector('figcaption'), pan = lb.querySelector('.ba-lb__pan');
+      var list = [], index = 0, back = null, zoomed = false, hint = null, panDrag = null;
+      var verb = window.matchMedia('(pointer: coarse)').matches ? 'Tap' : 'Click';
 
       function show() {
+        setZoom(false);
         var el = list[index];
         img.src = el.getAttribute('data-full') || el.getAttribute('src');
         img.alt = el.getAttribute('alt') || '';
-        cap.textContent = img.alt;
+        cap.textContent = '';
+        var a = document.createElement('span');
+        a.className = 'ba-lb__alt';
+        a.textContent = img.alt;
+        cap.appendChild(a);
         if (list.length > 1) {
           var n = document.createElement('span');
           n.className = 'ba-lb__count';
           n.textContent = (index + 1) + ' / ' + list.length;
           cap.appendChild(n);
         }
+        hint = document.createElement('span');
+        hint.className = 'ba-lb__hint';
+        cap.appendChild(hint);
+        updateHint();
       }
+      function updateHint() {
+        if (hint) hint.textContent = zoomed ? 'Drag to look around · ' + verb + ' to zoom out' : verb + ' the image to zoom in';
+      }
+      /* Zoom in around the point that was tapped, so it stays under the finger */
+      function setZoom(on, cx, cy) {
+        if (on === zoomed) return;
+        if (on) {
+          var r = img.getBoundingClientRect();
+          var fx = cx == null ? 0.5 : (cx - r.left) / r.width;
+          var fy = cy == null ? 0.5 : (cy - r.top) / r.height;
+          img.style.setProperty('--zw', Math.round(r.width * (window.innerWidth < 700 ? 2.8 : 2)) + 'px');
+          lb.classList.add('is-zoomed');
+          zoomed = true;
+          // reading the size lays the zoomed image out right away, so the scroll lands in the same frame
+          pan.scrollLeft = fx * img.offsetWidth - pan.clientWidth / 2;
+          pan.scrollTop = fy * img.offsetHeight - pan.clientHeight / 2;
+        } else {
+          lb.classList.remove('is-zoomed');
+          img.style.removeProperty('--zw');
+          zoomed = false;
+        }
+        updateHint();
+      }
+      img.addEventListener('click', function (e) {
+        if (panDrag && panDrag.moved) return;
+        setZoom(!zoomed, e.clientX, e.clientY);
+      });
+      /* with a mouse, drag to pan while zoomed (touch screens scroll natively) */
+      pan.addEventListener('pointerdown', function (e) {
+        if (!zoomed || e.pointerType !== 'mouse' || e.button) return;
+        panDrag = { x: e.clientX, y: e.clientY, l: pan.scrollLeft, t: pan.scrollTop, moved: false };
+      });
+      window.addEventListener('pointermove', function (e) {
+        if (!panDrag) return;
+        var dx = e.clientX - panDrag.x, dy = e.clientY - panDrag.y;
+        if (!panDrag.moved && Math.abs(dx) + Math.abs(dy) > 5) { panDrag.moved = true; pan.classList.add('is-dragging'); }
+        if (panDrag.moved) { pan.scrollLeft = panDrag.l - dx; pan.scrollTop = panDrag.t - dy; }
+      });
+      window.addEventListener('pointerup', function () {
+        if (!panDrag) return;
+        pan.classList.remove('is-dragging');
+        setTimeout(function () { panDrag = null; }, 0);
+      });
       function open(items, i) {
         list = items;
         index = i;
@@ -1014,6 +1157,7 @@
         lb.querySelector('.ba-lb__close').focus();
       }
       function close() {
+        setZoom(false);
         lb.classList.remove('is-open');
         document.documentElement.style.overflow = '';
         setTimeout(function () { lb.hidden = true; img.removeAttribute('src'); }, 250);
@@ -1095,7 +1239,8 @@
           if (!pausedAt) pausedAt = now;
         } else {
           if (pausedAt) { t0 += now - pausedAt; pausedAt = 0; }
-          var p = (now - t0) / opts.every;
+          /* a frame can ask to stay longer (the infographic needs reading time) */
+          var p = (now - t0) / (parseInt(frames[cur].getAttribute('data-dwell'), 10) || opts.every);
           if (opts.bar) tabs[cur].style.setProperty('--p', Math.min(1, p).toFixed(3));
           if (p >= 1) {
             if (opts.once && cur === frames.length - 1) stopped = true;
