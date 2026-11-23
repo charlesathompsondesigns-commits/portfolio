@@ -385,6 +385,198 @@
       .wwr-door__title { font-size: clamp(44px, 13vw, 56px); }
     }
 
+    /* ── The three parts, up top: typographic columns with jump links (no boxes) ── */
+    .cs-body-page--wwr .wwr-parts { border-bottom: 0; padding-top: clamp(16px, 3vh, 32px); }
+    .wwr-parts__eyebrow {
+      margin: 0 0 clamp(20px, 3vh, 28px);
+      font-family: var(--font-franklin-medium);
+      font-weight: 500;
+      font-size: 13px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--wwr-blossom);
+    }
+    .wwr-parts__list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(24px, 3vw, 48px);
+    }
+    .wwr-parts__link {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      height: 100%;
+      padding-top: 18px;
+      border-top: 1px solid var(--cs-rule);
+      color: var(--cs-ink);
+      text-decoration: none;
+      transition: border-color 0.25s var(--ease-out);
+    }
+    .wwr-parts__num {
+      font-family: var(--font-franklin-medium);
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cs-muted);
+    }
+    .wwr-parts__title {
+      font-family: var(--font-instrument);
+      font-size: clamp(28px, 2.6vw, 38px);
+      line-height: 1.05;
+    }
+    .wwr-parts__text {
+      font-family: var(--font-source);
+      font-size: clamp(16px, 1.15vw, 18px);
+      line-height: 1.5;
+      color: var(--cs-muted);
+    }
+    .wwr-parts__go {
+      margin-top: auto;
+      padding-top: 6px;
+      font-family: var(--font-franklin-medium);
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--wwr-blossom);
+    }
+    .wwr-parts__go span { display: inline-block; transition: transform 0.25s var(--ease-out); }
+    .wwr-parts__link:hover { border-top-color: var(--wwr-blossom); }
+    .wwr-parts__link:hover .wwr-parts__go span { transform: translateY(3px); }
+    .wwr-parts__link:focus-visible { outline: 2px solid var(--wwr-blossom); outline-offset: 6px; border-radius: 4px; }
+    @media (max-width: 760px) {
+      .wwr-parts__list { grid-template-columns: 1fr; }
+    }
+
+    /* Anchored sections stop just below the fixed nav */
+    .cs-body-page--wwr [id^="part-"],
+    .cs-body-page--wwr .cs-section[id] { scroll-margin-top: calc(var(--nav-height) + 12px); }
+
+    /* ── Side directory. Small screens: a Contents button opens it as a panel.
+       Wide screens (1400px and up): a sticky rail in the left margin, beside the content. ── */
+    .wwr-toc-btn {
+      position: fixed;
+      left: 14px;
+      bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+      z-index: 120;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 44px;
+      padding: 0 18px 0 14px;
+      border: 1px solid rgba(245, 237, 224, 0.3);
+      border-radius: 999px;
+      background: rgba(20, 32, 24, 0.78);
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+      color: #f5ede0;
+      font-family: var(--font-franklin-medium);
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(10px);
+      pointer-events: none;
+      transition: opacity 0.3s var(--ease-out), transform 0.3s var(--ease-out);
+    }
+    .wwr-toc-btn.is-shown { opacity: 1; transform: none; pointer-events: auto; }
+    .wwr-toc-btn:focus-visible { outline: 2px solid var(--wwr-blossom); outline-offset: 3px; }
+    .wwr-toc {
+      position: fixed;
+      left: 12px;
+      bottom: calc(68px + env(safe-area-inset-bottom, 0px));
+      z-index: 121;
+      width: min(300px, calc(100vw - 24px));
+      max-height: min(70vh, 560px);
+      overflow: auto;
+      padding: 18px 20px;
+      box-sizing: border-box;
+      border: 1px solid rgba(245, 237, 224, 0.16);
+      border-radius: 18px;
+      background: rgba(20, 32, 24, 0.94);
+      -webkit-backdrop-filter: blur(18px);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.6);
+      opacity: 0;
+      transform: translateY(10px);
+      visibility: hidden;
+      transition: opacity 0.25s var(--ease-out), transform 0.25s var(--ease-out), visibility 0s linear 0.25s;
+    }
+    .wwr-toc.is-open { opacity: 1; transform: none; visibility: visible; transition-delay: 0s; }
+    .wwr-toc__title {
+      margin: 0 0 12px;
+      font-family: var(--font-franklin-medium);
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--wwr-blossom);
+    }
+    .wwr-toc ol { list-style: none; margin: 0; padding: 0; }
+    .wwr-toc a { color: var(--cs-muted); text-decoration: none; transition: color 0.2s var(--ease-out); }
+    .wwr-toc a:hover { color: var(--cs-ink); }
+    .wwr-toc a:focus-visible { outline: 2px solid var(--wwr-blossom); outline-offset: 2px; border-radius: 3px; }
+    .wwr-toc__part + .wwr-toc__part { margin-top: 12px; }
+    .wwr-toc__part > a { display: flex; align-items: baseline; gap: 10px; }
+    .wwr-toc__n {
+      font-family: var(--font-franklin-medium);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: rgba(190, 204, 182, 0.7);
+    }
+    .wwr-toc__t { font-family: var(--font-instrument); font-size: 19px; line-height: 1.15; }
+    .wwr-toc__part > ol { margin: 6px 0 0 22px; border-left: 1px solid var(--cs-rule); }
+    .wwr-toc__part > ol a {
+      position: relative;
+      display: block;
+      padding: 4px 0 4px 12px;
+      font-family: var(--font-franklin-medium);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .wwr-toc__part.is-current > a,
+    .wwr-toc__part.is-current > a .wwr-toc__n,
+    .wwr-toc a.is-current { color: var(--cs-ink); }
+    .wwr-toc a.is-current::before {
+      content: "";
+      position: absolute;
+      left: -1px;
+      top: 6px;
+      bottom: 6px;
+      width: 2px;
+      border-radius: 2px;
+      background: var(--wwr-blossom);
+    }
+    @media (min-width: 1400px) {
+      .wwr-toc-btn { display: none; }
+      .wwr-toc {
+        left: 24px;
+        top: 50%;
+        bottom: auto;
+        width: 140px;
+        max-height: calc(100vh - var(--nav-height) - 48px);
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        background: none;
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+        box-shadow: none;
+        transform: translate(-8px, -50%);
+      }
+      .wwr-toc.is-shown { opacity: 1; transform: translate(0, -50%); visibility: visible; transition-delay: 0s; }
+      /* on the rail, only the current part shows its chapters */
+      .wwr-toc__part > ol { display: none; }
+      .wwr-toc__part.is-current > ol { display: block; }
+      .wwr-toc__t { font-size: 17px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .wwr-toc, .wwr-toc-btn { transition: none; }
+    }
+
     /* ── Instagram's own player, cropped to just the video. Its embed shows the reel in a 4:5 box
        under a 54px header, with the 9:16 video centred; widening the frame to 142.2% and nudging it
        up and left leaves only the video showing. The poster sits underneath while it loads. ── */
@@ -965,6 +1157,48 @@
     </ul>
   </nav>
 
+  <!-- ============ SIDE DIRECTORY ============
+       A sticky list of the parts and chapters beside the content on wide screens; on smaller
+       screens it opens from a Contents button. The current chapter is highlighted as you read. -->
+  <button class="wwr-toc-btn" type="button" aria-expanded="false" aria-controls="wwrToc">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+    <span>Contents</span>
+  </button>
+  <nav class="wwr-toc" id="wwrToc" aria-label="Case study contents">
+    <p class="wwr-toc__title">Contents</p>
+    <ol class="wwr-toc__parts">
+      <li class="wwr-toc__part" data-part="part-one">
+        <a href="#part-one"><span class="wwr-toc__n">01</span><span class="wwr-toc__t">In real life</span></a>
+        <ol>
+          <li><a href="#idea">Idea</a></li>
+          <li><a href="#colour">Colour</a></li>
+          <li><a href="#houses">Houses</a></li>
+          <li><a href="#trees">Trees</a></li>
+          <li><a href="#ground">Ground</a></li>
+          <li><a href="#finished">Finished</a></li>
+        </ol>
+      </li>
+      <li class="wwr-toc__part" data-part="part-two">
+        <a href="#part-two"><span class="wwr-toc__n">02</span><span class="wwr-toc__t">The 3D world</span></a>
+        <ol>
+          <li><a href="#vision">Vision</a></li>
+          <li><a href="#houses-3d">Houses</a></li>
+          <li><a href="#trees-3d">Trees</a></li>
+          <li><a href="#walk">Walk</a></li>
+          <li><a href="#story">Story</a></li>
+          <li><a href="#next">Next</a></li>
+        </ol>
+      </li>
+      <li class="wwr-toc__part" data-part="part-three">
+        <a href="#part-three"><span class="wwr-toc__n">03</span><span class="wwr-toc__t">XR pop-up</span></a>
+        <ol>
+          <li><a href="#concept">Concept</a></li>
+          <li><a href="#tribute">Tribute</a></li>
+        </ol>
+      </li>
+    </ol>
+  </nav>
+
   <!-- ============ HERO ============ -->
   <header class="cs-hero">
     <div class="cs-container">
@@ -1087,6 +1321,39 @@
     </div>
   </section>
 
+  <!-- ============ THE THREE PARTS (overview with jump links) ============ -->
+  <section class="cs-section wwr-parts" aria-labelledby="wwrPartsTitle">
+    <div class="cs-container">
+      <h2 class="wwr-parts__eyebrow" id="wwrPartsTitle">Three parts</h2>
+      <ol class="wwr-parts__list">
+        <li>
+          <a class="wwr-parts__link" href="#part-one">
+            <span class="wwr-parts__num">Part One</span>
+            <span class="wwr-parts__title">In real life.</span>
+            <span class="wwr-parts__text">The 2023 sculpture: laser-cut houses, handmade trees and a koi pond.</span>
+            <span class="wwr-parts__go">Go to Part One <span aria-hidden="true">↓</span></span>
+          </a>
+        </li>
+        <li>
+          <a class="wwr-parts__link" href="#part-two">
+            <span class="wwr-parts__num">Part Two</span>
+            <span class="wwr-parts__title">Big enough to walk into.</span>
+            <span class="wwr-parts__text">The life-size 3D garden for Apple Vision Pro, and the quiet game inside it.</span>
+            <span class="wwr-parts__go">Go to Part Two <span aria-hidden="true">↓</span></span>
+          </a>
+        </li>
+        <li>
+          <a class="wwr-parts__link" href="#part-three">
+            <span class="wwr-parts__num">Part Three</span>
+            <span class="wwr-parts__title">What it could become.</span>
+            <span class="wwr-parts__text">A concept for an XR pop-up in Chicago, with scent, wind and sound.</span>
+            <span class="wwr-parts__go">Go to Part Three <span aria-hidden="true">↓</span></span>
+          </a>
+        </li>
+      </ol>
+    </div>
+  </section>
+
   <!-- ============ THE 3D WORLD, UP FRONT ============
        A doorway into the live walkable garden; the full story is in Part Two. -->
   <section class="cs-section wwr-door-section" aria-label="Walk through the 3D garden">
@@ -1127,7 +1394,7 @@
   </section>
 
   <!-- ============ PART ONE: THE SCULPTURE ============ -->
-  <section class="wwr-part" aria-labelledby="wwrPart1">
+  <section class="wwr-part" id="part-one" aria-labelledby="wwrPart1">
     <div class="cs-container">
       <span class="wwr-part__label">Part One</span>
       <h2 class="wwr-part__title" id="wwrPart1">In real life.</h2>
@@ -1136,7 +1403,7 @@
   </section>
 
   <!-- ============ IDEA ============ -->
-  <section class="cs-section">
+  <section class="cs-section" id="idea">
     <div class="cs-container">
       <header class="cs-section__head">
         <span class="cs-section__num">Idea</span>
@@ -1152,7 +1419,7 @@
   </section>
 
   <!-- ============ COLOUR ============ -->
-  <section class="cs-section">
+  <section class="cs-section" id="colour">
     <div class="cs-container">
       <header class="cs-section__head">
         <span class="cs-section__num">Colour</span>
@@ -1190,7 +1457,7 @@
   </section>
 
   <!-- ============ HOUSES ============ -->
-  <section class="cs-section">
+  <section class="cs-section" id="houses">
     <div class="cs-container">
       <header class="cs-section__head">
         <span class="cs-section__num">Houses</span>
@@ -1218,7 +1485,7 @@
   </section>
 
   <!-- ============ TREES ============ -->
-  <section class="cs-section">
+  <section class="cs-section" id="trees">
     <div class="cs-container">
       <header class="cs-section__head">
         <span class="cs-section__num">Trees</span>
@@ -1246,7 +1513,7 @@
   </section>
 
   <!-- ============ GROUND ============ -->
-  <section class="cs-section">
+  <section class="cs-section" id="ground">
     <div class="cs-container">
       <header class="cs-section__head">
         <span class="cs-section__num">Ground</span>
@@ -1275,7 +1542,7 @@
   </section>
 
   <!-- ============ FINISHED ============ -->
-  <section class="cs-section">
+  <section class="cs-section" id="finished">
     <div class="cs-container">
       <header class="cs-section__head">
         <span class="cs-section__num">Finished</span>
@@ -1320,7 +1587,7 @@
   </section>
 
   <!-- ============ PART TWO: THE 3D WORLD ============ -->
-  <section class="wwr-part" aria-labelledby="wwrPart2">
+  <section class="wwr-part" id="part-two" aria-labelledby="wwrPart2">
     <div class="cs-container">
       <span class="wwr-part__label">Part Two</span>
       <h2 class="wwr-part__title" id="wwrPart2">Big enough to walk into.</h2>
@@ -1329,7 +1596,7 @@
   </section>
 
   <!-- ============ VISION ============ -->
-  <section class="cs-section">
+  <section class="cs-section" id="vision">
     <div class="cs-container">
       <header class="cs-section__head">
         <span class="cs-section__num">Vision</span>
@@ -1345,7 +1612,7 @@
   </section>
 
   <!-- ============ HOUSES IN 3D ============ -->
-  <section class="cs-section">
+  <section class="cs-section" id="houses-3d">
     <div class="cs-container">
       <header class="cs-section__head">
         <span class="cs-section__num">Houses</span>
@@ -1374,7 +1641,7 @@
   </section>
 
   <!-- ============ TREES IN 3D ============ -->
-  <section class="cs-section">
+  <section class="cs-section" id="trees-3d">
     <div class="cs-container">
       <header class="cs-section__head">
         <span class="cs-section__num">Trees</span>
@@ -1404,7 +1671,7 @@
   </section>
 
   <!-- ============ WALK ============ -->
-  <section class="cs-section">
+  <section class="cs-section" id="walk">
     <div class="cs-container">
       <header class="cs-section__head">
         <span class="cs-section__num">Walk</span>
@@ -1440,7 +1707,7 @@
   </section>
 
   <!-- ============ STORY: THE GAME INSIDE THE GARDEN ============ -->
-  <section class="cs-section">
+  <section class="cs-section" id="story">
     <div class="cs-container">
       <header class="cs-section__head">
         <span class="cs-section__num">Story</span>
@@ -1465,7 +1732,7 @@
   </section>
 
   <!-- ============ NEXT ============ -->
-  <section class="cs-section">
+  <section class="cs-section" id="next">
     <div class="cs-container">
       <header class="cs-section__head">
         <span class="cs-section__num">Next</span>
@@ -1481,7 +1748,7 @@
   </section>
 
   <!-- ============ PART THREE: THE XR POP-UP (A CONCEPT) ============ -->
-  <section class="wwr-part" aria-labelledby="wwrPart3">
+  <section class="wwr-part" id="part-three" aria-labelledby="wwrPart3">
     <div class="cs-container">
       <span class="wwr-part__label">Part Three</span>
       <h2 class="wwr-part__title" id="wwrPart3">What it could become.</h2>
@@ -1490,7 +1757,7 @@
   </section>
 
   <!-- ============ THE ROOM ============ -->
-  <section class="cs-section">
+  <section class="cs-section" id="concept">
     <div class="cs-container">
       <header class="cs-section__head">
         <span class="cs-section__num">Concept</span>
@@ -1564,7 +1831,7 @@
   </section>
 
   <!-- ============ THE TRIBUTE ============ -->
-  <section class="cs-section">
+  <section class="cs-section" id="tribute">
     <div class="cs-container">
       <header class="cs-section__head">
         <span class="cs-section__num">Tribute</span>
@@ -1689,6 +1956,49 @@
         else if (e.key === 'ArrowRight' && list.length > 1) step(1);
       });
       return { open: open };
+    })();
+
+    /* Side directory: shown from Part One to the credits; highlights the chapter you're reading.
+       On small screens the Contents button opens it as a panel. */
+    (function () {
+      var toc = document.getElementById('wwrToc');
+      var btn = document.querySelector('.wwr-toc-btn');
+      if (!toc || !btn) return;
+      var links = [].slice.call(toc.querySelectorAll('a[href^="#"]'));
+      var targets = links.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
+      var start = document.getElementById('part-one');
+      var end = document.querySelector('.cs-next');
+      var wide = window.matchMedia('(min-width: 1400px)');
+      var ticking = false;
+
+      function setOpen(open) {
+        toc.classList.toggle('is-open', open);
+        btn.setAttribute('aria-expanded', String(open));
+      }
+      function update() {
+        ticking = false;
+        var y = window.scrollY, vh = window.innerHeight;
+        var shown = start.getBoundingClientRect().top < vh * 0.6 && end.getBoundingClientRect().top > vh * 0.4;
+        toc.classList.toggle('is-shown', shown && wide.matches);
+        btn.classList.toggle('is-shown', shown && !wide.matches);
+        if (!shown && !wide.matches) setOpen(false);
+        // the current chapter is the last one whose top has passed a third of the way down the screen
+        var current = -1;
+        targets.forEach(function (t, i) { if (t && t.getBoundingClientRect().top <= vh * 0.34) current = i; });
+        links.forEach(function (a, i) { a.classList.toggle('is-current', i === current && !a.parentNode.classList.contains('wwr-toc__part')); });
+        var part = null;
+        if (current >= 0) part = links[current].closest('.wwr-toc__part');
+        [].forEach.call(toc.querySelectorAll('.wwr-toc__part'), function (li) { li.classList.toggle('is-current', li === part); });
+      }
+      function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll);
+      if (wide.addEventListener) wide.addEventListener('change', function () { setOpen(false); update(); });
+      btn.addEventListener('click', function (e) { e.stopPropagation(); setOpen(!toc.classList.contains('is-open')); });
+      toc.addEventListener('click', function (e) { if (e.target.closest('a') && !wide.matches) setOpen(false); });
+      document.addEventListener('click', function (e) { if (!wide.matches && toc.classList.contains('is-open') && !toc.contains(e.target)) setOpen(false); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && toc.classList.contains('is-open')) { setOpen(false); btn.focus(); } });
+      update();
     })();
 
     /* Videos with sound: autoplay muted while on screen (autoplay rules), pause when scrolled away,
