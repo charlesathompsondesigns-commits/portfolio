@@ -187,8 +187,7 @@
       background: #142018;
       box-shadow: 0 50px 100px -30px rgba(6, 12, 8, 0.75), 0 18px 40px -12px rgba(6, 12, 8, 0.5);
     }
-    .wwr-reel__frame video,
-    .wwr-walk video {
+    .wwr-reel__frame video {
       display: block;
       width: 100%;
       height: 100%;
@@ -263,20 +262,39 @@
       text-decoration: none;
       box-shadow: 0 50px 100px -40px rgba(6, 12, 8, 0.8), 0 0 0 1px rgba(245, 237, 224, 0.08);
     }
+    /* the first view sits underneath as well, so the card is never blank while a slide loads */
     .wwr-door__media {
       position: absolute;
       inset: 0;
       display: block;
+      overflow: hidden;
+      background: #142018 url("../WhereWeRest/feature/live-arrival.webp") center / cover no-repeat;
     }
-    .wwr-door__media video {
+    /* Four views of the live garden drift and cross-fade, one every six seconds */
+    .wwr-door__slide {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 1.2s var(--ease-out);
+      opacity: 0;
+      animation: wwr-slide 24s linear infinite;
     }
-    .wwr-door:hover .wwr-door__media video { transform: scale(1.04); }
+    .wwr-door__slide:nth-child(1) { animation-delay: 0s; }
+    .wwr-door__slide:nth-child(2) { animation-delay: 6s; }
+    .wwr-door__slide:nth-child(3) { animation-delay: 12s; }
+    .wwr-door__slide:nth-child(4) { animation-delay: 18s; }
+    @keyframes wwr-slide {
+      0%   { opacity: 0; transform: scale(1.02); }
+      5%   { opacity: 1; }
+      25%  { opacity: 1; }
+      31%  { opacity: 0; transform: scale(1.09); }
+      100% { opacity: 0; transform: scale(1.09); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .wwr-door__slide { animation: none; }
+      .wwr-door__slide:first-child { opacity: 1; }
+    }
     .wwr-door__shade {
       position: absolute;
       inset: 0;
@@ -346,7 +364,7 @@
     }
     .wwr-door:focus-visible { outline: 3px solid var(--wwr-blossom); outline-offset: 4px; }
     @media (prefers-reduced-motion: reduce) {
-      .wwr-door__media video, .wwr-reel__frame img { transition: none; }
+      .wwr-reel__frame img { transition: none; }
     }
     @media (max-width: 700px) {
       .wwr-door { display: flex; flex-direction: column; aspect-ratio: auto; min-height: 0; }
@@ -637,21 +655,6 @@
       .wwr-key { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 20px; }
     }
 
-    /* ── Walking through the prototype: a quiet loop in the copy column ── */
-    .wwr-walk {
-      grid-column: 2;
-      margin: clamp(28px, 4vh, 44px) 0 0;
-    }
-    .wwr-walk__frame {
-      aspect-ratio: 1440 / 900;
-      border-radius: 18px;
-      overflow: hidden;
-      background: #142018;
-      box-shadow: 0 40px 80px -30px rgba(6, 12, 8, 0.7), 0 14px 30px -12px rgba(6, 12, 8, 0.45);
-    }
-    .wwr-walk .cs-figure__caption { text-align: left; }
-    @media (max-width: 900px) { .wwr-walk { grid-column: 1; } }
-
     /* ── Photo galleries: the same self-scrolling strip as 808 and Sun-Drop.
        Visitors can scroll, swipe or drag; tapping a photo opens it in the viewer. ── */
     .wwr-strip-wrap { min-width: 0; }
@@ -924,9 +927,10 @@
     <div class="cs-container">
       <a class="wwr-door" href="https://where-we-rest.vercel.app/" target="_blank" rel="noopener" aria-label="Walk through Where We Rest in 3D: opens the in-progress 3D garden in a new tab">
         <span class="wwr-door__media" aria-hidden="true">
-          <video muted loop playsinline preload="none" poster="../WhereWeRest/feature/wwr-walk-poster.jpg" data-play-in-view>
-            <source src="../WhereWeRest/feature/wwr-walk.mp4" type="video/mp4" />
-          </video>
+          <img class="wwr-door__slide" src="../WhereWeRest/feature/live-arrival.webp" width="1440" height="900" alt="" decoding="async" />
+          <img class="wwr-door__slide" src="../WhereWeRest/feature/live-houses.webp" width="1440" height="900" alt="" loading="lazy" decoding="async" />
+          <img class="wwr-door__slide" src="../WhereWeRest/feature/live-willow.webp" width="1440" height="900" alt="" loading="lazy" decoding="async" />
+          <img class="wwr-door__slide" src="../WhereWeRest/feature/live-golden.webp" width="1440" height="900" alt="" loading="lazy" decoding="async" />
         </span>
         <span class="wwr-door__shade" aria-hidden="true"></span>
         <span class="wwr-door__copy">
@@ -1231,28 +1235,22 @@
       <div class="cs-section__body">
         <div class="cs-section__copy">
           <p class="cs-lead">The garden runs in the browser with three.js.</p>
-          <p>You drag to look around and tap the ground to walk, or use W, A, S and D. You can zoom out over the whole garden, and the houses and trunks are solid, so you can't walk through them. One millimetre of the sculpture becomes five centimetres.</p>
+          <p>You drag to look around and click the ground, or a house, to walk there. Scroll to rise above the garden. Each house greets you with a few lines of its own as you come near. One millimetre of the sculpture becomes five centimetres.</p>
           <p>It's online now: <a href="https://where-we-rest.vercel.app/" target="_blank" rel="noopener">step inside the garden</a> (opens in a new tab).</p>
         </div>
-        <figure class="wwr-walk">
-          <div class="wwr-walk__frame">
-            <video muted loop playsinline preload="none" poster="../WhereWeRest/feature/wwr-walk-poster.jpg" data-play-in-view aria-label="Walking through the browser prototype, past the Gnome House and the willow toward the pond and the Garden Magic House">
-              <source src="../WhereWeRest/feature/wwr-walk.mp4" type="video/mp4" />
-            </video>
-          </div>
-          <figcaption class="cs-figure__caption">An early build of the walk, before the trees were refined.</figcaption>
-        </figure>
         <figure class="cs-figure wwr-strip-wrap">
           <div class="wwr-strip" data-copies="3" aria-label="The garden in 3D">
             <div class="wwr-strip__track">
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/live-arrival.webp" data-full="../WhereWeRest/feature/live-arrival.webp" width="1312" height="820" loading="lazy" decoding="async" alt="The live garden at dusk: the cherry tree in blossom between the Garden Magic House and the glowing pink Elf House." draggable="false" />
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/live-houses.webp" data-full="../WhereWeRest/feature/live-houses.webp" width="1312" height="820" loading="lazy" decoding="async" alt="The live garden: the Garden Magic House, the tower and the willow behind the pond, the Elf House at the edge." draggable="false" />
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/live-willow.webp" data-full="../WhereWeRest/feature/live-willow.webp" width="1312" height="820" loading="lazy" decoding="async" alt="Under the willow in the live garden, lavender flowers in the grass." draggable="false" />
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/live-golden.webp" data-full="../WhereWeRest/feature/live-golden.webp" width="1312" height="820" loading="lazy" decoding="async" alt="The yellow tree alone on the meadow at dusk, light rays across a purple sky." draggable="false" />
               <img tabindex="0" role="button" src="../WhereWeRest/strip/r-realistic.webp" data-full="../WhereWeRest/full/r-realistic.webp" width="1093" height="820" loading="lazy" decoding="async" alt="A render of the garden: the Gnome House under the cherry tree, the willow and the tower behind." draggable="false" />
-              <img tabindex="0" role="button" src="../WhereWeRest/strip/web-pond.webp" width="1312" height="820" loading="lazy" decoding="async" alt="The browser prototype at eye level: the koi pond, the tower and the willow." draggable="false" />
               <img tabindex="0" role="button" src="../WhereWeRest/strip/r-overview.webp" data-full="../WhereWeRest/full/r-overview.webp" width="1093" height="820" loading="lazy" decoding="async" alt="A render of the garden with real leaves, grass and blossom." draggable="false" />
-              <img tabindex="0" role="button" src="../WhereWeRest/strip/web-garden.webp" width="1312" height="820" loading="lazy" decoding="async" alt="The browser prototype at eye level: the Elf House, the cherry tree and the Garden Magic House beyond the pond." draggable="false" />
               <img tabindex="0" role="button" src="../WhereWeRest/strip/r-cherry-tree.webp" data-full="../WhereWeRest/full/r-cherry-tree.webp" width="656" height="820" loading="lazy" decoding="async" alt="A render of the cherry tree against an evening sky, beside the Garden Magic House." draggable="false" />
             </div>
           </div>
-          <figcaption class="cs-figure__caption">Renders from Blender and stills from the browser prototype.</figcaption>
+          <figcaption class="cs-figure__caption">The live garden today, then renders from Blender along the way.</figcaption>
         </figure>
       </div>
     </div>
