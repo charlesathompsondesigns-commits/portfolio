@@ -2,20 +2,619 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Where We Rest — Charlesa Thompson</title>
-  <meta name="description" content="Case study by Charlesa Thompson." />
-  <meta name="theme-color" content="#fbf6e8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Where We Rest · Charlesa Thompson</title>
+  <meta name="description" content="Where We Rest: a miniature garden sculpture made in memory of my father, with laser-cut houses, hand-built trees and a koi pond, now being rebuilt as a life-size 3D world. Case study by Charlesa Thompson." />
+  <meta name="theme-color" content="#1f2b22" />
   <link rel="icon" href="/favicon-32.png?v=3" type="image/png" sizes="32x32" />
   <link rel="icon" href="/favicon-16.png?v=3" type="image/png" sizes="16x16" />
   <link rel="icon" href="/icon-192.png?v=3" type="image/png" sizes="192x192" />
   <link rel="shortcut icon" href="/favicon.ico?v=3" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3" />
-  <link rel="stylesheet" href="../styles.css?v=20261119-2" />
-  <script defer src="../nav.js?v=20261119-2"></script>
-</head>
-<body class="cs-body-page">
+  <link rel="stylesheet" href="../styles.css?v=20261120" />
+  <style>
+    /* ── Theme: a deep garden green with cream ink and blossom pink, from the sculpture ── */
+    html { background: #1f2b22; }
+    .cs-body-page--wwr {
+      --cs-bg:    rgb(31, 43, 34);      /* #1F2B22, the willow's shadow */
+      --cs-ink:   rgb(245, 237, 224);   /* #F5EDE0 */
+      --cs-muted: rgb(190, 204, 182);   /* 8.8:1 on the green */
+      --cs-rule:  rgba(245, 237, 224, 0.16);
+      --cs-card:  rgba(245, 237, 224, 0.06);
+      --wwr-blossom: #f0bfc4;
+      --wwr-gold: #e9c98b;
+    }
 
+    /* ── Green glass nav with cream ink, the same treatment as Sun-Drop's plum one ── */
+    .cs-body-page--wwr .nav {
+      background: linear-gradient(180deg, rgb(31, 43, 34) 0%, rgba(31, 43, 34, 0.82) 35%, rgba(40, 56, 44, 0.5) 100%);
+      -webkit-backdrop-filter: blur(22px) saturate(160%);
+      backdrop-filter: blur(22px) saturate(160%);
+      border-bottom: 0;
+      box-shadow: none;
+    }
+    .cs-body-page--wwr .nav::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 100%;
+      height: 22px;
+      background: linear-gradient(180deg, rgba(40, 56, 44, 0.5) 0%, rgba(40, 56, 44, 0) 100%);
+      -webkit-backdrop-filter: blur(10px) saturate(150%);
+      backdrop-filter: blur(10px) saturate(150%);
+      -webkit-mask-image: linear-gradient(180deg, #000 0%, transparent 100%);
+      mask-image: linear-gradient(180deg, #000 0%, transparent 100%);
+      pointer-events: none;
+    }
+    .cs-body-page--wwr .nav.is-open::after { opacity: 0; }
+    .cs-body-page--wwr .nav__logo,
+    .cs-body-page--wwr .nav__links a,
+    .cs-body-page--wwr .nav__toggle { color: var(--cs-ink); }
+    @media (max-width: 720px) {
+      .cs-body-page--wwr .nav__links {
+        background: linear-gradient(180deg, rgba(40, 56, 44, 0.97) 0%, rgba(31, 43, 34, 0.98) 100%);
+        -webkit-backdrop-filter: blur(30px) saturate(150%);
+        backdrop-filter: blur(30px) saturate(150%);
+      }
+      .cs-body-page--wwr .nav__links li { border-bottom-color: var(--cs-rule); }
+      .cs-body-page--wwr .nav.is-open { background: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; }
+    }
+
+    /* ── Rhythm: the same tighter spacing as the 808 and Sun-Drop pages ── */
+    .cs-body-page--wwr .cs-section { padding: clamp(40px, 6vh, 72px) 0; }
+    .cs-body-page--wwr .cs-section__head { margin-bottom: clamp(24px, 3.5vh, 36px); }
+    .cs-body-page--wwr .cs-figure { margin: clamp(24px, 3.5vh, 40px) 0; }
+    .cs-body-page--wwr .cs-quote { margin: clamp(28px, 4vh, 48px) 0; }
+    .cs-body-page--wwr .cs-quote__body { color: var(--wwr-blossom); }
+    .cs-body-page--wwr .cs-section__body > :last-child { margin-bottom: 0; }
+    .cs-body-page--wwr .cs-section__copy a { color: var(--cs-ink); text-decoration: underline; text-underline-offset: 3px; }
+
+    /* The wall closes the hero, so the hero drops its bottom padding */
+    .cs-body-page--wwr .cs-hero { padding-bottom: 0; }
+    .cs-body-page--wwr .cs-hero__pills { margin-bottom: 48px; row-gap: 16px; }
+
+    /* ── Brand wall: the centre card is the title in deep green on blossom pink. Like the
+       other case studies, it contrasts with the page so the name sits on top of the photos. ── */
+    .wwr-wall-hero {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      container-type: size;
+      background:
+        radial-gradient(ellipse 75% 65% at 36% 28%, rgba(255, 250, 246, 0.6) 0%, rgba(255, 250, 246, 0) 70%),
+        linear-gradient(135deg, #f8dcdd 0%, #f0bfc4 52%, #e2a2ad 100%);
+    }
+    .wwr-wall-hero__inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3cqh;
+      text-align: center;
+      color: #1f2b22;
+    }
+    .wwr-wall-hero__eyebrow {
+      font-family: var(--font-franklin-medium);
+      font-size: max(10px, min(2.1cqw, 4.4cqh));
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      opacity: 0.78;
+    }
+    .wwr-wall-hero__title {
+      font-family: var(--font-instrument);
+      font-weight: 400;
+      font-size: min(14.5cqw, 32cqh);
+      line-height: 0.95;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    }
+    /* Colour tiles sit in the wall like any other tile */
+    .wwr-swatch {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      gap: 2px;
+      padding: clamp(10px, 1.2vw, 18px);
+      box-sizing: border-box;
+      font-family: var(--font-franklin-medium);
+      font-size: clamp(11px, 1vw, 14px);
+      line-height: 1.25;
+      letter-spacing: 0.02em;
+    }
+    .wwr-swatch span:last-child { opacity: 0.72; }
+    /* While a photo loads its tile shows a soft frame, then the photo fades in (script below) */
+    .cs-body-page--wwr .cs-wall__tile { background: rgba(245, 237, 224, 0.08); }
+    img.cs-wall__tile, .wwr-strip__track img { transition: opacity 0.5s ease; }
+    img.wwr-fade:not(.is-loaded) { opacity: 0; }
+    @media (prefers-reduced-motion: reduce) {
+      img.cs-wall__tile, .wwr-strip__track img { transition: none; }
+    }
+    .cs-wall[data-wall-drag] .cs-wall__row { touch-action: pan-y; }
+    .cs-wall[data-wall-drag] img.cs-wall__tile { cursor: zoom-in; }
+    .cs-wall.is-dragging, .cs-wall.is-dragging img.cs-wall__tile { cursor: grabbing; }
+    .wwr-wall-note { margin: 0; padding: 16px 0 clamp(48px, 8vh, 96px); }
+
+    /* ── Featured: the sculpture in the studio light, where Sun-Drop shows its reel ── */
+    .wwr-feature { border-bottom: 0; overflow-x: clip; }
+    .wwr-feature__grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      column-gap: clamp(32px, 6vw, 96px);
+    }
+    .wwr-feature__title { margin-bottom: 20px; }
+    .wwr-feature__text {
+      max-width: 44ch;
+      margin: 0;
+      font-family: var(--font-source);
+      font-size: clamp(17px, 1.3vw, 19px);
+      line-height: 1.6;
+      color: var(--cs-ink);
+    }
+    .wwr-feature__meta {
+      margin: clamp(22px, 3vh, 30px) 0 0;
+      max-width: 44ch;
+      font-family: var(--font-franklin-medium);
+      font-size: 12px;
+      line-height: 1.7;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--cs-muted);
+    }
+    .wwr-feature__badge { margin-top: clamp(24px, 3.5vh, 34px); }
+    .wwr-reel {
+      position: relative;
+      isolation: isolate;
+      width: clamp(250px, 26vw, 340px);
+      aspect-ratio: 9 / 16;
+    }
+    /* a warm glow behind the video, the colour of the window light */
+    .wwr-reel::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      inset: -14% -32%;
+      border-radius: 50%;
+      background: radial-gradient(closest-side, rgba(233, 201, 139, 0.38), rgba(240, 191, 196, 0.12) 55%, rgba(240, 191, 196, 0));
+      filter: blur(24px);
+      pointer-events: none;
+    }
+    .wwr-reel__frame {
+      position: absolute;
+      inset: 0;
+      border-radius: 24px;
+      overflow: hidden;
+      background: #142018;
+      box-shadow: 0 50px 100px -30px rgba(6, 12, 8, 0.75), 0 18px 40px -12px rgba(6, 12, 8, 0.5);
+    }
+    .wwr-reel__frame video,
+    .wwr-walk video {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    @media (max-width: 900px) {
+      .wwr-feature__grid { grid-template-columns: 1fr; row-gap: 36px; }
+      .wwr-reel { justify-self: center; width: min(78vw, 320px); }
+    }
+
+    /* ── Exhibition badge: the same glowing pill as 808, Braid and Sun-Drop, tuned for the green page ── */
+    .cs-award {
+      position: relative;
+      isolation: isolate;
+      display: inline-grid;
+      grid-template-columns: auto auto;
+      grid-template-rows: auto auto;
+      column-gap: clamp(10px, 1.2vw, 14px);
+      row-gap: 1px;
+      align-items: center;
+      padding: clamp(8px, 0.9vw, 10px) clamp(18px, 2vw, 24px) clamp(8px, 0.9vw, 10px) clamp(8px, 0.9vw, 10px);
+      border-radius: 999px;
+      background: linear-gradient(160deg, rgba(255, 236, 190, 0.22) 0%, rgba(233, 201, 139, 0.07) 100%);
+      -webkit-backdrop-filter: blur(18px) saturate(140%);
+      backdrop-filter: blur(18px) saturate(140%);
+      border: 1px solid rgba(255, 214, 120, 0.75);
+      box-shadow: inset 0 1px 0 rgba(255, 246, 222, 0.45), 0 0 0 1px rgba(255, 199, 77, 0.4), 0 0 26px rgba(255, 186, 40, 0.45), 0 0 64px rgba(255, 186, 40, 0.2), 0 8px 24px rgba(6, 12, 8, 0.3);
+      color: var(--cs-ink);
+      animation: cs-award-pulse 2.4s ease-in-out infinite alternate;
+    }
+    .cs-award::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(105deg, rgba(255, 255, 255, 0) 38%, rgba(255, 246, 222, 0.7) 50%, rgba(255, 255, 255, 0) 62%) no-repeat;
+      background-size: 260% 100%;
+      background-position: 160% 0;
+      mix-blend-mode: soft-light;
+      pointer-events: none;
+      animation: cs-award-sheen 4.2s ease-in-out infinite;
+    }
+    .cs-award__glow {
+      position: absolute;
+      inset: -20px;
+      z-index: -1;
+      border-radius: 999px;
+      background: radial-gradient(closest-side, rgba(255, 196, 48, 0.6) 0%, rgba(255, 190, 40, 0.28) 55%, rgba(255, 176, 32, 0) 100%);
+      filter: blur(18px);
+      animation: cs-award-glow 2.4s ease-in-out infinite alternate;
+    }
+    .cs-award__medal {
+      grid-row: 1 / 3;
+      display: grid;
+      place-items: center;
+      width: clamp(34px, 3.4vw, 42px);
+      height: clamp(34px, 3.4vw, 42px);
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2f4535 0%, #18241b 100%);
+      color: #ffcf5a;
+      box-shadow: 0 0 0 1.5px rgba(255, 199, 77, 0.85), 0 0 14px rgba(255, 186, 40, 0.6);
+    }
+    .cs-award__medal svg { width: 18px; height: 18px; }
+    .cs-award__year {
+      grid-column: 2;
+      font-family: var(--font-franklin-medium);
+      font-size: clamp(9.5px, 0.85vw, 11px);
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--wwr-gold);
+      white-space: nowrap;
+    }
+    .cs-award__title {
+      grid-column: 2;
+      font-family: var(--font-instrument);
+      font-size: clamp(20px, 2vw, 26px);
+      line-height: 1;
+      color: var(--cs-ink);
+      white-space: nowrap;
+    }
+    .cs-hero__pills .cs-award { margin-left: 8px; }
+    @media (max-width: 600px) { .cs-hero__pills .cs-award { margin-left: 0; } }
+    @keyframes cs-award-glow {
+      from { opacity: 0.55; transform: scale(0.94); }
+      to   { opacity: 1;    transform: scale(1.08); }
+    }
+    @keyframes cs-award-pulse {
+      from { border-color: rgba(255, 214, 120, 0.65); }
+      to   { border-color: rgba(255, 226, 150, 1); }
+    }
+    @keyframes cs-award-sheen {
+      0%, 35% { background-position: 160% 0; }
+      75%, 100% { background-position: -60% 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .cs-award, .cs-award::after { animation: none; }
+      .cs-award__glow { animation: none; opacity: 0.9; }
+    }
+
+    /* ── How Might We: the studio light under a green wash, typed question, WebGL petals ── */
+    .wwr-hmw {
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      min-height: min(78vh, 760px);
+      padding: clamp(96px, 16vh, 180px) 0;
+      border-bottom: 0;
+      color: var(--cs-ink);
+      background: #8aa587 url("../WhereWeRest/hmw-light.jpg") center / cover no-repeat;
+      background-blend-mode: multiply;
+      -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 16%, #000 84%, transparent 100%);
+      mask-image: linear-gradient(180deg, transparent 0, #000 16%, #000 84%, transparent 100%);
+    }
+    /* a deep green glow behind the question keeps it readable over the photo */
+    .wwr-hmw::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 62% 56% at 50% 52%, rgba(20, 30, 23, 0.85) 0%, rgba(20, 30, 23, 0.5) 45%, rgba(20, 30, 23, 0) 78%);
+      pointer-events: none;
+    }
+    .wwr-hmw__gl {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .wwr-hmw__inner {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      text-align: center;
+    }
+    .wwr-hmw__q {
+      max-width: 17ch;
+      margin: 0 auto;
+      font-family: var(--font-instrument);
+      font-weight: 400;
+      font-size: clamp(38px, 5.6vw, 80px);
+      line-height: 1.08;
+      letter-spacing: -0.01em;
+      color: var(--cs-ink);
+      text-wrap: balance;
+    }
+    .wwr-sr {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+    .wwr-hmw__q .w { display: inline-block; white-space: nowrap; }
+    .wwr-hmw__q .c { position: relative; }
+    .wwr-hmw__q.is-ready .c { opacity: 0; }
+    .wwr-hmw__q.is-ready .c.on { opacity: 1; transition: opacity 90ms linear; }
+    .wwr-hmw__q.is-floating .w { animation: wwr-bob 6.5s ease-in-out infinite; animation-delay: calc(var(--i) * -0.8s); }
+    @keyframes wwr-bob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-0.06em); }
+    }
+    .wwr-caret {
+      position: absolute;
+      right: -0.08em;
+      top: 0.14em;
+      bottom: 0.1em;
+      width: 0.055em;
+      border-radius: 1px;
+      background: var(--wwr-blossom);
+      box-shadow: 0 0 10px rgba(240, 191, 196, 0.6);
+      animation: wwr-blink 1s steps(1) infinite;
+    }
+    .wwr-caret.is-out { opacity: 0; transition: opacity 0.6s ease; animation: none; }
+    @keyframes wwr-blink { 50% { opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) {
+      .wwr-hmw__q.is-floating .w, .wwr-caret { animation: none; }
+    }
+
+    /* ── Part openers: the page has two halves, the sculpture and the 3D world ── */
+    .wwr-part {
+      padding: clamp(72px, 12vh, 140px) 0 clamp(24px, 4vh, 48px);
+      text-align: center;
+      border-bottom: 0;
+    }
+    .wwr-part__label {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      font-family: var(--font-franklin-medium);
+      font-size: 13px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--wwr-blossom);
+    }
+    .wwr-part__label::before,
+    .wwr-part__label::after {
+      content: "";
+      width: clamp(28px, 5vw, 56px);
+      height: 1px;
+      background: currentColor;
+      opacity: 0.6;
+    }
+    .wwr-part__title {
+      margin: 18px auto 14px;
+      font-family: var(--font-instrument);
+      font-weight: 400;
+      font-size: clamp(48px, 7vw, 104px);
+      line-height: 1;
+      letter-spacing: -0.015em;
+      color: var(--cs-ink);
+      text-wrap: balance;
+    }
+    .wwr-part__sub {
+      margin: 0;
+      font-family: var(--font-source-italic);
+      font-style: italic;
+      font-size: clamp(16px, 1.3vw, 19px);
+      color: var(--cs-muted);
+    }
+    .wwr-part + .cs-section { border-top: 1px solid var(--cs-rule); }
+
+    /* ── The four houses and their colours ── */
+    .wwr-key {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: clamp(16px, 2vw, 28px);
+      margin: clamp(28px, 4vh, 40px) 0 0;
+      padding: 0;
+    }
+    .wwr-key li {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+    }
+    .wwr-key__dot {
+      width: clamp(40px, 3.6vw, 52px);
+      aspect-ratio: 1;
+      margin-bottom: 8px;
+      border-radius: 50%;
+      box-shadow: inset 0 0 0 1px rgba(245, 237, 224, 0.22);
+    }
+    .wwr-key__name {
+      font-family: var(--font-instrument);
+      font-size: clamp(19px, 1.6vw, 22px);
+      line-height: 1.1;
+      color: var(--cs-ink);
+      text-wrap: balance;
+    }
+    .wwr-key__hex {
+      font-family: var(--font-franklin-medium);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--cs-muted);
+    }
+    @media (max-width: 700px) {
+      .wwr-key { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 20px; }
+    }
+
+    /* ── Walking through the prototype: a quiet loop in the copy column ── */
+    .wwr-walk {
+      grid-column: 2;
+      margin: clamp(28px, 4vh, 44px) 0 0;
+    }
+    .wwr-walk__frame {
+      aspect-ratio: 1440 / 900;
+      border-radius: 18px;
+      overflow: hidden;
+      background: #142018;
+      box-shadow: 0 40px 80px -30px rgba(6, 12, 8, 0.7), 0 14px 30px -12px rgba(6, 12, 8, 0.45);
+    }
+    .wwr-walk .cs-figure__caption { text-align: left; }
+    @media (max-width: 900px) { .wwr-walk { grid-column: 1; } }
+
+    /* ── Photo galleries: the same self-scrolling strip as 808 and Sun-Drop.
+       Visitors can scroll, swipe or drag; tapping a photo opens it in the viewer. ── */
+    .wwr-strip-wrap { min-width: 0; }
+    .wwr-strip {
+      max-width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      overscroll-behavior-x: contain;
+      scrollbar-width: none;
+      cursor: grab;
+      -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 5%, #000 95%, transparent 100%);
+      mask-image: linear-gradient(90deg, transparent 0, #000 5%, #000 95%, transparent 100%);
+    }
+    .wwr-strip::-webkit-scrollbar { display: none; }
+    .wwr-strip.is-dragging { cursor: grabbing; }
+    .wwr-strip__track {
+      display: flex;
+      gap: clamp(12px, 1.4vw, 20px);
+      width: max-content;
+    }
+    .wwr-strip__track img {
+      flex: none;
+      height: clamp(220px, 28vw, 400px);
+      width: auto;
+      border-radius: 18px;
+      background: rgba(245, 237, 224, 0.06);
+      cursor: zoom-in;
+      -webkit-user-drag: none;
+      user-select: none;
+    }
+    .wwr-strip.is-dragging img { cursor: grabbing; }
+    .wwr-strip__track img:focus-visible { outline: 3px solid var(--wwr-blossom); outline-offset: -3px; }
+    @media (prefers-reduced-motion: reduce) {
+      .wwr-strip { -webkit-mask-image: none; mask-image: none; }
+      .wwr-strip__track img[aria-hidden] { display: none; }
+    }
+
+    /* ── Footer: a deeper green, since the page ink is cream ── */
+    .cs-body-page--wwr .cs-footer { background: #151e17; color: var(--cs-ink); }
+    .cs-body-page--wwr .cs-footer__back,
+    .cs-body-page--wwr .cs-footer__contact { color: var(--cs-ink); }
+
+    /* ── Photo viewer, same as the 808 and Sun-Drop pages, in green ── */
+    .wwr-lb {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: grid;
+      place-items: center;
+      padding: clamp(56px, 8vh, 80px) clamp(12px, 6vw, 96px);
+      background: rgba(12, 19, 14, 0.9);
+      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+    .wwr-lb[hidden] { display: none; }
+    .wwr-lb.is-open { opacity: 1; }
+    .wwr-lb figure {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      max-width: 100%;
+    }
+    .wwr-lb img {
+      display: block;
+      max-width: 100%;
+      max-height: calc(100vh - 2 * clamp(56px, 8vh, 80px) - 40px);
+      width: auto;
+      height: auto;
+      border-radius: 14px;
+      box-shadow: 0 40px 90px -20px rgba(0, 0, 0, 0.7), 0 12px 30px rgba(0, 0, 0, 0.35);
+      transform: scale(0.97);
+      transition: transform 0.25s ease;
+    }
+    .wwr-lb.is-open img { transform: none; }
+    .wwr-lb figcaption {
+      max-width: 60ch;
+      text-align: center;
+      font-family: var(--font-source-italic);
+      font-style: italic;
+      font-size: 15px;
+      color: rgba(245, 237, 224, 0.86);
+    }
+    .wwr-lb__count {
+      font-family: var(--font-franklin-medium);
+      font-style: normal;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      color: rgba(245, 237, 224, 0.55);
+      margin-left: 8px;
+    }
+    .wwr-lb button {
+      position: absolute;
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      border: 1px solid rgba(245, 237, 224, 0.3);
+      border-radius: 50%;
+      background: rgba(245, 237, 224, 0.12);
+      color: #f5ede0;
+      font-size: 22px;
+      line-height: 1;
+      cursor: pointer;
+    }
+    .wwr-lb button:hover { background: rgba(245, 237, 224, 0.24); }
+    .wwr-lb button:focus-visible { outline: 2px solid var(--wwr-blossom); outline-offset: 3px; }
+    .wwr-lb__close { top: 16px; right: 16px; }
+    .wwr-lb__prev { left: 16px; top: 50%; margin-top: -24px; }
+    .wwr-lb__next { right: 16px; top: 50%; margin-top: -24px; }
+    @media (max-width: 700px) {
+      .wwr-lb__prev, .wwr-lb__next { top: auto; bottom: 16px; margin-top: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .wwr-lb, .wwr-lb img { transition: none; }
+    }
+
+    /* ── Bottom glass edge (touch screens), same as the other case studies: Safari on iOS
+       tints its bottom toolbar from fixed elements touching the screen edge, so this keeps it green. ── */
+    .glass-edge { display: none; }
+    @media (max-width: 900px) {
+      .glass-edge {
+        display: block;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 90;
+        height: calc(40px + env(safe-area-inset-bottom, 0px));
+        background: linear-gradient(0deg, rgb(31, 43, 34) 0%, rgba(31, 43, 34, 0.7) 35%, rgba(40, 56, 44, 0) 100%);
+        -webkit-backdrop-filter: blur(14px) saturate(150%);
+        backdrop-filter: blur(14px) saturate(150%);
+        -webkit-mask-image: linear-gradient(0deg, #000 45%, transparent 100%);
+        mask-image: linear-gradient(0deg, #000 45%, transparent 100%);
+        pointer-events: none;
+      }
+    }
+  </style>
+  <script defer src="../nav.js?v=20261119-2"></script>
+  <script defer src="../wall.js?v=20261107"></script>
+</head>
+<body class="cs-body-page cs-body-page--wwr">
+
+  <!-- ============ Fixed Nav ============ -->
   <nav class="nav" aria-label="Primary">
     <a href="../index.html" class="nav__logo">CHAR</a>
     <ul class="nav__links">
@@ -25,24 +624,436 @@
     </ul>
   </nav>
 
+  <!-- ============ HERO ============ -->
   <header class="cs-hero">
     <div class="cs-container">
-      <p class="cs-hero__eyebrow">Project</p>
       <h1 class="cs-hero__title">Where We Rest</h1>
-      <p class="cs-hero__tagline">Case study coming soon.</p>
+      <p class="cs-hero__tagline">A small heaven on earth, in memory of my father.</p>
+      <div class="cs-hero__pills cs-hero__pills--justified">
+        <span class="cs-pill">Sculpture &amp; 3D World</span>
+        <span class="cs-pill">Artist &amp; Maker</span>
+        <span class="cs-award" role="note" aria-label="Exhibited in 2024 at the For Women, by Women Art Gallery in Chicago">
+          <span class="cs-award__glow" aria-hidden="true"></span>
+          <span class="cs-award__medal" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="1.5"/><path d="M3 15l5-5 4 4 3-3 6 6"/><circle cx="15.5" cy="8.5" r="1.3"/><path d="M8 21h8"/></svg>
+          </span>
+          <span class="cs-award__year" aria-hidden="true">Exhibited 2024</span>
+          <span class="cs-award__title" aria-hidden="true">FWBW Art Gallery</span>
+        </span>
+      </div>
+    </div>
+
+    <!-- ============ BRAND WALL ============
+         Three rows drift and travel with the scroll; the title card stays in the middle. -->
+    <div class="cs-wall" data-wall data-wall-drag>
+      <div class="cs-wall__stage">
+        <div class="cs-wall__row" data-speed="1">
+          <div class="cs-wall__track">
+            <img class="cs-wall__tile" src="../WhereWeRest/wall/sunset-wide.webp" data-full="../WhereWeRest/wall/sunset-wide.webp" width="418" height="580" style="aspect-ratio: 418 / 580" decoding="async" alt="Two unpainted masonite houses on a studio windowsill at sunset, the Chicago skyline behind them." draggable="false" />
+            <div class="cs-wall__tile wwr-swatch" style="aspect-ratio: 1 / 1; background: #F0BFC4; color: #1F2B22"><span>Blossom</span><span>#F0BFC4</span></div>
+            <img class="cs-wall__tile" src="../WhereWeRest/wall/yellow-tree-house.webp" data-full="../WhereWeRest/full/yellow-tree-house.webp" width="586" height="580" style="aspect-ratio: 586 / 580" decoding="async" alt="The grey Garden Magic House seen through the branches of the yellow tree." draggable="false" />
+            <img class="cs-wall__tile" src="../WhereWeRest/wall/golden-willow.webp" data-full="../WhereWeRest/full/golden-willow.webp" width="435" height="580" style="aspect-ratio: 435 / 580" decoding="async" alt="Window light falling across the willow and the dark red tower." draggable="false" />
+            <div class="cs-wall__tile wwr-swatch" style="aspect-ratio: 1 / 1; background: #CFA29C; color: #1F2B22"><span>Elf House</span><span>#CFA29C</span></div>
+            <img class="cs-wall__tile" src="../WhereWeRest/wall/willow-tower.webp" data-full="../WhereWeRest/full/willow-tower.webp" width="667" height="580" style="aspect-ratio: 667 / 580" decoding="async" alt="The weeping willow beside the dark red tower, cherry blossom behind." draggable="false" />
+            <img class="cs-wall__tile" src="../WhereWeRest/wall/golden-close.webp" data-full="../WhereWeRest/wall/golden-close.webp" width="466" height="580" style="aspect-ratio: 466 / 580" decoding="async" alt="The garden on its carved wooden stand in the studio, lit by the window." draggable="false" />
+            <img class="cs-wall__tile" src="../WhereWeRest/strip/r-blossom-branch.webp" data-full="../WhereWeRest/full/r-blossom-branch.webp" width="615" height="820" style="aspect-ratio: 615 / 820" decoding="async" alt="A 3D render of a cherry blossom branch for the life-size rebuild." draggable="false" />
+            <img class="cs-wall__tile" src="../WhereWeRest/wall/three-quarter.webp" data-full="../WhereWeRest/wall/three-quarter.webp" width="583" height="580" style="aspect-ratio: 583 / 580" decoding="async" alt="The whole garden from above: the pink and lilac houses, the grey house, the tower, the willow and the cherry tree." draggable="false" />
+            <div class="cs-wall__tile wwr-swatch" style="aspect-ratio: 1 / 1; background: #4C8A57; color: #F5EDE0"><span>Willow</span><span>#4C8A57</span></div>
+          </div>
+        </div>
+        <div class="cs-wall__row cs-wall__row--main" data-speed="-0.8">
+          <div class="cs-wall__track">
+            <img class="cs-wall__tile" data-wall-anchor="0.4" src="../WhereWeRest/wall/cherry-house.webp" data-full="../WhereWeRest/full/cherry-house.webp" width="600" height="900" style="aspect-ratio: 600 / 900" decoding="async" alt="The cherry blossom tree in front of the grey Garden Magic House." draggable="false" />
+            <img class="cs-wall__tile" src="../WhereWeRest/wall/sunset-cherry.webp" data-full="../WhereWeRest/strip/sunset-cherry.webp" width="703" height="900" style="aspect-ratio: 703 / 900" decoding="async" alt="The cherry tree and the unpainted houses in front of a pink and purple sunset." draggable="false" />
+            <img class="cs-wall__tile" src="../WhereWeRest/wall/overview.webp" data-full="../WhereWeRest/full/overview.webp" width="910" height="900" style="aspect-ratio: 910 / 900" decoding="async" alt="The finished garden: houses among the cherry, willow and yellow trees." draggable="false" />
+            <div class="cs-wall__tile wwr-swatch" style="aspect-ratio: 1 / 1; background: #E9C98B; color: #1F2B22"><span>Golden hour</span><span>#E9C98B</span></div>
+            <img class="cs-wall__tile" src="../WhereWeRest/wall/golden-window.webp" data-full="../WhereWeRest/full/golden-window.webp" width="720" height="896" style="aspect-ratio: 720 / 896" decoding="async" alt="The garden on its carved stand by the studio windows, Willis Tower outside." draggable="false" />
+            <img class="cs-wall__tile" src="../WhereWeRest/wall/pond.webp" data-full="../WhereWeRest/full/pond.webp" width="811" height="900" style="aspect-ratio: 811 / 900" decoding="async" alt="The koi pond from above, two orange koi in dark water, blossom petals on the grass around it." draggable="false" />
+            <img class="cs-wall__tile" data-wall-anchor="0.6" src="../WhereWeRest/wall/sunset-pair.webp" data-full="../WhereWeRest/strip/sunset-pair.webp" width="703" height="900" style="aspect-ratio: 703 / 900" decoding="async" alt="Two unpainted houses in silhouette against the sunset over the Loop." draggable="false" />
+            <img class="cs-wall__tile" src="../WhereWeRest/wall/r-blossom-macro.webp" data-full="../WhereWeRest/full/r-blossom-macro.webp" width="1125" height="900" style="aspect-ratio: 1125 / 900" decoding="async" alt="A close 3D render of cherry blossoms for the life-size rebuild." draggable="false" />
+          </div>
+        </div>
+        <div class="cs-wall__row" data-speed="1.25">
+          <div class="cs-wall__track">
+            <img class="cs-wall__tile" src="../WhereWeRest/wall/elf.webp" data-full="../WhereWeRest/full/elf.webp" width="387" height="580" style="aspect-ratio: 387 / 580" decoding="async" alt="The pink Elf House on its octagonal platform, freshly airbrushed." draggable="false" />
+            <div class="cs-wall__tile wwr-swatch" style="aspect-ratio: 1 / 1; background: #B89CAB; color: #1F2B22"><span>Gnome House</span><span>#B89CAB</span></div>
+            <img class="cs-wall__tile" src="../WhereWeRest/wall/tower.webp" data-full="../WhereWeRest/full/tower.webp" width="455" height="580" style="aspect-ratio: 455 / 580" decoding="async" alt="The dark red tower among the trees." draggable="false" />
+            <img class="cs-wall__tile" src="../WhereWeRest/wall/house-row.webp" data-full="../WhereWeRest/strip/house-row.webp" width="627" height="580" style="aspect-ratio: 627 / 580" decoding="async" alt="The pink Elf House and the dark red tower side by side under the cherry blossom." draggable="false" />
+            <div class="cs-wall__tile wwr-swatch" style="aspect-ratio: 1 / 1; background: #5B2A2C; color: #F5EDE0"><span>Tower</span><span>#5B2A2C</span></div>
+            <img class="cs-wall__tile" src="../WhereWeRest/wall/gnome.webp" data-full="../WhereWeRest/full/gnome.webp" width="355" height="580" style="aspect-ratio: 355 / 580" decoding="async" alt="The lilac Gnome House, freshly airbrushed." draggable="false" />
+            <img class="cs-wall__tile" src="../WhereWeRest/wall/r-elf.webp" data-full="../WhereWeRest/full/r-elf.webp" width="359" height="580" style="aspect-ratio: 359 / 580" decoding="async" alt="A 3D render of the Elf House, rebuilt part by part from the laser-cut files." draggable="false" />
+            <img class="cs-wall__tile" src="../WhereWeRest/wall/yellow-tree.webp" data-full="../WhereWeRest/full/yellow-tree.webp" width="586" height="580" style="aspect-ratio: 586 / 580" decoding="async" alt="The yellow tree's twisting branches and sponge foliage." draggable="false" />
+            <img class="cs-wall__tile" src="../WhereWeRest/wall/studio-tower.webp" data-full="../WhereWeRest/full/studio-tower.webp" width="453" height="580" style="aspect-ratio: 453 / 580" decoding="async" alt="The dark red tower and cherry blossom in the studio." draggable="false" />
+            <div class="cs-wall__tile wwr-swatch" style="aspect-ratio: 1 / 1; background: #A8A1A6; color: #1F2B22"><span>Garden Magic House</span><span>#A8A1A6</span></div>
+            <img class="cs-wall__tile" src="../WhereWeRest/strip/t-cherry-flowers.webp" data-full="../WhereWeRest/strip/t-cherry-flowers.webp" width="1025" height="820" style="aspect-ratio: 1025 / 820" decoding="async" alt="A 3D render of cherry flowers against a soft evening sky." draggable="false" />
+          </div>
+        </div>
+        <figure class="cs-wall__hero wwr-wall-hero" aria-hidden="true">
+          <span class="wwr-wall-hero__inner">
+            <span class="wwr-wall-hero__eyebrow">A heaven on earth</span>
+            <span class="wwr-wall-hero__title">Where We Rest</span>
+          </span>
+        </figure>
+      </div>
+    </div>
+    <div class="cs-container">
+      <p class="cs-figure__caption wwr-wall-note">The world of Where We Rest: the sculpture, the houses' colours and the first renders of the 3D garden.</p>
     </div>
   </header>
 
+  <!-- ============ FEATURED: THE STUDIO VIDEO ============ -->
+  <section class="cs-section wwr-feature" aria-label="Where We Rest in the studio">
+    <div class="cs-container wwr-feature__grid">
+      <div>
+        <h2 class="cs-section__title wwr-feature__title">Meet Where We Rest.</h2>
+        <p class="wwr-feature__text">In fall 2023 I built a small heaven on earth: laser-cut houses, hand-made trees and a koi pond, set in a garden in memory of my father. Here it is in the studio, in the window light.</p>
+        <p class="wwr-feature__meta">Sculpture final · Columbia College Chicago · Fall 2023</p>
+      </div>
+      <div class="wwr-reel">
+        <div class="wwr-reel__frame">
+          <video muted loop playsinline preload="none" poster="../WhereWeRest/feature/wwr-studio-poster.jpg" data-play-in-view aria-label="Where We Rest in the studio: window light through the willow, then a slow turn past the houses and the cherry tree">
+            <source src="../WhereWeRest/feature/wwr-studio.mp4" type="video/mp4" />
+          </video>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HOW MIGHT WE ============ -->
+  <section class="cs-section wwr-hmw" aria-labelledby="wwrHmwQ">
+    <canvas class="wwr-hmw__gl" aria-hidden="true"></canvas>
+    <div class="cs-container wwr-hmw__inner">
+      <h2 class="wwr-hmw__q" id="wwrHmwQ">How might a memory become a place you can visit?</h2>
+    </div>
+  </section>
+
+  <!-- ============ PART ONE: THE SCULPTURE ============ -->
+  <section class="wwr-part" aria-labelledby="wwrPart1">
+    <div class="cs-container">
+      <span class="wwr-part__label">Part One</span>
+      <h2 class="wwr-part__title" id="wwrPart1">Small enough to hold.</h2>
+      <p class="wwr-part__sub">The sculpture, fall 2023</p>
+    </div>
+  </section>
+
+  <!-- ============ IDEA ============ -->
   <section class="cs-section">
     <div class="cs-container">
       <header class="cs-section__head">
-        <span class="cs-section__num">— Coming Soon</span>
-        <h2 class="cs-section__title">Full case study in progress.</h2>
+        <span class="cs-section__num">Idea</span>
+        <h2 class="cs-section__title">A memorial and a gift.</h2>
       </header>
       <div class="cs-section__body">
         <div class="cs-section__copy">
-          <p class="cs-lead">The complete story — discovery, research, principles, and final design — will be published here shortly.</p>
-          <p>In the meantime, feel free to <a href="../index.html#contact" style="text-decoration: underline;">get in touch</a> for a walkthrough.</p>
+          <p class="cs-lead">I wanted Where We Rest to be a memorial to my father and, at the same time, a gift.</p>
+          <p>I imagined a heaven on earth: something beautiful in its detail that would remind me of peace and love.</p>
+          <p>Our sculpture final asked each of us to choose a focus. I chose transforming materials: taking very different materials and turning them into things you see in nature and in towns, like ponds, trees and houses.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ COLOUR ============ -->
+  <section class="cs-section">
+    <div class="cs-container">
+      <header class="cs-section__head">
+        <span class="cs-section__num">Colour</span>
+        <h2 class="cs-section__title">Every colour is someone.</h2>
+      </header>
+      <div class="cs-section__body">
+        <div class="cs-section__copy">
+          <p class="cs-lead">Each house is painted a colour that stands for someone in my life who has passed on.</p>
+          <p>I wanted the houses to feel like the ones in Studio Ghibli films such as Princess Mononoke and Ponyo. Their colours make me think of spring and rebirth, and I wanted that same feeling here. Where We Rest is rooted in remembrance, and I feel these colours represent the people it remembers best. I coloured every house with an airbrush.</p>
+          <ul class="wwr-key" aria-label="The four houses and their colours">
+            <li><span class="wwr-key__dot" style="background: #CFA29C"></span><span class="wwr-key__name">Elf House</span><span class="wwr-key__hex">Pink</span></li>
+            <li><span class="wwr-key__dot" style="background: #B89CAB"></span><span class="wwr-key__name">Gnome House</span><span class="wwr-key__hex">Lilac</span></li>
+            <li><span class="wwr-key__dot" style="background: #A8A1A6"></span><span class="wwr-key__name">Garden Magic House</span><span class="wwr-key__hex">Grey lilac</span></li>
+            <li><span class="wwr-key__dot" style="background: #5B2A2C"></span><span class="wwr-key__name">Tower</span><span class="wwr-key__hex">Deep red</span></li>
+          </ul>
+        </div>
+        <blockquote class="cs-quote">
+          <p class="cs-quote__body">"When you look at my piece, I want you to imagine blue skies, birds chirping and soft piano playing."</p>
+          <cite class="cs-quote__cite">My mission for the colours</cite>
+        </blockquote>
+        <figure class="cs-figure wwr-strip-wrap">
+          <div class="wwr-strip" data-copies="4" aria-label="Airbrushing the houses">
+            <div class="wwr-strip__track">
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/paint-tower.webp" width="615" height="820" loading="lazy" decoding="async" alt="Airbrushing one of the tower's parts a deep red." draggable="false" />
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/elf.webp" data-full="../WhereWeRest/full/elf.webp" width="547" height="820" loading="lazy" decoding="async" alt="The pink Elf House on its octagonal platform." draggable="false" />
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/gnome.webp" data-full="../WhereWeRest/full/gnome.webp" width="502" height="820" loading="lazy" decoding="async" alt="The lilac Gnome House." draggable="false" />
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/garden-magic.webp" data-full="../WhereWeRest/full/garden-magic.webp" width="549" height="820" loading="lazy" decoding="async" alt="The grey lilac Garden Magic House, with its clock window." draggable="false" />
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/pink-pair.webp" data-full="../WhereWeRest/full/pink-pair.webp" width="756" height="820" loading="lazy" decoding="async" alt="The Gnome House and the Garden Magic House side by side after painting." draggable="false" />
+            </div>
+          </div>
+          <figcaption class="cs-figure__caption">Airbrushing, then the houses in their colours. Drag or tap to look closer.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HOUSES ============ -->
+  <section class="cs-section">
+    <div class="cs-container">
+      <header class="cs-section__head">
+        <span class="cs-section__num">Houses</span>
+        <h2 class="cs-section__title">Cut by laser, built by hand.</h2>
+      </header>
+      <div class="cs-section__body">
+        <div class="cs-section__copy">
+          <p class="cs-lead">I wanted the houses to look as whimsical as possible, but also clean and grand.</p>
+          <p>I knew I wouldn't have time to make every house from scratch, so I found patterns on Etsy by Ivan Bilous, then laser cut and built them myself. Each house is cut from 1/8 inch masonite, and each one took about an hour to cut and another hour to build.</p>
+        </div>
+        <figure class="cs-figure wwr-strip-wrap">
+          <div class="wwr-strip" data-copies="4" aria-label="Laser cutting and building the houses">
+            <div class="wwr-strip__track">
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/cut-sheet.webp" width="615" height="820" loading="lazy" decoding="async" alt="A freshly laser-cut sheet of masonite: windows, arches and shingles still in the board." draggable="false" />
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/raw-tower.webp" width="550" height="820" loading="lazy" decoding="async" alt="The tower assembled from raw masonite, before paint." draggable="false" />
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/raw-house-window.webp" data-full="../WhereWeRest/full/raw-house-window.webp" width="577" height="820" loading="lazy" decoding="async" alt="The Garden Magic House in raw masonite on a desk by the window, Willis Tower behind." draggable="false" />
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/raw-parts.webp" width="592" height="820" loading="lazy" decoding="async" alt="Unpainted houses on the workbench beside the first glue-covered tree armatures." draggable="false" />
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/sunset-pair.webp" width="640" height="820" loading="lazy" decoding="async" alt="Two finished, unpainted houses on the studio windowsill at sunset." draggable="false" />
+            </div>
+          </div>
+          <figcaption class="cs-figure__caption">From the cut sheet to finished houses, before colour.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TREES ============ -->
+  <section class="cs-section">
+    <div class="cs-container">
+      <header class="cs-section__head">
+        <span class="cs-section__num">Trees</span>
+        <h2 class="cs-section__title">Wire, hot glue and sponge.</h2>
+      </header>
+      <div class="cs-section__body">
+        <div class="cs-section__copy">
+          <p class="cs-lead">Every tree starts as a twisted wire armature. I learned the technique from Geordie Crafts on YouTube.</p>
+          <p>I covered the wire in hot glue and textured it with a wood burner on its lowest setting until it looked like bark. Then I airbrushed the glue black and dry brushed it so the texture caught the light. The leaves are chopped up sponge.</p>
+        </div>
+        <figure class="cs-figure wwr-strip-wrap">
+          <div class="wwr-strip" data-copies="4" aria-label="Making the trees">
+            <div class="wwr-strip__track">
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/armature.webp" data-full="../WhereWeRest/full/armature.webp" width="549" height="820" loading="lazy" decoding="async" alt="A finished tree trunk with hot glue bark and its first sponge foliage, standing on a table." draggable="false" />
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/cherry-glove.webp" data-full="../WhereWeRest/full/cherry-glove.webp" width="549" height="820" loading="lazy" decoding="async" alt="Adding pink blossom to the cherry tree with a gloved hand." draggable="false" />
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/flocking.webp" width="592" height="820" loading="lazy" decoding="async" alt="The willow's black armature on a painting board, ready for foliage." draggable="false" />
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/willow.webp" data-full="../WhereWeRest/full/willow.webp" width="547" height="820" loading="lazy" decoding="async" alt="The finished willow: gnarled limbs and long hanging green foliage." draggable="false" />
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/yellow-tree.webp" data-full="../WhereWeRest/full/yellow-tree.webp" width="594" height="820" loading="lazy" decoding="async" alt="The finished yellow tree, its branches tipped with yellow foliage." draggable="false" />
+            </div>
+          </div>
+          <figcaption class="cs-figure__caption">From wire and glue to the finished willow and yellow tree.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GROUND ============ -->
+  <section class="cs-section">
+    <div class="cs-container">
+      <header class="cs-section__head">
+        <span class="cs-section__num">Ground</span>
+        <h2 class="cs-section__title">Foam, light and a koi pond.</h2>
+      </header>
+      <div class="cs-section__body">
+        <div class="cs-section__copy">
+          <p class="cs-lead">The base is purple insulation foam, carved with carving tools and an X-Acto knife.</p>
+          <p>I carved a track for the LED lights and holes for the tree trunks. The koi pond and its fish are sculpted from two-part epoxy clay, and I painted the fish with watered-down acrylics. SugarCharmShop on YouTube taught me how.</p>
+        </div>
+        <figure class="cs-figure wwr-strip-wrap">
+          <div class="wwr-strip" data-copies="4" aria-label="Carving the base and making the pond">
+            <div class="wwr-strip__track">
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/foam-base.webp" width="592" height="820" loading="lazy" decoding="async" alt="The carved purple foam base with the pond hollow and a path, the houses waiting behind it." draggable="false" />
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/carving.webp" width="592" height="820" loading="lazy" decoding="async" alt="Carving the path and pond into the foam base." draggable="false" />
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/pond-paint.webp" width="623" height="820" loading="lazy" decoding="async" alt="The epoxy clay pond and rocks on foil, next to a set of paints." draggable="false" />
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/pond.webp" data-full="../WhereWeRest/full/pond.webp" width="547" height="820" loading="lazy" decoding="async" alt="The finished koi pond from above, two orange koi in dark water." draggable="false" />
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/base-assembly.webp" width="577" height="820" loading="lazy" decoding="async" alt="Placing the trees and the tower on the foam base." draggable="false" />
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/top-down.webp" data-full="../WhereWeRest/full/top-down.webp" width="700" height="820" loading="lazy" decoding="async" alt="The garden from above: the pond in the middle, the willow in front, the cherry tree at the back." draggable="false" />
+            </div>
+          </div>
+          <figcaption class="cs-figure__caption">Carving the foam, making the pond and bringing it all together.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FINISHED ============ -->
+  <section class="cs-section">
+    <div class="cs-container">
+      <header class="cs-section__head">
+        <span class="cs-section__num">Finished</span>
+        <h2 class="cs-section__title">A garden to rest in.</h2>
+      </header>
+      <div class="cs-section__body">
+        <div class="cs-section__copy">
+          <p class="cs-lead">I finished Where We Rest in December 2023, seven weeks after I started: four houses, four trees and a koi pond, small enough to sit on a table.</p>
+          <p>In spring 2024 it was shown in the For Women, by Women Art Gallery's 3rd Annual Exhibition at 618 S. Michigan Ave in Chicago, from April 26 to August 1.</p>
+        </div>
+        <figure class="cs-figure wwr-strip-wrap">
+          <div class="wwr-strip" data-copies="3" aria-label="The finished sculpture">
+            <div class="wwr-strip__track">
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/cherry-house.webp" data-full="../WhereWeRest/full/cherry-house.webp" width="547" height="820" loading="lazy" decoding="async" alt="The cherry blossom tree in front of the grey Garden Magic House." draggable="false" />
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/overview.webp" data-full="../WhereWeRest/full/overview.webp" width="547" height="820" loading="lazy" decoding="async" alt="The houses among the cherry, willow and yellow trees." draggable="false" />
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/golden-willow.webp" data-full="../WhereWeRest/full/golden-willow.webp" width="536" height="820" loading="lazy" decoding="async" alt="Window light falling across the willow and the dark red tower." draggable="false" />
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/tower.webp" data-full="../WhereWeRest/full/tower.webp" width="547" height="820" loading="lazy" decoding="async" alt="The dark red tower among the trees." draggable="false" />
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/golden-window.webp" data-full="../WhereWeRest/full/golden-window.webp" width="549" height="820" loading="lazy" decoding="async" alt="The garden on its carved stand by the studio windows." draggable="false" />
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/willow-tower.webp" data-full="../WhereWeRest/full/willow-tower.webp" width="684" height="820" loading="lazy" decoding="async" alt="The weeping willow beside the dark red tower." draggable="false" />
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/yellow-tree-house.webp" data-full="../WhereWeRest/full/yellow-tree-house.webp" width="547" height="820" loading="lazy" decoding="async" alt="The Garden Magic House seen through the yellow tree." draggable="false" />
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/house-row.webp" width="640" height="820" loading="lazy" decoding="async" alt="The Elf House and the tower side by side under the cherry blossom." draggable="false" />
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/studio-tower.webp" data-full="../WhereWeRest/full/studio-tower.webp" width="562" height="820" loading="lazy" decoding="async" alt="The tower and cherry blossom in the studio." draggable="false" />
+            </div>
+          </div>
+          <figcaption class="cs-figure__caption">The finished sculpture.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PART TWO: THE 3D WORLD ============ -->
+  <section class="wwr-part" aria-labelledby="wwrPart2">
+    <div class="cs-container">
+      <span class="wwr-part__label">Part Two</span>
+      <h2 class="wwr-part__title" id="wwrPart2">Big enough to walk into.</h2>
+      <p class="wwr-part__sub">The 3D world, 2026, in progress</p>
+    </div>
+  </section>
+
+  <!-- ============ VISION ============ -->
+  <section class="cs-section">
+    <div class="cs-container">
+      <header class="cs-section__head">
+        <span class="cs-section__num">Vision</span>
+        <h2 class="cs-section__title">From a tabletop to a place.</h2>
+      </header>
+      <div class="cs-section__body">
+        <div class="cs-section__copy">
+          <p class="cs-lead">In November 2026 I started rebuilding Where We Rest at life size, as a garden you can walk through.</p>
+          <p>The goal is a website that runs on Apple Vision Pro, so you can stand inside the garden instead of looking down at it. I'm aiming for magical realism weighted heavily toward realism: a place that could possibly exist, with low golden light like the studio video, bark detail that shines and flowers that look real. Not a cartoon, and not a photo of the miniature.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HOUSES IN 3D ============ -->
+  <section class="cs-section">
+    <div class="cs-container">
+      <header class="cs-section__head">
+        <span class="cs-section__num">Houses</span>
+        <h2 class="cs-section__title">Every part, rebuilt.</h2>
+      </header>
+      <div class="cs-section__body">
+        <div class="cs-section__copy">
+          <p class="cs-lead">I rebuilt each house in Blender from the same laser-cut files, one part at a time.</p>
+          <p>Every part is extruded to 1/8 inch, the thickness of the masonite, then fitted together the way the real house goes together. The Etsy account I bought the patterns with is closed and the instructions were never recovered, so I worked out the assembly from how the slots and tabs fit and from the seller's listing photos.</p>
+        </div>
+        <figure class="cs-figure wwr-strip-wrap">
+          <div class="wwr-strip" data-copies="4" aria-label="The houses rebuilt in Blender">
+            <div class="wwr-strip__track">
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/r-elf-parts.webp" data-full="../WhereWeRest/full/r-elf-parts.webp" width="1802" height="820" loading="lazy" decoding="async" alt="Every flat part of the Elf House laid out in Blender, each extruded to 1/8 inch." draggable="false" />
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/r-elf.webp" data-full="../WhereWeRest/full/r-elf.webp" width="541" height="820" loading="lazy" decoding="async" alt="A render of the Elf House assembled from its parts." draggable="false" />
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/r-garden.webp" data-full="../WhereWeRest/full/r-garden.webp" width="541" height="820" loading="lazy" decoding="async" alt="A render of the Garden Magic House assembled from its parts." draggable="false" />
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/r-gnome.webp" data-full="../WhereWeRest/full/r-gnome.webp" width="541" height="820" loading="lazy" decoding="async" alt="A render of the Gnome House assembled from its parts." draggable="false" />
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/r-tower.webp" data-full="../WhereWeRest/full/r-tower.webp" width="541" height="820" loading="lazy" decoding="async" alt="A render of the tower assembled from its parts." draggable="false" />
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/r-painted.webp" data-full="../WhereWeRest/full/r-painted.webp" width="615" height="820" loading="lazy" decoding="async" alt="A first colour layout: the houses in their sculpture colours on a green square." draggable="false" />
+            </div>
+          </div>
+          <figcaption class="cs-figure__caption">The flat parts, the four houses assembled, and a first colour layout.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TREES IN 3D ============ -->
+  <section class="cs-section">
+    <div class="cs-container">
+      <header class="cs-section__head">
+        <span class="cs-section__num">Trees</span>
+        <h2 class="cs-section__title">Studying real trees.</h2>
+      </header>
+      <div class="cs-section__body">
+        <div class="cs-section__copy">
+          <p class="cs-lead">Each tree is based on a real species, studied for its bark and the way it grows.</p>
+          <p>The willow comes first: thick, gnarled limbs from a low base and long hanging shoots. The cherry blossom has a rounded crown and glossy, banded bark. The purple tree was always meant to be a tree that blooms lavender, and the yellow one is a real yellow-flowering tree fitted to the twisting trunk from the sculpture. All four are still in progress.</p>
+        </div>
+        <figure class="cs-figure wwr-strip-wrap">
+          <div class="wwr-strip" data-copies="3" aria-label="Tree studies in progress">
+            <div class="wwr-strip__track">
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/r-blossom-branch.webp" data-full="../WhereWeRest/full/r-blossom-branch.webp" width="615" height="820" loading="lazy" decoding="async" alt="A render of a cherry blossom branch." draggable="false" />
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/t-cherry-flowers.webp" width="1025" height="820" loading="lazy" decoding="async" alt="A render of cherry flowers against a soft evening sky." draggable="false" />
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/t-cherry-bark.webp" data-full="../WhereWeRest/full/t-cherry-bark.webp" width="656" height="820" loading="lazy" decoding="async" alt="A render of glossy, banded cherry bark." draggable="false" />
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/t-golden-flowers.webp" width="1093" height="820" loading="lazy" decoding="async" alt="A render of the yellow tree's flowers." draggable="false" />
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/t-lavender-flowers.webp" width="1025" height="820" loading="lazy" decoding="async" alt="A render of lavender blooms on the purple tree." draggable="false" />
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/t-lavender-full.webp" data-full="../WhereWeRest/full/t-lavender-full.webp" width="946" height="820" loading="lazy" decoding="async" alt="A render of the whole lavender tree, with lavender growing round its trunk." draggable="false" />
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/r-blossom-macro.webp" data-full="../WhereWeRest/full/r-blossom-macro.webp" width="1025" height="820" loading="lazy" decoding="async" alt="A close render of cherry blossoms." draggable="false" />
+            </div>
+          </div>
+          <figcaption class="cs-figure__caption">Tree studies in progress: cherry blossom and bark, the yellow tree's flowers and the lavender tree.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WALK ============ -->
+  <section class="cs-section">
+    <div class="cs-container">
+      <header class="cs-section__head">
+        <span class="cs-section__num">Walk</span>
+        <h2 class="cs-section__title">A garden you can walk through.</h2>
+      </header>
+      <div class="cs-section__body">
+        <div class="cs-section__copy">
+          <p class="cs-lead">The garden runs in the browser with three.js.</p>
+          <p>You drag to look around and tap the ground to walk, or use W, A, S and D. You can zoom out over the whole garden, and the houses and trunks are solid, so you can't walk through them. One millimetre of the sculpture becomes five centimetres.</p>
+        </div>
+        <figure class="wwr-walk">
+          <div class="wwr-walk__frame">
+            <video muted loop playsinline preload="none" poster="../WhereWeRest/feature/wwr-walk-poster.jpg" data-play-in-view aria-label="Walking through the browser prototype, past the Gnome House and the willow toward the pond and the Garden Magic House">
+              <source src="../WhereWeRest/feature/wwr-walk.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <figcaption class="cs-figure__caption">Walking toward the pond in the browser prototype, which still has the early trees.</figcaption>
+        </figure>
+        <figure class="cs-figure wwr-strip-wrap">
+          <div class="wwr-strip" data-copies="3" aria-label="The garden in 3D">
+            <div class="wwr-strip__track">
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/r-realistic.webp" data-full="../WhereWeRest/full/r-realistic.webp" width="1093" height="820" loading="lazy" decoding="async" alt="A render of the garden: the Gnome House under the cherry tree, the willow and the tower behind." draggable="false" />
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/web-pond.webp" width="1312" height="820" loading="lazy" decoding="async" alt="The browser prototype at eye level: the koi pond, the tower and the willow." draggable="false" />
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/r-overview.webp" data-full="../WhereWeRest/full/r-overview.webp" width="1093" height="820" loading="lazy" decoding="async" alt="A render of the garden with real leaves, grass and blossom." draggable="false" />
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/web-garden.webp" width="1312" height="820" loading="lazy" decoding="async" alt="The browser prototype at eye level: the Elf House, the cherry tree and the Garden Magic House beyond the pond." draggable="false" />
+              <img tabindex="0" role="button" src="../WhereWeRest/strip/r-cherry-tree.webp" data-full="../WhereWeRest/full/r-cherry-tree.webp" width="656" height="820" loading="lazy" decoding="async" alt="A render of the cherry tree against an evening sky, beside the Garden Magic House." draggable="false" />
+            </div>
+          </div>
+          <figcaption class="cs-figure__caption">Renders from Blender and stills from the browser prototype.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ NEXT ============ -->
+  <section class="cs-section">
+    <div class="cs-container">
+      <header class="cs-section__head">
+        <span class="cs-section__num">Next</span>
+        <h2 class="cs-section__title">Still growing.</h2>
+      </header>
+      <div class="cs-section__body">
+        <div class="cs-section__copy">
+          <p class="cs-lead">The 3D garden is still a work in progress.</p>
+          <p>Next I'll finish the trees and bring them into the scene, and give the houses wood grain, weathering and window glass. Then the garden goes online, to be tested on a real Vision Pro. When you can walk through it, it will be here.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CREDITS ============ -->
+  <section class="cs-section">
+    <div class="cs-container">
+      <header class="cs-section__head">
+        <span class="cs-section__num">Credits</span>
+        <h2 class="cs-section__title">Thank you.</h2>
+      </header>
+      <div class="cs-section__body">
+        <div class="cs-section__copy">
+          <p>House designs © Ivan Bilous, from his Etsy shop VectorPainter. I learned the tree technique from Geordie Crafts and the koi pond from SugarCharmShop, both on YouTube.</p>
         </div>
       </div>
     </div>
@@ -58,6 +1069,7 @@
     </div>
   </section>
 
+  <!-- ============ FOOTER ============ -->
   <footer class="cs-footer">
     <div class="cs-container">
       <div class="cs-footer__row">
@@ -67,5 +1079,405 @@
     </div>
   </footer>
 
+  <script>
+    /* Wall and gallery photos fade in once loaded. One capturing listener on the page covers
+       the copies that wall.js and the galleries add later. */
+    (function () {
+      var sel = 'img.cs-wall__tile, .wwr-strip__track img';
+      document.addEventListener('load', function (e) {
+        var t = e.target;
+        if (t.tagName === 'IMG' && t.matches(sel)) t.classList.add('is-loaded');
+      }, true);
+      Array.prototype.forEach.call(document.querySelectorAll(sel), function (img) {
+        if (img.complete && img.naturalWidth) img.classList.add('is-loaded');
+        else img.classList.add('wwr-fade');
+      });
+    })();
+
+    /* Photo viewer shared by the wall and the galleries. */
+    var wwrViewer = (function () {
+      var lb = document.createElement('div');
+      lb.className = 'wwr-lb';
+      lb.hidden = true;
+      lb.setAttribute('role', 'dialog');
+      lb.setAttribute('aria-modal', 'true');
+      lb.setAttribute('aria-label', 'Photo viewer');
+      lb.innerHTML = '<button class="wwr-lb__close" type="button" aria-label="Close">×</button>' +
+        '<button class="wwr-lb__prev" type="button" aria-label="Previous photo">‹</button>' +
+        '<figure><img alt="" /><figcaption></figcaption></figure>' +
+        '<button class="wwr-lb__next" type="button" aria-label="Next photo">›</button>';
+      document.body.appendChild(lb);
+      var img = lb.querySelector('img'), cap = lb.querySelector('figcaption');
+      var list = [], index = 0, back = null;
+
+      function show() {
+        var el = list[index];
+        img.src = el.getAttribute('data-full') || el.getAttribute('src');
+        img.alt = el.getAttribute('alt') || '';
+        cap.textContent = img.alt;
+        if (list.length > 1) {
+          var n = document.createElement('span');
+          n.className = 'wwr-lb__count';
+          n.textContent = (index + 1) + ' / ' + list.length;
+          cap.appendChild(n);
+        }
+      }
+      function open(items, i) {
+        list = items;
+        index = i;
+        back = document.activeElement;
+        lb.querySelector('.wwr-lb__prev').hidden = lb.querySelector('.wwr-lb__next').hidden = items.length < 2;
+        show();
+        lb.hidden = false;
+        document.documentElement.style.overflow = 'hidden';
+        requestAnimationFrame(function () { lb.classList.add('is-open'); });
+        lb.querySelector('.wwr-lb__close').focus();
+      }
+      function close() {
+        lb.classList.remove('is-open');
+        document.documentElement.style.overflow = '';
+        setTimeout(function () { lb.hidden = true; img.removeAttribute('src'); }, 250);
+        if (back && back.focus) back.focus();
+      }
+      function step(d) { index = (index + d + list.length) % list.length; show(); }
+
+      lb.addEventListener('click', function (e) {
+        if (e.target.closest('.wwr-lb__close')) return close();
+        if (e.target.closest('.wwr-lb__prev')) return step(-1);
+        if (e.target.closest('.wwr-lb__next')) return step(1);
+        if (e.target === lb || e.target.tagName === 'FIGURE') close();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (lb.hidden) return;
+        if (e.key === 'Escape') close();
+        else if (e.key === 'ArrowLeft' && list.length > 1) step(-1);
+        else if (e.key === 'ArrowRight' && list.length > 1) step(1);
+      });
+      return { open: open };
+    })();
+
+    /* Videos play only while on screen, muted (autoplay rules), and pause when scrolled away. */
+    Array.prototype.forEach.call(document.querySelectorAll('video[data-play-in-view]'), function (video) {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        video.setAttribute('controls', '');
+        return;
+      }
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (e) {
+          if (e[e.length - 1].isIntersecting) video.play().catch(function () {});
+          else video.pause();
+        }, { threshold: 0.25 }).observe(video);
+      } else {
+        video.setAttribute('controls', '');
+      }
+    });
+
+    /* Photo galleries: drift on their own, but visitors can scroll, swipe or drag them.
+       Hovering pauses; after a manual move each strip waits a moment, then carries on.
+       The script adds copies of the set (data-copies in all) so the loop never shows a gap.
+       Same behaviour as the 808 and Sun-Drop photo strips. */
+    Array.prototype.forEach.call(document.querySelectorAll('.wwr-strip'), function (box) {
+      var track = box.querySelector('.wwr-strip__track');
+      var originals = [].slice.call(track.querySelectorAll('img'));
+      var copies = parseInt(box.getAttribute('data-copies'), 10) || 4;
+      for (var c = 1; c < copies; c++) {
+        originals.forEach(function (img) {
+          var k = img.cloneNode(true);
+          k.setAttribute('aria-hidden', 'true');
+          k.removeAttribute('tabindex');
+          k.removeAttribute('role');
+          k.alt = '';
+          track.appendChild(k);
+        });
+      }
+      var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var SPEED = 30, set = 0, carry = 0, last = 0, hover = false, resumeAt = 0, running = false, drag = null;
+
+      function measure() {
+        if (still) return;
+        set = track.scrollWidth / copies;
+        if (box.scrollLeft < set * 0.5) box.scrollLeft = set;
+      }
+      function wrap() {
+        if (still || !set) return;
+        var d = 0;
+        if (box.scrollLeft >= set * (copies / 2 + 0.5)) d = -set;
+        else if (box.scrollLeft < set * 0.5) d = set;
+        if (d) { box.scrollLeft += d; if (drag) drag.start += d; }
+      }
+      function hold(ms) { resumeAt = performance.now() + (ms || 2500); }
+      function frame(t) {
+        if (!running) return;
+        var dt = last ? Math.min(t - last, 80) : 16;
+        last = t;
+        if (!still && !hover && !drag && t >= resumeAt) {
+          carry += SPEED * dt / 1000;
+          var px = Math.floor(carry);
+          if (px) { box.scrollLeft += px; carry -= px; }
+        }
+        wrap();
+        requestAnimationFrame(frame);
+      }
+
+      box.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') hover = true; });
+      box.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') hover = false; });
+      box.addEventListener('wheel', function () { hold(); }, { passive: true });
+      box.addEventListener('touchstart', function () { hold(3500); }, { passive: true });
+      box.addEventListener('scroll', wrap, { passive: true });
+
+      // mouse drag (touch and trackpads scroll natively)
+      box.addEventListener('pointerdown', function (e) {
+        if (e.pointerType !== 'mouse' || e.button) return;
+        drag = { x: e.clientX, start: box.scrollLeft, moved: false };
+      });
+      window.addEventListener('pointermove', function (e) {
+        if (!drag) return;
+        var dx = e.clientX - drag.x;
+        if (!drag.moved && Math.abs(dx) > 5) { drag.moved = true; box.classList.add('is-dragging'); }
+        if (drag.moved) box.scrollLeft = drag.start - dx;
+      });
+      window.addEventListener('pointerup', function () {
+        if (!drag) return;
+        if (drag.moved) {
+          var swallow = function (ev) { ev.stopPropagation(); ev.preventDefault(); };
+          box.addEventListener('click', swallow, true);
+          setTimeout(function () { box.removeEventListener('click', swallow, true); }, 60);
+        }
+        box.classList.remove('is-dragging');
+        drag = null;
+        hold();
+      });
+
+      // open a photo
+      function openFrom(el) {
+        var src = el.getAttribute('src');
+        var i = originals.findIndex(function (o) { return o.getAttribute('src') === src; });
+        wwrViewer.open(originals, Math.max(0, i));
+      }
+      box.addEventListener('click', function (e) {
+        var el = e.target.closest('img');
+        if (el) openFrom(el);
+      });
+      box.addEventListener('keydown', function (e) {
+        if ((e.key === 'Enter' || e.key === ' ') && e.target.tagName === 'IMG') { e.preventDefault(); openFrom(e.target); }
+      });
+
+      measure();
+      window.addEventListener('load', measure);
+      window.addEventListener('resize', function () { set = track.scrollWidth / copies; });
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (en) {
+          if (en[en.length - 1].isIntersecting) { if (!running) { running = true; last = 0; measure(); requestAnimationFrame(frame); } }
+          else running = false;
+        }).observe(box);
+      } else {
+        running = true;
+        requestAnimationFrame(frame);
+      }
+    });
+
+    /* Wall: tap or click any photo (clones included) to open it */
+    (function () {
+      var wall = document.querySelector('.cs-wall[data-wall-drag]');
+      if (!wall) return;
+      wall.addEventListener('click', function (e) {
+        var tile = e.target.closest('img.cs-wall__tile');
+        if (!tile) return;
+        var originals = [].slice.call(wall.querySelectorAll('img.cs-wall__tile:not([aria-hidden])'));
+        var src = tile.getAttribute('src');
+        var i = originals.findIndex(function (o) { return o.getAttribute('src') === src; });
+        wwrViewer.open(originals, Math.max(0, i));
+      });
+    })();
+
+    /* How Might We: type the question out, then let the words float, over a WebGL layer
+       of blossom petals drifting down through a shaft of window light. */
+    Array.prototype.forEach.call(document.querySelectorAll('.wwr-hmw'), function (sec) {
+      var q = sec.querySelector('.wwr-hmw__q');
+      var canvas = sec.querySelector('.wwr-hmw__gl');
+      var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      /* ---- Typed question ---- */
+      var text = q.textContent.trim();
+      var chars = [];
+      var vis = document.createElement('span');
+      vis.setAttribute('aria-hidden', 'true');
+      text.split(' ').forEach(function (word, i) {
+        if (i) vis.appendChild(document.createTextNode(' '));
+        var w = document.createElement('span');
+        w.className = 'w';
+        w.style.setProperty('--i', i);
+        word.split('').forEach(function (ch) {
+          var c = document.createElement('span');
+          c.className = 'c';
+          c.textContent = ch;
+          w.appendChild(c);
+          chars.push(c);
+        });
+        vis.appendChild(w);
+      });
+      q.innerHTML = '<span class="wwr-sr">' + text + '</span>';
+      q.appendChild(vis);
+
+      function settle(caret) {
+        q.classList.add('is-floating');
+        if (caret) setTimeout(function () { caret.classList.add('is-out'); }, 3200);
+      }
+
+      if (still) {
+        settle(null);
+      } else {
+        q.classList.add('is-ready');
+        var caret = document.createElement('span');
+        caret.className = 'wwr-caret';
+        chars[0].appendChild(caret);
+        var typed = false;
+        var typeIt = function () {
+          if (typed) return;
+          typed = true;
+          var pace = Math.min(1, 56 / chars.length), at = [], tsum = 0;
+          for (var k = 0; k < chars.length; k++) {
+            at.push(tsum);
+            var nxt = chars[k + 1];
+            tsum += (38 + Math.random() * 34) * pace + (nxt && !nxt.previousSibling ? 90 * pace : 0);
+          }
+          var i = 0, t0 = performance.now();
+          (function tick() {
+            var now = performance.now() - t0;
+            while (i < chars.length && at[i] <= now) {
+              chars[i].classList.add('on');
+              chars[i].appendChild(caret);
+              i++;
+            }
+            if (i >= chars.length) return settle(caret);
+            setTimeout(tick, 16);
+          })();
+        };
+        if ('IntersectionObserver' in window) {
+          var tio = new IntersectionObserver(function (e) {
+            if (e[0].isIntersecting) { tio.disconnect(); setTimeout(typeIt, 250); }
+          }, { threshold: 0.45 });
+          tio.observe(sec);
+        } else {
+          typeIt();
+        }
+      }
+
+      /* ---- WebGL petals in a shaft of light ---- */
+      var gl = canvas.getContext('webgl', { alpha: true, premultipliedAlpha: true, antialias: false });
+      if (!gl) return;   // the CSS stage still stands on its own
+
+      var vsrc = 'attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}';
+      var fsrc = [
+        'precision mediump float;',
+        'uniform vec2 uRes;uniform float uTime;uniform vec2 uLight;',
+        'float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}',
+        /* one layer of falling, turning petals; returns coverage and a per-petal random */
+        'vec2 petals(vec2 uv,float sc,float sp,float sz,float soft,float t){',
+        '  vec2 p=uv*sc;p.y+=t*sp;',
+        '  p.x+=.28*sin(t*.5+p.y*.9);',
+        '  vec2 id=floor(p);vec2 f=fract(p)-.5;',
+        '  float r=h(id);',
+        '  vec2 o=vec2(h(id+3.1),h(id+7.7))-.5;',
+        '  f-=o*.55;',
+        '  float a=t*(.35+.5*r)+r*6.283;',
+        '  vec2 q=mat2(cos(a),-sin(a),sin(a),cos(a))*f;',
+        '  q.x/=.35+.65*abs(sin(t*(.6+r)+r*9.));',
+        '  float d=length(q*vec2(1.,1.9));',
+        '  float m=(1.-smoothstep(sz*soft,sz,d))*step(.66,r);',
+        '  return vec2(m,r);',
+        '}',
+        'void main(){',
+        '  vec2 q=gl_FragCoord.xy/uRes;',
+        '  vec2 uv=gl_FragCoord.xy/uRes.y;',
+        '  float t=uTime;',
+        '  vec2 d=(q-uLight)*vec2(uRes.x/uRes.y*.55,1.);',
+        '  float beam=1.-smoothstep(0.,.68,length(d));',
+        '  vec2 A=petals(uv,4.5,.16,.17,.45,t),B=petals(uv+11.,7.,.22,.15,.55,t),C=petals(uv+23.,11.,.3,.13,.2,t);',
+        '  float m=A.x*.9+B.x*.6+C.x*.3;',
+        '  vec3 pink=vec3(.96,.64,.71);vec3 cream=vec3(1.,.88,.86);',
+        '  vec3 pc=mix(pink,cream,(A.y+B.y)*.3);',
+        '  float lit=.5+.65*beam;',
+        '  float al=clamp(beam*.14+m*lit*.85,0.,1.);',
+        '  vec3 col=vec3(1.,.86,.62)*beam*.14+pc*m*lit*.85;',
+        '  gl_FragColor=vec4(col,al);',
+        '}'
+      ].join('\n');
+
+      function shader(type, src) {
+        var sh = gl.createShader(type);
+        gl.shaderSource(sh, src);
+        gl.compileShader(sh);
+        return gl.getShaderParameter(sh, gl.COMPILE_STATUS) ? sh : null;
+      }
+      var vs = shader(gl.VERTEX_SHADER, vsrc), fs = shader(gl.FRAGMENT_SHADER, fsrc);
+      if (!vs || !fs) return;
+      var prog = gl.createProgram();
+      gl.attachShader(prog, vs);
+      gl.attachShader(prog, fs);
+      gl.linkProgram(prog);
+      if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
+      gl.useProgram(prog);
+
+      var buf = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+      var loc = gl.getAttribLocation(prog, 'p');
+      gl.enableVertexAttribArray(loc);
+      gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+      gl.enable(gl.BLEND);
+      gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+
+      var uRes = gl.getUniformLocation(prog, 'uRes');
+      var uTime = gl.getUniformLocation(prog, 'uTime');
+      var uLight = gl.getUniformLocation(prog, 'uLight');
+
+      var light = { x: 0.5, y: 1.05 }, aim = { x: 0.5, y: 1.05 };
+      function resize() {
+        var dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+        var w = Math.round(sec.clientWidth * dpr), h = Math.round(sec.clientHeight * dpr);
+        if (canvas.width !== w || canvas.height !== h) {
+          canvas.width = w;
+          canvas.height = h;
+          gl.viewport(0, 0, w, h);
+        }
+        gl.uniform2f(uRes, w, h);
+      }
+      function draw(time) {
+        light.x += (aim.x - light.x) * 0.06;
+        light.y += (aim.y - light.y) * 0.06;
+        gl.uniform1f(uTime, time / 1000);
+        gl.uniform2f(uLight, light.x, light.y);
+        gl.clearColor(0, 0, 0, 0);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+        gl.drawArrays(gl.TRIANGLES, 0, 3);
+      }
+
+      sec.addEventListener('pointermove', function (e) {
+        var r = sec.getBoundingClientRect();
+        aim.x = 0.5 + ((e.clientX - r.left) / r.width - 0.5) * 0.7;
+        aim.y = 1.05 - ((e.clientY - r.top) / r.height) * 0.35;
+      });
+      sec.addEventListener('pointerleave', function () { aim.x = 0.5; aim.y = 1.05; });
+
+      var running = false, raf = 0;
+      function frame(t) { draw(t); raf = requestAnimationFrame(frame); }
+      function start() { if (running || still) return; running = true; raf = requestAnimationFrame(frame); }
+      function stop() { running = false; cancelAnimationFrame(raf); }
+
+      resize();
+      draw(4000);
+      window.addEventListener('resize', function () { resize(); if (!running) draw(4000); });
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (e) {
+          e[e.length - 1].isIntersecting ? start() : stop();
+        }, { rootMargin: '10% 0px' }).observe(sec);
+      } else {
+        start();
+      }
+    });
+  </script>
+
+  <div class="glass-edge" aria-hidden="true"></div>
 </body>
 </html>
