@@ -71,31 +71,121 @@
     .cs-body-page--ba .cs-hero { padding-bottom: 0; }
     .cs-body-page--ba .cs-hero__pills { margin-bottom: 48px; row-gap: 16px; }
 
-    /* ── Brand wall: the wordmark on an Off-White card with a Halcyon Purple bloom and a fine grid,
-       the look of round two. Like 808's olive card and Sun-Drop's gold one, it contrasts with the page. ── */
-    .ba-wall-hero {
-      display: flex;
+    /* ── Brand wall: the center card is the final "In front of Earth" hero, wordmark and all.
+       Centerd so the astronaut and THE DEEPER BET. stay whole however the card crops it, with a
+       faint purple rim and a deeper shadow so it lifts off the drifting tiles behind. ── */
+    .cs-wall__hero.ba-wall-hero {
+      background: #120f30;
+      box-shadow:
+        0 0 0 var(--wall-gap) var(--cs-bg),
+        0 0 0 calc(var(--wall-gap) + 1px) rgba(217, 200, 255, 0.28),
+        0 40px 90px -20px rgba(4, 4, 18, 0.85),
+        0 0 80px -10px rgba(126, 68, 209, 0.55);
+    }
+    .cs-wall__hero.ba-wall-hero img { object-position: 50% 50%; }
+
+    /* ── Gold badge in the hero, the same glowing pill as Sun-Drop, 808 and Braid, tuned for the indigo page ── */
+    .cs-award {
+      position: relative;
+      isolation: isolate;
+      display: inline-grid;
+      grid-template-columns: auto auto auto;
+      grid-template-rows: auto auto;
+      column-gap: clamp(10px, 1.2vw, 14px);
+      row-gap: 1px;
       align-items: center;
-      justify-content: center;
-      background:
-        radial-gradient(ellipse 58% 62% at 74% 22%, rgba(126, 68, 209, 0.42) 0%, rgba(126, 68, 209, 0.14) 45%, rgba(126, 68, 209, 0) 72%),
-        radial-gradient(ellipse 42% 48% at 18% 88%, rgba(81, 138, 255, 0.18) 0%, rgba(81, 138, 255, 0) 70%),
-        repeating-linear-gradient(0deg, rgba(28, 38, 46, 0.06) 0 1px, transparent 1px 44px),
-        repeating-linear-gradient(90deg, rgba(28, 38, 46, 0.06) 0 1px, transparent 1px 44px),
-        #F2F3E9;
+      padding: clamp(8px, 0.9vw, 10px) clamp(18px, 2vw, 24px) clamp(8px, 0.9vw, 10px) clamp(8px, 0.9vw, 10px);
+      border-radius: 999px;
+      background: linear-gradient(160deg, rgba(255, 236, 190, 0.22) 0%, rgba(231, 204, 154, 0.06) 100%);
+      -webkit-backdrop-filter: blur(18px) saturate(140%);
+      backdrop-filter: blur(18px) saturate(140%);
+      border: 1px solid rgba(255, 214, 120, 0.75);
+      box-shadow: inset 0 1px 0 rgba(255, 246, 222, 0.45), 0 0 0 1px rgba(255, 199, 77, 0.4), 0 0 26px rgba(255, 186, 40, 0.45), 0 0 64px rgba(255, 186, 40, 0.2), 0 8px 24px rgba(4, 4, 18, 0.35);
+      color: var(--cs-ink);
+      text-decoration: none;
+      animation: cs-award-pulse 2.4s ease-in-out infinite alternate;
     }
-    .ba-wall-hero__mark {
-      display: block;
-      width: 74%;
-      aspect-ratio: 1600 / 202;
-      background-color: #1C262E;
-      -webkit-mask: url("../BlackAmbition/wordmark.png") center / contain no-repeat;
-      mask: url("../BlackAmbition/wordmark.png") center / contain no-repeat;
+    /* a soft light sweeps across the pill every few seconds */
+    .cs-award::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(105deg, rgba(255, 255, 255, 0) 38%, rgba(255, 246, 222, 0.7) 50%, rgba(255, 255, 255, 0) 62%) no-repeat;
+      background-size: 260% 100%;
+      background-position: 160% 0;
+      mix-blend-mode: soft-light;
+      pointer-events: none;
+      animation: cs-award-sheen 4.2s ease-in-out infinite;
     }
-    @media (max-width: 700px) {
-      .ba-wall-hero__mark { width: 80%; }
+    .cs-award__glow {
+      position: absolute;
+      inset: -20px;
+      z-index: -1;
+      border-radius: 999px;
+      background: radial-gradient(closest-side, rgba(255, 196, 48, 0.6) 0%, rgba(255, 190, 40, 0.28) 55%, rgba(255, 176, 32, 0) 100%);
+      filter: blur(18px);
+      animation: cs-award-glow 2.4s ease-in-out infinite alternate;
     }
-    /* Colour tiles sit in the wall like any other tile */
+    .cs-award__medal {
+      grid-row: 1 / 3;
+      display: grid;
+      place-items: center;
+      width: clamp(34px, 3.4vw, 42px);
+      height: clamp(34px, 3.4vw, 42px);
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2c2a78 0%, #14163D 100%);
+      color: #ffcf5a;
+      box-shadow: 0 0 0 1.5px rgba(255, 199, 77, 0.85), 0 0 14px rgba(255, 186, 40, 0.6);
+    }
+    .cs-award__medal svg { width: 18px; height: 18px; }
+    .cs-award__year {
+      grid-column: 2;
+      font-family: var(--font-franklin-medium);
+      font-size: clamp(9.5px, 0.85vw, 11px);
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #e7cc9a;
+      white-space: nowrap;
+    }
+    .cs-award__title {
+      grid-column: 2;
+      font-family: var(--font-instrument);
+      font-size: clamp(20px, 2vw, 26px);
+      line-height: 1;
+      color: var(--cs-ink);
+      white-space: nowrap;
+    }
+    .cs-award__arrow {
+      grid-column: 3;
+      grid-row: 1 / 3;
+      margin-left: 2px;
+      font-size: 16px;
+      color: #e7cc9a;
+      transition: transform 0.25s var(--ease-out);
+    }
+    .cs-award:hover .cs-award__arrow { transform: translate(2px, -2px); }
+    .cs-award:focus-visible { outline: 2px solid #e7cc9a; outline-offset: 4px; }
+    .cs-hero__pills .cs-award { margin-left: 8px; }
+    @media (max-width: 600px) { .cs-hero__pills .cs-award { margin-left: 0; } }
+    @keyframes cs-award-glow {
+      from { opacity: 0.55; transform: scale(0.94); }
+      to   { opacity: 1;    transform: scale(1.08); }
+    }
+    @keyframes cs-award-pulse {
+      from { border-color: rgba(255, 214, 120, 0.65); }
+      to   { border-color: rgba(255, 226, 150, 1); }
+    }
+    @keyframes cs-award-sheen {
+      0%, 35% { background-position: 160% 0; }
+      75%, 100% { background-position: -60% 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .cs-award, .cs-award::after { animation: none; }
+      .cs-award__glow { animation: none; opacity: 0.9; }
+    }
+    /* Color tiles sit in the wall like any other tile */
     .ba-swatch {
       display: flex;
       flex-direction: column;
@@ -543,7 +633,7 @@
       grid-template-rows: minmax(0, 1fr);
     }
     .ba-lb.is-zoomed figure { width: 100%; height: 100%; }
-    /* the track is at least the screen and grows with the image, so a small image centres
+    /* the track is at least the screen and grows with the image, so a small image centers
        (auto margins) and a big one starts at the edge and can be scrolled all the way round */
     .ba-lb.is-zoomed .ba-lb__pan {
       display: grid;
@@ -670,6 +760,15 @@
       <div class="cs-hero__pills cs-hero__pills--justified">
         <span class="cs-pill">Campaign Design</span>
         <span class="cs-pill">Freelance Designer</span>
+        <a class="cs-award" href="https://www.instagram.com/p/DZXbPYmETCd/?img_index=1" target="_blank" rel="noopener" aria-label="Posted by Black Ambition, the organization founded by Pharrell. Open their June 2026 Instagram post of my designs">
+          <span class="cs-award__glow" aria-hidden="true"></span>
+          <span class="cs-award__medal" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor"/></svg>
+          </span>
+          <span class="cs-award__year">Founded by Pharrell</span>
+          <span class="cs-award__title">Posted by Black Ambition</span>
+          <span class="cs-award__arrow" aria-hidden="true">↗</span>
+        </a>
       </div>
     </div>
 
@@ -700,7 +799,7 @@
             <img class="cs-wall__tile" data-wall-anchor="0.6" src="../BlackAmbition/wall/hero-sitting-type-lg.webp" data-full="../BlackAmbition/hero-sitting-type.webp" width="1600" height="900" style="aspect-ratio: 16 / 9" decoding="async" alt="Final hero with type: The Deeper Bet over an astronaut sitting at the edge of the Earth." draggable="false" />
             <img class="cs-wall__tile" src="../BlackAmbition/wall/hero-visor-lg.webp" data-full="../BlackAmbition/hero-visor.webp" width="1600" height="900" style="aspect-ratio: 16 / 9" decoding="async" alt="Final hero: the Earth reflected in an astronaut's visor, against a pink and violet nebula." draggable="false" />
             <img class="cs-wall__tile" src="../BlackAmbition/wall/poster-deeper-lg.webp" data-full="../BlackAmbition/poster-deeper.webp" width="720" height="900" style="aspect-ratio: 720 / 900" decoding="async" alt="Early poster: an astronaut walking toward the Earth, with The Deeper Bet in the corner." draggable="false" />
-            <img class="cs-wall__tile" src="../BlackAmbition/wall/hero-earth-lg.webp" data-full="../BlackAmbition/hero-earth.webp" width="1600" height="900" style="aspect-ratio: 16 / 9" decoding="async" alt="Campaign hero: an astronaut floating in front of the Earth, framed by pink and blue nebulas." draggable="false" />
+            <img class="cs-wall__tile" src="../BlackAmbition/wall/it2-wide-1-lg.webp" data-full="../BlackAmbition/it2-wide-1.webp" width="1600" height="900" style="aspect-ratio: 16 / 9" decoding="async" alt="Early wide banner: an astronaut walking toward the Earth, with The Deeper Bet and the Pharrell line." draggable="false" />
             <div class="cs-wall__tile ba-swatch" style="aspect-ratio: 1 / 1; background: #F2F3E9; color: #14163D"><span>Off-White</span><span>#F2F3E9</span></div>
             <img class="cs-wall__tile" src="../BlackAmbition/wall/nebula-blue-lg.webp" data-full="../BlackAmbition/nebula-blue.webp" width="901" height="900" style="aspect-ratio: 1 / 1" decoding="async" alt="Detail of the final art: a blue and violet nebula scattered with stars." draggable="false" />
           </div>
@@ -709,18 +808,18 @@
           <div class="cs-wall__track">
             <img class="cs-wall__tile" src="../BlackAmbition/wall/r2-00.webp" data-full="../BlackAmbition/r2-00.webp" width="580" height="580" style="aspect-ratio: 1 / 1" decoding="async" alt="Round two, Stellar Cartography: Charted in Motion, the numbers as a constellation on cream." draggable="false" />
             <div class="cs-wall__tile ba-swatch" style="aspect-ratio: 1 / 1; background: #518AFF; color: #14163D"><span>Sky Blue</span><span>#518AFF</span></div>
-            <img class="cs-wall__tile" src="../BlackAmbition/wall/ig-1.webp" data-full="../BlackAmbition/ig-1.webp" width="464" height="580" style="aspect-ratio: 464 / 580" decoding="async" alt="Instagram post: The Deeper Bet over an astronaut floating in front of the Earth." draggable="false" />
-            <img class="cs-wall__tile" src="../BlackAmbition/wall/hero-earth-type.webp" data-full="../BlackAmbition/hero-earth-type.webp" width="1031" height="580" style="aspect-ratio: 1031 / 580" decoding="async" alt="Final hero with type: The Deeper Bet over an astronaut floating in front of the Earth." draggable="false" />
+            <img class="cs-wall__tile" src="../BlackAmbition/wall/r2-08.webp" data-full="../BlackAmbition/r2-08.webp" width="580" height="580" style="aspect-ratio: 1 / 1" decoding="async" alt="Round two, Horizon Architecture: The Next Phase of Impact above columns of numbers rising from a dotted horizon." draggable="false" />
+            <img class="cs-wall__tile" src="../BlackAmbition/wall/hero-visor-type.webp" data-full="../BlackAmbition/hero-visor-type.webp" width="1031" height="580" style="aspect-ratio: 1031 / 580" decoding="async" alt="Final hero with type: The Deeper Bet across an astronaut's visor, with the Earth reflected in it." draggable="false" />
             <div class="cs-wall__tile ba-swatch" style="aspect-ratio: 1 / 1; background: #B82FA0; color: #F2F3E9"><span>Vivid Magenta</span><span>#B82FA0</span></div>
             <img class="cs-wall__tile" src="../BlackAmbition/wall/ig-3.webp" data-full="../BlackAmbition/ig-3.webp" width="464" height="580" style="aspect-ratio: 464 / 580" decoding="async" alt="Instagram post: Expanding Our Impact, the program's next moves charted beside the astronaut." draggable="false" />
             <img class="cs-wall__tile" src="../BlackAmbition/wall/fig-banner-2.webp" data-full="../BlackAmbition/fig-banner-2.webp" width="1160" height="580" style="aspect-ratio: 2 / 1" decoding="async" alt="Concept banner: $348M+ large on the left, The Deeper Bet's four moves listed on the right." draggable="false" />
-            <img class="cs-wall__tile" src="../BlackAmbition/wall/sitting-base.webp" data-full="../BlackAmbition/sitting-base.webp" width="1031" height="580" style="aspect-ratio: 1031 / 580" decoding="async" alt="The base layer of a hero, before colour: an astronaut sitting at the edge of the Earth under a blue swirl of light." draggable="false" />
+            <img class="cs-wall__tile" src="../BlackAmbition/wall/sitting-base.webp" data-full="../BlackAmbition/sitting-base.webp" width="1031" height="580" style="aspect-ratio: 1031 / 580" decoding="async" alt="The base layer of a hero, before color: an astronaut sitting at the edge of the Earth under a blue swirl of light." draggable="false" />
             <img class="cs-wall__tile" src="../BlackAmbition/wall/poster-foundation.webp" data-full="../BlackAmbition/poster-foundation.webp" width="464" height="580" style="aspect-ratio: 464 / 580" decoding="async" alt="Early poster: The Foundation over an astronaut's helmet with the Earth in the visor." draggable="false" />
             <img class="cs-wall__tile" src="../BlackAmbition/wall/r4-00.webp" data-full="../BlackAmbition/r4-00.webp" width="580" height="580" style="aspect-ratio: 1 / 1" decoding="async" alt="Round four layout, Cosmic Portrait: a founder's silhouette filled with nebula, with a Pharrell line." draggable="false" />
           </div>
         </div>
         <figure class="cs-wall__hero ba-wall-hero">
-          <span class="ba-wall-hero__mark" role="img" aria-label="The Black Ambition wordmark"></span>
+          <img src="../BlackAmbition/hero-earth-type.webp" width="1920" height="1080" decoding="async" fetchpriority="high" alt="The final hero: the Black Ambition wordmark and THE DEEPER BET. over an astronaut floating in front of the Earth, in a pink and purple nebula." />
         </figure>
       </div>
     </div>
@@ -808,11 +907,11 @@
         <div class="cs-section__copy ba-notes">
           <p class="cs-lead">I worked strictly from their brand book and turned its rules into a checklist.</p>
           <h3>The rules.</h3>
-          <p>Helvetica Neue and Recoleta. A ten colour palette with names like Halcyon Purple and Phoenix Red. A dotted line with an exact dash spec, and a set of named gradient flares. Logo or icons, never both in one piece, and one flare per composition.</p>
+          <p>Helvetica Neue and Recoleta. A ten color palette with names like Halcyon Purple and Phoenix Red. A dotted line with an exact dash spec, and a set of named gradient flares. Logo or icons, never both in one piece, and one flare per composition.</p>
           <h3>The story.</h3>
           <p>I rewrote the hierarchy before I touched a layout. The last five years became proof, condensed to a few numbers. The future became the headline: The Deeper Bet and the moves behind it. Dates came out, as the brief asked.</p>
           <h3>Three sizes from day one.</h3>
-          <p>Every direction had to work as a 1080 × 1080 social post, a 1920 × 1080 blog hero and a 1920 × 640 web banner. Same vocabulary, same colours, same type. Only the composition changes.</p>
+          <p>Every direction had to work as a 1080 × 1080 social post, a 1920 × 1080 blog hero and a 1920 × 640 web banner. Same vocabulary, same colors, same type. Only the composition changes.</p>
         </div>
       </div>
     </div>
@@ -876,7 +975,7 @@
       <div class="cs-section__body">
         <div class="cs-section__copy">
           <p class="cs-lead">Then the brief changed. The team didn't want the data redesigned. They wanted one powerful image that could stand in for it.</p>
-          <p>They asked for a nod to the galaxy theme and deeper, more vibrant colour. So round four stopped listing the numbers and started picturing them. I kept the brand's core colours and opened the palette up into magenta, indigo and cosmic black.</p>
+          <p>They asked for a nod to the galaxy theme and deeper, more vibrant color. So round four stopped listing the numbers and started picturing them. I kept the brand's core colors and opened the palette up into magenta, indigo and cosmic black.</p>
         </div>
         <div class="cs-section__copy ba-notes ba-after">
           <h3>The Universe Looks Like You.</h3>
@@ -891,7 +990,7 @@
             <div class="ba-strip__track">
               <img tabindex="0" role="button" src="../BlackAmbition/strip/r4-00.webp" data-full="../BlackAmbition/r4-00.webp" width="800" height="800" loading="lazy" decoding="async" alt="Cosmic Portrait: a founder's silhouette filled with purple nebula, with a Pharrell line at the top." draggable="false" />
               <img tabindex="0" role="button" src="../BlackAmbition/strip/r4-02.webp" data-full="../BlackAmbition/r4-02.webp" width="800" height="800" loading="lazy" decoding="async" alt="Generational Earth: a blue Earth glowing in a deep purple field." draggable="false" />
-              <img tabindex="0" role="button" src="../BlackAmbition/strip/r4-04.webp" data-full="../BlackAmbition/r4-04.webp" width="800" height="800" loading="lazy" decoding="async" alt="We Are the Constellation: a field of stars with a bright cluster at the centre." draggable="false" />
+              <img tabindex="0" role="button" src="../BlackAmbition/strip/r4-04.webp" data-full="../BlackAmbition/r4-04.webp" width="800" height="800" loading="lazy" decoding="async" alt="We Are the Constellation: a field of stars with a bright cluster at the center." draggable="false" />
               <img tabindex="0" role="button" src="../BlackAmbition/strip/r4-01.webp" data-full="../BlackAmbition/r4-01.webp" width="800" height="800" loading="lazy" decoding="async" alt="Cosmic Portrait, cinematic version: the silhouette larger, the Pharrell line at the bottom." draggable="false" />
               <img tabindex="0" role="button" src="../BlackAmbition/strip/r4-03.webp" data-full="../BlackAmbition/r4-03.webp" width="800" height="800" loading="lazy" decoding="async" alt="Generational Earth, second version: From here to the universe, with the Earth at the edge." draggable="false" />
               <img tabindex="0" role="button" src="../BlackAmbition/strip/r4-05.webp" data-full="../BlackAmbition/r4-05.webp" width="800" height="800" loading="lazy" decoding="async" alt="We Are the Constellation, second version: a founder figure with lines traced to the brightest stars." draggable="false" />
@@ -917,20 +1016,20 @@
       <div class="cs-section__body">
         <div class="cs-section__copy">
           <p class="cs-lead">The final images are composites. I worked from a mix of stock and generated imagery, then built each scene up in layers.</p>
-          <p>First a clean base: the astronaut, the Earth and the light. Then the nebula. Then a colour grade that pulls everything into Halcyon Purple and magenta. Then the type, and for the infographic, the numbers. Step through it below.</p>
+          <p>First a clean base: the astronaut, the Earth and the light. Then the nebula. Then a color grade that pulls everything into Halcyon Purple and magenta. Then the type, and for the infographic, the numbers. Step through it below.</p>
         </div>
         <figure class="ba-layers" data-layers>
           <div class="ba-layers__frame">
             <img class="is-on" src="../BlackAmbition/layer-base.webp" width="1920" height="1080" loading="lazy" decoding="async" alt="Layer one, the base: an astronaut floating in front of the Earth on a black star field, lit from above." />
             <img src="../BlackAmbition/layer-nebula.webp" width="1920" height="1080" loading="lazy" decoding="async" alt="Layer two: pink and blue nebulas added around the Earth." />
-            <img src="../BlackAmbition/hero-earth.webp" width="1920" height="1080" loading="lazy" decoding="async" alt="Layer three: the colour grade, pulling the whole scene into purple and magenta." />
+            <img src="../BlackAmbition/hero-earth.webp" width="1920" height="1080" loading="lazy" decoding="async" alt="Layer three: the color grade, pulling the whole scene into purple and magenta." />
             <img src="../BlackAmbition/hero-earth-type.webp" width="1920" height="1080" loading="lazy" decoding="async" alt="Layer four: the wordmark and The Deeper Bet set over the astronaut." />
             <img src="../BlackAmbition/infographic.webp" data-full="../BlackAmbition/infographic-hd.webp" width="2880" height="1620" loading="lazy" decoding="async" alt="Layer five, the final infographic: the title moves to the top and the numbers are charted as two constellations around the scene." />
           </div>
           <div class="ba-layers__steps" role="tablist" aria-label="Layers">
             <button class="ba-step" type="button" role="tab" aria-selected="true"><span class="ba-step__n">01</span>Base</button>
             <button class="ba-step" type="button" role="tab" aria-selected="false"><span class="ba-step__n">02</span>Nebula</button>
-            <button class="ba-step" type="button" role="tab" aria-selected="false"><span class="ba-step__n">03</span>Colour</button>
+            <button class="ba-step" type="button" role="tab" aria-selected="false"><span class="ba-step__n">03</span>Color</button>
             <button class="ba-step" type="button" role="tab" aria-selected="false"><span class="ba-step__n">04</span>Type</button>
             <button class="ba-step" type="button" role="tab" aria-selected="false"><span class="ba-step__n">05</span>Data</button>
           </div>
@@ -968,7 +1067,7 @@
       <div class="cs-section__body">
         <div class="cs-section__copy">
           <p class="cs-lead">Once the image was right, I brought the numbers back to it.</p>
-          <p>Prior Impact, 2021 to 2025, became one constellation, with $348M+ in founder revenue at its centre. Expanding Our Impact, 2026, became another, with The Deeper Bet at its centre and its five moves around it. A dotted line runs between the two, straight through the astronaut and the Earth.</p>
+          <p>Prior Impact, 2021 to 2025, became one constellation, with $348M+ in founder revenue at its center. Expanding Our Impact, 2026, became another, with The Deeper Bet at its center and its five moves around it. A dotted line runs between the two, straight through the astronaut and the Earth.</p>
           <p>It's the story their original sheet told, now with one place to start and a clear way through.</p>
         </div>
         <figure class="cs-figure ba-star">
@@ -979,7 +1078,7 @@
         </figure>
         <div class="cs-section__copy ba-notes ba-after">
           <h3>Made for Instagram.</h3>
-          <p>I cut the same constellations down into a four post set: a title card, Prior Impact, Expanding Our Impact and a newsletter call.</p>
+          <p>I cut the same constellations down into a four post set: a title card, Prior Impact, Expanding Our Impact and a newsletter call. Black Ambition posted the set on June 9, 2026, to announce The Deeper Bet.</p>
         </div>
         <figure class="cs-figure ba-strip-wrap">
           <div class="ba-strip" data-copies="4" aria-label="The Instagram set">
@@ -990,7 +1089,7 @@
               <img tabindex="0" role="button" src="../BlackAmbition/strip/ig-4.webp" data-full="../BlackAmbition/ig-4.webp" width="640" height="800" loading="lazy" decoding="async" alt="Instagram post four: Subscribe to Our Newsletter, with the brand's dot and star over the Earth." draggable="false" />
             </div>
           </div>
-          <figcaption class="cs-figure__caption">The infographic as a four post Instagram set.</figcaption>
+          <figcaption class="cs-figure__caption">The four post set, in the order Black Ambition posted it.</figcaption>
         </figure>
         <div class="cs-section__copy ba-notes ba-after">
           <h3>The heroes.</h3>
