@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Black Ambition · Charlesa Thompson</title>
+  <meta name="description" content="Black Ambition: turning a dense infographic about the prize program into The Deeper Bet, a set of cosmic campaign heroes. Freelance case study by Charlesa Thompson." />
+  <meta name="theme-color" content="#14163D" />
+  <link rel="icon" href="/favicon-32.png?v=3" type="image/png" sizes="32x32" />
+  <link rel="icon" href="/favicon-16.png?v=3" type="image/png" sizes="16x16" />
+  <link rel="icon" href="/icon-192.png?v=3" type="image/png" sizes="192x192" />
+  <link rel="shortcut icon" href="/favicon.ico?v=3" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3" />
+  <link rel="stylesheet" href="../styles.css?v=20261120" />
+  <style>
+    /* ── Theme: Deep Indigo and Off-White, from the round four palette I built for the campaign ── */
+    html { background: #14163D; }
+    .cs-body-page--ba {
+      --cs-bg:    rgb(20, 22, 61);      /* #14163D Deep Indigo */
+      --cs-ink:   rgb(242, 243, 233);   /* #F2F3E9 Off-White */
+      --cs-muted: rgb(180, 178, 214);   /* 8:1 on the indigo */
+      --cs-rule:  rgba(242, 243, 233, 0.16);
+      --cs-card:  rgba(242, 243, 233, 0.06);
+    }
+
+    /* ── Indigo glass nav with off-white ink, the same treatment as Sun-Drop's plum one ── */
+    .cs-body-page--ba .nav {
+      background: linear-gradient(180deg, rgb(20, 22, 61) 0%, rgba(20, 22, 61, 0.82) 35%, rgba(30, 30, 78, 0.5) 100%);
+      -webkit-backdrop-filter: blur(22px) saturate(160%);
+      backdrop-filter: blur(22px) saturate(160%);
+      border-bottom: 0;
+      box-shadow: none;
+    }
+    .cs-body-page--ba .nav::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 100%;
+      height: 22px;
+      background: linear-gradient(180deg, rgba(30, 30, 78, 0.5) 0%, rgba(30, 30, 78, 0) 100%);
+      -webkit-backdrop-filter: blur(10px) saturate(150%);
+      backdrop-filter: blur(10px) saturate(150%);
+      -webkit-mask-image: linear-gradient(180deg, #000 0%, transparent 100%);
+      mask-image: linear-gradient(180deg, #000 0%, transparent 100%);
+      pointer-events: none;
+    }
+    .cs-body-page--ba .nav.is-open::after { opacity: 0; }
+    .cs-body-page--ba .nav__logo,
+    .cs-body-page--ba .nav__links a,
+    .cs-body-page--ba .nav__toggle { color: var(--cs-ink); }
+    @media (max-width: 720px) {
+      .cs-body-page--ba .nav__links {
+        background: linear-gradient(180deg, rgba(30, 30, 78, 0.97) 0%, rgba(20, 22, 61, 0.98) 100%);
+        -webkit-backdrop-filter: blur(30px) saturate(150%);
+        backdrop-filter: blur(30px) saturate(150%);
+      }
+      .cs-body-page--ba .nav__links li { border-bottom-color: var(--cs-rule); }
+      .cs-body-page--ba .nav.is-open { background: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; }
+    }
+
+    /* ── Rhythm: the same tighter spacing as the 808 and Sun-Drop pages ── */
+    .cs-body-page--ba .cs-section { padding: clamp(40px, 6vh, 72px) 0; }
+    .cs-body-page--ba .cs-section__head { margin-bottom: clamp(24px, 3.5vh, 36px); }
+    .cs-body-page--ba .cs-figure { margin: clamp(24px, 3.5vh, 40px) 0; }
+    .cs-body-page--ba .cs-quote { margin: clamp(28px, 4vh, 48px) 0; }
+    .cs-body-page--ba .cs-section__body > :last-child { margin-bottom: 0; }
+    .cs-body-page--ba .cs-quote__body { color: #d9c8ff; }
+
+    /* The wall closes the hero, so the hero drops its bottom padding */
+    .cs-body-page--ba .cs-hero { padding-bottom: 0; }
+    .cs-body-page--ba .cs-hero__pills { margin-bottom: 48px; row-gap: 16px; }
+
+    /* ── Brand wall: the wordmark on an Off-White card with a Halcyon Purple bloom and a fine grid,
+       the look of round two. Like 808's olive card and Sun-Drop's gold one, it contrasts with the page. ── */
+    .ba-wall-hero {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(ellipse 58% 62% at 74% 22%, rgba(126, 68, 209, 0.42) 0%, rgba(126, 68, 209, 0.14) 45%, rgba(126, 68, 209, 0) 72%),
+        radial-gradient(ellipse 42% 48% at 18% 88%, rgba(81, 138, 255, 0.18) 0%, rgba(81, 138, 255, 0) 70%),
+        repeating-linear-gradient(0deg, rgba(28, 38, 46, 0.06) 0 1px, transparent 1px 44px),
+        repeating-linear-gradient(90deg, rgba(28, 38, 46, 0.06) 0 1px, transparent 1px 44px),
+        #F2F3E9;
+    }
+    .ba-wall-hero__mark {
+      display: block;
+      width: 74%;
+      aspect-ratio: 1600 / 202;
+      background-color: #1C262E;
+      -webkit-mask: url("../BlackAmbition/wordmark.png") center / contain no-repeat;
+      mask: url("../BlackAmbition/wordmark.png") center / contain no-repeat;
+    }
+    @media (max-width: 700px) {
+      .ba-wall-hero__mark { width: 80%; }
+    }
+    /* Colour tiles sit in the wall like any other tile */
+    .ba-swatch {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      gap: 2px;
+      padding: clamp(10px, 1.2vw, 18px);
+      box-sizing: border-box;
+      font-family: var(--font-franklin-medium);
+      font-size: clamp(11px, 1vw, 14px);
+      line-height: 1.25;
+      letter-spacing: 0.02em;
+    }
+    .ba-swatch span:last-child { opacity: 0.72; }
+    /* While a photo loads its tile shows a soft frame, then the photo fades in (script below) */
+    .cs-body-page--ba .cs-wall__tile { background: rgba(242, 243, 233, 0.08); }
+    img.cs-wall__tile, .ba-strip__track img { transition: opacity 0.5s ease; }
+    img.ba-fade:not(.is-loaded) { opacity: 0; }
+    @media (prefers-reduced-motion: reduce) {
+      img.cs-wall__tile, .ba-strip__track img { transition: none; }
+    }
+    .cs-wall[data-wall-drag] .cs-wall__row { touch-action: pan-y; }
+    .cs-wall[data-wall-drag] img.cs-wall__tile { cursor: zoom-in; }
+    .cs-wall.is-dragging, .cs-wall.is-dragging img.cs-wall__tile { cursor: grabbing; }
+    .ba-wall-note { margin: 0; padding: 16px 0 clamp(48px, 8vh, 96px); }
+
+    /* ── Featured: the three final heroes, where 808 shows its live phone ── */
+    .ba-feature { border-bottom: 0; overflow-x: clip; }
+    .ba-feature__intro {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      column-gap: clamp(32px, 6vw, 96px);
+      align-items: end;
+      margin-bottom: clamp(28px, 4.5vh, 48px);
+    }
+    .ba-feature__title { margin: 0; text-wrap: balance; }
+    .ba-feature__text {
+      max-width: 46ch;
+      margin: 0;
+      font-family: var(--font-source);
+      font-size: clamp(17px, 1.3vw, 19px);
+      line-height: 1.6;
+      color: var(--cs-ink);
+    }
+    @media (max-width: 900px) {
+      .ba-feature__intro { grid-template-columns: 1fr; row-gap: 20px; }
+    }
+
+    .ba-show { position: relative; isolation: isolate; margin: 0; }
+    /* a Halcyon Purple glow behind the frame, like the bloom in the art */
+    .ba-show::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      inset: 4% -6% -8%;
+      border-radius: 50%;
+      background: radial-gradient(closest-side, rgba(126, 68, 209, 0.5), rgba(184, 47, 160, 0.16) 60%, rgba(126, 68, 209, 0));
+      filter: blur(30px);
+      pointer-events: none;
+    }
+    .ba-show__frame {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      border-radius: clamp(14px, 1.6vw, 24px);
+      overflow: hidden;
+      background: #0b0c26;
+      box-shadow: 0 50px 100px -30px rgba(4, 4, 18, 0.8), 0 18px 40px -12px rgba(4, 4, 18, 0.55);
+      cursor: zoom-in;
+    }
+    .ba-show__img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transform: scale(1.04);
+      transition: opacity 1.2s ease, transform 7.5s cubic-bezier(0.2, 0.6, 0.3, 1);
+    }
+    .ba-show__img.is-on { opacity: 1; transform: scale(1); }
+    .ba-show__tabs {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: clamp(18px, 2.6vh, 26px);
+    }
+    .ba-tab {
+      position: relative;
+      overflow: hidden;
+      min-height: 44px;
+      padding: 0 18px;
+      border: 1px solid var(--cs-rule);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--cs-muted);
+      font-family: var(--font-franklin-medium);
+      font-size: 13px;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      transition: color 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+    }
+    .ba-tab:hover { color: var(--cs-ink); border-color: rgba(242, 243, 233, 0.4); }
+    .ba-tab[aria-selected="true"] { color: var(--cs-ink); border-color: rgba(217, 200, 255, 0.55); background: rgba(126, 68, 209, 0.18); }
+    .ba-tab:focus-visible { outline: 2px solid #d9c8ff; outline-offset: 3px; }
+    /* a thin bar fills under the active tab while the hero is on screen */
+    .ba-tab__bar {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: 7px;
+      height: 2px;
+      border-radius: 2px;
+      background: #d9c8ff;
+      transform-origin: left center;
+      transform: scaleX(var(--p, 0));
+      opacity: 0;
+    }
+    .ba-tab[aria-selected="true"] .ba-tab__bar { opacity: 0.8; }
+    @media (prefers-reduced-motion: reduce) {
+      .ba-show__img { transition: opacity 0.3s ease; transform: none; }
+      .ba-show__img.is-on { transform: none; }
+      .ba-tab__bar { display: none; }
+    }
+
+    /* ── How Might We: two nebulas from the final art under an indigo wash, typed question, WebGL stars ── */
+    .ba-hmw {
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      min-height: min(78vh, 760px);
+      padding: clamp(96px, 16vh, 180px) 0;
+      border-bottom: 0;
+      color: var(--cs-ink);
+      background: #14163D;
+      -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 16%, #000 84%, transparent 100%);
+      mask-image: linear-gradient(180deg, transparent 0, #000 16%, #000 84%, transparent 100%);
+    }
+    /* each nebula covers a little over half and fades out toward the middle, so the two blend with no seam */
+    .ba-hmw__neb {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 64%;
+      background-size: cover;
+      background-repeat: no-repeat;
+      opacity: 0.62;
+    }
+    .ba-hmw__neb--l {
+      left: 0;
+      background-image: url("../BlackAmbition/nebula-pink.webp");
+      background-position: right center;
+      -webkit-mask-image: linear-gradient(90deg, #000 50%, transparent 92%);
+      mask-image: linear-gradient(90deg, #000 50%, transparent 92%);
+    }
+    .ba-hmw__neb--r {
+      right: 0;
+      background-image: url("../BlackAmbition/nebula-blue.webp");
+      background-position: left center;
+      -webkit-mask-image: linear-gradient(270deg, #000 50%, transparent 92%);
+      mask-image: linear-gradient(270deg, #000 50%, transparent 92%);
+    }
+    /* a deep indigo pool behind the question keeps it readable and hides the seam */
+    .ba-hmw::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: radial-gradient(ellipse 62% 60% at 50% 52%, rgba(14, 14, 44, 0.92) 0%, rgba(14, 14, 44, 0.62) 45%, rgba(14, 14, 44, 0.12) 82%);
+      pointer-events: none;
+    }
+    .ba-hmw__gl {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .ba-hmw__inner {
+      position: relative;
+      z-index: 3;
+      width: 100%;
+      text-align: center;
+    }
+    .ba-hmw__q {
+      max-width: 17ch;
+      margin: 0 auto;
+      font-family: var(--font-instrument);
+      font-weight: 400;
+      font-size: clamp(38px, 5.6vw, 80px);
+      line-height: 1.08;
+      letter-spacing: -0.01em;
+      color: var(--cs-ink);
+      text-wrap: balance;
+    }
+    .ba-sr {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+    .ba-hmw__q .w { display: inline-block; white-space: nowrap; }
+    .ba-hmw__q .c { position: relative; }
+    .ba-hmw__q.is-ready .c { opacity: 0; }
+    .ba-hmw__q.is-ready .c.on { opacity: 1; transition: opacity 90ms linear; }
+    .ba-hmw__q.is-floating .w { animation: ba-bob 6.5s ease-in-out infinite; animation-delay: calc(var(--i) * -0.8s); }
+    @keyframes ba-bob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-0.06em); }
+    }
+    .ba-caret {
+      position: absolute;
+      right: -0.08em;
+      top: 0.14em;
+      bottom: 0.1em;
+      width: 0.055em;
+      border-radius: 1px;
+      background: #FF3C17;
+      box-shadow: 0 0 10px rgba(255, 60, 23, 0.6);
+      animation: ba-blink 1s steps(1) infinite;
+    }
+    .ba-caret.is-out { opacity: 0; transition: opacity 0.6s ease; animation: none; }
+    @keyframes ba-blink { 50% { opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) {
+      .ba-hmw__q.is-floating .w, .ba-caret { animation: none; }
+    }
+
+    /* ── Before and after: their infographic beside my hero ── */
+    .ba-versus {
+      grid-column: 2;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(20px, 3vw, 40px);
+      margin-top: clamp(28px, 4vh, 48px);
+    }
+    .ba-versus figure { margin: 0; }
+    .ba-versus__tag {
+      display: block;
+      font-family: var(--font-franklin-medium);
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cs-muted);
+      margin-bottom: 14px;
+    }
+    .ba-versus__img {
+      aspect-ratio: 16 / 9;
+      border-radius: 14px;
+      overflow: hidden;
+      background: rgba(242, 243, 233, 0.06);
+    }
+    .ba-versus__img img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .ba-versus figcaption {
+      margin-top: 16px;
+      font-family: var(--font-source);
+      font-size: clamp(16px, 1.2vw, 18px);
+      line-height: 1.55;
+      color: var(--cs-ink);
+      max-width: 40ch;
+    }
+    @media (max-width: 900px) { .ba-versus { grid-column: 1; } }
+    @media (max-width: 600px) { .ba-versus { grid-template-columns: 1fr; } }
+    img[data-zoom] { cursor: zoom-in; }
+
+    /* ── Prose with serif subheads instead of cards ── */
+    .ba-notes h3 {
+      font-family: var(--font-instrument);
+      font-weight: 400;
+      font-size: clamp(26px, 2.3vw, 32px);
+      line-height: 1.15;
+      color: var(--cs-ink);
+      margin: clamp(36px, 5vh, 52px) 0 12px;
+      text-wrap: balance;
+    }
+    .ba-notes h3:first-child { margin-top: 0; }
+    .ba-after { margin-top: clamp(8px, 2vh, 20px); }
+
+    /* ── Galleries: the same self-scrolling strip as 808 and Sun-Drop.
+       Visitors can scroll, swipe or drag; tapping an image opens it in the viewer. ── */
+    .ba-strip-wrap { min-width: 0; }
+    .ba-strip {
+      max-width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      overscroll-behavior-x: contain;
+      scrollbar-width: none;
+      cursor: grab;
+      -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 5%, #000 95%, transparent 100%);
+      mask-image: linear-gradient(90deg, transparent 0, #000 5%, #000 95%, transparent 100%);
+    }
+    .ba-strip::-webkit-scrollbar { display: none; }
+    .ba-strip.is-dragging { cursor: grabbing; }
+    .ba-strip__track {
+      display: flex;
+      gap: clamp(12px, 1.4vw, 20px);
+      width: max-content;
+    }
+    .ba-strip__track img {
+      flex: none;
+      height: clamp(200px, 26vw, 380px);
+      width: auto;
+      border-radius: 16px;
+      background: rgba(242, 243, 233, 0.06);
+      cursor: zoom-in;
+      -webkit-user-drag: none;
+      user-select: none;
+    }
+    .ba-strip.is-dragging img { cursor: grabbing; }
+    .ba-strip__track img:focus-visible { outline: 3px solid #d9c8ff; outline-offset: -3px; }
+    @media (prefers-reduced-motion: reduce) {
+      .ba-strip { -webkit-mask-image: none; mask-image: none; }
+      .ba-strip__track img[aria-hidden] { display: none; }
+    }
+
+    /* ── Layers: one hero built up step by step ── */
+    .ba-layers { margin: clamp(28px, 4vh, 48px) 0 0; grid-column: 1 / -1; }
+    .ba-layers__frame {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      border-radius: clamp(14px, 1.6vw, 22px);
+      overflow: hidden;
+      background: #0b0c26;
+      box-shadow: 0 40px 80px -30px rgba(4, 4, 18, 0.75);
+      cursor: zoom-in;
+    }
+    .ba-layers__frame img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 0.7s ease;
+    }
+    .ba-layers__frame img.is-on { opacity: 1; }
+    .ba-layers__steps {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: clamp(8px, 1.2vw, 16px);
+      margin-top: clamp(14px, 2vh, 20px);
+    }
+    .ba-step {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      min-height: 48px;
+      padding: 12px 0 0;
+      border: 0;
+      border-top: 2px solid var(--cs-rule);
+      background: none;
+      color: var(--cs-muted);
+      font-family: var(--font-franklin-medium);
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      text-align: left;
+      cursor: pointer;
+      transition: color 0.25s ease, border-color 0.25s ease;
+    }
+    .ba-step__n { font-size: 11px; letter-spacing: 0.16em; opacity: 0.7; }
+    .ba-step:hover { color: var(--cs-ink); }
+    .ba-step[aria-selected="true"] { color: var(--cs-ink); border-top-color: #d9c8ff; }
+    .ba-step:focus-visible { outline: 2px solid #d9c8ff; outline-offset: 4px; }
+    @media (max-width: 600px) {
+      .ba-step { flex-direction: column; gap: 2px; font-size: 12px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .ba-layers__frame img { transition: none; }
+    }
+
+    /* ── Footer: a deeper indigo, since the page ink is off-white ── */
+    .cs-body-page--ba .cs-footer { background: #0c0d29; color: var(--cs-ink); }
+    .cs-body-page--ba .cs-footer__back,
+    .cs-body-page--ba .cs-footer__contact { color: var(--cs-ink); }
+
+    /* ── Image viewer, same as the 808 and Sun-Drop pages, in indigo ── */
+    .ba-lb {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: grid;
+      place-items: center;
+      padding: clamp(56px, 8vh, 80px) clamp(12px, 6vw, 96px);
+      background: rgba(8, 8, 28, 0.9);
+      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+    .ba-lb[hidden] { display: none; }
+    .ba-lb.is-open { opacity: 1; }
+    .ba-lb figure {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      max-width: 100%;
+    }
+    .ba-lb img {
+      display: block;
+      max-width: 100%;
+      max-height: calc(100vh - 2 * clamp(56px, 8vh, 80px) - 40px);
+      width: auto;
+      height: auto;
+      border-radius: 14px;
+      box-shadow: 0 40px 90px -20px rgba(0, 0, 0, 0.7), 0 12px 30px rgba(0, 0, 0, 0.35);
+      transform: scale(0.97);
+      transition: transform 0.25s ease;
+    }
+    .ba-lb.is-open img { transform: none; }
+    .ba-lb figcaption {
+      max-width: 60ch;
+      text-align: center;
+      font-family: var(--font-source-italic);
+      font-style: italic;
+      font-size: 15px;
+      color: rgba(242, 243, 233, 0.86);
+    }
+    .ba-lb__count {
+      font-family: var(--font-franklin-medium);
+      font-style: normal;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      color: rgba(242, 243, 233, 0.55);
+      margin-left: 8px;
+    }
+    .ba-lb button {
+      position: absolute;
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      border: 1px solid rgba(242, 243, 233, 0.3);
+      border-radius: 50%;
+      background: rgba(242, 243, 233, 0.12);
+      color: #F2F3E9;
+      font-size: 22px;
+      line-height: 1;
+      cursor: pointer;
+    }
+    .ba-lb button:hover { background: rgba(242, 243, 233, 0.24); }
+    .ba-lb button:focus-visible { outline: 2px solid #d9c8ff; outline-offset: 3px; }
+    .ba-lb__close { top: 16px; right: 16px; }
+    .ba-lb__prev { left: 16px; top: 50%; margin-top: -24px; }
+    .ba-lb__next { right: 16px; top: 50%; margin-top: -24px; }
+    @media (max-width: 700px) {
+      .ba-lb__prev, .ba-lb__next { top: auto; bottom: 16px; margin-top: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .ba-lb, .ba-lb img { transition: none; }
+    }
+
+    /* ── Bottom glass edge (touch screens), same as the other case studies: Safari on iOS tints
+       its bottom toolbar from fixed elements touching the screen edge, so this keeps it indigo. ── */
+    .glass-edge { display: none; }
+    @media (max-width: 900px) {
+      .glass-edge {
+        display: block;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 90;
+        height: calc(40px + env(safe-area-inset-bottom, 0px));
+        background: linear-gradient(0deg, rgb(20, 22, 61) 0%, rgba(20, 22, 61, 0.7) 35%, rgba(30, 30, 78, 0) 100%);
+        -webkit-backdrop-filter: blur(14px) saturate(150%);
+        backdrop-filter: blur(14px) saturate(150%);
+        -webkit-mask-image: linear-gradient(0deg, #000 45%, transparent 100%);
+        mask-image: linear-gradient(0deg, #000 45%, transparent 100%);
+        pointer-events: none;
+      }
+    }
+  </style>
+  <script defer src="../nav.js?v=20261119-2"></script>
+  <script defer src="../wall.js?v=20261107"></script>
+</head>
+<body class="cs-body-page cs-body-page--ba">
+
+  <!-- ============ Fixed Nav ============ -->
+  <nav class="nav" aria-label="Primary">
+    <a href="../index.html" class="nav__logo">CHAR</a>
+    <ul class="nav__links">
+      <li><a href="../index.html#work">Work</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ============ HERO ============ -->
+  <header class="cs-hero">
+    <div class="cs-container">
+      <h1 class="cs-hero__title">Black Ambition</h1>
+      <p class="cs-hero__tagline">Five years of numbers, told as one image.</p>
+      <div class="cs-hero__pills cs-hero__pills--justified">
+        <span class="cs-pill">Campaign Design</span>
+        <span class="cs-pill">Freelance Designer</span>
+      </div>
+    </div>
+
+    <!-- ============ BRAND WALL ============
+         Three rows drift and travel with the scroll; the wordmark tile stays in the middle. -->
+    <div class="cs-wall" data-wall data-wall-drag>
+      <div class="cs-wall__stage">
+        <div class="cs-wall__row" data-speed="1">
+          <div class="cs-wall__track">
+            <img class="cs-wall__tile" src="../BlackAmbition/wall/ig-2.webp" data-full="../BlackAmbition/ig-2.webp" width="464" height="580" style="aspect-ratio: 464 / 580" decoding="async" alt="Instagram post: Prior Impact, the program's numbers charted as a constellation over the astronaut and Earth." draggable="false" />
+            <div class="cs-wall__tile ba-swatch" style="aspect-ratio: 1 / 1; background: #7E44D1; color: #F2F3E9"><span>Halcyon Purple</span><span>#7E44D1</span></div>
+            <img class="cs-wall__tile" src="../BlackAmbition/wall/fig-square-1.webp" data-full="../BlackAmbition/fig-square-1.webp" width="580" height="580" style="aspect-ratio: 1 / 1" decoding="async" alt="Concept square, Charted in Motion: the numbers as nodes joined by a dotted line under a purple bloom." draggable="false" />
+            <img class="cs-wall__tile" src="../BlackAmbition/wall/hero-sitting.webp" data-full="../BlackAmbition/hero-sitting.webp" width="1031" height="580" style="aspect-ratio: 1031 / 580" decoding="async" alt="Final hero: an astronaut sitting on a grassy ledge at the edge of the Earth, under a purple and magenta sky." draggable="false" />
+            <img class="cs-wall__tile" src="../BlackAmbition/wall/poster-universe.webp" data-full="../BlackAmbition/poster-universe.webp" width="464" height="580" style="aspect-ratio: 464 / 580" decoding="async" alt="Early poster: an astronaut sitting above the Earth with the line The Universe looks like you." draggable="false" />
+            <div class="cs-wall__tile ba-swatch" style="aspect-ratio: 1 / 1; background: #FF3C17; color: #14163D"><span>Phoenix Red</span><span>#FF3C17</span></div>
+            <img class="cs-wall__tile" src="../BlackAmbition/wall/nebula-pink.webp" data-full="../BlackAmbition/nebula-pink.webp" width="581" height="580" style="aspect-ratio: 1 / 1" decoding="async" alt="Detail of the final art: pink and violet nebula clouds scattered with stars." draggable="false" />
+            <img class="cs-wall__tile" src="../BlackAmbition/wall/r2-04.webp" data-full="../BlackAmbition/r2-04.webp" width="580" height="580" style="aspect-ratio: 1 / 1" decoding="async" alt="Round two, Monument: $348M+ set at billboard scale above the other numbers." draggable="false" />
+            <img class="cs-wall__tile" src="../BlackAmbition/wall/helmet.webp" data-full="../BlackAmbition/helmet.webp" width="464" height="580" style="aspect-ratio: 464 / 580" decoding="async" alt="An astronaut's helmet with the Earth reflected in the visor, lit in soft pink." draggable="false" />
+            <img class="cs-wall__tile" src="../BlackAmbition/wall/earth-edge.webp" data-full="../BlackAmbition/earth-edge.webp" width="589" height="580" style="aspect-ratio: 589 / 580" decoding="async" alt="Detail of the final art: the curve of the Earth under a swirl of light and pink nebula." draggable="false" />
+            <img class="cs-wall__tile" src="../BlackAmbition/wall/it2-wide-2.webp" data-full="../BlackAmbition/it2-wide-2.webp" width="1031" height="580" style="aspect-ratio: 1031 / 580" decoding="async" alt="Early wide banner: the astronaut above the Earth with The Universe looks like you and The Next Phase of Impact." draggable="false" />
+          </div>
+        </div>
+        <div class="cs-wall__row cs-wall__row--main" data-speed="-0.8">
+          <div class="cs-wall__track">
+            <img class="cs-wall__tile" data-wall-anchor="0.4" src="../BlackAmbition/wall/hero-earth-lg.webp" data-full="../BlackAmbition/hero-earth.webp" width="1600" height="900" style="aspect-ratio: 16 / 9" decoding="async" alt="Final hero: an astronaut floating in front of the Earth, framed by pink and blue nebulas." draggable="false" />
+            <img class="cs-wall__tile" src="../BlackAmbition/wall/r4-04-lg.webp" data-full="../BlackAmbition/r4-04.webp" width="900" height="900" style="aspect-ratio: 1 / 1" decoding="async" alt="Round four layout, We Are the Constellation: a field of stars on deep indigo." draggable="false" />
+            <div class="cs-wall__tile ba-swatch" style="aspect-ratio: 1 / 1; background: #5523AC; color: #F2F3E9"><span>Electric Purple</span><span>#5523AC</span></div>
+            <img class="cs-wall__tile" data-wall-anchor="0.6" src="../BlackAmbition/wall/hero-sitting-type-lg.webp" data-full="../BlackAmbition/hero-sitting-type.webp" width="1600" height="900" style="aspect-ratio: 16 / 9" decoding="async" alt="Final hero with type: The Deeper Bet over an astronaut sitting at the edge of the Earth." draggable="false" />
+            <img class="cs-wall__tile" src="../BlackAmbition/wall/hero-visor-lg.webp" data-full="../BlackAmbition/hero-visor.webp" width="1600" height="900" style="aspect-ratio: 16 / 9" decoding="async" alt="Final hero: the Earth reflected in an astronaut's visor, against a pink and violet nebula." draggable="false" />
+            <img class="cs-wall__tile" src="../BlackAmbition/wall/poster-deeper-lg.webp" data-full="../BlackAmbition/poster-deeper.webp" width="720" height="900" style="aspect-ratio: 720 / 900" decoding="async" alt="Early poster: an astronaut walking toward the Earth, with The Deeper Bet in the corner." draggable="false" />
+            <img class="cs-wall__tile" src="../BlackAmbition/wall/infographic-lg.webp" data-full="../BlackAmbition/infographic.webp" width="1600" height="900" style="aspect-ratio: 16 / 9" decoding="async" alt="The hero as an infographic: Prior Impact on the left and Expanding Our Impact on the right, around the astronaut." draggable="false" />
+            <div class="cs-wall__tile ba-swatch" style="aspect-ratio: 1 / 1; background: #F2F3E9; color: #14163D"><span>Off-White</span><span>#F2F3E9</span></div>
+            <img class="cs-wall__tile" src="../BlackAmbition/wall/nebula-blue-lg.webp" data-full="../BlackAmbition/nebula-blue.webp" width="901" height="900" style="aspect-ratio: 1 / 1" decoding="async" alt="Detail of the final art: a blue and violet nebula scattered with stars." draggable="false" />
+          </div>
+        </div>
+        <div class="cs-wall__row" data-speed="1.25">
+          <div class="cs-wall__track">
+            <img class="cs-wall__tile" src="../BlackAmbition/wall/r2-00.webp" data-full="../BlackAmbition/r2-00.webp" width="580" height="580" style="aspect-ratio: 1 / 1" decoding="async" alt="Round two, Stellar Cartography: Charted in Motion, the numbers as a constellation on cream." draggable="false" />
+            <div class="cs-wall__tile ba-swatch" style="aspect-ratio: 1 / 1; background: #518AFF; color: #14163D"><span>Sky Blue</span><span>#518AFF</span></div>
+            <img class="cs-wall__tile" src="../BlackAmbition/wall/ig-1.webp" data-full="../BlackAmbition/ig-1.webp" width="464" height="580" style="aspect-ratio: 464 / 580" decoding="async" alt="Instagram post: The Deeper Bet over an astronaut floating in front of the Earth." draggable="false" />
+            <img class="cs-wall__tile" src="../BlackAmbition/wall/hero-earth-type.webp" data-full="../BlackAmbition/hero-earth-type.webp" width="1031" height="580" style="aspect-ratio: 1031 / 580" decoding="async" alt="Final hero with type: The Deeper Bet over an astronaut floating in front of the Earth." draggable="false" />
+            <div class="cs-wall__tile ba-swatch" style="aspect-ratio: 1 / 1; background: #B82FA0; color: #F2F3E9"><span>Vivid Magenta</span><span>#B82FA0</span></div>
+            <img class="cs-wall__tile" src="../BlackAmbition/wall/ig-3.webp" data-full="../BlackAmbition/ig-3.webp" width="464" height="580" style="aspect-ratio: 464 / 580" decoding="async" alt="Instagram post: Expanding Our Impact, the program's next moves charted beside the astronaut." draggable="false" />
+            <img class="cs-wall__tile" src="../BlackAmbition/wall/fig-banner-2.webp" data-full="../BlackAmbition/fig-banner-2.webp" width="1160" height="580" style="aspect-ratio: 2 / 1" decoding="async" alt="Concept banner: $348M+ large on the left, The Deeper Bet's four moves listed on the right." draggable="false" />
+            <img class="cs-wall__tile" src="../BlackAmbition/wall/sitting-base.webp" data-full="../BlackAmbition/sitting-base.webp" width="1031" height="580" style="aspect-ratio: 1031 / 580" decoding="async" alt="The base layer of a hero, before colour: an astronaut sitting at the edge of the Earth under a blue swirl of light." draggable="false" />
+            <img class="cs-wall__tile" src="../BlackAmbition/wall/poster-foundation.webp" data-full="../BlackAmbition/poster-foundation.webp" width="464" height="580" style="aspect-ratio: 464 / 580" decoding="async" alt="Early poster: The Foundation over an astronaut's helmet with the Earth in the visor." draggable="false" />
+            <img class="cs-wall__tile" src="../BlackAmbition/wall/r4-00.webp" data-full="../BlackAmbition/r4-00.webp" width="580" height="580" style="aspect-ratio: 1 / 1" decoding="async" alt="Round four layout, Cosmic Portrait: a founder's silhouette filled with nebula, with a Pharrell line." draggable="false" />
+          </div>
+        </div>
+        <figure class="cs-wall__hero ba-wall-hero">
+          <span class="ba-wall-hero__mark" role="img" aria-label="The Black Ambition wordmark"></span>
+        </figure>
+      </div>
+    </div>
+    <div class="cs-container">
+      <p class="cs-figure__caption ba-wall-note">The world of the campaign: four rounds of concepts, the final heroes and the palette.</p>
+    </div>
+  </header>
+
+  <!-- ============ FEATURED: THE FINAL HEROES ============ -->
+  <section class="cs-section ba-feature" aria-label="The final heroes">
+    <div class="cs-container">
+      <div class="ba-feature__intro">
+        <h2 class="cs-section__title ba-feature__title">Meet The Deeper Bet.</h2>
+        <p class="ba-feature__text">Black Ambition asked me to turn a dense infographic about their prize program into a standout campaign piece for its next chapter. Four rounds in four days later, the numbers became an astronaut, the Earth and a sky full of purple.</p>
+      </div>
+      <figure class="ba-show" data-show>
+        <div class="ba-show__frame">
+          <img class="ba-show__img is-on" src="../BlackAmbition/hero-earth-type.webp" width="1920" height="1080" decoding="async" alt="Final hero: The Deeper Bet over an astronaut floating in front of the Earth, framed by pink and blue nebulas." />
+          <img class="ba-show__img" src="../BlackAmbition/hero-sitting-type.webp" width="1920" height="1080" loading="lazy" decoding="async" alt="Final hero: The Deeper Bet over an astronaut sitting at the edge of the Earth, under a swirl of light." />
+          <img class="ba-show__img" src="../BlackAmbition/hero-visor-type.webp" width="1920" height="1080" loading="lazy" decoding="async" alt="Final hero: The Deeper Bet across an astronaut's visor, with the Earth reflected in it." />
+        </div>
+        <div class="ba-show__tabs" role="tablist" aria-label="Choose a hero">
+          <button class="ba-tab" type="button" role="tab" aria-selected="true">In front of Earth<span class="ba-tab__bar" aria-hidden="true"></span></button>
+          <button class="ba-tab" type="button" role="tab" aria-selected="false">At the edge<span class="ba-tab__bar" aria-hidden="true"></span></button>
+          <button class="ba-tab" type="button" role="tab" aria-selected="false">Earth in the visor<span class="ba-tab__bar" aria-hidden="true"></span></button>
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============ HOW MIGHT WE ============ -->
+  <section class="cs-section ba-hmw" aria-labelledby="baHmwQ">
+    <div class="ba-hmw__neb ba-hmw__neb--l" aria-hidden="true"></div>
+    <div class="ba-hmw__neb ba-hmw__neb--r" aria-hidden="true"></div>
+    <canvas class="ba-hmw__gl" aria-hidden="true"></canvas>
+    <div class="cs-container ba-hmw__inner">
+      <h2 class="ba-hmw__q" id="baHmwQ">How might we make five years of numbers feel as big as the ambition behind them?</h2>
+    </div>
+  </section>
+
+  <!-- ============ BRIEF ============ -->
+  <section class="cs-section">
+    <div class="cs-container">
+      <header class="cs-section__head">
+        <span class="cs-section__num">Brief</span>
+        <h2 class="cs-section__title">A staple piece for the next phase.</h2>
+      </header>
+      <div class="cs-section__body">
+        <div class="cs-section__copy">
+          <p class="cs-lead">Black Ambition was opening a new chapter, The Deeper Bet, and wanted a staple piece to announce it.</p>
+          <p>Their infographic told the story so far: 157 prize winners funded, $348M+ in founder revenue, $297M+ in capital raised. It was heavy with text and numbers, with no clear place for the eye to land.</p>
+          <p>They wanted something aspirational and expansive, with "universe" energy, that could work on social, in presentations and on the web. They asked for two or three directions, and I had four days.</p>
+        </div>
+        <div class="ba-versus">
+          <figure>
+            <span class="ba-versus__tag">Before</span>
+            <div class="ba-versus__img">
+              <img src="../BlackAmbition/before.webp" width="1920" height="1080" loading="lazy" data-zoom alt="Black Ambition's original infographic: rows of numbers, labels and faceted shapes on an off-white ground." />
+            </div>
+            <figcaption>Black Ambition's original infographic. Every number asks for attention at once.</figcaption>
+          </figure>
+          <figure>
+            <span class="ba-versus__tag">After</span>
+            <div class="ba-versus__img">
+              <img src="../BlackAmbition/hero-earth-type.webp" width="1920" height="1080" loading="lazy" data-zoom alt="My final hero: The Deeper Bet over an astronaut floating in front of the Earth." />
+            </div>
+            <figcaption>My final hero. One image and one place to look.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONSTRAINT ============ -->
+  <section class="cs-section">
+    <div class="cs-container">
+      <header class="cs-section__head">
+        <span class="cs-section__num">Constraint</span>
+        <h2 class="cs-section__title">By the book.</h2>
+      </header>
+      <div class="cs-section__body">
+        <div class="cs-section__copy ba-notes">
+          <p class="cs-lead">I worked strictly from their brand book and turned its rules into a checklist.</p>
+          <h3>The rules.</h3>
+          <p>Helvetica Neue and Recoleta. A ten colour palette with names like Halcyon Purple and Phoenix Red. A dotted line with an exact dash spec, and a set of named gradient flares. Logo or icons, never both in one piece, and one flare per composition.</p>
+          <h3>The story.</h3>
+          <p>I rewrote the hierarchy before I touched a layout. The last five years became proof, condensed to a few numbers. The future became the headline: The Deeper Bet and the moves behind it. Dates came out, as the brief asked.</p>
+          <h3>Three sizes from day one.</h3>
+          <p>Every direction had to work as a 1080 × 1080 social post, a 1920 × 1080 blog hero and a 1920 × 640 web banner. Same vocabulary, same colours, same type. Only the composition changes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DIRECTIONS ============ -->
+  <section class="cs-section">
+    <div class="cs-container">
+      <header class="cs-section__head">
+        <span class="cs-section__num">Directions</span>
+        <h2 class="cs-section__title">Three ways in, then three more.</h2>
+      </header>
+      <div class="cs-section__body">
+        <div class="cs-section__copy">
+          <p class="cs-lead">The first round stayed strictly on brand: an off-white ground, faceted forms and the dotted line.</p>
+          <p>Modular Cards gave every number its own card, a system rather than a poster. Editorial Spread told the story like a magazine feature. Trajectory turned the dotted line into an arc from the past into what comes next. My recommendation was to use all three as one campaign: lead with the editorial, extend with the cards, launch with the trajectory.</p>
+        </div>
+        <figure class="cs-figure ba-strip-wrap">
+          <div class="ba-strip" data-copies="3" aria-label="Round one concepts">
+            <div class="ba-strip__track">
+              <img tabindex="0" role="button" src="../BlackAmbition/strip/r1-editorial-hero.webp" data-full="../BlackAmbition/r1-editorial-hero.webp" width="1422" height="800" loading="lazy" decoding="async" alt="Round one, Editorial Spread: Beyond the Prize in a large serif beside soft gradient orbs." draggable="false" />
+              <img tabindex="0" role="button" src="../BlackAmbition/strip/r1-cards-hero.webp" data-full="../BlackAmbition/r1-cards-hero.webp" width="1422" height="800" loading="lazy" decoding="async" alt="Round one, Modular Cards: the five numbers in a row, each with its own gradient form." draggable="false" />
+              <img tabindex="0" role="button" src="../BlackAmbition/strip/r1-trajectory-hero.webp" data-full="../BlackAmbition/r1-trajectory-hero.webp" width="1422" height="800" loading="lazy" decoding="async" alt="Round one, Trajectory: gradient forms rising along a dotted arc to the upper right." draggable="false" />
+              <img tabindex="0" role="button" src="../BlackAmbition/strip/r1-cards.webp" data-full="../BlackAmbition/r1-cards.webp" width="800" height="800" loading="lazy" decoding="async" alt="Modular Cards across all three sizes: square, banner and web hero." draggable="false" />
+              <img tabindex="0" role="button" src="../BlackAmbition/strip/r1-editorial.webp" data-full="../BlackAmbition/r1-editorial.webp" width="800" height="800" loading="lazy" decoding="async" alt="Editorial Spread across all three sizes, with a faceted purple form." draggable="false" />
+              <img tabindex="0" role="button" src="../BlackAmbition/strip/r1-trajectory.webp" data-full="../BlackAmbition/r1-trajectory.webp" width="800" height="800" loading="lazy" decoding="async" alt="Trajectory across all three sizes, the forms scaling up along the arc." draggable="false" />
+            </div>
+          </div>
+          <figcaption class="cs-figure__caption">Round one: three directions, each across three sizes. Drag or tap to look closer.</figcaption>
+        </figure>
+        <div class="cs-section__copy ba-after">
+          <p>The team's notes asked for more energy. Round two moved to cream, a fine grid and a single Halcyon Purple bloom, closer to the campaign assets they were already running, and showed each direction as a main banner, a photo banner, a program grid and a newsletter post.</p>
+          <p>Stellar Cartography charted the numbers as a constellation joined by the dotted line. Monument set them at billboard scale. Horizon Architecture stacked them as columns rising into the sky. The team liked the constellation, and I refined the strongest layouts in Figma.</p>
+        </div>
+        <figure class="cs-figure ba-strip-wrap">
+          <div class="ba-strip" data-copies="3" aria-label="Round two and the Figma refinements">
+            <div class="ba-strip__track">
+              <img tabindex="0" role="button" src="../BlackAmbition/strip/r2-00.webp" data-full="../BlackAmbition/r2-00.webp" width="800" height="800" loading="lazy" decoding="async" alt="Stellar Cartography: Charted in Motion, the numbers as nodes joined by a dotted line, $348M+ in red." draggable="false" />
+              <img tabindex="0" role="button" src="../BlackAmbition/strip/r2-04.webp" data-full="../BlackAmbition/r2-04.webp" width="800" height="800" loading="lazy" decoding="async" alt="Monument: $348M+ at billboard scale, with 157, $297M+, 78% and 65% below." draggable="false" />
+              <img tabindex="0" role="button" src="../BlackAmbition/strip/r2-08.webp" data-full="../BlackAmbition/r2-08.webp" width="800" height="800" loading="lazy" decoding="async" alt="Horizon Architecture: The Next Phase of Impact above columns of numbers rising from a dotted horizon." draggable="false" />
+              <img tabindex="0" role="button" src="../BlackAmbition/strip/r2-06.webp" data-full="../BlackAmbition/r2-06.webp" width="800" height="800" loading="lazy" decoding="async" alt="Monument program grid: $1M+, Portfolio, Regional and Amplified stacked in bold type." draggable="false" />
+              <img tabindex="0" role="button" src="../BlackAmbition/strip/r2-10.webp" data-full="../BlackAmbition/r2-10.webp" width="800" height="800" loading="lazy" decoding="async" alt="Horizon program grid: The Deeper Bet's four pillars as columns, Portfolio in purple." draggable="false" />
+              <img tabindex="0" role="button" src="../BlackAmbition/strip/fig-banner-1.webp" data-full="../BlackAmbition/fig-banner-1.webp" width="1600" height="800" loading="lazy" decoding="async" alt="Figma refinement: Charted in Motion, the constellation of numbers across a wide format." draggable="false" />
+              <img tabindex="0" role="button" src="../BlackAmbition/strip/fig-banner-3.webp" data-full="../BlackAmbition/fig-banner-3.webp" width="1600" height="800" loading="lazy" decoding="async" alt="Figma refinement: Every Route Leads Here, the numbers converging on The Deeper Bet." draggable="false" />
+              <img tabindex="0" role="button" src="../BlackAmbition/strip/fig-banner-2.webp" data-full="../BlackAmbition/fig-banner-2.webp" width="1600" height="800" loading="lazy" decoding="async" alt="Figma refinement: $348M+ large on the left, The Deeper Bet's four moves on the right." draggable="false" />
+            </div>
+          </div>
+          <figcaption class="cs-figure__caption">Round two and the Figma refinements: the constellation, the monument and the horizon.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PIVOT ============ -->
+  <section class="cs-section">
+    <div class="cs-container">
+      <header class="cs-section__head">
+        <span class="cs-section__num">Pivot</span>
+        <h2 class="cs-section__title">Not a chart. An image.</h2>
+      </header>
+      <div class="cs-section__body">
+        <div class="cs-section__copy">
+          <p class="cs-lead">Then the brief changed. The team didn't want the data redesigned. They wanted one powerful image that could stand in for it.</p>
+          <p>They asked for a nod to the galaxy theme and deeper, more vibrant colour. So round four stopped listing the numbers and started picturing them. I kept the brand's core colours and opened the palette up into magenta, indigo and cosmic black.</p>
+        </div>
+        <div class="cs-section__copy ba-notes ba-after">
+          <h3>The Universe Looks Like You.</h3>
+          <p>A founder's silhouette filled with nebula, built around a line from Pharrell.</p>
+          <h3>Generational Earth.</h3>
+          <p>The Earth from deep space, with a purple bloom spreading out from a single point.</p>
+          <h3>We Are the Constellation.</h3>
+          <p>157 stars, one for each prize winner, with the brightest cluster forming the brand mark.</p>
+        </div>
+        <figure class="cs-figure ba-strip-wrap">
+          <div class="ba-strip" data-copies="4" aria-label="Round four layouts">
+            <div class="ba-strip__track">
+              <img tabindex="0" role="button" src="../BlackAmbition/strip/r4-00.webp" data-full="../BlackAmbition/r4-00.webp" width="800" height="800" loading="lazy" decoding="async" alt="Cosmic Portrait: a founder's silhouette filled with purple nebula, with a Pharrell line at the top." draggable="false" />
+              <img tabindex="0" role="button" src="../BlackAmbition/strip/r4-02.webp" data-full="../BlackAmbition/r4-02.webp" width="800" height="800" loading="lazy" decoding="async" alt="Generational Earth: a blue Earth glowing in a deep purple field." draggable="false" />
+              <img tabindex="0" role="button" src="../BlackAmbition/strip/r4-04.webp" data-full="../BlackAmbition/r4-04.webp" width="800" height="800" loading="lazy" decoding="async" alt="We Are the Constellation: a field of stars with a bright cluster at the centre." draggable="false" />
+              <img tabindex="0" role="button" src="../BlackAmbition/strip/r4-01.webp" data-full="../BlackAmbition/r4-01.webp" width="800" height="800" loading="lazy" decoding="async" alt="Cosmic Portrait, cinematic version: the silhouette larger, the Pharrell line at the bottom." draggable="false" />
+              <img tabindex="0" role="button" src="../BlackAmbition/strip/r4-03.webp" data-full="../BlackAmbition/r4-03.webp" width="800" height="800" loading="lazy" decoding="async" alt="Generational Earth, second version: From here to the universe, with the Earth at the edge." draggable="false" />
+              <img tabindex="0" role="button" src="../BlackAmbition/strip/r4-05.webp" data-full="../BlackAmbition/r4-05.webp" width="800" height="800" loading="lazy" decoding="async" alt="We Are the Constellation, second version: a founder figure with lines traced to the brightest stars." draggable="false" />
+            </div>
+          </div>
+          <figcaption class="cs-figure__caption">Round four: three cosmic directions, laid out before any photography.</figcaption>
+        </figure>
+        <blockquote class="cs-quote">
+          <p class="cs-quote__body">"The Universe looks like you."</p>
+          <cite class="cs-quote__cite">Pharrell, the line behind round four</cite>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROCESS ============ -->
+  <section class="cs-section">
+    <div class="cs-container">
+      <header class="cs-section__head">
+        <span class="cs-section__num">Process</span>
+        <h2 class="cs-section__title">Built in layers.</h2>
+      </header>
+      <div class="cs-section__body">
+        <div class="cs-section__copy">
+          <p class="cs-lead">The final images are composites. I worked from a mix of stock and generated imagery, then built each scene up in layers.</p>
+          <p>First a clean base: the astronaut, the Earth and the light. Then the nebula. Then a colour grade that pulls everything into Halcyon Purple and magenta. The type goes on last. Step through one of them below.</p>
+        </div>
+        <figure class="ba-layers" data-layers>
+          <div class="ba-layers__frame">
+            <img class="is-on" src="../BlackAmbition/layer-base.webp" width="1920" height="1080" loading="lazy" decoding="async" alt="Layer one, the base: an astronaut floating in front of the Earth on a black star field, lit from above." />
+            <img src="../BlackAmbition/layer-nebula.webp" width="1920" height="1080" loading="lazy" decoding="async" alt="Layer two: pink and blue nebulas added around the Earth." />
+            <img src="../BlackAmbition/hero-earth.webp" width="1920" height="1080" loading="lazy" decoding="async" alt="Layer three: the colour grade, pulling the whole scene into purple and magenta." />
+            <img src="../BlackAmbition/hero-earth-type.webp" width="1920" height="1080" loading="lazy" decoding="async" alt="Layer four: the wordmark and The Deeper Bet set over the astronaut." />
+          </div>
+          <div class="ba-layers__steps" role="tablist" aria-label="Layers">
+            <button class="ba-step" type="button" role="tab" aria-selected="true"><span class="ba-step__n">01</span>Base</button>
+            <button class="ba-step" type="button" role="tab" aria-selected="false"><span class="ba-step__n">02</span>Nebula</button>
+            <button class="ba-step" type="button" role="tab" aria-selected="false"><span class="ba-step__n">03</span>Colour</button>
+            <button class="ba-step" type="button" role="tab" aria-selected="false"><span class="ba-step__n">04</span>Type</button>
+          </div>
+          <figcaption class="cs-figure__caption">One hero, layer by layer.</figcaption>
+        </figure>
+        <div class="cs-section__copy ba-after">
+          <p>Before the finals, I tried the idea in portrait posters and wide banners: the Pharrell line, The Foundation, The Deeper Bet and a newsletter post.</p>
+        </div>
+        <figure class="cs-figure ba-strip-wrap">
+          <div class="ba-strip" data-copies="3" aria-label="First photographic passes">
+            <div class="ba-strip__track">
+              <img tabindex="0" role="button" src="../BlackAmbition/strip/poster-universe.webp" data-full="../BlackAmbition/poster-universe.webp" width="640" height="800" loading="lazy" decoding="async" alt="Poster: an astronaut sitting above the Earth with the line The Universe looks like you." draggable="false" />
+              <img tabindex="0" role="button" src="../BlackAmbition/strip/poster-deeper.webp" data-full="../BlackAmbition/poster-deeper.webp" width="640" height="800" loading="lazy" decoding="async" alt="Poster: an astronaut walking toward the Earth, The Deeper Bet in the lower left." draggable="false" />
+              <img tabindex="0" role="button" src="../BlackAmbition/strip/it2-wide-1.webp" data-full="../BlackAmbition/it2-wide-1.webp" width="1422" height="800" loading="lazy" decoding="async" alt="Wide banner: the astronaut walking toward the Earth, with The Deeper Bet and the Pharrell line." draggable="false" />
+              <img tabindex="0" role="button" src="../BlackAmbition/strip/poster-foundation.webp" data-full="../BlackAmbition/poster-foundation.webp" width="640" height="800" loading="lazy" decoding="async" alt="Poster: The Foundation over a helmet with the Earth in the visor." draggable="false" />
+              <img tabindex="0" role="button" src="../BlackAmbition/strip/poster-helmet.webp" data-full="../BlackAmbition/poster-helmet.webp" width="640" height="800" loading="lazy" decoding="async" alt="Poster: the wordmark over a helmet with the Earth in the visor, in purple light." draggable="false" />
+              <img tabindex="0" role="button" src="../BlackAmbition/strip/it2-wide-2.webp" data-full="../BlackAmbition/it2-wide-2.webp" width="1422" height="800" loading="lazy" decoding="async" alt="Wide banner: the astronaut sitting above the Earth with The Next Phase of Impact." draggable="false" />
+              <img tabindex="0" role="button" src="../BlackAmbition/strip/poster-subscribe.webp" data-full="../BlackAmbition/poster-subscribe.webp" width="640" height="800" loading="lazy" decoding="async" alt="Newsletter post: Subscribe to Our Newsletter over towering nebula pillars and the brand's dot and star." draggable="false" />
+              <img tabindex="0" role="button" src="../BlackAmbition/strip/helmet.webp" data-full="../BlackAmbition/helmet.webp" width="640" height="800" loading="lazy" decoding="async" alt="A helmet with the Earth in the visor, in soft pink light, before the nebula." draggable="false" />
+            </div>
+          </div>
+          <figcaption class="cs-figure__caption">First photographic passes, before the finals.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SOLUTION ============ -->
+  <section class="cs-section">
+    <div class="cs-container">
+      <header class="cs-section__head">
+        <span class="cs-section__num">Solution</span>
+        <h2 class="cs-section__title">The Deeper Bet.</h2>
+      </header>
+      <div class="cs-section__body">
+        <div class="cs-section__copy">
+          <p class="cs-lead">Three 1920 × 1080 heroes, each with and without the campaign line: an astronaut in front of the Earth, one sitting at its edge, and the Earth reflected in a visor.</p>
+          <p>There are no numbers in them. Five years of founders, revenue and capital became one feeling: the scale of what comes next.</p>
+        </div>
+        <figure class="cs-figure ba-strip-wrap">
+          <div class="ba-strip" data-copies="3" aria-label="The final heroes">
+            <div class="ba-strip__track">
+              <img tabindex="0" role="button" src="../BlackAmbition/strip/hero-earth-type.webp" data-full="../BlackAmbition/hero-earth-type.webp" width="1422" height="800" loading="lazy" decoding="async" alt="The Deeper Bet over an astronaut floating in front of the Earth." draggable="false" />
+              <img tabindex="0" role="button" src="../BlackAmbition/strip/hero-sitting-type.webp" data-full="../BlackAmbition/hero-sitting-type.webp" width="1422" height="800" loading="lazy" decoding="async" alt="The Deeper Bet over an astronaut sitting at the edge of the Earth." draggable="false" />
+              <img tabindex="0" role="button" src="../BlackAmbition/strip/hero-visor-type.webp" data-full="../BlackAmbition/hero-visor-type.webp" width="1422" height="800" loading="lazy" decoding="async" alt="The Deeper Bet across an astronaut's visor, the Earth reflected in it." draggable="false" />
+              <img tabindex="0" role="button" src="../BlackAmbition/strip/hero-earth.webp" data-full="../BlackAmbition/hero-earth.webp" width="1422" height="800" loading="lazy" decoding="async" alt="The astronaut in front of the Earth, without type." draggable="false" />
+              <img tabindex="0" role="button" src="../BlackAmbition/strip/hero-sitting.webp" data-full="../BlackAmbition/hero-sitting.webp" width="1422" height="800" loading="lazy" decoding="async" alt="The astronaut at the edge of the Earth, without type." draggable="false" />
+              <img tabindex="0" role="button" src="../BlackAmbition/strip/hero-visor.webp" data-full="../BlackAmbition/hero-visor.webp" width="1422" height="800" loading="lazy" decoding="async" alt="The Earth in the visor, without type." draggable="false" />
+            </div>
+          </div>
+          <figcaption class="cs-figure__caption">The final heroes, with and without type.</figcaption>
+        </figure>
+        <div class="cs-section__copy ba-notes ba-after">
+          <h3>Carrying it further.</h3>
+          <p>I also explored how the hero could bring the numbers back without crowding them: Prior Impact on one side, Expanding Our Impact on the other, and a four post Instagram set that walks through the story.</p>
+        </div>
+        <figure class="cs-figure ba-strip-wrap">
+          <div class="ba-strip" data-copies="3" aria-label="The infographic and Instagram set">
+            <div class="ba-strip__track">
+              <img tabindex="0" role="button" src="../BlackAmbition/strip/infographic.webp" data-full="../BlackAmbition/infographic.webp" width="1422" height="800" loading="lazy" decoding="async" alt="Infographic: Prior Impact on the left and Expanding Our Impact on the right, charted around the astronaut and Earth." draggable="false" />
+              <img tabindex="0" role="button" src="../BlackAmbition/strip/ig-1.webp" data-full="../BlackAmbition/ig-1.webp" width="640" height="800" loading="lazy" decoding="async" alt="Instagram post one: The Deeper Bet over the astronaut in front of the Earth." draggable="false" />
+              <img tabindex="0" role="button" src="../BlackAmbition/strip/ig-2.webp" data-full="../BlackAmbition/ig-2.webp" width="640" height="800" loading="lazy" decoding="async" alt="Instagram post two: Prior Impact, the program's numbers as a constellation." draggable="false" />
+              <img tabindex="0" role="button" src="../BlackAmbition/strip/ig-3.webp" data-full="../BlackAmbition/ig-3.webp" width="640" height="800" loading="lazy" decoding="async" alt="Instagram post three: Expanding Our Impact, the program's next moves." draggable="false" />
+              <img tabindex="0" role="button" src="../BlackAmbition/strip/ig-4.webp" data-full="../BlackAmbition/ig-4.webp" width="640" height="800" loading="lazy" decoding="async" alt="Instagram post four: Subscribe to Our Newsletter, with the brand's dot and star over the Earth." draggable="false" />
+            </div>
+          </div>
+          <figcaption class="cs-figure__caption">The hero as an infographic and an Instagram set.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ REFLECTION ============ -->
+  <section class="cs-section">
+    <div class="cs-container">
+      <header class="cs-section__head">
+        <span class="cs-section__num">Reflection</span>
+        <h2 class="cs-section__title">Picture it, don't list it.</h2>
+      </header>
+      <div class="cs-section__body">
+        <div class="cs-section__copy">
+          <p class="cs-lead">The brand rules gave me a fast, confident start. The breakthrough came when I stopped redesigning the data and started picturing it.</p>
+          <p>Four rounds in four days taught me to ask early what a team needs its audience to feel, not just what it needs to say.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ NEXT PROJECT CTA ============ -->
+  <section class="cs-next">
+    <div class="cs-container">
+      <p class="cs-next__eyebrow">Next Project</p>
+      <a href="project-808.html" class="cs-next__title">
+        Project 808 <span class="cs-next__arrow">→</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="cs-footer">
+    <div class="cs-container">
+      <div class="cs-footer__row">
+        <a href="../index.html#work" class="cs-footer__back">← Back to all work</a>
+        <a href="mailto:charlesathompsondesigns@gmail.com" class="cs-footer__contact">Get in touch</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* Wall and gallery images fade in once loaded. One capturing listener on the page covers
+       the copies that wall.js and the galleries add later. */
+    (function () {
+      var sel = 'img.cs-wall__tile, .ba-strip__track img';
+      document.addEventListener('load', function (e) {
+        var t = e.target;
+        if (t.tagName === 'IMG' && t.matches(sel)) t.classList.add('is-loaded');
+      }, true);
+      Array.prototype.forEach.call(document.querySelectorAll(sel), function (img) {
+        if (img.complete && img.naturalWidth) img.classList.add('is-loaded');
+        else img.classList.add('ba-fade');
+      });
+    })();
+
+    /* Image viewer shared by the wall, the galleries and the page images. */
+    var baViewer = (function () {
+      var lb = document.createElement('div');
+      lb.className = 'ba-lb';
+      lb.hidden = true;
+      lb.setAttribute('role', 'dialog');
+      lb.setAttribute('aria-modal', 'true');
+      lb.setAttribute('aria-label', 'Image viewer');
+      lb.innerHTML = '<button class="ba-lb__close" type="button" aria-label="Close">×</button>' +
+        '<button class="ba-lb__prev" type="button" aria-label="Previous image">‹</button>' +
+        '<figure><img alt="" /><figcaption></figcaption></figure>' +
+        '<button class="ba-lb__next" type="button" aria-label="Next image">›</button>';
+      document.body.appendChild(lb);
+      var img = lb.querySelector('img'), cap = lb.querySelector('figcaption');
+      var list = [], index = 0, back = null;
+
+      function show() {
+        var el = list[index];
+        img.src = el.getAttribute('data-full') || el.getAttribute('src');
+        img.alt = el.getAttribute('alt') || '';
+        cap.textContent = img.alt;
+        if (list.length > 1) {
+          var n = document.createElement('span');
+          n.className = 'ba-lb__count';
+          n.textContent = (index + 1) + ' / ' + list.length;
+          cap.appendChild(n);
+        }
+      }
+      function open(items, i) {
+        list = items;
+        index = i;
+        back = document.activeElement;
+        lb.querySelector('.ba-lb__prev').hidden = lb.querySelector('.ba-lb__next').hidden = items.length < 2;
+        show();
+        lb.hidden = false;
+        document.documentElement.style.overflow = 'hidden';
+        requestAnimationFrame(function () { lb.classList.add('is-open'); });
+        lb.querySelector('.ba-lb__close').focus();
+      }
+      function close() {
+        lb.classList.remove('is-open');
+        document.documentElement.style.overflow = '';
+        setTimeout(function () { lb.hidden = true; img.removeAttribute('src'); }, 250);
+        if (back && back.focus) back.focus();
+      }
+      function step(d) { index = (index + d + list.length) % list.length; show(); }
+
+      lb.addEventListener('click', function (e) {
+        if (e.target.closest('.ba-lb__close')) return close();
+        if (e.target.closest('.ba-lb__prev')) return step(-1);
+        if (e.target.closest('.ba-lb__next')) return step(1);
+        if (e.target === lb || e.target.tagName === 'FIGURE') close();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (lb.hidden) return;
+        if (e.key === 'Escape') close();
+        else if (e.key === 'ArrowLeft' && list.length > 1) step(-1);
+        else if (e.key === 'ArrowRight' && list.length > 1) step(1);
+      });
+      return { open: open };
+    })();
+
+    /* Page images marked data-zoom open in the viewer, with arrows through the rest */
+    (function () {
+      var photos = [].slice.call(document.querySelectorAll('img[data-zoom]'));
+      photos.forEach(function (el, i) {
+        el.setAttribute('tabindex', '0');
+        el.setAttribute('role', 'button');
+        el.addEventListener('click', function () { baViewer.open(photos, i); });
+        el.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); baViewer.open(photos, i); }
+        });
+      });
+    })();
+
+    /* Tab sets shared by the featured heroes and the layer steps: buttons pick a frame,
+       arrow keys move between buttons, and the set can advance on its own while on screen. */
+    function baTabs(root, opts) {
+      var frames = [].slice.call(root.querySelectorAll(opts.frames));
+      var tabs = [].slice.call(root.querySelectorAll(opts.tabs));
+      var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var cur = 0, visible = false, paused = false, stopped = false, t0 = 0, raf = 0;
+
+      function go(i, user) {
+        cur = (i + frames.length) % frames.length;
+        frames.forEach(function (f, k) {
+          f.classList.toggle('is-on', k === cur);
+          if (k === cur && f.loading === 'lazy') f.loading = 'eager';
+        });
+        tabs.forEach(function (t, k) {
+          t.setAttribute('aria-selected', String(k === cur));
+          t.tabIndex = k === cur ? 0 : -1;
+          t.style.setProperty('--p', '0');
+        });
+        if (user && opts.stopOnUser) stopped = true;
+        t0 = performance.now();
+      }
+      tabs.forEach(function (t, k) {
+        t.addEventListener('click', function () { go(k, true); });
+        t.addEventListener('keydown', function (e) {
+          var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+          if (!d) return;
+          e.preventDefault();
+          go(cur + d, true);
+          tabs[cur].focus();
+        });
+      });
+      root.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') paused = true; });
+      root.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') paused = false; });
+
+      /* the frame opens in the viewer, with arrows through the set */
+      var frameBox = root.querySelector(opts.box);
+      if (frameBox) frameBox.addEventListener('click', function () { baViewer.open(frames, cur); });
+
+      var pausedAt = 0;
+      function tick(now) {
+        if (!visible) return;
+        if (paused || stopped) {
+          if (!pausedAt) pausedAt = now;
+        } else {
+          if (pausedAt) { t0 += now - pausedAt; pausedAt = 0; }
+          var p = (now - t0) / opts.every;
+          if (opts.bar) tabs[cur].style.setProperty('--p', Math.min(1, p).toFixed(3));
+          if (p >= 1) {
+            if (opts.once && cur === frames.length - 1) stopped = true;
+            else go(cur + 1, false);
+          }
+        }
+        raf = requestAnimationFrame(tick);
+      }
+      go(0, false);
+      if (still || !('IntersectionObserver' in window)) return;
+      new IntersectionObserver(function (en) {
+        var on = en[en.length - 1].isIntersecting;
+        if (on && !visible) { visible = true; t0 = performance.now(); pausedAt = 0; raf = requestAnimationFrame(tick); }
+        else if (!on) { visible = false; cancelAnimationFrame(raf); }
+      }, { threshold: 0.5 }).observe(root);
+    }
+    Array.prototype.forEach.call(document.querySelectorAll('[data-show]'), function (el) {
+      baTabs(el, { frames: '.ba-show__img', tabs: '.ba-tab', box: '.ba-show__frame', every: 6500, bar: true });
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('[data-layers]'), function (el) {
+      baTabs(el, { frames: '.ba-layers__frame img', tabs: '.ba-step', box: '.ba-layers__frame', every: 2600, once: true, stopOnUser: true });
+    });
+
+    /* Galleries: drift on their own, but visitors can scroll, swipe or drag them.
+       Hovering pauses; after a manual move each strip waits a moment, then carries on.
+       The script adds copies of the set (data-copies in all) so the loop never shows a gap.
+       Same behaviour as the 808 and Sun-Drop strips. */
+    Array.prototype.forEach.call(document.querySelectorAll('.ba-strip'), function (box) {
+      var track = box.querySelector('.ba-strip__track');
+      var originals = [].slice.call(track.querySelectorAll('img'));
+      var copies = parseInt(box.getAttribute('data-copies'), 10) || 4;
+      for (var c = 1; c < copies; c++) {
+        originals.forEach(function (img) {
+          var k = img.cloneNode(true);
+          k.setAttribute('aria-hidden', 'true');
+          k.removeAttribute('tabindex');
+          k.removeAttribute('role');
+          k.alt = '';
+          track.appendChild(k);
+        });
+      }
+      var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var SPEED = 30, set = 0, carry = 0, last = 0, hover = false, resumeAt = 0, running = false, drag = null;
+
+      function measure() {
+        if (still) return;
+        set = track.scrollWidth / copies;
+        if (box.scrollLeft < set * 0.5) box.scrollLeft = set;
+      }
+      function wrap() {
+        if (still || !set) return;
+        var d = 0;
+        if (box.scrollLeft >= set * (copies / 2 + 0.5)) d = -set;
+        else if (box.scrollLeft < set * 0.5) d = set;
+        if (d) { box.scrollLeft += d; if (drag) drag.start += d; }
+      }
+      function hold(ms) { resumeAt = performance.now() + (ms || 2500); }
+      function frame(t) {
+        if (!running) return;
+        var dt = last ? Math.min(t - last, 80) : 16;
+        last = t;
+        if (!still && !hover && !drag && t >= resumeAt) {
+          carry += SPEED * dt / 1000;
+          var px = Math.floor(carry);
+          if (px) { box.scrollLeft += px; carry -= px; }
+        }
+        wrap();
+        requestAnimationFrame(frame);
+      }
+
+      box.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') hover = true; });
+      box.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') hover = false; });
+      box.addEventListener('wheel', function () { hold(); }, { passive: true });
+      box.addEventListener('touchstart', function () { hold(3500); }, { passive: true });
+      box.addEventListener('scroll', wrap, { passive: true });
+
+      // mouse drag (touch and trackpads scroll natively)
+      box.addEventListener('pointerdown', function (e) {
+        if (e.pointerType !== 'mouse' || e.button) return;
+        drag = { x: e.clientX, start: box.scrollLeft, moved: false };
+      });
+      window.addEventListener('pointermove', function (e) {
+        if (!drag) return;
+        var dx = e.clientX - drag.x;
+        if (!drag.moved && Math.abs(dx) > 5) { drag.moved = true; box.classList.add('is-dragging'); }
+        if (drag.moved) box.scrollLeft = drag.start - dx;
+      });
+      window.addEventListener('pointerup', function () {
+        if (!drag) return;
+        if (drag.moved) {
+          var swallow = function (ev) { ev.stopPropagation(); ev.preventDefault(); };
+          box.addEventListener('click', swallow, true);
+          setTimeout(function () { box.removeEventListener('click', swallow, true); }, 60);
+        }
+        box.classList.remove('is-dragging');
+        drag = null;
+        hold();
+      });
+
+      // open an image
+      function openFrom(el) {
+        var src = el.getAttribute('src');
+        var i = originals.findIndex(function (o) { return o.getAttribute('src') === src; });
+        baViewer.open(originals, Math.max(0, i));
+      }
+      box.addEventListener('click', function (e) {
+        var el = e.target.closest('img');
+        if (el) openFrom(el);
+      });
+      box.addEventListener('keydown', function (e) {
+        if ((e.key === 'Enter' || e.key === ' ') && e.target.tagName === 'IMG') { e.preventDefault(); openFrom(e.target); }
+      });
+
+      measure();
+      window.addEventListener('load', measure);
+      window.addEventListener('resize', function () { set = track.scrollWidth / copies; });
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (en) {
+          if (en[en.length - 1].isIntersecting) { if (!running) { running = true; last = 0; measure(); requestAnimationFrame(frame); } }
+          else running = false;
+        }).observe(box);
+      } else {
+        running = true;
+        requestAnimationFrame(frame);
+      }
+    });
+
+    /* Wall: tap or click any tile (clones included) to open it */
+    (function () {
+      var wall = document.querySelector('.cs-wall[data-wall-drag]');
+      if (!wall) return;
+      wall.addEventListener('click', function (e) {
+        var tile = e.target.closest('img.cs-wall__tile');
+        if (!tile) return;
+        var originals = [].slice.call(wall.querySelectorAll('img.cs-wall__tile:not([aria-hidden])'));
+        var src = tile.getAttribute('src');
+        var i = originals.findIndex(function (o) { return o.getAttribute('src') === src; });
+        baViewer.open(originals, Math.max(0, i));
+      });
+    })();
+
+    /* How Might We: type the question out, then let the words float,
+       over a WebGL star field that twinkles and drifts, with a purple glow that follows the pointer. */
+    Array.prototype.forEach.call(document.querySelectorAll('.ba-hmw'), function (sec) {
+      var q = sec.querySelector('.ba-hmw__q');
+      var canvas = sec.querySelector('.ba-hmw__gl');
+      var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      /* ---- Typed question ---- */
+      var text = q.textContent.trim();
+      var chars = [];
+      var vis = document.createElement('span');
+      vis.setAttribute('aria-hidden', 'true');
+      text.split(' ').forEach(function (word, i) {
+        if (i) vis.appendChild(document.createTextNode(' '));
+        var w = document.createElement('span');
+        w.className = 'w';
+        w.style.setProperty('--i', i);
+        word.split('').forEach(function (ch) {
+          var c = document.createElement('span');
+          c.className = 'c';
+          c.textContent = ch;
+          w.appendChild(c);
+          chars.push(c);
+        });
+        vis.appendChild(w);
+      });
+      q.innerHTML = '<span class="ba-sr">' + text + '</span>';
+      q.appendChild(vis);
+
+      function settle(caret) {
+        q.classList.add('is-floating');
+        if (caret) setTimeout(function () { caret.classList.add('is-out'); }, 3200);
+      }
+
+      if (still) {
+        settle(null);
+      } else {
+        q.classList.add('is-ready');
+        var caret = document.createElement('span');
+        caret.className = 'ba-caret';
+        chars[0].appendChild(caret);
+        var typed = false;
+        var typeIt = function () {
+          if (typed) return;
+          typed = true;
+          var pace = Math.min(1, 56 / chars.length), at = [], tsum = 0;
+          for (var k = 0; k < chars.length; k++) {
+            at.push(tsum);
+            var nxt = chars[k + 1];
+            tsum += (38 + Math.random() * 34) * pace + (nxt && !nxt.previousSibling ? 90 * pace : 0);
+          }
+          var i = 0, t0 = performance.now();
+          (function tick() {
+            var now = performance.now() - t0;
+            while (i < chars.length && at[i] <= now) {
+              chars[i].classList.add('on');
+              chars[i].appendChild(caret);
+              i++;
+            }
+            if (i >= chars.length) return settle(caret);
+            setTimeout(tick, 16);
+          })();
+        };
+        if ('IntersectionObserver' in window) {
+          var tio = new IntersectionObserver(function (e) {
+            if (e[0].isIntersecting) { tio.disconnect(); setTimeout(typeIt, 250); }
+          }, { threshold: 0.45 });
+          tio.observe(sec);
+        } else {
+          typeIt();
+        }
+      }
+
+      /* ---- WebGL star field ---- */
+      var gl = canvas.getContext('webgl', { alpha: true, premultipliedAlpha: true, antialias: false });
+      if (!gl) return;   // the CSS stage still stands on its own
+
+      var vsrc = 'attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}';
+      var fsrc = [
+        'precision mediump float;',
+        'uniform vec2 uRes;uniform float uTime;uniform vec2 uLight;',
+        'float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}',
+        'float stars(vec2 uv,float sc,float sp,float sz,float t){',
+        '  vec2 p=uv*sc;p.x+=t*sp;',
+        '  vec2 id=floor(p);vec2 f=fract(p)-.5;',
+        '  float r=h(id);',
+        '  vec2 o=vec2(h(id+3.1),h(id+7.7))-.5;',
+        '  float d=length(f-o*.7);',
+        '  float s=sz*(.35+.65*h(id+1.3));',
+        '  float m=(1.-smoothstep(0.,s,d))*step(.5,r);',
+        '  return m*(.5+.5*sin(t*(.6+r*1.8)+r*40.));',
+        '}',
+        'void main(){',
+        '  vec2 q=gl_FragCoord.xy/uRes;',
+        '  vec2 uv=gl_FragCoord.xy/uRes.y;',
+        '  float t=uTime;',
+        '  vec2 d=(q-uLight)*vec2(uRes.x/uRes.y*.6,1.);',
+        '  float glow=1.-smoothstep(0.,.7,length(d));',
+        '  float m=stars(uv,7.,.012,.09,t)*.6+stars(uv+11.,13.,.02,.08,t)*.42+stars(uv+23.,24.,.03,.07,t)*.3;',
+        '  float lit=.4+.8*glow;',
+        '  vec3 purple=vec3(.49,.27,.82);vec3 white=vec3(.95,.95,1.);',
+        '  float a=clamp(glow*.2+m*lit*.85,0.,1.);',
+        '  vec3 col=purple*glow*.2+white*m*lit*.85;',
+        '  gl_FragColor=vec4(col,a);',
+        '}'
+      ].join('\n');
+
+      function shader(type, src) {
+        var sh = gl.createShader(type);
+        gl.shaderSource(sh, src);
+        gl.compileShader(sh);
+        return gl.getShaderParameter(sh, gl.COMPILE_STATUS) ? sh : null;
+      }
+      var vs = shader(gl.VERTEX_SHADER, vsrc), fs = shader(gl.FRAGMENT_SHADER, fsrc);
+      if (!vs || !fs) return;
+      var prog = gl.createProgram();
+      gl.attachShader(prog, vs);
+      gl.attachShader(prog, fs);
+      gl.linkProgram(prog);
+      if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
+      gl.useProgram(prog);
+
+      var buf = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+      var loc = gl.getAttribLocation(prog, 'p');
+      gl.enableVertexAttribArray(loc);
+      gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+      gl.enable(gl.BLEND);
+      gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+
+      var uRes = gl.getUniformLocation(prog, 'uRes');
+      var uTime = gl.getUniformLocation(prog, 'uTime');
+      var uLight = gl.getUniformLocation(prog, 'uLight');
+
+      var light = { x: 0.5, y: 0.5 }, aim = { x: 0.5, y: 0.5 };
+      function resize() {
+        var dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+        var w = Math.round(sec.clientWidth * dpr), h = Math.round(sec.clientHeight * dpr);
+        if (canvas.width !== w || canvas.height !== h) {
+          canvas.width = w;
+          canvas.height = h;
+          gl.viewport(0, 0, w, h);
+        }
+        gl.uniform2f(uRes, w, h);
+      }
+      function draw(time) {
+        light.x += (aim.x - light.x) * 0.06;
+        light.y += (aim.y - light.y) * 0.06;
+        gl.uniform1f(uTime, time / 1000);
+        gl.uniform2f(uLight, light.x, light.y);
+        gl.clearColor(0, 0, 0, 0);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+        gl.drawArrays(gl.TRIANGLES, 0, 3);
+      }
+
+      sec.addEventListener('pointermove', function (e) {
+        var r = sec.getBoundingClientRect();
+        aim.x = 0.5 + ((e.clientX - r.left) / r.width - 0.5) * 0.8;
+        aim.y = 0.5 - ((e.clientY - r.top) / r.height - 0.5) * 0.6;
+      });
+      sec.addEventListener('pointerleave', function () { aim.x = 0.5; aim.y = 0.5; });
+
+      var running = false, raf = 0;
+      function frame(t) { draw(t); raf = requestAnimationFrame(frame); }
+      function start() { if (running || still) return; running = true; raf = requestAnimationFrame(frame); }
+      function stop() { running = false; cancelAnimationFrame(raf); }
+
+      resize();
+      draw(4000);
+      window.addEventListener('resize', function () { resize(); if (!running) draw(4000); });
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (e) {
+          e[e.length - 1].isIntersecting ? start() : stop();
+        }, { rootMargin: '10% 0px' }).observe(sec);
+      } else {
+        start();
+      }
+    });
+  </script>
+
+  <div class="glass-edge" aria-hidden="true"></div>
+</body>
+</html>
