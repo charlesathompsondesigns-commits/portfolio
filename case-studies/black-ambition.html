@@ -490,6 +490,17 @@
     }
     .ba-notes h3:first-child { margin-top: 0; }
     .ba-after { margin-top: clamp(8px, 2vh, 20px); }
+    /* links inside the prose: off-white with a lavender underline that warms to gold on hover */
+    .ba-link {
+      color: var(--cs-ink);
+      text-decoration: underline;
+      text-decoration-color: rgba(217, 200, 255, 0.6);
+      text-decoration-thickness: 1px;
+      text-underline-offset: 0.2em;
+      transition: color 0.2s ease, text-decoration-color 0.2s ease;
+    }
+    .ba-link:hover { color: #f3d27e; text-decoration-color: #f3d27e; }
+    .ba-link:focus-visible { outline: 2px solid #d9c8ff; outline-offset: 2px; border-radius: 2px; }
 
     /* ── Galleries: the same self-scrolling strip as 808 and Sun-Drop.
        Visitors can scroll, swipe or drag; tapping an image opens it in the viewer. ── */
@@ -528,7 +539,8 @@
       .ba-strip__track img[aria-hidden] { display: none; }
     }
 
-    /* ── Layers: one hero built up step by step ── */
+    /* ── Layers: one scene builds itself up on a loop while it's on screen. Each layer settles
+       on top of the ones before it (they stack, not swap), then the stack peels back to the base. ── */
     .ba-layers { margin: clamp(28px, 4vh, 48px) 0 0; grid-column: 1 / -1; }
     .ba-layers__frame {
       position: relative;
@@ -546,9 +558,10 @@
       height: 100%;
       object-fit: cover;
       opacity: 0;
-      transition: opacity 0.7s ease;
+      transform: scale(1.045);
+      transition: opacity 0.6s ease, transform 1s cubic-bezier(0.2, 0.7, 0.2, 1);
     }
-    .ba-layers__frame img.is-on { opacity: 1; }
+    .ba-layers__frame img.is-on { opacity: 1; transform: none; }
     .ba-layers__steps {
       display: grid;
       grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -572,15 +585,28 @@
       cursor: pointer;
       transition: color 0.25s ease, border-color 0.25s ease;
     }
+    .ba-step { position: relative; }
     .ba-step__n { font-size: 11px; letter-spacing: 0.16em; opacity: 0.7; }
     .ba-step:hover { color: var(--cs-ink); }
-    .ba-step[aria-selected="true"] { color: var(--cs-ink); border-top-color: #d9c8ff; }
+    /* layers already in the stack stay lit; the current one fills its line like a timeline */
+    .ba-step.is-done { color: var(--cs-ink); border-top-color: rgba(217, 200, 255, 0.55); }
+    .ba-step[aria-selected="true"] { color: var(--cs-ink); border-top-color: rgba(217, 200, 255, 0.28); }
+    .ba-step__bar {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: -2px;
+      height: 2px;
+      background: #d9c8ff;
+      transform-origin: left center;
+      transform: scaleX(var(--p, 0));
+    }
     .ba-step:focus-visible { outline: 2px solid #d9c8ff; outline-offset: 4px; }
     @media (max-width: 600px) {
       .ba-step { flex-direction: column; gap: 2px; font-size: 12px; }
     }
     @media (prefers-reduced-motion: reduce) {
-      .ba-layers__frame img { transition: none; }
+      .ba-layers__frame img { transition: none; transform: none; }
     }
 
     /* ── Footer: a deeper indigo, since the page ink is off-white ── */
@@ -1015,7 +1041,7 @@
       <div class="cs-section__body">
         <div class="cs-section__copy">
           <p class="cs-lead">The final images are composites. I worked from a mix of stock and generated imagery, then built each scene up in layers.</p>
-          <p>First a clean base: the astronaut, the Earth and the light. Then the nebula. Then a color grade that pulls everything into Halcyon Purple and magenta. Then the type, and for the infographic, the numbers. Step through it below.</p>
+          <p>First a clean base: the astronaut, the Earth and the light. Then the nebula. Then a color grade that pulls everything into Halcyon Purple and magenta. Then the type, and for the infographic, the numbers. Watch it build below.</p>
         </div>
         <figure class="ba-layers" data-layers>
           <div class="ba-layers__frame">
@@ -1023,16 +1049,16 @@
             <img src="../BlackAmbition/layer-nebula.webp" width="1920" height="1080" loading="lazy" decoding="async" alt="Layer two: pink and blue nebulas added around the Earth." />
             <img src="../BlackAmbition/hero-earth.webp" width="1920" height="1080" loading="lazy" decoding="async" alt="Layer three: the color grade, pulling the whole scene into purple and magenta." />
             <img src="../BlackAmbition/hero-earth-type.webp" width="1920" height="1080" loading="lazy" decoding="async" alt="Layer four: the wordmark and The Deeper Bet set over the astronaut." />
-            <img src="../BlackAmbition/infographic.webp" data-full="../BlackAmbition/infographic-hd.webp" width="2880" height="1620" loading="lazy" decoding="async" alt="Layer five, the final infographic: the title moves to the top and the numbers are charted as two constellations around the scene." />
+            <img src="../BlackAmbition/infographic.webp" data-full="../BlackAmbition/infographic-hd.webp" data-dwell="3400" width="2880" height="1620" loading="lazy" decoding="async" alt="Layer five, the final infographic: the title moves to the top and the numbers are charted as two constellations around the scene." />
           </div>
           <div class="ba-layers__steps" role="tablist" aria-label="Layers">
-            <button class="ba-step" type="button" role="tab" aria-selected="true"><span class="ba-step__n">01</span>Base</button>
-            <button class="ba-step" type="button" role="tab" aria-selected="false"><span class="ba-step__n">02</span>Nebula</button>
-            <button class="ba-step" type="button" role="tab" aria-selected="false"><span class="ba-step__n">03</span>Color</button>
-            <button class="ba-step" type="button" role="tab" aria-selected="false"><span class="ba-step__n">04</span>Type</button>
-            <button class="ba-step" type="button" role="tab" aria-selected="false"><span class="ba-step__n">05</span>Data</button>
+            <button class="ba-step" type="button" role="tab" aria-selected="true"><span class="ba-step__n">01</span>Base<span class="ba-step__bar" aria-hidden="true"></span></button>
+            <button class="ba-step" type="button" role="tab" aria-selected="false"><span class="ba-step__n">02</span>Nebula<span class="ba-step__bar" aria-hidden="true"></span></button>
+            <button class="ba-step" type="button" role="tab" aria-selected="false"><span class="ba-step__n">03</span>Color<span class="ba-step__bar" aria-hidden="true"></span></button>
+            <button class="ba-step" type="button" role="tab" aria-selected="false"><span class="ba-step__n">04</span>Type<span class="ba-step__bar" aria-hidden="true"></span></button>
+            <button class="ba-step" type="button" role="tab" aria-selected="false"><span class="ba-step__n">05</span>Data<span class="ba-step__bar" aria-hidden="true"></span></button>
           </div>
-          <figcaption class="cs-figure__caption">One scene, layer by layer, from the base to the final infographic.</figcaption>
+          <figcaption class="cs-figure__caption">One scene building itself, layer by layer, from the base to the final infographic. Tap a step to hold it.</figcaption>
         </figure>
         <div class="cs-section__copy ba-after">
           <p>Before the finals, I tried the idea in portrait posters and wide banners: the Pharrell line, The Foundation, The Deeper Bet and a newsletter post. One scene, an astronaut sitting at the edge of the Earth, went all the way to a finished hero before the team chose another direction.</p>
@@ -1078,7 +1104,7 @@
         </figure>
         <div class="cs-section__copy ba-notes ba-after">
           <h3>Made for Instagram.</h3>
-          <p>I cut the same constellations down into a four post set: a title card, Prior Impact, Expanding Our Impact and a newsletter call. Black Ambition posted the set on June 9, 2026, to announce The Deeper Bet.</p>
+          <p>I cut the same constellations down into a four post set: a title card, Prior Impact, Expanding Our Impact and a newsletter call. Black Ambition <a class="ba-link" href="https://www.instagram.com/p/DZXbPYmETCd/?img_index=1" target="_blank" rel="noopener">posted the set on Instagram<span aria-hidden="true"> ↗</span></a> on June 9, 2026, to announce The Deeper Bet.</p>
         </div>
         <figure class="cs-figure ba-strip-wrap">
           <div class="ba-strip" data-copies="4" aria-label="The Instagram set">
@@ -1121,6 +1147,22 @@
         <div class="cs-section__copy">
           <p class="cs-lead">The brand rules gave me a fast, confident start. The breakthrough came when I stopped redesigning the data and started picturing it. Once the picture was right, the numbers had somewhere to live.</p>
           <p>Four rounds in four days taught me to ask early what a team needs its audience to feel, not just what it needs to say.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ IMPACT ============ -->
+  <section class="cs-section">
+    <div class="cs-container">
+      <header class="cs-section__head">
+        <span class="cs-section__num">Impact</span>
+        <h2 class="cs-section__title">Still part of the brand.</h2>
+      </header>
+      <div class="cs-section__body">
+        <div class="cs-section__copy">
+          <p class="cs-lead">The look I designed for The Deeper Bet didn't stop at one campaign.</p>
+          <p>Black Ambition now uses my designs in many ways across the brand, from dinner card designs to check designs.</p>
         </div>
       </div>
     </div>
@@ -1301,15 +1343,17 @@
       function go(i, user) {
         cur = (i + frames.length) % frames.length;
         frames.forEach(function (f, k) {
-          f.classList.toggle('is-on', k === cur);
-          if (k === cur && f.loading === 'lazy') f.loading = 'eager';
-        });
-        tabs.forEach(function (t, k) {
-          t.setAttribute('aria-selected', String(k === cur));
-          t.tabIndex = k === cur ? 0 : -1;
-          t.style.setProperty('--p', '0');
+          /* stack: every layer up to the current one stays on, so each new one lands on top */
+          f.classList.toggle('is-on', opts.stack ? k <= cur : k === cur);
+          if (k <= cur + 1 && f.loading === 'lazy') f.loading = 'eager';
         });
         if (user && opts.stopOnUser) stopped = true;
+        tabs.forEach(function (t, k) {
+          t.setAttribute('aria-selected', String(k === cur));
+          t.classList.toggle('is-done', !!opts.stack && k < cur);
+          t.tabIndex = k === cur ? 0 : -1;
+          t.style.setProperty('--p', opts.stack && (stopped || still) && k === cur ? '1' : '0');
+        });
         t0 = performance.now();
       }
       tabs.forEach(function (t, k) {
@@ -1322,7 +1366,7 @@
           tabs[cur].focus();
         });
       });
-      root.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') paused = true; });
+      root.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse' && !opts.noHoverPause) paused = true; });
       root.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') paused = false; });
 
       /* the frame opens in the viewer, with arrows through the set */
@@ -1358,7 +1402,7 @@
       baTabs(el, { frames: '.ba-show__img', tabs: '.ba-tab', box: '.ba-show__frame', every: 6500, bar: true });
     });
     Array.prototype.forEach.call(document.querySelectorAll('[data-layers]'), function (el) {
-      baTabs(el, { frames: '.ba-layers__frame img', tabs: '.ba-step', box: '.ba-layers__frame', every: 2600, once: true, stopOnUser: true });
+      baTabs(el, { frames: '.ba-layers__frame img', tabs: '.ba-step', box: '.ba-layers__frame', every: 1300, stack: true, bar: true, stopOnUser: true, noHoverPause: true });
     });
 
     /* Galleries: drift on their own, but visitors can scroll, swipe or drag them.
