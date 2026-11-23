@@ -194,10 +194,183 @@
       height: 100%;
       object-fit: cover;
     }
+    /* The reel poster opens the post on Instagram */
+    .wwr-reel--link { display: block; color: var(--cs-ink); text-decoration: none; }
+    .wwr-reel__frame img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s var(--ease-out);
+    }
+    .wwr-reel__play {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      display: grid;
+      place-items: center;
+      width: 76px;
+      height: 76px;
+      margin: -38px 0 0 -38px;
+      padding-left: 4px;
+      box-sizing: border-box;
+      border-radius: 50%;
+      border: 1px solid rgba(245, 237, 224, 0.5);
+      background: rgba(20, 32, 24, 0.42);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      color: #f5ede0;
+      transition: transform 0.25s var(--ease-out), background 0.25s var(--ease-out);
+    }
+    .wwr-reel__tag {
+      position: absolute;
+      left: 50%;
+      bottom: 16px;
+      transform: translateX(-50%);
+      padding: 9px 16px;
+      border-radius: 999px;
+      background: rgba(20, 32, 24, 0.55);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      font-family: var(--font-franklin-medium);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      color: #f5ede0;
+    }
+    .wwr-reel--link:hover .wwr-reel__frame img { transform: scale(1.03); }
+    .wwr-reel--link:hover .wwr-reel__play { transform: scale(1.08); background: rgba(20, 32, 24, 0.6); }
+    .wwr-reel--link:focus-visible { outline: none; }
+    .wwr-reel--link:focus-visible .wwr-reel__frame { outline: 3px solid var(--wwr-blossom); outline-offset: 4px; }
     @media (max-width: 900px) {
       .wwr-feature__grid { grid-template-columns: 1fr; row-gap: 36px; }
       .wwr-reel { justify-self: center; width: min(78vw, 320px); }
     }
+
+    /* ── The 3D world, up front: a wide doorway card that opens the walkable garden ── */
+    .cs-body-page--wwr .wwr-door-section { padding-top: 0; border-bottom: 0; }
+    .wwr-door {
+      position: relative;
+      isolation: isolate;
+      display: block;
+      overflow: hidden;
+      aspect-ratio: 16 / 7;
+      min-height: 360px;
+      border-radius: clamp(18px, 2vw, 28px);
+      background: #142018;
+      color: var(--cs-ink);
+      text-decoration: none;
+      box-shadow: 0 50px 100px -40px rgba(6, 12, 8, 0.8), 0 0 0 1px rgba(245, 237, 224, 0.08);
+    }
+    .wwr-door__media {
+      position: absolute;
+      inset: 0;
+      display: block;
+    }
+    .wwr-door__media video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 1.2s var(--ease-out);
+    }
+    .wwr-door:hover .wwr-door__media video { transform: scale(1.04); }
+    .wwr-door__shade {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(16, 24, 18, 0.9) 0%, rgba(16, 24, 18, 0.62) 36%, rgba(16, 24, 18, 0) 68%);
+      pointer-events: none;
+    }
+    .wwr-door__copy {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 12px;
+      height: 100%;
+      max-width: 36rem;
+      padding: clamp(28px, 4vw, 60px);
+      box-sizing: border-box;
+    }
+    .wwr-door__eyebrow {
+      font-family: var(--font-franklin-medium);
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--wwr-blossom);
+    }
+    .wwr-door__title {
+      font-family: var(--font-instrument);
+      font-weight: 400;
+      font-size: clamp(40px, 4.2vw, 64px);
+      line-height: 1;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    }
+    .wwr-door__text {
+      max-width: 34ch;
+      font-family: var(--font-source);
+      font-size: clamp(16px, 1.25vw, 18px);
+      line-height: 1.55;
+    }
+    .wwr-door__cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+      min-height: 46px;
+      padding: 0 22px;
+      border-radius: 999px;
+      background: var(--wwr-blossom);
+      color: #1f2b22;
+      font-family: var(--font-franklin-medium);
+      font-size: 13px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      box-shadow: 0 10px 30px -10px rgba(240, 191, 196, 0.6);
+      transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out);
+    }
+    .wwr-door__arrow { display: inline-block; transition: transform 0.25s var(--ease-out); }
+    .wwr-door:hover .wwr-door__cta { transform: translateY(-1px); box-shadow: 0 14px 34px -10px rgba(240, 191, 196, 0.75); }
+    .wwr-door:hover .wwr-door__arrow { transform: translate(2px, -2px); }
+    .wwr-door__note {
+      font-family: var(--font-franklin-medium);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--cs-muted);
+    }
+    .wwr-door:focus-visible { outline: 3px solid var(--wwr-blossom); outline-offset: 4px; }
+    @media (prefers-reduced-motion: reduce) {
+      .wwr-door__media video, .wwr-reel__frame img { transition: none; }
+    }
+    @media (max-width: 700px) {
+      .wwr-door { display: flex; flex-direction: column; aspect-ratio: auto; min-height: 0; }
+      .wwr-door__media { position: relative; aspect-ratio: 16 / 10; }
+      .wwr-door__shade { display: none; }
+      .wwr-door__copy { max-width: none; padding: 24px 22px 28px; }
+    }
+
+    /* ── The studio video, now in the Finished chapter ── */
+    .wwr-clip {
+      grid-column: 2;
+      width: clamp(240px, 22vw, 300px);
+      margin: clamp(28px, 4vh, 40px) 0 0;
+    }
+    .wwr-clip__frame {
+      aspect-ratio: 9 / 16;
+      border-radius: 20px;
+      overflow: hidden;
+      background: #142018;
+      box-shadow: 0 40px 80px -30px rgba(6, 12, 8, 0.7), 0 14px 30px -12px rgba(6, 12, 8, 0.45);
+    }
+    .wwr-clip video { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .wwr-clip .cs-figure__caption { text-align: left; }
+    @media (max-width: 900px) { .wwr-clip { grid-column: 1; } }
 
     /* ── Exhibition badge: the same glowing pill as 808, Braid and Sun-Drop, tuned for the green page ── */
     .cs-award {
@@ -270,6 +443,17 @@
       color: var(--cs-ink);
       white-space: nowrap;
     }
+    a.cs-award { text-decoration: none; }
+    .cs-award__arrow {
+      grid-column: 3;
+      grid-row: 1 / 3;
+      margin-left: 2px;
+      font-size: 16px;
+      color: var(--wwr-gold);
+      transition: transform 0.25s var(--ease-out);
+    }
+    a.cs-award:hover .cs-award__arrow { transform: translate(2px, -2px); }
+    a.cs-award:focus-visible { outline: 2px solid var(--wwr-gold); outline-offset: 4px; }
     .cs-hero__pills .cs-award { margin-left: 8px; }
     @media (max-width: 600px) { .cs-hero__pills .cs-award { margin-left: 0; } }
     @keyframes cs-award-glow {
@@ -701,21 +885,58 @@
     </div>
   </header>
 
-  <!-- ============ FEATURED: THE STUDIO VIDEO ============ -->
-  <section class="cs-section wwr-feature" aria-label="Where We Rest in the studio">
+  <!-- ============ FEATURED: THE INSTAGRAM REEL ============
+       The reel's own cut is not on disk yet, so this is a poster from the same footage
+       that opens the post on Instagram. -->
+  <section class="cs-section wwr-feature" aria-label="Where We Rest on Instagram">
     <div class="cs-container wwr-feature__grid">
       <div>
         <h2 class="cs-section__title wwr-feature__title">Meet Where We Rest.</h2>
-        <p class="wwr-feature__text">In fall 2023 I built a small heaven on earth: laser-cut houses, hand-made trees and a koi pond, set in a garden in memory of my father. Here it is in the studio, in the window light.</p>
+        <p class="wwr-feature__text">In fall 2023 I built a small heaven on earth: laser-cut houses, hand-made trees and a koi pond, set in a garden in memory of my father.</p>
         <p class="wwr-feature__meta">Sculpture final · Columbia College Chicago · Fall 2023</p>
-      </div>
-      <div class="wwr-reel">
-        <div class="wwr-reel__frame">
-          <video muted loop playsinline preload="none" poster="../WhereWeRest/feature/wwr-studio-poster.jpg" data-play-in-view aria-label="Where We Rest in the studio: window light through the willow, then a slow turn past the houses and the cherry tree">
-            <source src="../WhereWeRest/feature/wwr-studio.mp4" type="video/mp4" />
-          </video>
+        <div class="wwr-feature__badge">
+          <a class="cs-award" href="https://www.instagram.com/p/DajLhyHukQH/" target="_blank" rel="noopener" aria-label="Watch my Where We Rest reel on Instagram (opens in a new tab)">
+            <span class="cs-award__glow" aria-hidden="true"></span>
+            <span class="cs-award__medal" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor"/></svg>
+            </span>
+            <span class="cs-award__year">On Instagram</span>
+            <span class="cs-award__title">Watch the reel</span>
+            <span class="cs-award__arrow" aria-hidden="true">↗</span>
+          </a>
         </div>
       </div>
+      <a class="wwr-reel wwr-reel--link" href="https://www.instagram.com/p/DajLhyHukQH/" target="_blank" rel="noopener" aria-label="Play my Where We Rest reel on Instagram (opens in a new tab)">
+        <span class="wwr-reel__frame">
+          <img src="../WhereWeRest/feature/wwr-reel-poster.jpg" width="720" height="1280" alt="" decoding="async" />
+          <span class="wwr-reel__play" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></svg>
+          </span>
+          <span class="wwr-reel__tag" aria-hidden="true">Play on Instagram ↗</span>
+        </span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============ THE 3D WORLD, UP FRONT ============
+       A doorway into the walkable garden; the full story is in Part Two. -->
+  <section class="cs-section wwr-door-section" aria-label="Walk through the 3D garden">
+    <div class="cs-container">
+      <a class="wwr-door" href="../WhereWeRest/world/" target="_blank" rel="noopener" aria-label="Walk through Where We Rest in 3D: opens the in-progress 3D garden in a new tab">
+        <span class="wwr-door__media" aria-hidden="true">
+          <video muted loop playsinline preload="none" poster="../WhereWeRest/feature/wwr-walk-poster.jpg" data-play-in-view>
+            <source src="../WhereWeRest/feature/wwr-walk.mp4" type="video/mp4" />
+          </video>
+        </span>
+        <span class="wwr-door__shade" aria-hidden="true"></span>
+        <span class="wwr-door__copy">
+          <span class="wwr-door__eyebrow">New · 3D world in progress</span>
+          <span class="wwr-door__title">Walk through it.</span>
+          <span class="wwr-door__text">I'm rebuilding the garden at life size. Step inside and walk between the houses, right in your browser.</span>
+          <span class="wwr-door__cta">Enter the garden <span class="wwr-door__arrow" aria-hidden="true">↗</span></span>
+          <span class="wwr-door__note">Opens in a new tab · about 34 MB</span>
+        </span>
+      </a>
     </div>
   </section>
 
@@ -888,6 +1109,14 @@
           <p class="cs-lead">I finished Where We Rest in December 2023, seven weeks after I started: four houses, four trees and a koi pond, small enough to sit on a table.</p>
           <p>In spring 2024 it was shown in the For Women, by Women Art Gallery's 3rd Annual Exhibition at 618 S. Michigan Ave in Chicago, from April 26 to August 1.</p>
         </div>
+        <figure class="wwr-clip">
+          <div class="wwr-clip__frame">
+            <video muted loop playsinline preload="none" poster="../WhereWeRest/feature/wwr-studio-poster.jpg" data-play-in-view aria-label="Where We Rest in the studio: window light through the willow, then a slow turn past the houses and the cherry tree">
+              <source src="../WhereWeRest/feature/wwr-studio.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <figcaption class="cs-figure__caption">The finished garden in the studio's window light.</figcaption>
+        </figure>
         <figure class="cs-figure wwr-strip-wrap">
           <div class="wwr-strip" data-copies="3" aria-label="The finished sculpture">
             <div class="wwr-strip__track">
@@ -1003,6 +1232,7 @@
         <div class="cs-section__copy">
           <p class="cs-lead">The garden runs in the browser with three.js.</p>
           <p>You drag to look around and tap the ground to walk, or use W, A, S and D. You can zoom out over the whole garden, and the houses and trunks are solid, so you can't walk through them. One millimetre of the sculpture becomes five centimetres.</p>
+          <p><a href="../WhereWeRest/world/" target="_blank" rel="noopener">Step inside the garden</a> (opens in a new tab).</p>
         </div>
         <figure class="wwr-walk">
           <div class="wwr-walk__frame">
