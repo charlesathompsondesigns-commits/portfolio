@@ -636,36 +636,52 @@
     }
     .wwr-part + .cs-section { border-top: 1px solid var(--cs-rule); }
 
+    /* ── Prose with serif subheads instead of cards (the storyline) ── */
+    .wwr-notes h3 {
+      font-family: var(--font-instrument);
+      font-weight: 400;
+      font-size: clamp(26px, 2.3vw, 32px);
+      line-height: 1.15;
+      color: var(--cs-ink);
+      margin: clamp(36px, 5vh, 52px) 0 10px;
+      text-wrap: balance;
+    }
+    .wwr-notes h3 + p { margin-top: 0; }
+    .wwr-notes .wwr-q { font-family: var(--font-source-italic); font-style: italic; color: var(--wwr-blossom); }
+
     /* ── The four houses and their colours ── */
     .wwr-key {
       list-style: none;
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: clamp(16px, 2vw, 28px);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(20px, 2.6vh, 28px) clamp(20px, 3vw, 40px);
       margin: clamp(28px, 4vh, 40px) 0 0;
       padding: 0;
     }
     .wwr-key li {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 4px;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      column-gap: 16px;
+      row-gap: 4px;
+      align-items: center;
     }
     .wwr-key__dot {
-      width: clamp(40px, 3.6vw, 52px);
+      grid-row: 1 / 3;
+      width: clamp(44px, 3.8vw, 54px);
       aspect-ratio: 1;
-      margin-bottom: 8px;
       border-radius: 50%;
       box-shadow: inset 0 0 0 1px rgba(245, 237, 224, 0.22);
     }
     .wwr-key__name {
+      align-self: end;
       font-family: var(--font-instrument);
-      font-size: clamp(19px, 1.6vw, 22px);
+      font-size: clamp(20px, 1.7vw, 24px);
       line-height: 1.1;
       color: var(--cs-ink);
       text-wrap: balance;
     }
     .wwr-key__hex {
+      align-self: start;
       font-family: var(--font-franklin-medium);
       font-size: 11px;
       letter-spacing: 0.14em;
@@ -673,7 +689,7 @@
       color: var(--cs-muted);
     }
     @media (max-width: 700px) {
-      .wwr-key { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 20px; }
+      .wwr-key { grid-template-columns: 1fr; row-gap: 18px; }
     }
 
     /* ── Photo galleries: the same self-scrolling strip as 808 and Sun-Drop.
@@ -877,7 +893,7 @@
             <div class="cs-wall__tile wwr-swatch" style="aspect-ratio: 1 / 1; background: #F0BFC4; color: #1F2B22"><span>Blossom</span><span>#F0BFC4</span></div>
             <img class="cs-wall__tile" src="../WhereWeRest/wall/yellow-tree-house.webp" data-full="../WhereWeRest/full/yellow-tree-house.webp" width="586" height="580" style="aspect-ratio: 586 / 580" decoding="async" alt="The grey Garden Magic House seen through the branches of the yellow tree." draggable="false" />
             <img class="cs-wall__tile" src="../WhereWeRest/wall/golden-willow.webp" data-full="../WhereWeRest/full/golden-willow.webp" width="435" height="580" style="aspect-ratio: 435 / 580" decoding="async" alt="Window light falling across the willow and the dark red tower." draggable="false" />
-            <div class="cs-wall__tile wwr-swatch" style="aspect-ratio: 1 / 1; background: #CFA29C; color: #1F2B22"><span>Elf House</span><span>#CFA29C</span></div>
+            <div class="cs-wall__tile wwr-swatch" style="aspect-ratio: 1 / 1; background: #CFA29C; color: #1F2B22"><span>The House of Love</span><span>#CFA29C</span></div>
             <img class="cs-wall__tile" src="../WhereWeRest/wall/willow-tower.webp" data-full="../WhereWeRest/full/willow-tower.webp" width="667" height="580" style="aspect-ratio: 667 / 580" decoding="async" alt="The weeping willow beside the dark red tower, cherry blossom behind." draggable="false" />
             <img class="cs-wall__tile" src="../WhereWeRest/wall/golden-close.webp" data-full="../WhereWeRest/wall/golden-close.webp" width="466" height="580" style="aspect-ratio: 466 / 580" decoding="async" alt="The garden on its carved wooden stand in the studio, lit by the window." draggable="false" />
             <img class="cs-wall__tile" src="../WhereWeRest/strip/r-blossom-branch.webp" data-full="../WhereWeRest/full/r-blossom-branch.webp" width="615" height="820" style="aspect-ratio: 615 / 820" decoding="async" alt="A 3D render of a cherry blossom branch for the life-size rebuild." draggable="false" />
@@ -900,15 +916,15 @@
         <div class="cs-wall__row" data-speed="1.25">
           <div class="cs-wall__track">
             <img class="cs-wall__tile" src="../WhereWeRest/wall/elf.webp" data-full="../WhereWeRest/full/elf.webp" width="387" height="580" style="aspect-ratio: 387 / 580" decoding="async" alt="The pink Elf House on its octagonal platform, freshly airbrushed." draggable="false" />
-            <div class="cs-wall__tile wwr-swatch" style="aspect-ratio: 1 / 1; background: #B89CAB; color: #1F2B22"><span>Gnome House</span><span>#B89CAB</span></div>
+            <div class="cs-wall__tile wwr-swatch" style="aspect-ratio: 1 / 1; background: #B89CAB; color: #1F2B22"><span>The House of Roots and Hope</span><span>#B89CAB</span></div>
             <img class="cs-wall__tile" src="../WhereWeRest/wall/tower.webp" data-full="../WhereWeRest/full/tower.webp" width="455" height="580" style="aspect-ratio: 455 / 580" decoding="async" alt="The dark red tower among the trees." draggable="false" />
             <img class="cs-wall__tile" src="../WhereWeRest/wall/house-row.webp" data-full="../WhereWeRest/strip/house-row.webp" width="627" height="580" style="aspect-ratio: 627 / 580" decoding="async" alt="The pink Elf House and the dark red tower side by side under the cherry blossom." draggable="false" />
-            <div class="cs-wall__tile wwr-swatch" style="aspect-ratio: 1 / 1; background: #5B2A2C; color: #F5EDE0"><span>Tower</span><span>#5B2A2C</span></div>
+            <div class="cs-wall__tile wwr-swatch" style="aspect-ratio: 1 / 1; background: #5B2A2C; color: #F5EDE0"><span>The Tower of Purpose</span><span>#5B2A2C</span></div>
             <img class="cs-wall__tile" src="../WhereWeRest/wall/gnome.webp" data-full="../WhereWeRest/full/gnome.webp" width="355" height="580" style="aspect-ratio: 355 / 580" decoding="async" alt="The lilac Gnome House, freshly airbrushed." draggable="false" />
             <img class="cs-wall__tile" src="../WhereWeRest/wall/r-elf.webp" data-full="../WhereWeRest/full/r-elf.webp" width="359" height="580" style="aspect-ratio: 359 / 580" decoding="async" alt="A 3D render of the Elf House, rebuilt part by part from the laser-cut files." draggable="false" />
             <img class="cs-wall__tile" src="../WhereWeRest/wall/yellow-tree.webp" data-full="../WhereWeRest/full/yellow-tree.webp" width="586" height="580" style="aspect-ratio: 586 / 580" decoding="async" alt="The yellow tree's twisting branches and sponge foliage." draggable="false" />
             <img class="cs-wall__tile" src="../WhereWeRest/wall/studio-tower.webp" data-full="../WhereWeRest/full/studio-tower.webp" width="453" height="580" style="aspect-ratio: 453 / 580" decoding="async" alt="The dark red tower and cherry blossom in the studio." draggable="false" />
-            <div class="cs-wall__tile wwr-swatch" style="aspect-ratio: 1 / 1; background: #A8A1A6; color: #1F2B22"><span>Garden Magic House</span><span>#A8A1A6</span></div>
+            <div class="cs-wall__tile wwr-swatch" style="aspect-ratio: 1 / 1; background: #A8A1A6; color: #1F2B22"><span>The House of Remembering</span><span>#A8A1A6</span></div>
             <img class="cs-wall__tile" src="../WhereWeRest/strip/t-cherry-flowers.webp" data-full="../WhereWeRest/strip/t-cherry-flowers.webp" width="1025" height="820" style="aspect-ratio: 1025 / 820" decoding="async" alt="A 3D render of cherry flowers against a soft evening sky." draggable="false" />
           </div>
         </div>
@@ -1035,10 +1051,10 @@
           <p class="cs-lead">Each house is painted a colour that stands for someone in my life who has passed on.</p>
           <p>I wanted the houses to feel like the ones in Studio Ghibli films such as Princess Mononoke and Ponyo. Their colours make me think of spring and rebirth, and I wanted that same feeling here. Where We Rest is rooted in remembrance, and I feel these colours represent the people it remembers best. I coloured every house with an airbrush.</p>
           <ul class="wwr-key" aria-label="The four houses and their colours">
-            <li><span class="wwr-key__dot" style="background: #CFA29C"></span><span class="wwr-key__name">Elf House</span><span class="wwr-key__hex">Pink</span></li>
-            <li><span class="wwr-key__dot" style="background: #B89CAB"></span><span class="wwr-key__name">Gnome House</span><span class="wwr-key__hex">Lilac</span></li>
-            <li><span class="wwr-key__dot" style="background: #A8A1A6"></span><span class="wwr-key__name">Garden Magic House</span><span class="wwr-key__hex">Grey lilac</span></li>
-            <li><span class="wwr-key__dot" style="background: #5B2A2C"></span><span class="wwr-key__name">Tower</span><span class="wwr-key__hex">Deep red</span></li>
+            <li><span class="wwr-key__dot" style="background: #CFA29C"></span><span class="wwr-key__name">The House of Love</span><span class="wwr-key__hex">Elf House · Pink</span></li>
+            <li><span class="wwr-key__dot" style="background: #B89CAB"></span><span class="wwr-key__name">The House of Roots and Hope</span><span class="wwr-key__hex">Gnome House · Lilac</span></li>
+            <li><span class="wwr-key__dot" style="background: #A8A1A6"></span><span class="wwr-key__name">The House of Remembering</span><span class="wwr-key__hex">Garden Magic House · Grey lilac</span></li>
+            <li><span class="wwr-key__dot" style="background: #5B2A2C"></span><span class="wwr-key__name">The Tower of Purpose</span><span class="wwr-key__hex">Tower · Deep red</span></li>
           </ul>
         </div>
         <blockquote class="cs-quote">
@@ -1308,6 +1324,33 @@
           </div>
           <figcaption class="cs-figure__caption">The live garden today, then renders from Blender along the way.</figcaption>
         </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STORY: THE GAME INSIDE THE GARDEN ============ -->
+  <section class="cs-section">
+    <div class="cs-container">
+      <header class="cs-section__head">
+        <span class="cs-section__num">Story</span>
+        <h2 class="cs-section__title">Four houses, four questions.</h2>
+      </header>
+      <div class="cs-section__body">
+        <div class="cs-section__copy wwr-notes">
+          <p class="cs-lead">The garden is also a quiet game. It asks your name when you arrive, and it uses it as you go.</p>
+          <p>Walk up to a house and its door wakes: a line about what you notice, the house's name, and an invitation to come in or keep wandering. Step inside and you become as small as the miniature, your eyes thirty centimetres from the floor, so the room towers over you. Then the house asks you one question.</p>
+          <h3>The House of Roots and Hope</h3>
+          <p>The lilac Gnome House sits low, close to the earth. <span class="wwr-q">"Whose story still lives in yours? What part of it do you hope to carry forward?"</span></p>
+          <h3>The House of Love</h3>
+          <p>The pink Elf House glows from all eight windows. <span class="wwr-q">"Who taught you what love feels like? They can be here with you, or already gone."</span></p>
+          <h3>The Tower of Purpose</h3>
+          <p>You climb to the top room of the tower, where a lantern flickers on. <span class="wwr-q">"What are you building with your life right now? Who do you wish could see it?"</span></p>
+          <h3>The House of Remembering</h3>
+          <p>The grey lilac Garden Magic House is the quiet one, kept for the people you miss. <span class="wwr-q">"Is there someone you miss? If they could hear you now, what would you tell them?"</span></p>
+          <h3>What you keep.</h3>
+          <p>You can write your answer or speak it, read or hear it back, and keep it. Your words stay in your own browser, and the next time you visit a house it shows you what you said there before. The menu can find all your answers again, or forget you on that device.</p>
+          <p>While you wander, quiet birdsong and soft piano play, made right in the browser. It's the feeling I wrote down for the colours in 2023: blue skies, birds chirping and soft piano playing.</p>
+        </div>
       </div>
     </div>
   </section>
