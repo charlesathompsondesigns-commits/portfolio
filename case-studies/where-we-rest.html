@@ -248,15 +248,17 @@
     }
 
     /* ── The 3D world, up front: a wide doorway card that opens the walkable garden ── */
-    .cs-body-page--wwr .wwr-door-section { padding-top: 0; border-bottom: 0; }
+    .cs-body-page--wwr .wwr-door-section { padding-top: clamp(8px, 2vh, 24px); border-bottom: 0; }
+    /* the card runs nearly edge to edge, with the same gutter as the brand wall */
+    .wwr-door-wrap { padding: 0 clamp(8px, 1vw, 16px); }
     .wwr-door {
       position: relative;
       isolation: isolate;
       display: block;
       overflow: hidden;
-      aspect-ratio: 16 / 7;
-      min-height: 360px;
-      border-radius: clamp(18px, 2vw, 28px);
+      height: min(88vh, 940px);
+      min-height: 560px;
+      border-radius: clamp(18px, 2vw, 32px);
       background: #142018;
       color: var(--cs-ink);
       text-decoration: none;
@@ -298,7 +300,9 @@
     .wwr-door__shade {
       position: absolute;
       inset: 0;
-      background: linear-gradient(90deg, rgba(16, 24, 18, 0.9) 0%, rgba(16, 24, 18, 0.62) 36%, rgba(16, 24, 18, 0) 68%);
+      background:
+        linear-gradient(90deg, rgba(16, 24, 18, 0.9) 0%, rgba(16, 24, 18, 0.6) 32%, rgba(16, 24, 18, 0) 60%),
+        linear-gradient(0deg, rgba(16, 24, 18, 0.55) 0%, rgba(16, 24, 18, 0) 30%);
       pointer-events: none;
     }
     .wwr-door__copy {
@@ -308,45 +312,45 @@
       flex-direction: column;
       justify-content: center;
       align-items: flex-start;
-      gap: 12px;
+      gap: clamp(14px, 1.6vh, 20px);
       height: 100%;
-      max-width: 36rem;
-      padding: clamp(28px, 4vw, 60px);
+      max-width: 46rem;
+      padding: clamp(32px, 6vw, 112px);
       box-sizing: border-box;
     }
     .wwr-door__eyebrow {
       font-family: var(--font-franklin-medium);
-      font-size: 12px;
-      letter-spacing: 0.2em;
+      font-size: clamp(12px, 1vw, 14px);
+      letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--wwr-blossom);
     }
     .wwr-door__title {
       font-family: var(--font-instrument);
       font-weight: 400;
-      font-size: clamp(40px, 4.2vw, 64px);
+      font-size: clamp(56px, 7.4vw, 128px);
       line-height: 1;
       letter-spacing: -0.01em;
       white-space: nowrap;
     }
     .wwr-door__text {
-      max-width: 34ch;
+      max-width: 36ch;
       font-family: var(--font-source);
-      font-size: clamp(16px, 1.25vw, 18px);
+      font-size: clamp(18px, 1.5vw, 22px);
       line-height: 1.55;
     }
     .wwr-door__cta {
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      margin-top: 10px;
-      min-height: 46px;
-      padding: 0 22px;
+      margin-top: clamp(10px, 1.6vh, 18px);
+      min-height: 56px;
+      padding: 0 30px;
       border-radius: 999px;
       background: var(--wwr-blossom);
       color: #1f2b22;
       font-family: var(--font-franklin-medium);
-      font-size: 13px;
+      font-size: 14px;
       letter-spacing: 0.14em;
       text-transform: uppercase;
       box-shadow: 0 10px 30px -10px rgba(240, 191, 196, 0.6);
@@ -363,14 +367,22 @@
       color: var(--cs-muted);
     }
     .wwr-door:focus-visible { outline: 3px solid var(--wwr-blossom); outline-offset: 4px; }
+    /* the Vision Pro badge sits in the card's lower right corner, over the garden */
+    .wwr-door .wwr-door__badge {
+      position: absolute;
+      right: clamp(24px, 3vw, 48px);
+      bottom: clamp(24px, 3vw, 48px);
+    }
     @media (prefers-reduced-motion: reduce) {
       .wwr-reel__frame img { transition: none; }
     }
     @media (max-width: 700px) {
-      .wwr-door { display: flex; flex-direction: column; aspect-ratio: auto; min-height: 0; }
-      .wwr-door__media { position: relative; aspect-ratio: 16 / 10; }
+      .wwr-door { display: flex; flex-direction: column; height: auto; min-height: 0; }
+      .wwr-door__media { position: relative; aspect-ratio: 4 / 5; }
       .wwr-door__shade { display: none; }
-      .wwr-door__copy { max-width: none; padding: 24px 22px 28px; }
+      .wwr-door__copy { max-width: none; padding: 26px 22px 30px; }
+      .wwr-door .wwr-door__badge { position: relative; right: auto; bottom: auto; align-self: flex-start; margin: 0 22px 30px; }
+      .wwr-door__title { font-size: clamp(44px, 13vw, 56px); }
     }
 
     /* ── The studio video, now in the Finished chapter ── */
@@ -473,6 +485,7 @@
     a.cs-award:hover .cs-award__arrow { transform: translate(2px, -2px); }
     a.cs-award:focus-visible { outline: 2px solid var(--wwr-gold); outline-offset: 4px; }
     .cs-hero__pills .cs-award { margin-left: 8px; }
+    .cs-hero__pills .cs-award + .cs-award { margin-left: 0; }
     @media (max-width: 600px) { .cs-hero__pills .cs-award { margin-left: 0; } }
     @keyframes cs-award-glow {
       from { opacity: 0.55; transform: scale(0.94); }
@@ -819,6 +832,14 @@
       <div class="cs-hero__pills cs-hero__pills--justified">
         <span class="cs-pill">Sculpture &amp; 3D World</span>
         <span class="cs-pill">Artist &amp; Maker</span>
+        <span class="cs-award" role="note" aria-label="Miniature Design Award, Open House Chicago">
+          <span class="cs-award__glow" aria-hidden="true"></span>
+          <span class="cs-award__medal" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="5"/><path d="M8.5 13.2 7 21l5-2.6 5 2.6-1.5-7.8"/></svg>
+          </span>
+          <span class="cs-award__year" aria-hidden="true">Open House Chicago</span>
+          <span class="cs-award__title" aria-hidden="true">Miniature Design Award</span>
+        </span>
         <span class="cs-award" role="note" aria-label="Exhibited in 2024 at the For Women, by Women Art Gallery in Chicago">
           <span class="cs-award__glow" aria-hidden="true"></span>
           <span class="cs-award__medal" aria-hidden="true">
@@ -826,6 +847,14 @@
           </span>
           <span class="cs-award__year" aria-hidden="true">Exhibited 2024</span>
           <span class="cs-award__title" aria-hidden="true">FWBW Art Gallery</span>
+        </span>
+        <span class="cs-award" role="note" aria-label="3D world built for Apple Vision Pro">
+          <span class="cs-award__glow" aria-hidden="true"></span>
+          <span class="cs-award__medal" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11c0-2.6 2-4 4.6-4h8.8C19 7 21 8.4 21 11v.6c0 2.8-2 4.4-4.4 4.4-1.9 0-2.7-1.7-4.6-1.7s-2.7 1.7-4.6 1.7C5 16 3 14.4 3 11.6z"/></svg>
+          </span>
+          <span class="cs-award__year" aria-hidden="true">3D world</span>
+          <span class="cs-award__title" aria-hidden="true">Built for Apple Vision Pro</span>
         </span>
       </div>
     </div>
@@ -924,7 +953,7 @@
   <!-- ============ THE 3D WORLD, UP FRONT ============
        A doorway into the live walkable garden; the full story is in Part Two. -->
   <section class="cs-section wwr-door-section" aria-label="Walk through the 3D garden">
-    <div class="cs-container">
+    <div class="wwr-door-wrap">
       <a class="wwr-door" href="https://where-we-rest.vercel.app/" target="_blank" rel="noopener" aria-label="Walk through Where We Rest in 3D: opens the in-progress 3D garden in a new tab">
         <span class="wwr-door__media" aria-hidden="true">
           <img class="wwr-door__slide" src="../WhereWeRest/feature/live-arrival.webp" width="1440" height="900" alt="" decoding="async" />
@@ -939,6 +968,14 @@
           <span class="wwr-door__text">I'm rebuilding the garden at life size. Step inside and walk between the houses, right in your browser.</span>
           <span class="wwr-door__cta">Enter the garden <span class="wwr-door__arrow" aria-hidden="true">↗</span></span>
           <span class="wwr-door__note">Opens in a new tab · about 60 MB, best on Wi-Fi</span>
+        </span>
+        <span class="cs-award wwr-door__badge">
+          <span class="cs-award__glow" aria-hidden="true"></span>
+          <span class="cs-award__medal" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11c0-2.6 2-4 4.6-4h8.8C19 7 21 8.4 21 11v.6c0 2.8-2 4.4-4.4 4.4-1.9 0-2.7-1.7-4.6-1.7s-2.7 1.7-4.6 1.7C5 16 3 14.4 3 11.6z"/></svg>
+          </span>
+          <span class="cs-award__year">3D world</span>
+          <span class="cs-award__title">Built for Apple Vision Pro</span>
         </span>
       </a>
     </div>
