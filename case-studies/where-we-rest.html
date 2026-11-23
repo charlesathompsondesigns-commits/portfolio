@@ -404,6 +404,69 @@
       background: transparent;
     }
 
+    /* ── Part Three: the XR pop-up floor plan with a numbered key beside it ── */
+    .wwr-plan {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+      gap: clamp(28px, 4vw, 64px);
+      align-items: center;
+      margin: clamp(32px, 5vh, 56px) 0 0;
+    }
+    .wwr-plan__drawing {
+      padding: clamp(12px, 2vw, 28px);
+      border-radius: clamp(18px, 2vw, 28px);
+      background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(245, 237, 224, 0.05), rgba(245, 237, 224, 0) 70%);
+    }
+    .wwr-plan__svg { display: block; width: 100%; height: auto; max-height: 86vh; }
+    .wwr-plan__svg text { font-family: var(--font-franklin-medium); fill: #f5ede0; }
+    .wwr-plan__small { font-size: 15px; letter-spacing: 0.18em; fill: rgba(245, 237, 224, 0.7) !important; }
+    .wwr-plan__mark text { font-size: 24px; fill: #1f2b22 !important; }
+    .wwr-plan__key {
+      list-style: none;
+      counter-reset: wwr-key;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: clamp(16px, 2.4vh, 24px);
+    }
+    .wwr-plan__key li {
+      counter-increment: wwr-key;
+      display: grid;
+      grid-template-columns: 36px minmax(0, 1fr);
+      column-gap: 14px;
+      font-family: var(--font-source);
+      font-size: clamp(16px, 1.2vw, 18px);
+      line-height: 1.5;
+      color: var(--cs-muted);
+    }
+    .wwr-plan__key li::before {
+      content: counter(wwr-key);
+      grid-row: 1 / 3;
+      display: grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--wwr-blossom);
+      color: #1f2b22;
+      font-family: var(--font-franklin-medium);
+      font-size: 14px;
+    }
+    .wwr-plan__key strong {
+      display: block;
+      font-family: var(--font-instrument);
+      font-weight: 400;
+      font-size: clamp(20px, 1.6vw, 23px);
+      line-height: 1.2;
+      color: var(--cs-ink);
+    }
+    .wwr-plan .cs-figure__caption { grid-column: 1 / -1; margin-top: 0; }
+    @media (max-width: 900px) {
+      .wwr-plan { grid-template-columns: 1fr; }
+      .wwr-plan__svg { max-height: none; }
+    }
+
     /* ── The studio video, now in the Finished chapter ── */
     .wwr-clip {
       grid-column: 2;
@@ -1412,6 +1475,105 @@
         <div class="cs-section__copy">
           <p class="cs-lead">Still a work in progress.</p>
           <p>Next, I'm testing it on a real Vision Pro.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PART THREE: THE XR POP-UP (A CONCEPT) ============ -->
+  <section class="wwr-part" aria-labelledby="wwrPart3">
+    <div class="cs-container">
+      <span class="wwr-part__label">Part Three</span>
+      <h2 class="wwr-part__title" id="wwrPart3">What it could become.</h2>
+      <p class="wwr-part__sub">A concept for an XR pop-up in Chicago</p>
+    </div>
+  </section>
+
+  <!-- ============ THE ROOM ============ -->
+  <section class="cs-section">
+    <div class="cs-container">
+      <header class="cs-section__head">
+        <span class="cs-section__num">Concept</span>
+        <h2 class="cs-section__title">A garden you can feel.</h2>
+      </header>
+      <div class="cs-section__body">
+        <div class="cs-section__copy">
+          <p class="cs-lead">I imagine Where We Rest as an XR pop-up in Chicago: one huge room where the Vision Pro garden and the real one meet.</p>
+          <p>The miniature waits at the entrance. Inside, soft foam blocks stand exactly where the houses and trees are in the headset, so what you see, you can touch. By the lavender tree and the pond, scent, a breeze and sound make it feel alive.</p>
+        </div>
+        <figure class="wwr-plan">
+          <div class="wwr-plan__drawing">
+            <svg class="wwr-plan__svg" viewBox="0 0 760 1060" role="img" aria-labelledby="wwrPlanTitle wwrPlanDesc" xmlns="http://www.w3.org/2000/svg">
+            <title id="wwrPlanTitle">Floor plan of the imagined Where We Rest XR pop-up</title>
+            <desc id="wwrPlanDesc">A lobby with the real sculpture leads into one large room laid out like the 3D garden: foam blocks where the four houses and the tree trunks stand, the koi pond in the middle with sound, a breeze carrying lavender scent from the purple tree, and a tribute wall by the exit.</desc>
+            <defs><pattern id="wwrGrid" width="75" height="75" patternUnits="userSpaceOnUse"><path d="M75 0H0V75" fill="none" stroke="rgba(245,237,224,0.06)" stroke-width="1"/></pattern><radialGradient id="wwrScent"><stop offset="0" stop-color="#b9a3e3" stop-opacity="0.32"/><stop offset="1" stop-color="#b9a3e3" stop-opacity="0"/></radialGradient><radialGradient id="wwrSound"><stop offset="0.45" stop-color="#9fd3cf" stop-opacity="0"/><stop offset="0.7" stop-color="#9fd3cf" stop-opacity="0.18"/><stop offset="1" stop-color="#9fd3cf" stop-opacity="0"/></radialGradient></defs>
+            <rect x="260" y="40" width="240" height="96" rx="14" fill="rgba(245,237,224,0.05)" stroke="rgba(245,237,224,0.28)"/>
+            <text class="wwr-plan__small" x="276" y="64">LOBBY</text>
+            <rect x="346" y="72" width="68" height="44" rx="6" fill="#f0bfc4" fill-opacity="0.18" stroke="#f0bfc4" stroke-opacity="0.8"/>
+            <rect x="360" y="82" width="40" height="24" rx="3" fill="#f0bfc4" fill-opacity="0.55"/>
+            <path d="M380 140 V 200" stroke="rgba(245,237,224,0.55)" stroke-width="2" stroke-dasharray="4 6" fill="none"/>
+            <rect x="80" y="170" width="600" height="765" rx="22" fill="url(#wwrGrid)" stroke="rgba(245,237,224,0.35)" stroke-width="1.5"/>
+            <rect x="352" y="167" width="56" height="6" fill="#1f2b22"/>
+            <circle cx="182" cy="601.2" r="135" fill="url(#wwrScent)"/>
+            <circle cx="380" cy="530" r="112.5" fill="url(#wwrSound)"/>
+            <circle cx="408.5" cy="353" r="94.5" fill="#f0bfc4" fill-opacity="0.13" stroke="#f0bfc4" stroke-opacity="0.55" stroke-dasharray="3 5"/>
+            <circle cx="569" cy="515" r="70.5" fill="#e9c98b" fill-opacity="0.13" stroke="#e9c98b" stroke-opacity="0.55" stroke-dasharray="3 5"/>
+            <circle cx="182" cy="601.2" r="73.5" fill="#b9a3e3" fill-opacity="0.13" stroke="#b9a3e3" stroke-opacity="0.55" stroke-dasharray="3 5"/>
+            <circle cx="320" cy="747.5" r="144" fill="#4c8a57" fill-opacity="0.13" stroke="#4c8a57" stroke-opacity="0.55" stroke-dasharray="3 5"/>
+            <ellipse cx="380" cy="530" rx="46.5" ry="40.5" fill="#2f5a57" stroke="#9fd3cf" stroke-opacity="0.7"/>
+            <ellipse cx="380" cy="530" rx="67.5" ry="61.5" fill="none" stroke="#9fd3cf" stroke-opacity="0.45" stroke-dasharray="2 6"/>
+            <ellipse cx="380" cy="530" rx="88.5" ry="82.5" fill="none" stroke="#9fd3cf" stroke-opacity="0.23" stroke-dasharray="2 6"/>
+            <path d="M92 577.2 C 170 544.2, 245 601.2, 314 546.5" fill="none" stroke="#f5ede0" stroke-opacity="0.55" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M92 607.2 C 170 574.2, 245 631.2, 314 557" fill="none" stroke="#f5ede0" stroke-opacity="0.7" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M92 637.2 C 170 604.2, 245 661.2, 314 567.5" fill="none" stroke="#f5ede0" stroke-opacity="0.55" stroke-width="1.6" stroke-linecap="round"/>
+            <rect x="76" y="581" width="10" height="40.5" rx="4" fill="#f5ede0" fill-opacity="0.7"/>
+            <rect x="272" y="378.5" width="73.5" height="78" rx="8" fill="#CFA29C" stroke="rgba(31,43,34,0.6)" stroke-width="2"/>
+            <rect x="191" y="464" width="108" height="87" rx="8" fill="#B89CAB" stroke="rgba(31,43,34,0.6)" stroke-width="2"/>
+            <rect x="429.5" y="434" width="81" height="79.5" rx="8" fill="#A8A1A6" stroke="rgba(31,43,34,0.6)" stroke-width="2"/>
+            <rect x="438.5" y="602" width="63" height="58.5" rx="8" fill="#5B2A2C" stroke="rgba(31,43,34,0.6)" stroke-width="2"/>
+            <rect x="389.8" y="338.8" width="24" height="24" rx="5" fill="#6b4a3a" stroke="rgba(245,237,224,0.35)"/>
+            <rect x="556.2" y="499.2" width="24" height="24" rx="5" fill="#6b4a3a" stroke="rgba(245,237,224,0.35)"/>
+            <rect x="176.8" y="593.8" width="24" height="24" rx="5" fill="#6b4a3a" stroke="rgba(245,237,224,0.35)"/>
+            <rect x="316.2" y="730.2" width="24" height="24" rx="5" fill="#6b4a3a" stroke="rgba(245,237,224,0.35)"/>
+            <circle cx="357.5" cy="215" r="9" fill="none" stroke="#f5ede0" stroke-width="2"/>
+            <circle cx="357.5" cy="215" r="3" fill="#f5ede0"/>
+            <rect x="170" y="957" width="420" height="14" rx="7" fill="#e9c98b" fill-opacity="0.85"/>
+            <text class="wwr-plan__small" x="170" y="997">TRIBUTE WALL</text>
+            <text class="wwr-plan__small" x="590" y="997" text-anchor="end">EXIT</text>
+            <g class="wwr-plan__mark"><circle cx="438" cy="94" r="22" fill="#f0bfc4" stroke="#1f2b22" stroke-width="3"/><text x="438" y="103" text-anchor="middle">1</text></g>
+            <g class="wwr-plan__mark"><circle cx="387.5" cy="215" r="22" fill="#f0bfc4" stroke="#1f2b22" stroke-width="3"/><text x="387.5" y="224" text-anchor="middle">2</text></g>
+            <g class="wwr-plan__mark"><circle cx="245" cy="507.5" r="22" fill="#f0bfc4" stroke="#1f2b22" stroke-width="3"/><text x="245" y="516.5" text-anchor="middle">3</text></g>
+            <g class="wwr-plan__mark"><circle cx="182" cy="526.2" r="22" fill="#f0bfc4" stroke="#1f2b22" stroke-width="3"/><text x="182" y="535.2" text-anchor="middle">4</text></g>
+            <g class="wwr-plan__mark"><circle cx="380" cy="597.5" r="22" fill="#f0bfc4" stroke="#1f2b22" stroke-width="3"/><text x="380" y="606.5" text-anchor="middle">5</text></g>
+            <g class="wwr-plan__mark"><circle cx="380" cy="964" r="22" fill="#f0bfc4" stroke="#1f2b22" stroke-width="3"/><text x="380" y="973" text-anchor="middle">6</text></g>
+            <g class="wwr-plan__scale"><path d="M515 897.5 h 150" stroke="rgba(245,237,224,0.6)" stroke-width="2"/><path d="M515 891.5 v 12 M665 891.5 v 12" stroke="rgba(245,237,224,0.6)" stroke-width="2"/><text class="wwr-plan__small" x="590" y="883.5" text-anchor="middle">10 M</text></g>
+            </svg>
+          </div>
+          <ol class="wwr-plan__key">
+            <li><strong>The real sculpture</strong>under glass in the lobby, lit like the studio window.</li>
+            <li><strong>Headset on</strong>under the cherry tree, where the web garden begins.</li>
+            <li><strong>Foam blocks</strong>built to each house and trunk in the 3D garden, in the houses' colours.</li>
+            <li><strong>Lavender on the breeze</strong>from fans by the purple tree, drifting toward the pond.</li>
+            <li><strong>Water and birdsong</strong>at the koi pond, with the soft piano from the garden.</li>
+            <li><strong>A tribute wall</strong>on the way out.</li>
+          </ol>
+          <figcaption class="cs-figure__caption">The room drawn from the 3D garden's real layout. At full scale it covers roughly 35 by 45 metres.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ THE TRIBUTE ============ -->
+  <section class="cs-section">
+    <div class="cs-container">
+      <header class="cs-section__head">
+        <span class="cs-section__num">Tribute</span>
+        <h2 class="cs-section__title">For the ones we miss.</h2>
+      </header>
+      <div class="cs-section__body">
+        <div class="cs-section__copy">
+          <p class="cs-lead">The walk ends at a tribute to my loved ones who have passed on, the people each house's colour stands for.</p>
+          <p>Visitors could add someone of their own, answering the House of Remembering's question: is there someone you miss?</p>
         </div>
       </div>
     </div>
