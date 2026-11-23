@@ -398,7 +398,15 @@
       background: #142018;
       box-shadow: 0 40px 80px -30px rgba(6, 12, 8, 0.7), 0 14px 30px -12px rgba(6, 12, 8, 0.45);
     }
-    .wwr-clip video { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .wwr-clip__frame { position: relative; }
+    .wwr-clip video,
+    .wwr-clip__frame--link img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    /* the second reel's poster opens the post on Instagram, like the featured reel */
+    .wwr-clip__frame--link { display: block; color: #f5ede0; text-decoration: none; }
+    .wwr-clip__frame--link img { transition: transform 0.6s var(--ease-out); }
+    .wwr-clip__frame--link:hover img { transform: scale(1.03); }
+    .wwr-clip__frame--link:hover .wwr-reel__play { transform: scale(1.08); background: rgba(20, 32, 24, 0.6); }
+    .wwr-clip__frame--link:focus-visible { outline: 3px solid var(--wwr-blossom); outline-offset: 4px; }
     .wwr-clip .cs-figure__caption { text-align: left; }
     @media (max-width: 900px) { .wwr-clip { grid-column: 1; } }
 
@@ -1276,6 +1284,16 @@
           <p>You drag to look around and click the ground, or a house, to walk there. Scroll to rise above the garden. Each house greets you with a few lines of its own as you come near. One millimetre of the sculpture becomes five centimetres.</p>
           <p>It's online now: <a href="https://where-we-rest.vercel.app/" target="_blank" rel="noopener">step inside the garden</a> (opens in a new tab).</p>
         </div>
+        <figure class="wwr-clip">
+          <a class="wwr-clip__frame wwr-clip__frame--link" href="https://www.instagram.com/reel/DgBrWMDs1PU/" target="_blank" rel="noopener" aria-label="Play my reel walking through the 3D garden on Instagram (opens in a new tab)">
+            <img src="../WhereWeRest/feature/wwr-reel2-poster.jpg" width="720" height="1280" alt="" loading="lazy" decoding="async" />
+            <span class="wwr-reel__play" aria-hidden="true">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></svg>
+            </span>
+            <span class="wwr-reel__tag" aria-hidden="true">Play on Instagram ↗</span>
+          </a>
+          <figcaption class="cs-figure__caption">My reel walking through the garden, on Instagram.</figcaption>
+        </figure>
         <figure class="cs-figure wwr-strip-wrap">
           <div class="wwr-strip" data-copies="3" aria-label="The garden in 3D">
             <div class="wwr-strip__track">
