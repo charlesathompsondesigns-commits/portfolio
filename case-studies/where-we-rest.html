@@ -410,6 +410,41 @@
     .wwr-clip .cs-figure__caption { text-align: left; }
     @media (max-width: 900px) { .wwr-clip { grid-column: 1; } }
 
+    /* ── Sound toggle: videos autoplay muted when they scroll into view, and visitors can
+       turn sound on, one video at a time (the same control as the 808 page) ── */
+    .cs-sound {
+      position: absolute;
+      right: 12px;
+      bottom: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 44px;
+      padding: 0 16px 0 13px;
+      border: 1px solid rgba(245, 237, 224, 0.3);
+      border-radius: 999px;
+      background: rgba(20, 32, 24, 0.55);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      color: #f5ede0;
+      font-family: var(--font-franklin-medium);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s var(--ease-in-out), transform 0.2s var(--ease-out);
+    }
+    .cs-sound:hover { background: rgba(20, 32, 24, 0.8); transform: translateY(-1px); }
+    .cs-sound:focus-visible { outline: 2px solid var(--wwr-blossom); outline-offset: 3px; }
+    .cs-sound__icon--on { display: none; }
+    .cs-sound[aria-pressed="true"] .cs-sound__icon--on { display: block; }
+    .cs-sound[aria-pressed="true"] .cs-sound__icon--off { display: none; }
+    @media (max-width: 600px) {
+      .cs-sound { width: 44px; padding: 0; justify-content: center; right: 10px; bottom: 10px; }
+      .cs-sound__label { display: none; }
+    }
+
     /* ── Exhibition badge: the same glowing pill as 808, Braid and Sun-Drop, tuned for the green page ── */
     .cs-award {
       position: relative;
@@ -1174,10 +1209,15 @@
           <p>It was shown at the For Women, by Women Art Gallery in Chicago in 2024. In 2025 it won the Miniature Design Award at Open House Chicago, hosted by the Chicago Architecture Group at South Side Sanctuary.</p>
         </div>
         <figure class="wwr-clip">
-          <div class="wwr-clip__frame">
-            <video muted loop playsinline preload="none" poster="../WhereWeRest/feature/wwr-studio-poster.jpg" data-play-in-view aria-label="Where We Rest in the studio: window light through the willow, then a slow turn past the houses and the cherry tree">
+          <div class="wwr-clip__frame" data-reel-media>
+            <video muted loop playsinline preload="none" poster="../WhereWeRest/feature/wwr-studio-poster.jpg" data-reel-video aria-label="Where We Rest in the studio: window light through the willow, then a slow turn past the houses and the cherry tree">
               <source src="../WhereWeRest/feature/wwr-studio.mp4" type="video/mp4" />
             </video>
+            <button class="cs-sound" type="button" data-reel-sound aria-pressed="false" aria-label="Turn sound on">
+              <svg class="cs-sound__icon cs-sound__icon--off" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+              <svg class="cs-sound__icon cs-sound__icon--on" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></svg>
+              <span class="cs-sound__label">Sound on</span>
+            </button>
           </div>
           <figcaption class="cs-figure__caption">The finished garden in the studio's window light.</figcaption>
         </figure>
@@ -1476,6 +1516,38 @@
         else if (e.key === 'ArrowRight' && list.length > 1) step(1);
       });
       return { open: open };
+    })();
+
+    /* Videos with sound: autoplay muted while on screen (autoplay rules), pause when scrolled away,
+       and a Sound on button per video. Turning one on turns the others off. Same as the 808 page. */
+    (function () {
+      var parts = [].slice.call(document.querySelectorAll('[data-reel-media]')).map(function (m) {
+        return { video: m.querySelector('[data-reel-video]'), btn: m.querySelector('[data-reel-sound]') };
+      }).filter(function (p) { return p.video && p.btn; });
+      if (!parts.length) return;
+      function setSound(p, on) {
+        p.video.muted = !on;
+        p.btn.setAttribute('aria-pressed', String(on));
+        p.btn.setAttribute('aria-label', on ? 'Turn sound off' : 'Turn sound on');
+        p.btn.querySelector('.cs-sound__label').textContent = on ? 'Sound off' : 'Sound on';
+      }
+      parts.forEach(function (p) {
+        p.btn.addEventListener('click', function () {
+          var turnOn = p.video.muted;
+          parts.forEach(function (q) { if (q !== p) setSound(q, false); });
+          setSound(p, turnOn);
+          if (turnOn) p.video.play().catch(function () {});
+        });
+      });
+      if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) e.target.play().catch(function () {});
+            else e.target.pause();
+          });
+        }, { threshold: 0.5 });
+        parts.forEach(function (p) { io.observe(p.video); });
+      }
     })();
 
     /* Videos play only while on screen, muted (autoplay rules), and pause when scrolled away. */
