@@ -385,6 +385,25 @@
       .wwr-door__title { font-size: clamp(44px, 13vw, 56px); }
     }
 
+    /* ── Instagram's own player, cropped to just the video. Its embed shows the reel in a 4:5 box
+       under a 54px header, with the 9:16 video centred; widening the frame to 142.2% and nudging it
+       up and left leaves only the video showing. The poster sits underneath while it loads. ── */
+    .wwr-ig {
+      position: relative;
+      overflow: hidden;
+      background: #142018 center / cover no-repeat;
+    }
+    .wwr-reel .wwr-ig { position: absolute; }
+    .wwr-ig iframe {
+      position: absolute;
+      left: -21.1%;
+      top: -54px;
+      width: 142.2%;
+      height: calc(100% + 260px);
+      border: 0;
+      background: transparent;
+    }
+
     /* ── The studio video, now in the Finished chapter ── */
     .wwr-clip {
       grid-column: 2;
@@ -997,15 +1016,11 @@
           </a>
         </div>
       </div>
-      <a class="wwr-reel wwr-reel--link" href="https://www.instagram.com/p/DajLhyHukQH/" target="_blank" rel="noopener" aria-label="Play my Where We Rest reel on Instagram (opens in a new tab)">
-        <span class="wwr-reel__frame">
-          <img src="../WhereWeRest/feature/wwr-reel-poster.jpg" width="720" height="1280" alt="" decoding="async" />
-          <span class="wwr-reel__play" aria-hidden="true">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></svg>
-          </span>
-          <span class="wwr-reel__tag" aria-hidden="true">Play on Instagram ↗</span>
-        </span>
-      </a>
+      <div class="wwr-reel">
+        <div class="wwr-reel__frame wwr-ig" style="background-image: url('../WhereWeRest/feature/wwr-reel-poster.jpg')">
+          <iframe src="https://www.instagram.com/reel/DajLhyHukQH/embed/" title="My Where We Rest reel on Instagram" loading="lazy" scrolling="no" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1338,14 +1353,10 @@
           <p>It runs right in your browser. <a href="https://where-we-rest.vercel.app/" target="_blank" rel="noopener">Step inside the garden</a> (opens in a new tab).</p>
         </div>
         <figure class="wwr-clip">
-          <a class="wwr-clip__frame wwr-clip__frame--link" href="https://www.instagram.com/reel/DgBrWMDs1PU/" target="_blank" rel="noopener" aria-label="Play my reel walking through the 3D garden on Instagram (opens in a new tab)">
-            <img src="../WhereWeRest/feature/wwr-reel2-poster.jpg" width="720" height="1280" alt="" loading="lazy" decoding="async" />
-            <span class="wwr-reel__play" aria-hidden="true">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></svg>
-            </span>
-            <span class="wwr-reel__tag" aria-hidden="true">Play on Instagram ↗</span>
-          </a>
-          <figcaption class="cs-figure__caption">My reel walking through the garden, on Instagram.</figcaption>
+          <div class="wwr-clip__frame wwr-ig" style="background-image: url('../WhereWeRest/feature/wwr-reel2-poster.jpg')">
+            <iframe src="https://www.instagram.com/reel/DgBrWMDs1PU/embed/" title="My reel walking through the 3D garden, on Instagram" loading="lazy" scrolling="no" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <figcaption class="cs-figure__caption">My reel walking through the garden. Tap to play.</figcaption>
         </figure>
         <figure class="cs-figure wwr-strip-wrap">
           <div class="wwr-strip" data-copies="3" aria-label="The garden in 3D">
