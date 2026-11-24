@@ -1544,55 +1544,39 @@ ul  { list-style: none; }
   .more-work, .explore-btn, .explore-btn__chip { transition: none; }
 }
 
-/* Glowing version: the homepage button that opens the Work page. A warm gold halo
-   breathes behind it and a soft light sweeps across, like the case-study badges,
-   so it reads clearly as the way into the rest of the work. */
+/* Glowing version: the homepage button that opens the Work page. The button itself
+   stays the plain frosted pill; only a soft champagne-rose glow breathes around the
+   outside, so it reads clearly as the way into the rest of the work. */
 .explore-btn--glow {
   text-decoration: none;
-  background: linear-gradient(180deg, rgba(255, 249, 230, 0.98) 0%, rgba(255, 228, 168, 0.85) 100%);
-  border-color: rgba(255, 210, 110, 1);
+  border-color: rgba(232, 190, 160, 0.9);
   box-shadow:
-    inset 0 1px 0 #fff,
-    0 0 0 2px rgba(255, 199, 77, 0.7),
-    0 0 36px rgba(255, 180, 30, 0.75),
-    0 0 96px rgba(255, 180, 30, 0.4),
-    0 14px 32px rgba(11, 8, 32, 0.12);
-  animation: explore-pulse 2.4s ease-in-out infinite alternate;
-}
-.explore-btn--glow::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(105deg, rgba(255, 255, 255, 0) 38%, rgba(255, 255, 255, 0.85) 50%, rgba(255, 255, 255, 0) 62%) no-repeat;
-  background-size: 260% 100%;
-  background-position: 160% 0;
-  mix-blend-mode: soft-light;
-  pointer-events: none;
-  animation: explore-sheen 4.2s ease-in-out infinite;
+    0 0 0 1px rgba(214, 160, 128, 0.45),
+    0 0 34px rgba(226, 160, 120, 0.8),
+    0 0 96px rgba(226, 160, 120, 0.45),
+    0 14px 32px rgba(11, 8, 32, 0.1);
+  animation: explore-pulse 2.6s ease-in-out infinite alternate;
 }
 .explore-btn__glow {
   position: absolute;
-  inset: -34px;
+  inset: -30px;
   z-index: -1;
   border-radius: 999px;
-  background: radial-gradient(closest-side, rgba(255, 196, 48, 0.85) 0%, rgba(255, 186, 40, 0.38) 55%, rgba(255, 176, 32, 0) 100%);
+  background: radial-gradient(closest-side, rgba(230, 160, 120, 0.8) 0%, rgba(230, 160, 120, 0.32) 55%, rgba(230, 160, 120, 0) 100%);
   filter: blur(20px);
   pointer-events: none;
-  animation: explore-glow 2.4s ease-in-out infinite alternate;
+  animation: explore-glow 2.6s ease-in-out infinite alternate;
 }
 .explore-btn--glow .explore-btn__chip {
-  color: #ffcf5a;
-  box-shadow: 0 0 0 1.5px rgba(255, 199, 77, 0.85), 0 0 14px rgba(255, 186, 40, 0.6), 0 4px 12px rgba(11, 8, 32, 0.25);
+  color: #f3d2bd;
+  box-shadow: 0 0 0 1.5px rgba(232, 180, 150, 0.8), 0 4px 12px rgba(11, 8, 32, 0.25);
 }
 .explore-btn--glow:hover {
-  background: linear-gradient(180deg, rgba(255, 253, 246, 1) 0%, rgba(255, 242, 212, 0.82) 100%);
   box-shadow:
-    inset 0 1px 0 #fff,
-    0 0 0 2px rgba(255, 199, 77, 0.9),
-    0 0 46px rgba(255, 180, 30, 0.9),
-    0 0 120px rgba(255, 180, 30, 0.5),
-    0 20px 40px rgba(11, 8, 32, 0.16);
+    0 0 0 1px rgba(214, 160, 128, 0.6),
+    0 0 46px rgba(226, 160, 120, 0.95),
+    0 0 120px rgba(226, 160, 120, 0.55),
+    0 20px 40px rgba(11, 8, 32, 0.14);
 }
 .explore-btn--glow:hover .explore-btn__chip { transform: translateX(3px); }
 .explore-btn--glow:focus-visible { outline: 2px solid #0B0820; outline-offset: 6px; }
@@ -1601,16 +1585,13 @@ ul  { list-style: none; }
   to   { opacity: 1;    transform: scale(1.06); }
 }
 @keyframes explore-pulse {
-  from { border-color: rgba(255, 214, 120, 0.7); }
-  to   { border-color: rgba(255, 226, 150, 1); }
-}
-@keyframes explore-sheen {
-  0%, 35% { background-position: 160% 0; }
-  75%, 100% { background-position: -60% 0; }
+  from { border-color: rgba(232, 190, 160, 0.7); }
+  to   { border-color: rgba(240, 206, 182, 1); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .explore-btn--glow, .explore-btn--glow::after { animation: none; }
+  .explore-btn--glow { animation: none; }
   .explore-btn__glow { animation: none; opacity: 0.85; }
+}
 }
 
 /* Tablet — tighten internal padding so 50/50 cards breathe at 768–1024 */
