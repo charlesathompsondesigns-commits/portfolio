@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Work · Charlesa Thompson</title>
+  <meta name="description" content="Every case study by Charlesa Thompson: product, spatial and assistive design, sculpture and 3D worlds." />
+  <meta name="theme-color" content="#f4ead3" />
+  <link rel="icon" href="/favicon-32.png?v=3" type="image/png" sizes="32x32" />
+  <link rel="icon" href="/favicon-16.png?v=3" type="image/png" sizes="16x16" />
+  <link rel="icon" href="/icon-192.png?v=3" type="image/png" sizes="192x192" />
+  <link rel="shortcut icon" href="/favicon.ico?v=3" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3" />
+  <link rel="stylesheet" href="styles.css?v=20261123" />
+  <script defer src="nav.js?v=20261119-2"></script>
+  <style>
+    /* ========================================================
+       Work page: the full catalog of case studies, on the About
+       page's cream, with each card on its own colour band.
+       ======================================================== */
+    /* cream sits on html so the Projects colour bands (painted just behind #work) show through the body */
+    html { background: rgb(244, 234, 211); }
+    body { background: transparent; color: var(--black); }
+
+    .work-hero {
+      padding: calc(var(--nav-height) + clamp(56px, 9vw, 120px) + var(--bar-push)) var(--gutter) clamp(8px, 2vw, 24px);
+      transition: padding-top var(--bar-slide);
+    }
+    @media (prefers-reduced-motion: reduce) { .work-hero { transition: none; } }
+    .work-hero__inner { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--gutter); }   /* lines up with the cards, which sit in .section + .container */
+    .work-hero__label {
+      font-family: var(--font-franklin-medium);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(0, 0, 0, 0.55);
+      margin: 0 0 20px;
+    }
+    .work-hero__title {
+      font-family: var(--font-instrument);
+      font-weight: 400;
+      font-size: clamp(64px, 9vw, 132px);
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      color: #0B0820;
+      margin: 0 0 20px;
+    }
+    .work-hero__text {
+      max-width: 44ch;
+      margin: 0;
+      font-family: var(--font-franklin);
+      font-size: clamp(16px, 1.3vw, 19px);
+      line-height: 1.6;
+      color: rgba(11, 8, 32, 0.72);
+    }
+    .work-list { padding-top: clamp(48px, 7vw, 96px); }
+    .work-list .case-stack { gap: clamp(88px, 11vh, 160px); }
+
+    /* ── Glass nav, like Braid and 808: starts at exactly the page colour (what
+       Safari paints behind the status bar) and clears into frosted glass, with
+       dark ink and a soft blurred fade instead of a hard edge. ── */
+    .nav {
+      background: linear-gradient(180deg, rgb(244, 234, 211) 0%, rgba(244, 234, 211, 0.82) 35%, rgba(248, 240, 222, 0.5) 100%);
+      -webkit-backdrop-filter: blur(22px) saturate(180%);
+      backdrop-filter: blur(22px) saturate(180%);
+      border-bottom: 0;
+      box-shadow: none;
+    }
+    .nav::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 100%;
+      height: 22px;
+      background: linear-gradient(180deg, rgba(248, 240, 222, 0.5) 0%, rgba(248, 240, 222, 0) 100%);
+      -webkit-backdrop-filter: blur(10px) saturate(160%);
+      backdrop-filter: blur(10px) saturate(160%);
+      -webkit-mask-image: linear-gradient(180deg, #000 0%, transparent 100%);
+      mask-image: linear-gradient(180deg, #000 0%, transparent 100%);
+      pointer-events: none;
+    }
+    .nav.is-open::after { opacity: 0; }
+    .nav__logo,
+    .nav__links a,
+    .nav__toggle { color: var(--brown); }
+    @media (max-width: 720px) {
+      .nav__links {
+        background: linear-gradient(180deg, rgba(248, 240, 222, 0.97) 0%, rgba(244, 234, 211, 0.98) 100%);
+        -webkit-backdrop-filter: blur(30px) saturate(160%);
+        backdrop-filter: blur(30px) saturate(160%);
+      }
+      .nav__links li { border-bottom-color: rgba(39, 15, 5, 0.14); }
+      .nav.is-open { background: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============ Shared Nav ============ -->
+  <nav class="nav" aria-label="Primary">
+    <a href="index.html" class="nav__logo">CHAR</a>
+    <ul class="nav__links">
+      <li><a href="work.html" aria-current="page">Work</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <header class="work-hero">
+      <div class="work-hero__inner">
+        <p class="work-hero__label">Work</p>
+        <h1 class="work-hero__title">All projects.</h1>
+        <p class="work-hero__text">Every case study in one place: product, spatial and assistive design, sculpture and 3D worlds.</p>
+      </div>
+    </header>
+
+    <!-- ============ Projects ============ -->
+    <section class="section work-list" id="work" aria-label="Projects">
+      <div class="container">
+        <div class="case-stack">
+
+        <!-- Project 808 — light olive card, text left / app opening right -->
+        <a href="case-studies/project-808.html" class="case-card case-card--nascar reveal">
+          <div class="case-card__text">
+            <h2 class="case-card__title">Project 808</h2>
+            <p class="case-card__desc">Chicago trains world-class creatives, then loses them. This campaign site builds the case to keep them here.</p>
+            <div class="case-card__btns">
+              <span class="case-pill case-pill--filled">See Project</span>
+              <span class="case-pill case-pill--outline">Concept</span>
+              <span class="case-pill case-pill--outline">Community Impact</span>
+            </div>
+          </div>
+          <div class="case-card__img">
+            <video class="case-card__video" src="Project808/card/808-card-v2.mp4" poster="Project808/card/808-card-v2-poster.jpg" width="1440" height="810" muted loop playsinline preload="none" aria-hidden="true"></video>
+          </div>
+        </a>
+
+        <!-- Sun-Drop Flower: soft rose card, text left / the finished lamp right -->
+        <a href="case-studies/sundrop-flower.html" class="case-card case-card--sundrop reveal">
+          <div class="case-card__text">
+            <h2 class="case-card__title">Sun-Drop Flower</h2>
+            <p class="case-card__desc">Assistive lighting that is also art. A robotic lamp I built for my mom's arthritis that turns on with a wave of the hand, no switch needed.</p>
+            <div class="case-card__btns">
+              <span class="case-pill case-pill--filled">See Project</span>
+              <span class="case-pill case-pill--outline">Assistive Tech</span>
+              <span class="case-pill case-pill--outline">Equitable Design</span>
+              <span class="case-pill case-pill--outline">Virality</span>
+            </div>
+          </div>
+          <!-- Her pencil sketches under a plum wash, the lamp video in the middle, and a gold
+               vine that grows through the sketch over the length of the video. The vine is
+               drawn by the script at the end of the page, so every leaf and curl sprouts
+               from the stem. -->
+          <div class="case-card__img sd-stage">
+            <svg class="sd-vine" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+              <defs>
+                <linearGradient id="sdGold" gradientUnits="userSpaceOnUse" x1="200" y1="0" x2="1400" y2="1000">
+                  <stop offset="0" stop-color="#f8e7bd" />
+                  <stop offset="0.45" stop-color="#e6c88f" />
+                  <stop offset="1" stop-color="#c99f5b" />
+                </linearGradient>
+              </defs>
+            </svg>
+            <video class="sd-stage__video" src="Sundrop/card/sundrop-card.mp4" poster="Sundrop/card/sundrop-card-poster.jpg" width="720" height="1280" muted loop playsinline preload="none" aria-hidden="true"></video>
+          </div>
+        </a>
+
+        <!-- Braid — lavender card, text left / phone mockups right -->
+        <a href="case-studies/braid.html" class="case-card case-card--braid reveal">
+          <div class="case-card__text">
+            <h2 class="case-card__title">Braid</h2>
+            <p class="case-card__desc">Led UX/UI design for a mobile education platform centered on textured hair care, owning product structure and visual systems from concept through MVP.</p>
+            <div class="case-card__btns">
+              <span class="case-pill case-pill--filled">See Project</span>
+              <span class="case-pill case-pill--outline">Team Based</span>
+              <span class="case-pill case-pill--outline">Entrepreneurship</span>
+            </div>
+          </div>
+          <div class="case-card__img">
+            <img src="screens-hero.jpg" alt="Braid app mockups" loading="lazy" />
+          </div>
+        </a>
+
+        <!-- Where We Rest: soft sage card, text left / the live 3D garden with the real sculpture playing on top -->
+        <a href="case-studies/where-we-rest.html" class="case-card case-card--wwr reveal">
+          <div class="case-card__text">
+            <h2 class="case-card__title">Where We Rest</h2>
+            <p class="case-card__desc">A miniature garden I built in memory of my father and my brother, now a life-size 3D world you can walk through.</p>
+            <div class="case-card__btns">
+              <span class="case-pill case-pill--filled">See Project</span>
+              <span class="case-pill case-pill--outline">Sculpture</span>
+              <span class="case-pill case-pill--outline">3D World</span>
+              <span class="case-pill case-pill--outline">Award Winner</span>
+            </div>
+          </div>
+          <div class="case-card__img wwr-stage">
+            <video class="wwr-stage__video" src="WhereWeRest/card/wwr-card.mp4" poster="WhereWeRest/card/wwr-card-poster.jpg" width="540" height="960" muted loop playsinline preload="none" aria-hidden="true"></video>
+          </div>
+        </a>
+
+        <!-- Columbia Chronicle — light cream card, text left / app mockups right -->
+        <a href="case-studies/columbia-chronicle.html" class="case-card case-card--chronicle reveal">
+          <div class="case-card__text">
+            <h2 class="case-card__title">The Columbia Chronicle</h2>
+            <p class="case-card__desc">Designed and prototyped the first mobile app experience for a legacy student news organization, establishing core user flows and information architecture.</p>
+            <div class="case-card__btns">
+              <span class="case-pill case-pill--filled">See Project</span>
+              <span class="case-pill case-pill--outline">Paid</span>
+              <span class="case-pill case-pill--outline">Mobile UX</span>
+            </div>
+          </div>
+          <div class="case-card__img">
+            <img src="Columbia%20Chronicle/Image.png" alt="The Columbia Chronicle mobile app mockups" loading="lazy" />
+          </div>
+        </a>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ Footer ============ -->
+  <footer class="footer">
+    <a href="/" class="footer__logo">CHAR</a>
+    <ul class="footer__links">
+      <li><a href="work.html">Work</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+      <li><a href="/resume.pdf">Resume</a></li>
+      <li><a href="https://www.instagram.com/charlesa.xo/" target="_blank" rel="noopener">Instagram</a></li>
+      <li><a href="https://www.linkedin.com/in/charlesa-thompson-4a4436240" target="_blank" rel="noopener">LinkedIn</a></li>
+    </ul>
+  </footer>
+
+  <script src="cards.js?v=20261123"></script>
+  <script>
+    /* Cards fade and lift in as they reach the screen, like on the homepage */
+    (function () {
+      var els = document.querySelectorAll('.reveal');
+      if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        Array.prototype.forEach.call(els, function (el) { el.classList.add('visible'); });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+      Array.prototype.forEach.call(els, function (el) { io.observe(el); });
+    })();
+  </script>
+
+</body>
+</html>
