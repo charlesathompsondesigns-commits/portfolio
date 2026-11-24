@@ -12,7 +12,7 @@
   <link rel="shortcut icon" href="/favicon.ico?v=3" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3" />
   <link rel="preconnect" href="https://www.thecharlesathompson.com" crossorigin>
-  <link rel="stylesheet" href="styles.css?v=20261120-3" />
+  <link rel="stylesheet" href="styles.css?v=20261123" />
   <script defer src="nav.js?v=20261119-2"></script>
   <script defer src="contact.js"></script>
   <style>
@@ -230,6 +230,23 @@
       <div class="more-work" id="moreWork" inert aria-hidden="true">
         <div class="more-work__inner">
           <div class="case-stack case-stack--more">
+
+        <!-- Where We Rest: soft sage card, text left / the live 3D garden with the real sculpture playing on top -->
+        <a href="case-studies/where-we-rest.html" class="case-card case-card--wwr reveal">
+          <div class="case-card__text">
+            <h2 class="case-card__title">Where We Rest</h2>
+            <p class="case-card__desc">A miniature garden I built in memory of my father and my brother, now a life-size 3D world you can walk through.</p>
+            <div class="case-card__btns">
+              <span class="case-pill case-pill--filled">See Project</span>
+              <span class="case-pill case-pill--outline">Sculpture</span>
+              <span class="case-pill case-pill--outline">3D World</span>
+              <span class="case-pill case-pill--outline">Award Winner</span>
+            </div>
+          </div>
+          <div class="case-card__img wwr-stage">
+            <video class="wwr-stage__video" src="WhereWeRest/card/wwr-card.mp4" poster="WhereWeRest/card/wwr-card-poster.jpg" width="540" height="960" muted loop playsinline preload="none" aria-hidden="true"></video>
+          </div>
+        </a>
 
         <!-- Columbia Chronicle — light cream card, text left / app mockups right -->
         <a href="case-studies/columbia-chronicle.html" class="case-card case-card--chronicle reveal">
@@ -580,6 +597,7 @@
         { el: work.querySelector('.case-card--nascar'),    c: '220,223,184' },
         { el: work.querySelector('.case-card--sundrop'),   c: '238,220,226' },
         { el: work.querySelector('.case-card--braid'),     c: '223,213,237' },
+        { el: work.querySelector('.case-card--wwr'),       c: '222,232,219' },
         { el: work.querySelector('.case-card--chronicle'), c: '220,232,244' }
       ].filter(function (x) { return x.el; });
       if (!all.length) return;
@@ -1044,6 +1062,21 @@
           });
         }).observe(box);
       } else { running = true; requestAnimationFrame(frame); }
+    })();
+  </script>
+
+  <script>
+    /* Where We Rest card: the sculpture loop plays only while the card is on screen */
+    (function () {
+      var v = document.querySelector('.wwr-stage__video');
+      if (!v || !('IntersectionObserver' in window)) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); }
+          else v.pause();
+        });
+      }, { threshold: 0.35 }).observe(v.parentNode);
     })();
   </script>
 

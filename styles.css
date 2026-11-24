@@ -1416,6 +1416,50 @@ ul  { list-style: none; }
   .case-card--sundrop .case-pill { padding: 0 13px; }
 }
 
+/* Where We Rest: soft sage glass, a light tint of the case study's garden green.
+   The stage is the live 3D garden, with the real sculpture playing in a frame on top. */
+.case-card--wwr {
+  background: rgba(219, 230, 216, 0.55);
+}
+.case-card--wwr .wwr-stage {
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+  background: #1f2b22 url("WhereWeRest/feature/live-arrival.webp") center / cover no-repeat;
+}
+.wwr-stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(ellipse 58% 70% at 50% 50%, rgba(20, 30, 23, 0.45) 0%, rgba(20, 30, 23, 0.15) 65%, rgba(20, 30, 23, 0) 100%);
+  pointer-events: none;
+}
+.case-card--wwr .wwr-stage__video {
+  position: absolute;
+  z-index: 2;
+  top: 7%;
+  bottom: 7%;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: auto;
+  height: 86%;
+  aspect-ratio: 9 / 16;
+  object-fit: cover;
+  border-radius: 14px;
+  box-shadow: 0 0 0 1px rgba(240, 191, 196, 0.45), 0 24px 50px -16px rgba(6, 12, 8, 0.75);
+}
+@media (max-width: 900px) {
+  .case-card--wwr .case-card__img { aspect-ratio: 4 / 3; }
+}
+@media (max-width: 600px) {
+  .case-card--wwr .case-card__img { aspect-ratio: 1 / 1; }
+}
+@media (min-width: 901px) {
+  .case-card--wwr .case-pill { padding: 0 13px; }
+}
+
 /* More work: hidden under "Explore the rest of my work". The rows trick animates
    the height; overflow is released once it has opened so card shadows aren't clipped. */
 .more-work {
